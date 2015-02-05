@@ -4,6 +4,9 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 public class NewWindow extends JFrame {
+		
+		// initialize variables
+		
 		public NewWindow() {
 		setTitle("New Window");
 		setSize(1200, 800);
@@ -41,17 +44,22 @@ public class NewWindow extends JFrame {
 		leftP.add(plantPrompt);
 		JTextField plantPN = new JTextField();
 		leftP.add(plantPN);
+		/*
+		 * range of 2-3 plants for now
+		 * when user has a good number of plants prompts
+		 * then create n dropdownmenus for plant types
+		 */
 		// acceptable ranges
 		JLabel plantDBPick = new JLabel("Plant Type: ");
 		leftP.add(plantDBPick);
-		// create dropdown
-		JLabel tankSizePrompt = new JLabel("Tank Size (Length x Width x Height) cm or inches?s: ");
+		// create dropdownmenu for hydrogenas?
+		JLabel tankSizePrompt = new JLabel("Tank Size (Length x Width x Height) (cm)s: ");
 		leftP.add(tankSizePrompt);
 		// length dimension
 		JTextField lengthP = new JTextField();
 		leftP.add(lengthP);
 		// create empty box
-		System.out.println(" x ");
+		System.out.println("AHAHAH");
 		// width dimension
 		JTextField widthP = new JTextField();
 		leftP.add(widthP);
