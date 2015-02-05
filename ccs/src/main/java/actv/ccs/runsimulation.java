@@ -26,7 +26,8 @@ public class runsimulation extends JFrame{
 		// create data
 		JLabel fishEx = new JLabel("Fish #1 \n");
 		dataPanel.add(fishEx);
-		// create small table for Fish Data 
+		// create small table for Fish Data
+		// fish info from database is being displayed here through viewer
 		// create small table for data on simulation, time etc.
 		JButton StopSim = new JButton("Stop Simulation");
 		JButton ContSim = new JButton("Continue Simulation");

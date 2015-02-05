@@ -4,10 +4,9 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 public class NewWindow extends JFrame {
-	
-	public NewWindow() {
+		public NewWindow() {
 		setTitle("New Window");
-		setSize(800, 800);
+		setSize(1200, 800);
 		System.out.println("NewWindow is being called\n");
 		JMenuBar b = createjMenu();
 		this.setJMenuBar(b);
@@ -18,24 +17,51 @@ public class NewWindow extends JFrame {
 		leftP.setLayout(new GridLayout(10,1));
 		this.add(leftP, BorderLayout.WEST);
 		// adding labels
-		JLabel cichlidPrompt = new JLabel ("How many Convict Cichlids: boooowwa");
+		// cichlid prompt
+		JLabel cichlidPrompt = new JLabel ("How many Convict Cichlids: "); // text box - set a range now
 		leftP.add(cichlidPrompt);
+		JTextField cichlidNumberP = new JTextField();
+		leftP.add(cichlidNumberP); // add a number check including range etc.
+		// then when the user has a accceptable range
+		/*
+		 * when user has good range for cichlidNumberP
+		 * then create n number of JPopupMenus
+		 */
 		// create jmenu thing
-		JLabel fishFromDBPrompt = new JLabel ("Fish #  ");
+		/*
+		 * Then the user picks out the fish from the database etc.
+		 */
+		JLabel fishFromDBPrompt = new JLabel ("Fish #1 ");
 		leftP.add(fishFromDBPrompt);
+		/*
+		 * dropdown menu from database, so need to find a awy to access database, mysql?
+		 */
 		// create jmenu for picking a fish from the database
 		JLabel plantPrompt = new JLabel("How many plants: ");
 		leftP.add(plantPrompt);
-		// create dropdown
+		JTextField plantPN = new JTextField();
+		leftP.add(plantPN);
+		// acceptable ranges
 		JLabel plantDBPick = new JLabel("Plant Type: ");
 		leftP.add(plantDBPick);
 		// create dropdown
-		JLabel tankSizePrompt = new JLabel("Tank Size: ");
+		JLabel tankSizePrompt = new JLabel("Tank Size (Length x Width x Height) cm or inches?s: ");
 		leftP.add(tankSizePrompt);
+		// length dimension
+		JTextField lengthP = new JTextField();
+		leftP.add(lengthP);
 		// create empty box
+		System.out.println(" x ");
 		// width dimension
+		JTextField widthP = new JTextField();
+		leftP.add(widthP);
 		// create empty box
+		System.out.println(" x ");
 		// height dimension
+		JTextField heightP = new JTextField();
+		leftP.add(heightP);
+		// create empty box
+		System.out.println("\n");
 		JLabel waterTempP = new JLabel("Water Temperature: ");
 		leftP.add(waterTempP);
 		// drop down box
