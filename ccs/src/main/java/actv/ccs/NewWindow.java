@@ -40,7 +40,7 @@ public class NewWindow extends JFrame {
 		 * dropdown menu from database, so need to find a awy to access database, mysql?
 		 */
 		// create jmenu for picking a fish from the database
-		JLabel plantPrompt = new JLabel("How many plants: ");
+		JLabel plantPrompt = new JLabel("\nHow many plants: ");
 		leftP.add(plantPrompt);
 		JTextField plantPN = new JTextField();
 		leftP.add(plantPN);
@@ -53,7 +53,7 @@ public class NewWindow extends JFrame {
 		JLabel plantDBPick = new JLabel("Plant Type: ");
 		leftP.add(plantDBPick);
 		// create dropdownmenu for hydrogenas?
-		JLabel tankSizePrompt = new JLabel("Tank Size (Length x Width x Height) (cm)s: ");
+		JLabel tankSizePrompt = new JLabel("\nTank Size (Length x Width x Height) (cm)s: ");
 		leftP.add(tankSizePrompt);
 		// length dimension
 		JTextField lengthP = new JTextField();
