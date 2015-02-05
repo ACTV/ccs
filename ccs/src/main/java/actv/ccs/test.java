@@ -7,7 +7,7 @@ public class test extends JFrame{
 	public test()
 	{
 	
-		setTitle("We're Testing Shit out");
+		setTitle("Template for GUI");
 		setSize(500, 500);
 		System.out.println("test is being called\n");
 		JMenuBar b = createjMenu();
