@@ -44,7 +44,6 @@ public class runsimulation extends JFrame implements ActionListener {
 		JButton StopSim = new JButton("Stop Simulation");
 		JButton ContSim = new JButton("Continue Simulation");
 		JButton outPutData = new JButton("Output Data"); // testing here
-		outPutData.addActionListener(this);
 		
 		dataPanel.add(StopSim);
 		//newline
