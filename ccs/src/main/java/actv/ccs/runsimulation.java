@@ -1,23 +1,35 @@
 package actv.ccs;
 import javax.swing.*;
 import javax.swing.border.*;
+
 import java.awt.*;
-public class runsimulation extends JFrame{
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class runsimulation extends JFrame implements ActionListener {
+		// initialize variables - bless you 133!
+	
+		private MapView mv;
+		private GameWorld gw;
+		private Timer timer;
 	
 	public runsimulation()
 	{
 	
+		gw = new GameWorld();
+		mv = new MapView(gw);
+		gw.addObserver(mv);
+		
+		
 		setTitle("Convict Cichlid Simulator");
-		setSize(500, 500);
+		setSize(1000, 600);
 		System.out.println("runSimulation is being called\n");
 		JMenuBar b = createjMenu();
 		this.setJMenuBar(b);
 		// create center border = stuff
-		JPanel displayPanel = new JPanel();
-		// use something along the lines of gameobserver ala 133
-		displayPanel.setBorder(new EtchedBorder());
-		displayPanel.setBackground(Color.GRAY);
-		this.add(displayPanel, BorderLayout.CENTER);
+		mv.setBorder( new EtchedBorder());
+		mv.setBackground(Color.GRAY);
+		this.add(mv, BorderLayout.CENTER);
 		// create bottom border = stuff
 		JPanel dataPanel = new JPanel();
 		dataPanel.setBorder(new EtchedBorder());
@@ -31,13 +43,44 @@ public class runsimulation extends JFrame{
 		// create small table for data on simulation, time etc.
 		JButton StopSim = new JButton("Stop Simulation");
 		JButton ContSim = new JButton("Continue Simulation");
-		JButton outPutData = new JButton("Output Data");
+		JButton outPutData = new JButton("Output Data"); // testing here
+		outPutData.addActionListener(this);
+		
 		dataPanel.add(StopSim);
 		//newline
 		dataPanel.add(outPutData);
+		
+		
+		
+		
+		// 
+		gw.spawn();
+		
+		
+		//
+		timer = new Timer(500, this);
+		timer.start();
 		this.setVisible(true);	
+		gw.notifyObservers(); // notify observers of change
 	}
-	
+
+ 	public void actionPerformed(ActionEvent e) {
+ 	 	 double timeElapsed = gw.getTime();
+ 	 	 gw.setTime(timeElapsed);
+ 	 	 // each timer tick should pass an elapsed time value to the move method of each movable object
+ 		 Iterator i = gw.getIterator();
+ 		 while (i.hasNext())
+ 		 {
+ 			 GameObject obj = (GameObject) i.getNext(); // for ever object 
+ 			   if (obj instanceof IMovable)
+ 			   {
+ 				((IMovable) obj).move( timeElapsed ); // move items if paused
+ 			   }
+ 		 }
+ 		 gw.setTime(gw.getTime()+1);
+ 		 gw.notifyObservers();
+ 		 repaint();
+ 	}
 	private JMenuBar createjMenu() { 
 		// creating menubar
 		JMenuBar bar = new JMenuBar();
