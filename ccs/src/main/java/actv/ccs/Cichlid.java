@@ -5,6 +5,9 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
+// goddamn fish why won't you show up?!
+
+
 public class Cichlid extends Movable implements IDrawable, IMovable {
 	 private GameWorld gw;
 	 private AffineTransform myTranslate, myRotate, myScale;
