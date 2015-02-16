@@ -26,10 +26,12 @@ public class runsimulation extends JFrame implements ActionListener {
 		System.out.println("runSimulation is being called\n");
 		JMenuBar b = createjMenu();
 		this.setJMenuBar(b);
+		
 		// create center border = stuff
 		mv.setBorder( new EtchedBorder());
 		mv.setBackground(Color.GRAY);
 		this.add(mv, BorderLayout.CENTER);
+		
 		// create bottom border = stuff
 		JPanel dataPanel = new JPanel();
 		dataPanel.setBorder(new EtchedBorder());
@@ -48,8 +50,6 @@ public class runsimulation extends JFrame implements ActionListener {
 		dataPanel.add(StopSim);
 		//newline
 		dataPanel.add(outPutData);
-		
-		
 		
 		
 		// 

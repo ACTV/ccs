@@ -41,11 +41,12 @@ public class Cichlid extends Movable implements IDrawable, IMovable {
 		 }
 		 public void draw(Graphics2D g2d) // draw object
 		 {	
-			 g2d.setColor(Color.black);
+			 g2d.setColor(Color.blue);
 			 AffineTransform at = g2d.getTransform();
 			 g2d.transform(myScale);
 			 g2d.transform(myTranslate);
 			 g2d.transform(this.getRotate());
+			 g2d.drawRect(0, 0, 300, 300);
 			 g2d.setTransform(at);
 		 }
 		 
