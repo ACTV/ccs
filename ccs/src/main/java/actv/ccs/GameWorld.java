@@ -21,6 +21,7 @@ public class GameWorld implements IObservable, IGameWorld {
 	{
 		System.out.println("calling spawn test");
 		spawnTest();
+		spawnTest();
 	}
 	
 	public void spawnTest()
