@@ -5,10 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
-// goddamn fish why won't you show up?!
 
-
-public class Cichlid extends Movable implements IDrawable, IMovable {
+public class Cichlid extends Movable implements IDrawable, IMovable, ICollider {
 	 private GameWorld gw;
 	 private AffineTransform myTranslate, myRotate, myScale;
 	 
@@ -70,5 +68,36 @@ public class Cichlid extends Movable implements IDrawable, IMovable {
 			  myTranslate.translate( deltaX, deltaY);
 			  this.setX(myTranslate.getTranslateX() );
 			  this.setY(myTranslate.getTranslateY() );
+		}
+		public boolean collidesWith(ICollider o)
+		{
+			boolean result = false; // create boolean
+		
+			// get both object centers
+			int fObjCenterX  = (int) this.getX() + (getWidth()/2);
+			int fObjCenterY = (int) this.getY() + (getHeight()/2); 
+			
+			int sObjCenterX = (int) ((GameObject) o).getX() + ((GameObject) o).getWidth()/2; 
+			int sObjCenterY = (int) ((GameObject) o).getY() + ((GameObject) o).getHeight()/2;
+			
+			// get distance between o1bjects (x,y)
+			int dx = fObjCenterX - sObjCenterX;
+			int dy = fObjCenterY - sObjCenterY;
+			int dist = (dx*dx + dy*dy); // get distance
+			
+			// find square of radii
+			int fObjRadius = getWidth()/2;
+			int sObjRadius = ((GameObject) o).getWidth()/2;
+			int radSquared = ( fObjRadius*fObjRadius + 2*fObjRadius*sObjRadius+ sObjRadius*sObjRadius); // a^2 + 2ab + b^2
+			if (dist <= radSquared)
+			{
+				result = true;
+			}
+			return result;
+		}
+		public void handleCollision(ICollider otherObject)
+		{
+			
+			System.out.println("rules here");
 		}
 }
