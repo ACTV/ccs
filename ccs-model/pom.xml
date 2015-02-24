@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>actv</groupId>
-  <artifactId>ccs-rules</artifactId>
+  <artifactId>ccs-model</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>rules</name>
+  <name>ccs-model</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -21,22 +21,5 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-    	<groupId>org.drools</groupId>
-    	<artifactId>drools-compiler</artifactId>
-    	<version>6.1.0.Final</version>
-    </dependency>
   </dependencies>
-  
-  <build>
-  	<plugins>
-  		<plugin>
-        	<groupId>org.kie</groupId>
-       	 	<artifactId>kie-maven-plugin</artifactId>
-       	 	<version>6.1.0.Final</version>
-       		<extensions>true</extensions>
-      </plugin>
-  	</plugins>
-  	
-  </build>
 </project>

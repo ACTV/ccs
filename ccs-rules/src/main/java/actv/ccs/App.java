@@ -1,4 +1,4 @@
-package actv.rules;
+package actv.ccs;
 
 /**
  * Hello world!

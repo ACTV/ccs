@@ -1,0 +1,9 @@
+<kmodule xmlns="http://jboss.org/kie/6.1.0.Final/kmodule">
+
+  <kbase name="kbase" packages="src.main.resources.actv.rules" default="true">
+
+    <ksession name="ksession" type="stateless" default="false"/>
+	
+  </kbase>
+
+</kmodule>

@@ -1,4 +1,4 @@
-package actv.rules;
+package ccs_model.ccs_model;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
