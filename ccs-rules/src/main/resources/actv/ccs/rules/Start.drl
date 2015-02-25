@@ -1,0 +1,15 @@
+package actv.ccs.rules;
+
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.type.FishState;
+
+rule "Start"
+	ruleflow-group "swim"
+	when
+		$cc : ConvictCichlid(state == FishState.NONE);
+		
+	then
+		modify($cc){
+			setState(FishState.SWIM);
+		}
+end

@@ -12,7 +12,7 @@
              xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
              xmlns:tns="http://www.jboss.org/drools">
 
-  <process processType="Private" isExecutable="true" id="swim" name="Swim" tns:packageName="actv.ccs.rules" >
+  <process processType="Private" isExecutable="true" id="swim" name="Swim" tns:packageName="actv.ccs.flow" >
 
     <!-- nodes -->
     <startEvent id="_1"  isInterrupting="true">
@@ -41,17 +41,17 @@
         <dc:Bounds x="212" y="41" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_jbpm-unique-0" >
-        <dc:Bounds x="195" y="161" width="80" height="48" />
+        <dc:Bounds x="195" y="153" width="80" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_jbpm-unique-1" >
         <dc:Bounds x="212" y="274" width="48" height="48" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="_1-_jbpm-unique-0" >
         <di:waypoint x="236" y="65" />
-        <di:waypoint x="235" y="185" />
+        <di:waypoint x="235" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_jbpm-unique-0-_jbpm-unique-1" >
-        <di:waypoint x="235" y="185" />
+        <di:waypoint x="235" y="177" />
         <di:waypoint x="236" y="298" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

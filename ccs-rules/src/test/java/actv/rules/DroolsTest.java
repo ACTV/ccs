@@ -1,39 +1,28 @@
 package actv.rules;
 
-import java.util.List;
-import java.util.ArrayList;
-
-import junit.framework.TestCase;
-
-import org.kie.api.KieBase;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.StatelessKieSession;
+import org.kie.api.runtime.KieSession;
 
-/**
- * Unit test for simple App.
- */
-public class DroolsTest 
-    extends TestCase
-{
-	private StatelessKieSession session;
-	private KieBase kBase;
+
+public class DroolsTest{
+	private KieSession session;
 	private KieServices kieServices;
 	private KieContainer kContainer;
+	private String startProc;
 	
-	public DroolsTest(){
+	public DroolsTest(String drl, String path, String startProc){
 		kieServices = KieServices.Factory.get();
 		kContainer = kieServices.getKieClasspathContainer();
-		
-		kBase = kContainer.getKieBase("kbase");
-		session = kBase.newStatelessKieSession();
+		session = kContainer.newKieSession("test_session");
+		this.startProc = startProc;
 	}
 	
-	public void execute(String rule, String flow, String flowName, Object...objects){
-		List cmds = new ArrayList();
+	public void execute(Object...objects){
 		for(Object obj : objects)
-			cmds.add(obj);
-		
-		session.execute(cmds);
+			session.insert(obj);
+		session.startProcess(startProc);
+		session.fireAllRules();
+		session.dispose();
 	}
 }

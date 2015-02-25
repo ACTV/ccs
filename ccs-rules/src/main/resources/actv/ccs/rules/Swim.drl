@@ -10,6 +10,6 @@ rule "Swim"
 		
 	then
 		modify($cc){
-			setState(FishState.STOP);
+			setState(FishState.IDLE);
 		}
 end

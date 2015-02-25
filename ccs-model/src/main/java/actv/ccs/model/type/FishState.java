@@ -9,5 +9,7 @@ public enum FishState {
 	SWIM,
 	STOP,
 	FLEE,
-	CAUTION
+	CAUTION,
+	NONE,
+	IDLE
 }

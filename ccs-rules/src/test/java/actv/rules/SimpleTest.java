@@ -6,11 +6,12 @@ import actv.ccs.model.ConvictCichlid;
 public class SimpleTest extends DroolsTest {
 	
 	public SimpleTest(){
-		super();
+		super("Swim.drl", "actv.ccs.rules", "swim");
 	}
 	
 	@Test
 	public void tester(){
-		execute("actv.ccs.rules.swim.drl", "actv.ccs.flow.swim.bpmn", "swim", new ConvictCichlid());
+		ConvictCichlid cc = new ConvictCichlid();
+		execute(cc);
 	}
 }
