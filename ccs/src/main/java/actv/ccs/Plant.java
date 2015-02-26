@@ -4,13 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
-public class Tree extends LandScaped implements ICollider, IDrawable
+public class Plant extends LandScaped implements ICollider, IDrawable
 {	
 	private int diameter;
 	private boolean flag;
 	private AffineTransform myTranslate, myRotate, myScale;
 
-	public Tree(double x, double y, int w, int h, int r, int g, int b) 
+	public Plant(double x, double y, int w, int h, int r, int g, int b) 
 	{
 		super(x, y, w, h, r, g, b);
 		diameter = w;

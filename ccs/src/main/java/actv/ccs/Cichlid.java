@@ -97,7 +97,17 @@ public class Cichlid extends Movable implements IDrawable, IMovable, ICollider {
 		}
 		public void handleCollision(ICollider otherObject)
 		{
-			
-			System.out.println("rules here");
+		if (otherObject instanceof Cichlid) // if player tank collides with rock or tree
+		{
+			this.setSpeed(0);
+			System.out.println("Cichlid hit a cichlid.");
 		}
+		if (otherObject instanceof Plant)
+		{
+			this.setSpeed(0);
+			System.out.println("Cichlid hit Plant.");
+		}
+
+		}
+
 }
