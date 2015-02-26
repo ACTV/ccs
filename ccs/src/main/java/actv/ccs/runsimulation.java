@@ -12,7 +12,8 @@ public class runsimulation extends JFrame implements ActionListener {
 		private MapView mv;
 		private GameWorld gw;
 		private Timer timer;
-	
+		private JButton stopSim = new JButton("Pause Sim");
+		private JButton resumeSim = new JButton("Resume Sim");
 	public runsimulation()
 	{
 	
@@ -46,6 +47,9 @@ public class runsimulation extends JFrame implements ActionListener {
 		JButton StopSim = new JButton("Stop Simulation");
 		JButton ContSim = new JButton("Continue Simulation");
 		JButton outPutData = new JButton("Output Data"); // testing here
+		// create commands
+		StopCommand stopCommand = new StopCommand();
+		StopSim.setAction(stopCommand);
 		
 		dataPanel.add(StopSim);
 		//newline
@@ -71,10 +75,14 @@ public class runsimulation extends JFrame implements ActionListener {
  		 while (i.hasNext())
  		 {
  			 GameObject obj = (GameObject) i.getNext(); // for ever object 
+ 			 
+ 			 if (gw.getPause() == false)
+ 			 {
  			   if (obj instanceof IMovable)
  			   {
  				((IMovable) obj).move( timeElapsed ); // move items if paused
  			   }
+ 			 }
  		 }
  		 gw.setTime(gw.getTime()+1);
  		 gw.notifyObservers();
@@ -118,4 +126,30 @@ public class runsimulation extends JFrame implements ActionListener {
 		
 		return bar;
 	}
+	public class StopCommand extends AbstractAction { // pause command
+ 		
+ 		public StopCommand()
+ 		{
+ 			super("Pause");
+ 		}
+ 		public void actionPerformed(ActionEvent e)
+ 		{
+ 			if (gw.getTimerPause() ) // play
+ 			{  
+ 				gw.setPause(true); // set toggle to false
+ 				stopSim.setText("Play") ; // set text
+ 				gw.setTimerToggle(false);
+ 				timer.stop(); // timer stops
+ 				System.out.println("Game is paused" + " and gw.setpause is " + gw.getPause());
+ 			}
+ 			 else // else
+ 			 {   gw.setPause(false);// set toggle to true
+	 			 stopSim.setText("Pause");// set text
+	 			 gw.setTimerToggle(true);
+	 			 timer.restart(); // start timer again
+	 			System.out.println("Play mode" + " and gw.setpause is " + gw.getPause());
+ 			 }
+ 		}
+ 	}
+ 
 }

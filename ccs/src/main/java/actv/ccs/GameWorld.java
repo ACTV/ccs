@@ -10,7 +10,9 @@ public class GameWorld implements IObservable, IGameWorld {
 	private double time = 0;
 	private Cichlid cCichlid;
 	private Plant plantEx;
-	
+	private boolean pauseToggle;
+	private boolean timerToggle;
+
 	
 	public GameWorld()
 	{
@@ -87,5 +89,21 @@ public class GameWorld implements IObservable, IGameWorld {
 	}
 	public void setPlant(Plant p) {
 		this.plantEx = p;
+	}
+	public boolean getPause()
+	{
+		return pauseToggle;
+	}
+	public void setPause(boolean t)
+	{
+		pauseToggle = t;
+	}
+	public boolean getTimerPause()
+	{
+		return timerToggle;
+	}
+	public void setTimerToggle(boolean t)
+	{
+		timerToggle = t;
 	}
 }
