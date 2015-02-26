@@ -1,6 +1,9 @@
 package actv.ccs.model.ui;
 
+import java.awt.*;
+
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.*;
 
 import actv.ccs.model.*;
@@ -26,11 +29,18 @@ public class TestView extends JFrame {
 		
 		controller.updateView(); // starting
 		
-		// update data
-		controller.setFishState(FishState.SWIM);
+		controller.setFishState(FishState.SWIM); // update data
 		
-		controller.updateView();
+		controller.updateView(); // data is updated
 		
+		JPanel dataPanel = new JPanel();
+		dataPanel.setLayout(new GridLayout(2,2));
+		dataPanel.setBorder(new EtchedBorder());
+		this.add(dataPanel, BorderLayout.SOUTH);
+		
+		// output fish data to one side
+		JLabel printData = new JLabel("Data Output");
+		dataPanel.add(printData);
 		
 		this.setVisible(true);
 		
