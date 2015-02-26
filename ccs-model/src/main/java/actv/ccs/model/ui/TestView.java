@@ -38,9 +38,11 @@ public class TestView extends JFrame {
 		dataPanel.setBorder(new EtchedBorder());
 		this.add(dataPanel, BorderLayout.SOUTH);
 		
-		// output fish data to one side
+		// output fish data to one side ... this is good for now.
 		JLabel printData = new JLabel("Data Output");
 		dataPanel.add(printData);
+		String dataOutput = getFromDB().toString();
+		printData.setText(dataOutput);
 		
 		this.setVisible(true);
 		
