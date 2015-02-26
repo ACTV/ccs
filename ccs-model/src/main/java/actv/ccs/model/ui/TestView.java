@@ -13,6 +13,7 @@ public class TestView extends JFrame {
 	
 	private ConvictCichlid cichlid;
 	
+	private JButton pauseButton = new JButton("Pause");
 	
 	public TestView()
 	{
@@ -43,6 +44,10 @@ public class TestView extends JFrame {
 		dataPanel.add(printData);
 		String dataOutput = getFromDB().toString();
 		printData.setText(dataOutput);
+		
+		dataPanel.add(pauseButton);
+		
+		
 		
 		this.setVisible(true);
 		
