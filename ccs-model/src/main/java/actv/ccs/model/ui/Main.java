@@ -3,6 +3,7 @@ package actv.ccs.model.ui;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.*;
 
+
 public class Main {
 
 	// so the model is the Convict Cichlid
@@ -18,24 +19,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		ConvictCichlid cichlid = getFromDB();
-		
-		TestView view = new TestView();
-		
-		TestController testC = new TestController(cichlid, view);
-		
-		testC.updateView();
-		testC.setFishLocation(new float[] {0,1});
-		
-		testC.updateView();
+		TestView testRun = new TestView();
 	}
 	
-	private static ConvictCichlid getFromDB()
-	{
-		ConvictCichlid c = new ConvictCichlid();
-		c.setLocation(new float[] {1,1});
-		c.setState(FishState.NONE);
-		return c;
-	}
 
 }
