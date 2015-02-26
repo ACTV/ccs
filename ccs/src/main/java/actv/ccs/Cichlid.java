@@ -44,17 +44,17 @@ public class Cichlid extends Movable implements IDrawable, IMovable, ICollider {
 			 g2d.transform(myScale);
 			 g2d.transform(myTranslate);
 			 g2d.transform(this.getRotate());
-			 g2d.drawRect(0, 0, 300, 300);
+			 g2d.drawRect(0, 0, 50, 50);
 			 g2d.setTransform(at);
 		 }
 		 
 		public int getWidth()
 		{
-			return 300;
+			return 50;
 		}
 		public int getHeight()
 		{
-			return 300;
+			return 50;
 		}
 		public void move(double time) // time in miliseconds
 		{	
