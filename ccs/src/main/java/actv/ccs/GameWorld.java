@@ -23,23 +23,10 @@ public class GameWorld implements IObservable, IGameWorld {
 	public void spawn()
 	{
 		System.out.println("calling spawn test");
-		spawnCichlid();
-		spawnCichlid();
-		spawnPlant();
+
 	}
 	
-	public void spawnCichlid()
-	{
-		cCichlid = new Cichlid(Math.random()*900, Math.random()*500, 50, 50, 0, 0, 0,
-				(int) (Math.random() * 10), (int) (Math.random() * 360), this);
-		gameObjectList.add(cCichlid);
-		
-	}
-	public void spawnPlant() 
-	{
-		plantEx = new Plant(Math.random()*900, Math.random()*500, 20, 20, 0, 0, 0);
-		gameObjectList.add(plantEx);	
-	}
+
 	public void add(GameObject o) // add object to GameWorld
 	{
 		gameObjectList.add(o);

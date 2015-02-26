@@ -1,5 +1,5 @@
 package actv.ccs;
-
+import actv.ccs.rules.*;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -19,6 +19,7 @@ public class Cichlid extends Movable implements IDrawable, IMovable, ICollider {
 		 myTranslate.translate(x, y);
 		 myScale = new AffineTransform();
 		 myRotate = new AffineTransform();
+		 
 	 }
 	// new AffineTransforms
 		 public void rotate (double degrees)
