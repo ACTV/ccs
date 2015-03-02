@@ -9,7 +9,7 @@ rule "Swim"
 		$cc : ConvictCichlid(state == FishState.SWIM);
 		
 	then
-		modify($cc){
-			setState(FishState.IDLE);
-		}
+		System.out.println("Swam");
+		$cc.setState(FishState.IDLE);
+		update($cc);
 end
