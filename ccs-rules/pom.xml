@@ -34,7 +34,7 @@
     <dependency>
 		<groupId>org.jbpm</groupId>
 		<artifactId>jbpm-bpmn2</artifactId>
-		<version>5.3.1.BRMS</version>
+		<version>5.5.0.Final</version>
 	</dependency>
   </dependencies>
 

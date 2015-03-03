@@ -1,9 +1,0 @@
-<kmodule xmlns="http://jboss.org/kie/6.1.0.Final/kmodule">
-
-  <kbase name="test_kbase" packages="src.main.resources.actv.ccs.rules.*" default="true">
-
-    <ksession name="test_session" type="stateful" default="false"/>
-	
-  </kbase>
-
-</kmodule>
