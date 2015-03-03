@@ -20,7 +20,7 @@ public class SimpleTest extends DroolsTest {
 	public void tester(){
 		ConvictCichlid cc = new ConvictCichlid();
 		cc.setState(FishState.SWIM);
-		ExecutionResults res = execute(cc);
+		execute(cc);
 		System.out.println(cc.getName());
 		Assert.assertEquals(FishState.IDLE, cc.getState());
 	}

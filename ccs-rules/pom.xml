@@ -27,6 +27,12 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+		<groupId>org.drools</groupId>
+		<artifactId>droolsjbpm-tools-distribution</artifactId>
+		<version>5.5.0.Final</version>
+	</dependency>
+	<!-- 
+    <dependency>
     	<groupId>org.drools</groupId>
     	<artifactId>drools-compiler</artifactId>
     	<version>5.5.0.Final</version>
@@ -36,6 +42,12 @@
 		<artifactId>jbpm-bpmn2</artifactId>
 		<version>5.5.0.Final</version>
 	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-core</artifactId>
+		<version>4.1.5.RELEASE</version>
+	</dependency>
+	-->
   </dependencies>
 
 </project>
