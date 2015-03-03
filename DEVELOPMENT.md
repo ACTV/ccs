@@ -24,4 +24,5 @@ Drools Setup:
 References/Resources:
 ---------
 [JBoss Drools 5.5.Final Documentation](http://docs.jboss.org/drools/release/5.5.0.Final/drools-expert-docs/html_single/)  
-[Drools 5.5.Final Knowledge API](http://docs.jboss.org/drools/release/5.5.0.Final/knowledge-api-javadoc/)
+[Drools 5.5.Final Knowledge API](http://docs.jboss.org/drools/release/5.5.0.Final/knowledge-api-javadoc/)  
+[BRMS Rule Flow Component Guide](https://access.redhat.com/documentation/en-US/JBoss_Enterprise_BRMS_Platform/5/html-single/BRMS_Rule_Flow_Component_Guide/index.html#idm9215088)
