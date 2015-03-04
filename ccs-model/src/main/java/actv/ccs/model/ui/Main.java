@@ -19,7 +19,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		NewSimulation newS = new NewSimulation();
+		SaveWindow newSW = new SaveWindow();
+	//	NewSimulation newS = new NewSimulation();
 	//	TestView testRun = new TestView();
 	}
 	
