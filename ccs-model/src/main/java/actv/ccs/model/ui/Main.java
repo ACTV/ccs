@@ -18,9 +18,10 @@ public class Main {
 	 */
 	
 	public static void main(String[] args) {
-		
-		SaveWindow newSW = new SaveWindow();
-	//	NewSimulation newS = new NewSimulation();
+	
+	//	LoadWindow loadWindow = new LoadWindow();
+	//	SaveWindow newSW = new SaveWindow();
+		NewSimulation newS = new NewSimulation();
 	//	TestView testRun = new TestView();
 	}
 	
