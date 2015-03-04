@@ -19,7 +19,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		TestView testRun = new TestView();
+		NewSimulation newS = new NewSimulation();
+	//	TestView testRun = new TestView();
 	}
 	
 
