@@ -19,12 +19,16 @@ public class NewSimulation extends JFrame {
 	private JTextField WidthTextField;
 	private JTextField HeightTextField;
 	private String [] poolOfFish;
+
+/* 3-4-15
+ * need to do a button listener later on etc fish stuff.
+ */
 	
 	public NewSimulation()
 	{
 		
 		cichlid = new ConvictCichlid();
-	//	test = new TestView();
+		test = new TestView();
 		
 		cichlid = getFromDB();
 		
@@ -35,8 +39,8 @@ public class NewSimulation extends JFrame {
 		poolOfFish = new String [] {"Stringer Bell", "Marlo Stanfield", "James McNulty", "The Bunk"};
 		
 		// create menu bar
-	//	JMenuBar b = createJMenu();
-	//	this.setJMenuBar(b);
+		JMenuBar b = createJMenu();
+		this.setJMenuBar(b);
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
 		
@@ -80,52 +84,57 @@ public class NewSimulation extends JFrame {
 		getContentPane().add(lblSizewidthX);
 		
 		NameTextField = new JTextField();
-		NameTextField.setText("Tester");
+		NameTextField.setText("Goddamn Sharks");
 		springLayout.putConstraint(SpringLayout.NORTH, NameTextField, 6, SpringLayout.SOUTH, lblIfNot);
 		springLayout.putConstraint(SpringLayout.WEST, NameTextField, 75, SpringLayout.EAST, lblCichlidName);
 		getContentPane().add(NameTextField);
 		NameTextField.setColumns(10);
 		String cichlidNameT = NameTextField.getText().toString();
 		
-	//	controller.setName(cichlidNameT);
+		System.out.println(cichlidNameT);
+		
+		controller.setName(cichlidNameT);
 
 		
 		WeightTextField = new JTextField();
-		WeightTextField.setText("10.0");
+		WeightTextField.setText("150.0");
 		springLayout.putConstraint(SpringLayout.NORTH, WeightTextField, 0, SpringLayout.NORTH, lblWeightkg);
 		springLayout.putConstraint(SpringLayout.WEST, WeightTextField, 0, SpringLayout.WEST, NameTextField);
 		getContentPane().add(WeightTextField);
 		WeightTextField.setColumns(10);
 		String weightS = WeightTextField.getText().toString();
-//		float weightC = Float.parseFloat(weightS);
+		float weightC = Float.parseFloat(weightS);
+		System.out.println(weightC);
 		
-	//	controller.setWeight(weightC);	
+		controller.setWeight(weightC);	
 
 		
 		
 		WidthTextField = new JTextField();
-		WidthTextField.setText("5.0");
+		WidthTextField.setText("12.0");
 		springLayout.putConstraint(SpringLayout.NORTH, WidthTextField, 0, SpringLayout.NORTH, lblSizewidthX);
 		springLayout.putConstraint(SpringLayout.EAST, WidthTextField, 0, SpringLayout.EAST, NameTextField);
 		getContentPane().add(WidthTextField);
 		WidthTextField.setColumns(10);
 		String widthS = WidthTextField.getText().toString();
-//		float widthC = Float.parseFloat(widthS);
+		float widthC = Float.parseFloat(widthS);
+		System.out.println(widthC);
 		
-//		controller.setLength(widthC);	
+		controller.setLength(widthC);	
 		
 
 		
 		HeightTextField = new JTextField();
-		HeightTextField.setText("5.0");
+		HeightTextField.setText("100.0");
 		springLayout.putConstraint(SpringLayout.NORTH, HeightTextField, 0, SpringLayout.NORTH, WidthTextField);
 		getContentPane().add(HeightTextField);
 		HeightTextField.setColumns(10);
 		
 		String heightS = HeightTextField.getText().toString();
-//		float heightC = Float.parseFloat(heightS);
+		float heightC = Float.parseFloat(heightS);
+		System.out.println(heightC);
 		
-//		controller.setHeight(heightC);	
+		controller.setHeight(heightC);	
 
 		
 		JLabel x = new JLabel("X");
