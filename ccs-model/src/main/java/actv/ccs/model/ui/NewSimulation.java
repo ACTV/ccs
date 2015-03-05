@@ -19,11 +19,15 @@ public class NewSimulation extends JFrame {
 	private SimulationWorld world;
 	private ConvictCichlidController controller;
 	
-	private JButton pauseButton = new JButton("Pause");
 	private JTextField NameTextField;
 	private JTextField WeightTextField;
 	private JTextField WidthTextField;
 	private JTextField HeightTextField;
+	private JTextArea outputData;
+	
+	private int tankFishCount;
+	private int tankPlantCount;
+	
 	private String [] poolOfFish;
 	
 	
@@ -41,9 +45,13 @@ public class NewSimulation extends JFrame {
 	{
 		
 		cichlid = new ConvictCichlid();
-		tank = new TankObject(20, 20, 20, 26, 0, 0);
+		tank = new TankObject(20, 20, 20, 26, 0, 0); // array value default tank
 		world = new SimulationWorld();
 		cichlid = getFromDB();
+		
+		tankFishCount = tank.getCichlidCount();
+		tankPlantCount = tank.getCichlidCount();
+		
 		
 		controller = new ConvictCichlidController(cichlid, world);
 		
@@ -71,7 +79,6 @@ public class NewSimulation extends JFrame {
 		JComboBox comboBox = new JComboBox(poolOfFish);
 		springLayout.putConstraint(SpringLayout.NORTH, comboBox, 0, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, comboBox, 6, SpringLayout.EAST, lblPleasePickA);
-		springLayout.putConstraint(SpringLayout.EAST, comboBox, -642, SpringLayout.EAST, getContentPane());
 		getContentPane().add(comboBox);
 		
 		// find a way to get the database merger here
@@ -113,8 +120,8 @@ public class NewSimulation extends JFrame {
 					WidthTextField.setEditable(false);
 					HeightTextField.setEditable(false);
 					
-					
 					controller.updateView();					
+					
 				}
 				else if (selectedFish.equals("Marlo Stanfield"))
 				{
@@ -256,9 +263,6 @@ public class NewSimulation extends JFrame {
 		NameTextField.setColumns(10);
 		final String cichlidNameT = NameTextField.getText().toString();
 		
-	//	controller.setName(cichlidNameT);
-
-		
 		WeightTextField = new JTextField();
 		WeightTextField.setText("150.0");
 		springLayout.putConstraint(SpringLayout.NORTH, WeightTextField, 0, SpringLayout.NORTH, lblWeightkg);
@@ -267,9 +271,6 @@ public class NewSimulation extends JFrame {
 		WeightTextField.setColumns(10);
 		String weightS = WeightTextField.getText().toString();
 		final float weightC = Float.parseFloat(weightS);
-	//	System.out.println(weightC);
-		
-	//	controller.setWeight(weightC);	
 		
 		WidthTextField = new JTextField();
 		WidthTextField.setText("12.0");
@@ -279,9 +280,6 @@ public class NewSimulation extends JFrame {
 		WidthTextField.setColumns(10);
 		String widthS = WidthTextField.getText().toString();
 		final float widthC = Float.parseFloat(widthS);
-	//	System.out.println(widthC);
-		
-	//	controller.setLength(widthC);			
 		
 		HeightTextField = new JTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, HeightTextField, 0, SpringLayout.NORTH, WidthTextField);
@@ -291,13 +289,9 @@ public class NewSimulation extends JFrame {
 		
 		String heightS = HeightTextField.getText().toString();
 		final float heightC = Float.parseFloat(heightS);
-	//	System.out.println(heightC);
-		
-	//	controller.setHeight(heightC);	
 		
 		JLabel x = new JLabel("X");
 		springLayout.putConstraint(SpringLayout.NORTH, x, 79, SpringLayout.SOUTH, comboBox);
-		springLayout.putConstraint(SpringLayout.SOUTH, x, -412, SpringLayout.SOUTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, HeightTextField, 38, SpringLayout.EAST, x);
 		springLayout.putConstraint(SpringLayout.WEST, x, 6, SpringLayout.EAST, WidthTextField);
 		springLayout.putConstraint(SpringLayout.EAST, x, -734, SpringLayout.EAST, getContentPane());
@@ -327,18 +321,24 @@ public class NewSimulation extends JFrame {
 			float heightC = Float.parseFloat(heightS);
 			controller.setHeight(heightC);	
 			
+			
 			controller.updateView();
+			tank.setCichlidCount(tankFishCount++);
+			System.out.println("added " + tank.getCichlidCount());
+
 			}
 		});
 		
 		
-		JTextArea outputData = new JTextArea();
+		outputData = new JTextArea();
+		springLayout.putConstraint(SpringLayout.EAST, comboBox, 0, SpringLayout.EAST, outputData);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnGenerateFish, -31, SpringLayout.NORTH, outputData);
 		springLayout.putConstraint(SpringLayout.NORTH, outputData, 288, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, outputData, 51, SpringLayout.WEST, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, outputData, -84, SpringLayout.SOUTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, outputData, -587, SpringLayout.EAST, getContentPane());
 		getContentPane().add(outputData);
+		outputData.setEditable(false);
 		
 		JLabel lblTestingoutputData = new JLabel("testingOutput Data");
 		springLayout.putConstraint(SpringLayout.SOUTH, lblTestingoutputData, -17, SpringLayout.NORTH, outputData);
@@ -346,7 +346,8 @@ public class NewSimulation extends JFrame {
 		getContentPane().add(lblTestingoutputData);
 		
 		JSlider waterTemperatureSlider = new JSlider();
-		springLayout.putConstraint(SpringLayout.NORTH, waterTemperatureSlider, 6, SpringLayout.SOUTH, x);
+		springLayout.putConstraint(SpringLayout.NORTH, waterTemperatureSlider, 134, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, x, -6, SpringLayout.NORTH, waterTemperatureSlider);
 		springLayout.putConstraint(SpringLayout.EAST, waterTemperatureSlider, 0, SpringLayout.EAST, HeightTextField);
 		getContentPane().add(waterTemperatureSlider);
 		waterTemperatureSlider.addChangeListener(new ChangeListener()
@@ -371,9 +372,8 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.NORTH, lblWaterTemperaturecelsius, 27, SpringLayout.SOUTH, lblSizewidthX);
 		springLayout.putConstraint(SpringLayout.WEST, lblWaterTemperaturecelsius, 10, SpringLayout.WEST, getContentPane());
 		getContentPane().add(lblWaterTemperaturecelsius);
-		
-		
-		
+			
+	
 		this.setVisible(true);
 		
 	}
