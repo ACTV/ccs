@@ -68,7 +68,7 @@ public class NewSimulation extends JFrame {
 		JComboBox comboBox = new JComboBox(poolOfFish);
 		springLayout.putConstraint(SpringLayout.NORTH, comboBox, 0, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, comboBox, 6, SpringLayout.EAST, lblPleasePickA);
-		springLayout.putConstraint(SpringLayout.EAST, comboBox, 70, SpringLayout.EAST, lblPleasePickA);
+		springLayout.putConstraint(SpringLayout.EAST, comboBox, -642, SpringLayout.EAST, getContentPane());
 		getContentPane().add(comboBox);
 		
 		// then it would put in the values for the fish and make the fields unchangeable for the time being. later on, will do ... do you want to add more?
@@ -129,8 +129,8 @@ public class NewSimulation extends JFrame {
 	//	controller.setLength(widthC);			
 		
 		HeightTextField = new JTextField();
-		HeightTextField.setText("100.0");
 		springLayout.putConstraint(SpringLayout.NORTH, HeightTextField, 0, SpringLayout.NORTH, WidthTextField);
+		HeightTextField.setText("100.0");
 		getContentPane().add(HeightTextField);
 		HeightTextField.setColumns(10);
 		
@@ -141,10 +141,9 @@ public class NewSimulation extends JFrame {
 	//	controller.setHeight(heightC);	
 		
 		JLabel x = new JLabel("X");
-		springLayout.putConstraint(SpringLayout.WEST, HeightTextField, 6, SpringLayout.EAST, x);
+		springLayout.putConstraint(SpringLayout.WEST, HeightTextField, 38, SpringLayout.EAST, x);
 		springLayout.putConstraint(SpringLayout.NORTH, x, 79, SpringLayout.SOUTH, comboBox);
 		springLayout.putConstraint(SpringLayout.WEST, x, 6, SpringLayout.EAST, WidthTextField);
-		springLayout.putConstraint(SpringLayout.SOUTH, x, 0, SpringLayout.SOUTH, lblSizewidthX);
 		springLayout.putConstraint(SpringLayout.EAST, x, -734, SpringLayout.EAST, getContentPane());
 		getContentPane().add(x);
 		
@@ -154,18 +153,27 @@ public class NewSimulation extends JFrame {
 		getContentPane().add(lblAddInGender);
 		
 		JButton btnGenerateFish = new JButton("Generate Fish");
+		springLayout.putConstraint(SpringLayout.SOUTH, x, -33, SpringLayout.NORTH, btnGenerateFish);
 		springLayout.putConstraint(SpringLayout.NORTH, btnGenerateFish, 0, SpringLayout.NORTH, lblAddInGender);
 		springLayout.putConstraint(SpringLayout.WEST, btnGenerateFish, 0, SpringLayout.WEST, NameTextField);
 		getContentPane().add(btnGenerateFish);
-		btnGenerateFish.addActionListener(new ActionListener()
-		{
+		btnGenerateFish.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e)
 			{
-				controller.setName(cichlidNameT);
-				controller.setWeight(weightC);	
-				controller.setLength(widthC);
-				controller.setHeight(heightC);
-				controller.updateView();
+			String cichlidNameT = NameTextField.getText().toString();
+			controller.setName(cichlidNameT);
+			String weightS = WeightTextField.getText().toString();
+			float weightC = Float.parseFloat(weightS);
+			controller.setWeight(weightC);
+			String widthS = WidthTextField.getText().toString();
+			float widthC = Float.parseFloat(widthS);
+			controller.setLength(widthC);
+			String heightS = HeightTextField.getText().toString();
+			float heightC = Float.parseFloat(heightS);
+			controller.setHeight(heightC);	
+			
+			controller.updateView();
 			}
 		});
 		
