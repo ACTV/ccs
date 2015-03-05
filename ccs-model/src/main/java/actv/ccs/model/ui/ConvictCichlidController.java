@@ -3,15 +3,15 @@ package actv.ccs.model.ui;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 
-public class TestController {
+public class ConvictCichlidController {
 	
 	private ConvictCichlid cichlid;
-	private TestView view;
+	private SimulationWorld world;
 	
-	public TestController(ConvictCichlid c, TestView v)
+	public ConvictCichlidController(ConvictCichlid c, SimulationWorld v)
 	{
 		this.cichlid = c;
-		this.view = v;
+		this.world = v;
 	}
 	
 	public void setFishState(FishState s)
@@ -74,7 +74,7 @@ public class TestController {
 	
 	public void updateView()
 	{
-		view.printData(cichlid.getState(), cichlid.getLocation(), cichlid.getAggro(), cichlid.getLength(), cichlid.getHeight(), cichlid.getWeight(), cichlid.getName());
+		world.printData(cichlid.getState(), cichlid.getLocation(), cichlid.getAggro(), cichlid.getLength(), cichlid.getHeight(), cichlid.getWeight(), cichlid.getName());
 	}
 	
 }

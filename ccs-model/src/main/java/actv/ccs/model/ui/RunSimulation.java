@@ -1,33 +1,52 @@
 package actv.ccs.model.ui;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JTextPane;
 import javax.swing.border.EtchedBorder;
-import javax.swing.event.*;
 
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
 
-public class TestView extends JFrame {
+public class RunSimulation extends JFrame {
 	
 	private ConvictCichlid cichlid;
+	private TankObject tank;
+	private SimulationWorld world;
+	private TankView tV;
 	
 	private JButton pauseButton = new JButton("Pause");
 	
-	public TestView()
+	public RunSimulation()
 	{
 		setTitle("Convict Cichlid Fish Simulator Test 1");
 		setSize(1000,600);
+		
+		
+		world = new SimulationWorld();
+		tV = new TankView(world);
+		
 		
 		// create menu bar
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
 		
-		cichlid = getFromDB();
 		
-		TestController controller = new TestController(cichlid, this);
+		// center panel for map
+		tV.setBorder(new EtchedBorder());
+		tV.setBackground(Color.orange);
+		this.add(tV, BorderLayout.CENTER);
 		
+		// Bottom Panel for Data Output
 		JPanel dataPanel = new JPanel();
 		dataPanel.setLayout(new GridLayout(2,2));
 		dataPanel.setBorder(new EtchedBorder());
@@ -39,8 +58,6 @@ public class TestView extends JFrame {
 		// output fish data to one side ... this is good for now.
 		JLabel printData = new JLabel("Data Output");
 		dataPanel.add(printData);
-		String dataOutput = getFromDB().toString();
-		printData.setText(dataOutput);
 		
 		dataPanel.add(pauseButton);
 		
@@ -49,29 +66,8 @@ public class TestView extends JFrame {
 		this.setVisible(true);
 		
 	}
-	
-	public void printData(FishState state, float[] location, float aggroLevel, float length, float height, float weight, String name){
-		System.out.println("FishState is " + state);
-		System.out.println("Fish location is " + location);
-		System.out.println("Fish aggro is " + aggroLevel);
-		System.out.println("Fish length is " + length);
-		System.out.println("Fish height is " + height);
-		System.out.println("Fish weight is " + weight);
-		System.out.println("Fish name is " + name);
-		
-	}
-	private static ConvictCichlid getFromDB()
-	{
-		ConvictCichlid c = new ConvictCichlid();
-		c.setLocation(new float[] {1,1});
-		c.setState(FishState.NONE);
-		c.setLength(10);
-		c.setHeight(5);
-		c.setWeight(10);
-		c.setName("Shark");
-		return c;
-	}
-	
+
+
 	private JMenuBar createJMenu() { 
 		// creating menubar
 		JMenuBar bar = new JMenuBar();

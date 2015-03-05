@@ -13,8 +13,8 @@ import actv.ccs.model.type.FishState;
 public class NewSimulation extends JFrame {
 	
 	private ConvictCichlid cichlid;
-	private TestView test;
-	private TestController controller;
+	private SimulationWorld world;
+	private ConvictCichlidController controller;
 	
 	private JButton pauseButton = new JButton("Pause");
 	private JTextField NameTextField;
@@ -38,11 +38,10 @@ public class NewSimulation extends JFrame {
 	{
 		
 		cichlid = new ConvictCichlid();
-		test = new TestView();
-		
+		world = new SimulationWorld();
 		cichlid = getFromDB();
 		
-		controller = new TestController(cichlid, test);
+		controller = new ConvictCichlidController(cichlid, world);
 		
 		setTitle("Convict Cichlid Fish Simulator New Simulation Test");
 		setSize(1000,600);

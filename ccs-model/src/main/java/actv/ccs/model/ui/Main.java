@@ -22,7 +22,7 @@ public class Main {
 	//	LoadWindow loadWindow = new LoadWindow();
 	//	SaveWindow newSW = new SaveWindow();
 	//	NewSimulation newS = new NewSimulation();
-		TestView testRun = new TestView();
+		RunSimulation testRun = new RunSimulation();
 	}
 	
 
