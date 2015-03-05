@@ -45,7 +45,7 @@ public class NewSimulation extends JFrame {
 		
 		setTitle("Convict Cichlid Fish Simulator New Simulation Test");
 		setSize(1000,600);
-		poolOfFish = new String [] {"Stringer Bell", "Marlo Stanfield", "James McNulty", "The Bunk"};
+		poolOfFish = new String [] {"addyourownfish", "Stringer Bell", "Marlo Stanfield", "James McNulty", "The Bunk"};
 		
 		// create menu bar
 		JMenuBar b = createJMenu();
@@ -70,7 +70,159 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.EAST, comboBox, -642, SpringLayout.EAST, getContentPane());
 		getContentPane().add(comboBox);
 		
+		// find a way to get the database merger here
+		
+		
 		// then it would put in the values for the fish and make the fields unchangeable for the time being. later on, will do ... do you want to add more?
+		comboBox.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					// show fish values
+				JComboBox<String> combo = (JComboBox<String>) e.getSource();
+				String selectedFish = (String) combo.getSelectedItem();
+				
+				if (selectedFish.equals("Stringer Bell"))
+				{
+					NameTextField.setText("Stringer Bell");
+					String cichlidNameT = NameTextField.getText().toString();
+					controller.setName(cichlidNameT);
+					
+					
+					WeightTextField.setText("10.0");
+					String weightS = WeightTextField.getText().toString();
+					float weightC = Float.parseFloat(weightS);
+					controller.setWeight(weightC);
+					
+					WidthTextField.setText("1.0");
+					String widthS = WidthTextField.getText().toString();
+					float widthC = Float.parseFloat(widthS);
+					controller.setLength(widthC);
+					
+					HeightTextField.setText("3.0");
+					String heightS = HeightTextField.getText().toString();
+					float heightC = Float.parseFloat(heightS);
+					controller.setHeight(heightC);	
+					
+					NameTextField.setEditable(false);
+					WeightTextField.setEditable(false);
+					WidthTextField.setEditable(false);
+					HeightTextField.setEditable(false);
+					
+					
+					controller.updateView();					
+				}
+				else if (selectedFish.equals("Marlo Stanfield"))
+				{
+					NameTextField.setText("Marlo Stanfield");
+					String cichlidNameT = NameTextField.getText().toString();
+					controller.setName(cichlidNameT);
+					
+					
+					WeightTextField.setText("100.0");
+					String weightS = WeightTextField.getText().toString();
+					float weightC = Float.parseFloat(weightS);
+					controller.setWeight(weightC);
+					
+					WidthTextField.setText("10.0");
+					String widthS = WidthTextField.getText().toString();
+					float widthC = Float.parseFloat(widthS);
+					controller.setLength(widthC);
+					
+					HeightTextField.setText("30.0");
+					String heightS = HeightTextField.getText().toString();
+					float heightC = Float.parseFloat(heightS);
+					controller.setHeight(heightC);
+					
+					NameTextField.setEditable(false);
+					WeightTextField.setEditable(false);
+					WidthTextField.setEditable(false);
+					HeightTextField.setEditable(false);
+					
+					
+					controller.updateView();					
+					
+				}
+				else if (selectedFish.equals("James McNulty"))
+				{
+					NameTextField.setText("James McNulty");
+					String cichlidNameT = NameTextField.getText().toString();
+					controller.setName(cichlidNameT);
+					
+					
+					WeightTextField.setText("101.0");
+					String weightS = WeightTextField.getText().toString();
+					float weightC = Float.parseFloat(weightS);
+					controller.setWeight(weightC);
+					
+					WidthTextField.setText("11.0");
+					String widthS = WidthTextField.getText().toString();
+					float widthC = Float.parseFloat(widthS);
+					controller.setLength(widthC);
+					
+					HeightTextField.setText("31.0");
+					String heightS = HeightTextField.getText().toString();
+					float heightC = Float.parseFloat(heightS);
+					controller.setHeight(heightC);
+					
+					NameTextField.setEditable(false);
+					WeightTextField.setEditable(false);
+					WidthTextField.setEditable(false);
+					HeightTextField.setEditable(false);
+					
+					
+					controller.updateView();					
+				
+				}
+				else if (selectedFish.equals("The Bunk"))
+				{
+					NameTextField.setText("The Bunk");
+					String cichlidNameT = NameTextField.getText().toString();
+					controller.setName(cichlidNameT);
+					
+					
+					WeightTextField.setText("102.0");
+					String weightS = WeightTextField.getText().toString();
+					float weightC = Float.parseFloat(weightS);
+					controller.setWeight(weightC);
+					
+					WidthTextField.setText("12.0");
+					String widthS = WidthTextField.getText().toString();
+					float widthC = Float.parseFloat(widthS);
+					controller.setLength(widthC);
+					
+					HeightTextField.setText("32.0");
+					String heightS = HeightTextField.getText().toString();
+					float heightC = Float.parseFloat(heightS);
+					controller.setHeight(heightC);
+					
+					NameTextField.setEditable(false);
+					WeightTextField.setEditable(false);
+					WidthTextField.setEditable(false);
+					HeightTextField.setEditable(false);
+					
+					
+					controller.updateView();					
+				
+				}
+				else if (selectedFish.equals("addyourownfish"))
+				{
+					NameTextField.setEditable(true);
+					WeightTextField.setEditable(true);
+					WidthTextField.setEditable(true);
+					HeightTextField.setEditable(true);
+					
+					
+					System.out.println("do nothing");
+				}
+				
+			}
+		});
+	
+		
+		
+		
+		
 		
 		JLabel lblIfNot = new JLabel("if not ... we can make a cichlid now!");
 		springLayout.putConstraint(SpringLayout.NORTH, lblIfNot, 23, SpringLayout.SOUTH, lblPleasePickA);

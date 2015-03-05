@@ -21,8 +21,8 @@ public class Main {
 	
 	//	LoadWindow loadWindow = new LoadWindow();
 	//	SaveWindow newSW = new SaveWindow();
-	//	NewSimulation newS = new NewSimulation();
-		RunSimulation testRun = new RunSimulation();
+		NewSimulation newS = new NewSimulation();
+	//	RunSimulation testRun = new RunSimulation();
 	}
 	
 
