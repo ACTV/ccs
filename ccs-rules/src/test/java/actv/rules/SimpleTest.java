@@ -2,7 +2,6 @@ package actv.rules;
 
 import junit.framework.Assert;
 
-import org.drools.runtime.ExecutionResults;
 import org.junit.Test;
 
 import actv.ccs.model.ConvictCichlid;
@@ -21,7 +20,6 @@ public class SimpleTest extends DroolsTest {
 		ConvictCichlid cc = new ConvictCichlid();
 		cc.setState(FishState.SWIM);
 		execute(cc);
-		System.out.println(cc.getName());
-		Assert.assertEquals(FishState.IDLE, cc.getState());
+		Assert.assertEquals(FishState.IDLE.toString(), cc.getState().toString());
 	}
 }
