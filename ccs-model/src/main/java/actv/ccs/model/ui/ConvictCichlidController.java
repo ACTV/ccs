@@ -71,10 +71,18 @@ public class ConvictCichlidController {
 	{
 		cichlid.setName(s);
 	}
+	public int getID()
+	{
+		return cichlid.getID();
+	}
+	public void setID(int i)
+	{
+		cichlid.setID(i);
+	}
 	
 	public void updateView()
 	{
-		world.printData(cichlid.getState(), cichlid.getLocation(), cichlid.getAggro(), cichlid.getLength(), cichlid.getHeight(), cichlid.getWeight(), cichlid.getName());
+		world.printData(cichlid.getState(), cichlid.getLocation(), cichlid.getAggro(), cichlid.getLength(), cichlid.getHeight(), cichlid.getWeight(), cichlid.getName(), cichlid.getID());
 	}
 	
 }

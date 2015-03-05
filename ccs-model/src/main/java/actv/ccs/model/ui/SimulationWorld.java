@@ -19,7 +19,7 @@ public class SimulationWorld {
 		
 	}
 	
-	public void printData(FishState state, float[] location, float aggroLevel, float length, float height, float weight, String name){
+	public void printData(FishState state, float[] location, float aggroLevel, float length, float height, float weight, String name, int id){
 		System.out.println("FishState is " + state);
 		System.out.println("Fish location is " + location);
 		System.out.println("Fish aggro is " + aggroLevel);
@@ -27,7 +27,7 @@ public class SimulationWorld {
 		System.out.println("Fish height is " + height);
 		System.out.println("Fish weight is " + weight);
 		System.out.println("Fish name is " + name);
-		
+		System.out.println("Fish ID is " + id);
 	}
 	private static ConvictCichlid getFromDB()
 	{
@@ -38,6 +38,7 @@ public class SimulationWorld {
 		c.setHeight(5);
 		c.setWeight(10);
 		c.setName("Shark");
+		c.setID(0);
 		return c;
 	}
 

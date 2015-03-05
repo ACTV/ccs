@@ -27,7 +27,7 @@ public class NewSimulation extends JFrame {
 	
 	private int tankFishCount;
 	private int tankPlantCount;
-	
+	private int fishID = 0;
 	private String [] poolOfFish;
 	private String cichlidNameA;
 	private String cichlidNameB;
@@ -193,7 +193,6 @@ public class NewSimulation extends JFrame {
 					String cichlidNameT = NameTextField.getText().toString();
 					controller.setName(cichlidNameT);
 					
-					
 					WeightTextField.setText("102.0");
 					String weightS = WeightTextField.getText().toString();
 					float weightC = Float.parseFloat(weightS);
@@ -214,7 +213,6 @@ public class NewSimulation extends JFrame {
 					WidthTextField.setEditable(false);
 					HeightTextField.setEditable(false);
 					
-					
 					controller.updateView();					
 				
 				}
@@ -225,17 +223,11 @@ public class NewSimulation extends JFrame {
 					WidthTextField.setEditable(true);
 					HeightTextField.setEditable(true);
 					
-					
 					System.out.println("do nothing");
 				}
 				
 			}
 		});
-	
-		
-		
-		
-		
 		
 		JLabel lblIfNot = new JLabel("if not ... we can make a cichlid now!");
 		springLayout.putConstraint(SpringLayout.NORTH, lblIfNot, 23, SpringLayout.SOUTH, lblPleasePickA);
@@ -311,6 +303,9 @@ public class NewSimulation extends JFrame {
 			
 			public void actionPerformed(ActionEvent e)
 			{
+		
+			fishID++;	
+			controller.setID(fishID);	
 			String cichlidNameT = NameTextField.getText().toString();
 			controller.setName(cichlidNameT);
 			String weightS = WeightTextField.getText().toString();
@@ -322,11 +317,14 @@ public class NewSimulation extends JFrame {
 			String heightS = HeightTextField.getText().toString();
 			float heightC = Float.parseFloat(heightS);
 			controller.setHeight(heightC);	
+		
 			
+		
 			cichlidNameB = controller.getName();
 			
 			controller.updateView();
 			tank.setCichlidCount(tankFishCount++);
+		
 			int tankOutputCichlidTA = tank.getCichlidCount()+1;
 			String outputToTextArea = ("added " + cichlidNameB + " to the tank, therefore there are " + tankOutputCichlidTA +
 					" convict cichlids in the tank.");
@@ -406,6 +404,7 @@ public class NewSimulation extends JFrame {
 		c.setHeight(5);
 		c.setWeight(10);
 		c.setName("Shark");
+		c.setID(0);
 		return c;
 	}
 	

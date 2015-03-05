@@ -10,6 +10,8 @@ public class ConvictCichlid extends Object{
 	private float height;
 	private float weight;
 	private String name;
+	private int cichlidID;
+	
 	
 	public ConvictCichlid(){
 		super();
@@ -71,6 +73,14 @@ public class ConvictCichlid extends Object{
 	public void setName(String s)
 	{
 		this.name = s;
+	}
+	public int getID()
+	{
+		return cichlidID;
+	}
+	public void setID(int id)
+	{
+		this.cichlidID = id;
 	}
 	
 }
