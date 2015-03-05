@@ -29,7 +29,8 @@ public class NewSimulation extends JFrame {
 	private int tankPlantCount;
 	
 	private String [] poolOfFish;
-	
+	private String cichlidNameA;
+	private String cichlidNameB;
 	
 
 /* updates are from latest to oldest (top to bottom)
@@ -261,7 +262,7 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.WEST, NameTextField, 75, SpringLayout.EAST, lblCichlidName);
 		getContentPane().add(NameTextField);
 		NameTextField.setColumns(10);
-		final String cichlidNameT = NameTextField.getText().toString();
+		cichlidNameA = NameTextField.getText().toString();
 		
 		WeightTextField = new JTextField();
 		WeightTextField.setText("150.0");
@@ -321,10 +322,13 @@ public class NewSimulation extends JFrame {
 			float heightC = Float.parseFloat(heightS);
 			controller.setHeight(heightC);	
 			
+			cichlidNameB = controller.getName();
 			
 			controller.updateView();
 			tank.setCichlidCount(tankFishCount++);
-			System.out.println("added " + tank.getCichlidCount());
+			int tankOutputCichlidTA = tank.getCichlidCount()+1;
+			System.out.println("added " + cichlidNameB + " to the tank, therefore there are " + tankOutputCichlidTA +
+					" convict cichlids in the tank.");
 
 			}
 		});
