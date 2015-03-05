@@ -141,20 +141,19 @@ public class NewSimulation extends JFrame {
 	//	controller.setHeight(heightC);	
 		
 		JLabel x = new JLabel("X");
-		springLayout.putConstraint(SpringLayout.WEST, HeightTextField, 38, SpringLayout.EAST, x);
 		springLayout.putConstraint(SpringLayout.NORTH, x, 79, SpringLayout.SOUTH, comboBox);
+		springLayout.putConstraint(SpringLayout.SOUTH, x, -412, SpringLayout.SOUTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, HeightTextField, 38, SpringLayout.EAST, x);
 		springLayout.putConstraint(SpringLayout.WEST, x, 6, SpringLayout.EAST, WidthTextField);
 		springLayout.putConstraint(SpringLayout.EAST, x, -734, SpringLayout.EAST, getContentPane());
 		getContentPane().add(x);
 		
 		JLabel lblAddInGender = new JLabel("add in gender, age later on.");
-		springLayout.putConstraint(SpringLayout.NORTH, lblAddInGender, 33, SpringLayout.SOUTH, lblSizewidthX);
-		springLayout.putConstraint(SpringLayout.WEST, lblAddInGender, 0, SpringLayout.WEST, lblPleasePickA);
+		springLayout.putConstraint(SpringLayout.EAST, lblAddInGender, 0, SpringLayout.EAST, lblSizewidthX);
 		getContentPane().add(lblAddInGender);
 		
 		JButton btnGenerateFish = new JButton("Generate Fish");
-		springLayout.putConstraint(SpringLayout.SOUTH, x, -33, SpringLayout.NORTH, btnGenerateFish);
-		springLayout.putConstraint(SpringLayout.NORTH, btnGenerateFish, 0, SpringLayout.NORTH, lblAddInGender);
+		springLayout.putConstraint(SpringLayout.NORTH, lblAddInGender, 0, SpringLayout.NORTH, btnGenerateFish);
 		springLayout.putConstraint(SpringLayout.WEST, btnGenerateFish, 0, SpringLayout.WEST, NameTextField);
 		getContentPane().add(btnGenerateFish);
 		btnGenerateFish.addActionListener(new ActionListener() {
@@ -179,16 +178,27 @@ public class NewSimulation extends JFrame {
 		
 		
 		JTextArea outputData = new JTextArea();
-		springLayout.putConstraint(SpringLayout.NORTH, outputData, 71, SpringLayout.SOUTH, btnGenerateFish);
-		springLayout.putConstraint(SpringLayout.WEST, outputData, 53, SpringLayout.WEST, getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, outputData, 239, SpringLayout.SOUTH, btnGenerateFish);
-		springLayout.putConstraint(SpringLayout.EAST, outputData, 399, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, btnGenerateFish, -31, SpringLayout.NORTH, outputData);
+		springLayout.putConstraint(SpringLayout.NORTH, outputData, 288, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, outputData, 51, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, outputData, -84, SpringLayout.SOUTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, outputData, -587, SpringLayout.EAST, getContentPane());
 		getContentPane().add(outputData);
 		
 		JLabel lblTestingoutputData = new JLabel("testingOutput Data");
-		springLayout.putConstraint(SpringLayout.WEST, lblTestingoutputData, 51, SpringLayout.WEST, getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, lblTestingoutputData, -20, SpringLayout.NORTH, outputData);
+		springLayout.putConstraint(SpringLayout.SOUTH, lblTestingoutputData, -17, SpringLayout.NORTH, outputData);
+		springLayout.putConstraint(SpringLayout.EAST, lblTestingoutputData, 0, SpringLayout.EAST, lblSizewidthX);
 		getContentPane().add(lblTestingoutputData);
+		
+		JSlider waterTemperatureSlider = new JSlider();
+		springLayout.putConstraint(SpringLayout.NORTH, waterTemperatureSlider, 6, SpringLayout.SOUTH, x);
+		springLayout.putConstraint(SpringLayout.EAST, waterTemperatureSlider, 0, SpringLayout.EAST, HeightTextField);
+		getContentPane().add(waterTemperatureSlider);
+		
+		JLabel lblWaterTemperaturecelsius = new JLabel("Water Temperature (Celsius)");
+		springLayout.putConstraint(SpringLayout.NORTH, lblWaterTemperaturecelsius, 27, SpringLayout.SOUTH, lblSizewidthX);
+		springLayout.putConstraint(SpringLayout.WEST, lblWaterTemperaturecelsius, 10, SpringLayout.WEST, getContentPane());
+		getContentPane().add(lblWaterTemperaturecelsius);
 		
 	//	controller.updateView(); // data is updated
 		

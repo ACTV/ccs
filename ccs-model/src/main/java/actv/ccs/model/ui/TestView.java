@@ -28,16 +28,13 @@ public class TestView extends JFrame {
 		
 		TestController controller = new TestController(cichlid, this);
 		
-		controller.updateView(); // starting
-		
-		controller.setFishState(FishState.SWIM); // update data
-		
-		controller.updateView(); // data is updated
-		
 		JPanel dataPanel = new JPanel();
 		dataPanel.setLayout(new GridLayout(2,2));
 		dataPanel.setBorder(new EtchedBorder());
-		this.add(dataPanel, BorderLayout.SOUTH);
+		getContentPane().add(dataPanel, BorderLayout.SOUTH);
+		
+		JTextPane outputDataHere = new JTextPane();
+		dataPanel.add(outputDataHere);
 		
 		// output fish data to one side ... this is good for now.
 		JLabel printData = new JLabel("Data Output");
