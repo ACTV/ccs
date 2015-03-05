@@ -1,5 +1,7 @@
 package actv.ccs.model.ui;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -12,6 +14,7 @@ public class NewSimulation extends JFrame {
 	
 	private ConvictCichlid cichlid;
 	private TestView test;
+	private TestController controller;
 	
 	private JButton pauseButton = new JButton("Pause");
 	private JTextField NameTextField;
@@ -19,8 +22,15 @@ public class NewSimulation extends JFrame {
 	private JTextField WidthTextField;
 	private JTextField HeightTextField;
 	private String [] poolOfFish;
+	
+	
 
-/* 3-4-15
+/* updates are from latest to oldest (top to bottom)
+ * 
+ * 3-4-15
+ * form is done. just need to make checks and flags and resize the width by height window
+ * 
+ * 3-4-15
  * need to do a button listener later on etc fish stuff.
  */
 	
@@ -32,7 +42,7 @@ public class NewSimulation extends JFrame {
 		
 		cichlid = getFromDB();
 		
-		TestController controller = new TestController(cichlid, test);
+		controller = new TestController(cichlid, test);
 		
 		setTitle("Convict Cichlid Fish Simulator New Simulation Test");
 		setSize(1000,600);
@@ -89,11 +99,9 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.WEST, NameTextField, 75, SpringLayout.EAST, lblCichlidName);
 		getContentPane().add(NameTextField);
 		NameTextField.setColumns(10);
-		String cichlidNameT = NameTextField.getText().toString();
+		final String cichlidNameT = NameTextField.getText().toString();
 		
-		System.out.println(cichlidNameT);
-		
-		controller.setName(cichlidNameT);
+	//	controller.setName(cichlidNameT);
 
 		
 		WeightTextField = new JTextField();
@@ -103,12 +111,10 @@ public class NewSimulation extends JFrame {
 		getContentPane().add(WeightTextField);
 		WeightTextField.setColumns(10);
 		String weightS = WeightTextField.getText().toString();
-		float weightC = Float.parseFloat(weightS);
-		System.out.println(weightC);
+		final float weightC = Float.parseFloat(weightS);
+	//	System.out.println(weightC);
 		
-		controller.setWeight(weightC);	
-
-		
+	//	controller.setWeight(weightC);	
 		
 		WidthTextField = new JTextField();
 		WidthTextField.setText("12.0");
@@ -117,12 +123,10 @@ public class NewSimulation extends JFrame {
 		getContentPane().add(WidthTextField);
 		WidthTextField.setColumns(10);
 		String widthS = WidthTextField.getText().toString();
-		float widthC = Float.parseFloat(widthS);
-		System.out.println(widthC);
+		final float widthC = Float.parseFloat(widthS);
+	//	System.out.println(widthC);
 		
-		controller.setLength(widthC);	
-		
-
+	//	controller.setLength(widthC);			
 		
 		HeightTextField = new JTextField();
 		HeightTextField.setText("100.0");
@@ -131,11 +135,10 @@ public class NewSimulation extends JFrame {
 		HeightTextField.setColumns(10);
 		
 		String heightS = HeightTextField.getText().toString();
-		float heightC = Float.parseFloat(heightS);
-		System.out.println(heightC);
+		final float heightC = Float.parseFloat(heightS);
+	//	System.out.println(heightC);
 		
-		controller.setHeight(heightC);	
-
+	//	controller.setHeight(heightC);	
 		
 		JLabel x = new JLabel("X");
 		springLayout.putConstraint(SpringLayout.WEST, HeightTextField, 6, SpringLayout.EAST, x);
@@ -154,6 +157,18 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.NORTH, btnGenerateFish, 0, SpringLayout.NORTH, lblAddInGender);
 		springLayout.putConstraint(SpringLayout.WEST, btnGenerateFish, 0, SpringLayout.WEST, NameTextField);
 		getContentPane().add(btnGenerateFish);
+		btnGenerateFish.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				controller.setName(cichlidNameT);
+				controller.setWeight(weightC);	
+				controller.setLength(widthC);
+				controller.setHeight(heightC);
+				controller.updateView();
+			}
+		});
+		
 		
 		JTextArea outputData = new JTextArea();
 		springLayout.putConstraint(SpringLayout.NORTH, outputData, 71, SpringLayout.SOUTH, btnGenerateFish);
@@ -167,7 +182,7 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.SOUTH, lblTestingoutputData, -20, SpringLayout.NORTH, outputData);
 		getContentPane().add(lblTestingoutputData);
 		
-		controller.updateView(); // data is updated
+	//	controller.updateView(); // data is updated
 		
 		
 
@@ -175,6 +190,7 @@ public class NewSimulation extends JFrame {
 		
 	}
 	
+
 	public void printData(FishState state, float[] location, float aggroLevel, float length, float height, float weight, String name){
 		System.out.println("FishState is " + state);
 		System.out.println("Fish location is " + location);
