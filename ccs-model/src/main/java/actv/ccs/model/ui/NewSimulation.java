@@ -9,10 +9,13 @@ import javax.swing.event.*;
 
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
+import actv.ccs.model.TankObject;
+
 
 public class NewSimulation extends JFrame {
 	
 	private ConvictCichlid cichlid;
+	private TankObject tank;
 	private SimulationWorld world;
 	private ConvictCichlidController controller;
 	
@@ -38,6 +41,7 @@ public class NewSimulation extends JFrame {
 	{
 		
 		cichlid = new ConvictCichlid();
+		tank = new TankObject(20, 20, 20, 26, 0, 0);
 		world = new SimulationWorld();
 		cichlid = getFromDB();
 		
@@ -345,16 +349,31 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.NORTH, waterTemperatureSlider, 6, SpringLayout.SOUTH, x);
 		springLayout.putConstraint(SpringLayout.EAST, waterTemperatureSlider, 0, SpringLayout.EAST, HeightTextField);
 		getContentPane().add(waterTemperatureSlider);
+		waterTemperatureSlider.addChangeListener(new ChangeListener()
+		{
+			public void stateChanged(ChangeEvent e)
+			{
+				
+				JSlider slider = (JSlider) e.getSource();
+				float value = slider.getValue();
+				
+				if (!slider.getValueIsAdjusting())
+				{
+					
+					tank.setTankTemperature(value);
+					System.out.println("value: " + value);
+					System.out.println("the value is changing " + tank.getTankTemperature());
+				}
+			}
+		});
 		
 		JLabel lblWaterTemperaturecelsius = new JLabel("Water Temperature (Celsius)");
 		springLayout.putConstraint(SpringLayout.NORTH, lblWaterTemperaturecelsius, 27, SpringLayout.SOUTH, lblSizewidthX);
 		springLayout.putConstraint(SpringLayout.WEST, lblWaterTemperaturecelsius, 10, SpringLayout.WEST, getContentPane());
 		getContentPane().add(lblWaterTemperaturecelsius);
 		
-	//	controller.updateView(); // data is updated
 		
 		
-
 		this.setVisible(true);
 		
 	}
