@@ -15,24 +15,27 @@ import org.drools.runtime.StatelessKnowledgeSession;
 import org.springframework.core.io.ClassPathResource;
 
 
-
+/**
+ * 
+ * Setup for a JUnit test of a rule.
+ *
+ */
 public class DroolsTest{
 	private StatelessKnowledgeSession sks; 
 	private String startProc;
 	
 	public DroolsTest(String drl, String flowFile, String startProc){
-		super();
 		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-		KnowledgeBase kb;
 		
-		kbuilder.add(ResourceFactory.newClassPathResource(drl, getClass()), ResourceType.DRL);
-		try {
+		try{
 			ClassPathResource flow = new ClassPathResource(flowFile);
 			kbuilder.add(ResourceFactory.newUrlResource(flow.getURL()), ResourceType.BPMN2);
-		} catch (IOException e) {
+			kbuilder.add(ResourceFactory.newClassPathResource(drl, getClass()), ResourceType.DRL);
+		}catch(IOException e){
 			e.printStackTrace();
 		}
-		kb = kbuilder.newKnowledgeBase();
+		
+		KnowledgeBase kb = kbuilder.newKnowledgeBase();
 	
 		sks = kb.newStatelessKnowledgeSession();
 		
@@ -41,6 +44,7 @@ public class DroolsTest{
 	
 	public void execute(Object...objects){
 		List<Command<?>> l = new ArrayList<Command<?>>();
+		// Insert objects (and start process) into a list for batch execution
 		for(Object obj : objects)
 			l.add(CommandFactory.newInsert(obj));
 		l.add(CommandFactory.newStartProcess(startProc));
