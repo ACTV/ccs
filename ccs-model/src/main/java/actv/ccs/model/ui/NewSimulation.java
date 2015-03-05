@@ -80,6 +80,7 @@ public class NewSimulation extends JFrame {
 		JComboBox comboBox = new JComboBox(poolOfFish);
 		springLayout.putConstraint(SpringLayout.NORTH, comboBox, 0, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, comboBox, 6, SpringLayout.EAST, lblPleasePickA);
+		springLayout.putConstraint(SpringLayout.EAST, comboBox, -587, SpringLayout.EAST, getContentPane());
 		getContentPane().add(comboBox);
 		
 		// find a way to get the database merger here
@@ -327,20 +328,23 @@ public class NewSimulation extends JFrame {
 			controller.updateView();
 			tank.setCichlidCount(tankFishCount++);
 			int tankOutputCichlidTA = tank.getCichlidCount()+1;
-			System.out.println("added " + cichlidNameB + " to the tank, therefore there are " + tankOutputCichlidTA +
+			String outputToTextArea = ("added " + cichlidNameB + " to the tank, therefore there are " + tankOutputCichlidTA +
 					" convict cichlids in the tank.");
+			
+			outputData.setText(outputToTextArea);
 
 			}
 		});
 		
 		
 		outputData = new JTextArea();
-		springLayout.putConstraint(SpringLayout.EAST, comboBox, 0, SpringLayout.EAST, outputData);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnGenerateFish, -31, SpringLayout.NORTH, outputData);
+		springLayout.putConstraint(SpringLayout.EAST, outputData, 0, SpringLayout.EAST, comboBox);
+		outputData.setWrapStyleWord(true);
+		outputData.setLineWrap(true);
+		springLayout.putConstraint(SpringLayout.SOUTH, outputData, -50, SpringLayout.SOUTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.NORTH, outputData, 288, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, outputData, 51, SpringLayout.WEST, getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, outputData, -84, SpringLayout.SOUTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, outputData, -587, SpringLayout.EAST, getContentPane());
 		getContentPane().add(outputData);
 		outputData.setEditable(false);
 		
