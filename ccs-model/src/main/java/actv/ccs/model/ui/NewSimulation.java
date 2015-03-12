@@ -2,6 +2,7 @@ package actv.ccs.model.ui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.*;
 import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
 
@@ -22,6 +23,9 @@ public class NewSimulation extends JFrame {
 	private TankObject tank;
 	private SimulationWorld world;
 	private ConvictCichlidController controller;
+	private RunSimulation rS;
+	
+	private boolean startSimulation;
 	
 	private JTextField NameTextField;
 	private JTextField WeightTextField;
@@ -39,8 +43,7 @@ public class NewSimulation extends JFrame {
 	private JTextField tankLengthField;
 	private JTextField tankHeightField;
 	
-
-//	private static Logger logger = Logger.getLogger("Log2File");
+	// need to fix logger
 	
 /* updates are from latest to oldest (top to bottom)
  * 
@@ -58,13 +61,10 @@ public class NewSimulation extends JFrame {
 		tank = new TankObject(20, 20, 20, 26, 0, 0); // array value default tank
 		world = new SimulationWorld();
 		cichlid = getFromDB();
+		startSimulation = false;
 		
 		tankFishCount = tank.getCichlidCount();
 		tankPlantCount = tank.getCichlidCount();
-		
-//		FileHandler logFile = new FileHandler("Log2File.txt");
-//		logFile.setFormatter(new SimpleFormatter());
-//		logger.addHandler(logFile);
 		
 		controller = new ConvictCichlidController(cichlid, world);
 		
@@ -421,8 +421,6 @@ public class NewSimulation extends JFrame {
 		String tankWidthS = tankWidthField.getText().toString();
 		final float tankWidthC = Float.parseFloat(tankWidthS);
 		
-		
-		
 		tankLengthField = new JTextField();
 		tankLengthField.setText("20.0");
 		tankLengthField.setEditable(false);
@@ -469,12 +467,17 @@ public class NewSimulation extends JFrame {
 				System.out.println("Tank Length: " + tank.getTankLength());
 				tank.setTankHeight(tankHeightC);
 				System.out.println("Tank Height: " + tank.getTankHeight());
+				
+				System.out.println("Running Simulation");
+				
+				rS = new RunSimulation();
+				startSimulation = true;
+				
+				CloseJFrame();
 			}
 		});
 		
-	
-		this.setVisible(true);
-		
+		this.setVisible(true);	
 	}
 	
 
@@ -538,5 +541,10 @@ public class NewSimulation extends JFrame {
 		bar.add(about);
 		
 		return bar;
+	}
+	
+	public void CloseJFrame()
+	{
+		super.dispose();
 	}
 }
