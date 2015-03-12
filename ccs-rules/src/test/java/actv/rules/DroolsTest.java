@@ -16,7 +16,6 @@ import org.drools.rule.builder.dialect.mvel.MVELDialectConfiguration;
 import org.drools.runtime.StatelessKnowledgeSession;
 import org.springframework.core.io.ClassPathResource;
 
-
 /**
  * 
  * Setup for a JUnit test of a rule.
@@ -38,7 +37,8 @@ public class DroolsTest{
 			ClassPathResource flow = new ClassPathResource(flowFile);
 			kbuilder.add(ResourceFactory.newUrlResource(flow.getURL()), ResourceType.BPMN2);
 //			kbuilder.add(ResourceFactory.newClassPathResource(drl, getClass()), ResourceType.DRL);
-			kbuilder.add(ResourceFactory.newClassPathResource(drl), ResourceType.DRL);
+			byte[] drlByte = drl.getBytes();
+			kbuilder.add(ResourceFactory.newByteArrayResource(drlByte), ResourceType.DRL);
 		}catch(IOException e){
 			e.printStackTrace();
 		}
