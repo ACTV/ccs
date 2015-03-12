@@ -1,15 +1,18 @@
-package actv.ccs.rules;
+package actv.ccs.rules.start;
 
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 
 rule "Start"
-	ruleflow-group "swim"
+	ruleflow-group "start"
+	salience 1000
+
 	when
-		$cc : ConvictCichlid(state == FishState.NONE);
+		$cc : ConvictCichlid();
 		
 	then
 		modify($cc){
-			setState(FishState.SWIM);
+			setCautionLevel($cc.getCautionLevel() * 1.6),
+			setState(FishState.CAUTION);
 		}
 end

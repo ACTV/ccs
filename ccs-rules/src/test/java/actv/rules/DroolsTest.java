@@ -10,7 +10,9 @@ import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
 import org.drools.command.Command;
 import org.drools.command.CommandFactory;
+import org.drools.compiler.PackageBuilderConfiguration;
 import org.drools.io.ResourceFactory;
+import org.drools.rule.builder.dialect.mvel.MVELDialectConfiguration;
 import org.drools.runtime.StatelessKnowledgeSession;
 import org.springframework.core.io.ClassPathResource;
 
@@ -25,18 +27,24 @@ public class DroolsTest{
 	private String startProc;
 	
 	public DroolsTest(String drl, String flowFile, String startProc){
+		// Set up default Drools dialect to MVEL
+		MVELDialectConfiguration conf=(MVELDialectConfiguration)new PackageBuilderConfiguration().getDialectConfiguration("mvel");
+		conf.setStrict(false);
+		conf.getPackageBuilderConfiguration().setDefaultDialect("mvel");
+		  
 		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 		
-		try{
+		try{ 
 			ClassPathResource flow = new ClassPathResource(flowFile);
 			kbuilder.add(ResourceFactory.newUrlResource(flow.getURL()), ResourceType.BPMN2);
-			kbuilder.add(ResourceFactory.newClassPathResource(drl, getClass()), ResourceType.DRL);
+//			kbuilder.add(ResourceFactory.newClassPathResource(drl, getClass()), ResourceType.DRL);
+			kbuilder.add(ResourceFactory.newClassPathResource(drl), ResourceType.DRL);
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 		
 		KnowledgeBase kb = kbuilder.newKnowledgeBase();
-	
+		
 		sks = kb.newStatelessKnowledgeSession();
 		
 		this.startProc = startProc;
