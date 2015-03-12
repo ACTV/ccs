@@ -1,5 +1,7 @@
 package actv.ccs.model.ui;
 
+import java.io.IOException;
+
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.*;
 
@@ -17,7 +19,7 @@ public class Main {
 	 *  this is pretty much run ui but i'm going to add a jframe later on.
 	 */
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SecurityException, IOException {
 	
 	//	LoadWindow loadWindow = new LoadWindow();
 	//	SaveWindow newSW = new SaveWindow();

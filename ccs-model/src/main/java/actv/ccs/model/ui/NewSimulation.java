@@ -2,15 +2,14 @@ package actv.ccs.model.ui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.*;
+import java.io.IOException;
+import java.util.logging.Logger;
 import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.*;
-
-import com.sun.istack.internal.logging.Logger;
 
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
@@ -24,8 +23,6 @@ public class NewSimulation extends JFrame {
 	private SimulationWorld world;
 	private ConvictCichlidController controller;
 	private RunSimulation rS;
-	
-	private boolean startSimulation;
 	
 	private JTextField NameTextField;
 	private JTextField WeightTextField;
@@ -44,7 +41,8 @@ public class NewSimulation extends JFrame {
 	private JTextField tankHeightField;
 	
 	// need to fix logger
-	
+ 	private static Logger logger = Logger.getLogger("LoggingToFile");
+ 	
 /* updates are from latest to oldest (top to bottom)
  * 
  * 3-4-15
@@ -54,14 +52,19 @@ public class NewSimulation extends JFrame {
  * need to do a button listener later on etc fish stuff.
  */
 	
-	public NewSimulation()
+	public NewSimulation() throws SecurityException, IOException
 	{
 		
 		cichlid = new ConvictCichlid();
 		tank = new TankObject(20, 20, 20, 26, 0, 0); // array value default tank
 		world = new SimulationWorld();
 		cichlid = getFromDB();
-		startSimulation = false;
+		
+		
+		FileHandler logFile = new FileHandler("Log2File.txt");
+		logFile.setFormatter(new SimpleFormatter());
+		logger.addHandler(logFile);
+		logger.info("Starting logging data");
 		
 		tankFishCount = tank.getCichlidCount();
 		tankPlantCount = tank.getCichlidCount();
@@ -322,16 +325,22 @@ public class NewSimulation extends JFrame {
 			controller.setID(fishID);	
 			String cichlidNameT = NameTextField.getText().toString();
 			controller.setName(cichlidNameT);
+			logger.info("ID #" + fishID + " Name:" + cichlidNameT);
 			String weightS = WeightTextField.getText().toString();
 			float weightC = Float.parseFloat(weightS);
 			controller.setWeight(weightC);
+			logger.info("ID #" + fishID + " weight:" + weightC);
 			String widthS = WidthTextField.getText().toString();
 			float widthC = Float.parseFloat(widthS);
 			controller.setLength(widthC);
+			logger.info("ID #" + fishID + " width:" + widthC);
 			String heightS = HeightTextField.getText().toString();
 			float heightC = Float.parseFloat(heightS);
 			controller.setHeight(heightC);	
-		
+			logger.info("ID #" + fishID + " height:" + heightC);
+			
+			logger.info("ID #" + fishID + " baseAggro:" + controller.getAggro());
+			
 			
 		
 			cichlidNameB = controller.getName();
@@ -457,22 +466,20 @@ public class NewSimulation extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 		
+				logger.info("Tank Information");
 				tank.setCichlidCount(tankFishCount);
-				System.out.println("Cichlid Count: " + tank.getCichlidCount());
+				logger.info("Cichlid Count: " + tank.getCichlidCount());
 				tank.setPlantCount(0);
-				System.out.println("Plant Count: " + tank.getPlantCount());
+				logger.info("Plant Count: " + tank.getPlantCount());
 				tank.setTankWidth(tankWidthC);
-				System.out.println("Tank Width: " + tank.getTankWidth());	
+				logger.info("Tank Width: " + tank.getTankWidth());	
 				tank.setTankLength(tankLengthC);
-				System.out.println("Tank Length: " + tank.getTankLength());
+				logger.info("Tank Length: " + tank.getTankLength());
 				tank.setTankHeight(tankHeightC);
-				System.out.println("Tank Height: " + tank.getTankHeight());
-				
+				logger.info("Tank Temperature: " + tank.getTankTemperature());
 				System.out.println("Running Simulation");
 				
 				rS = new RunSimulation();
-				startSimulation = true;
-				
 				CloseJFrame();
 			}
 		});
