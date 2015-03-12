@@ -2,10 +2,14 @@ package actv.ccs.model.ui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.FileHandler;
+import java.util.logging.SimpleFormatter;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.*;
+
+import com.sun.istack.internal.logging.Logger;
 
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
@@ -31,8 +35,13 @@ public class NewSimulation extends JFrame {
 	private String [] poolOfFish;
 	private String cichlidNameA;
 	private String cichlidNameB;
+	private JTextField tankWidthField;
+	private JTextField tankLengthField;
+	private JTextField tankHeightField;
 	
 
+//	private static Logger logger = Logger.getLogger("Log2File");
+	
 /* updates are from latest to oldest (top to bottom)
  * 
  * 3-4-15
@@ -53,6 +62,9 @@ public class NewSimulation extends JFrame {
 		tankFishCount = tank.getCichlidCount();
 		tankPlantCount = tank.getCichlidCount();
 		
+//		FileHandler logFile = new FileHandler("Log2File.txt");
+//		logFile.setFormatter(new SimpleFormatter());
+//		logger.addHandler(logFile);
 		
 		controller = new ConvictCichlidController(cichlid, world);
 		
@@ -286,18 +298,20 @@ public class NewSimulation extends JFrame {
 		
 		JLabel x = new JLabel("X");
 		springLayout.putConstraint(SpringLayout.NORTH, x, 79, SpringLayout.SOUTH, comboBox);
+		springLayout.putConstraint(SpringLayout.SOUTH, x, -412, SpringLayout.SOUTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, HeightTextField, 38, SpringLayout.EAST, x);
 		springLayout.putConstraint(SpringLayout.WEST, x, 6, SpringLayout.EAST, WidthTextField);
 		springLayout.putConstraint(SpringLayout.EAST, x, -734, SpringLayout.EAST, getContentPane());
 		getContentPane().add(x);
 		
 		JLabel lblAddInGender = new JLabel("add in gender, age later on.");
-		springLayout.putConstraint(SpringLayout.EAST, lblAddInGender, 0, SpringLayout.EAST, lblSizewidthX);
+		springLayout.putConstraint(SpringLayout.NORTH, lblAddInGender, 23, SpringLayout.SOUTH, lblSizewidthX);
+		springLayout.putConstraint(SpringLayout.WEST, lblAddInGender, 0, SpringLayout.WEST, lblPleasePickA);
 		getContentPane().add(lblAddInGender);
 		
 		JButton btnGenerateFish = new JButton("Generate Fish");
-		springLayout.putConstraint(SpringLayout.NORTH, lblAddInGender, 0, SpringLayout.NORTH, btnGenerateFish);
-		springLayout.putConstraint(SpringLayout.WEST, btnGenerateFish, 0, SpringLayout.WEST, NameTextField);
+		springLayout.putConstraint(SpringLayout.NORTH, btnGenerateFish, 6, SpringLayout.SOUTH, x);
+		springLayout.putConstraint(SpringLayout.WEST, btnGenerateFish, 18, SpringLayout.EAST, lblAddInGender);
 		getContentPane().add(btnGenerateFish);
 		btnGenerateFish.addActionListener(new ActionListener() {
 			
@@ -336,24 +350,21 @@ public class NewSimulation extends JFrame {
 		
 		
 		outputData = new JTextArea();
-		springLayout.putConstraint(SpringLayout.SOUTH, btnGenerateFish, -31, SpringLayout.NORTH, outputData);
-		springLayout.putConstraint(SpringLayout.EAST, outputData, 0, SpringLayout.EAST, comboBox);
+		springLayout.putConstraint(SpringLayout.NORTH, outputData, 279, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, outputData, 616, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, outputData, -59, SpringLayout.SOUTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, outputData, -22, SpringLayout.EAST, getContentPane());
 		outputData.setWrapStyleWord(true);
 		outputData.setLineWrap(true);
-		springLayout.putConstraint(SpringLayout.SOUTH, outputData, -50, SpringLayout.SOUTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.NORTH, outputData, 288, SpringLayout.NORTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, outputData, 51, SpringLayout.WEST, getContentPane());
 		getContentPane().add(outputData);
 		outputData.setEditable(false);
 		
 		JLabel lblTestingoutputData = new JLabel("testingOutput Data");
-		springLayout.putConstraint(SpringLayout.SOUTH, lblTestingoutputData, -17, SpringLayout.NORTH, outputData);
-		springLayout.putConstraint(SpringLayout.EAST, lblTestingoutputData, 0, SpringLayout.EAST, lblSizewidthX);
+		springLayout.putConstraint(SpringLayout.SOUTH, lblTestingoutputData, -14, SpringLayout.NORTH, outputData);
+		springLayout.putConstraint(SpringLayout.EAST, lblTestingoutputData, -291, SpringLayout.EAST, getContentPane());
 		getContentPane().add(lblTestingoutputData);
 		
 		JSlider waterTemperatureSlider = new JSlider();
-		springLayout.putConstraint(SpringLayout.NORTH, waterTemperatureSlider, 134, SpringLayout.NORTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, x, -6, SpringLayout.NORTH, waterTemperatureSlider);
 		springLayout.putConstraint(SpringLayout.EAST, waterTemperatureSlider, 0, SpringLayout.EAST, HeightTextField);
 		getContentPane().add(waterTemperatureSlider);
 		waterTemperatureSlider.addChangeListener(new ChangeListener()
@@ -375,10 +386,92 @@ public class NewSimulation extends JFrame {
 		});
 		
 		JLabel lblWaterTemperaturecelsius = new JLabel("Water Temperature (Celsius)");
-		springLayout.putConstraint(SpringLayout.NORTH, lblWaterTemperaturecelsius, 27, SpringLayout.SOUTH, lblSizewidthX);
-		springLayout.putConstraint(SpringLayout.WEST, lblWaterTemperaturecelsius, 10, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, waterTemperatureSlider, 0, SpringLayout.SOUTH, lblWaterTemperaturecelsius);
+		springLayout.putConstraint(SpringLayout.EAST, lblWaterTemperaturecelsius, 0, SpringLayout.EAST, lblAddInGender);
 		getContentPane().add(lblWaterTemperaturecelsius);
+		
+		JLabel lblTankSpecifications = new JLabel("Tank Specifications:");
+		springLayout.putConstraint(SpringLayout.NORTH, lblTankSpecifications, 56, SpringLayout.SOUTH, lblAddInGender);
+		springLayout.putConstraint(SpringLayout.WEST, lblTankSpecifications, 10, SpringLayout.WEST, getContentPane());
+		getContentPane().add(lblTankSpecifications);
+		
+		JLabel lblTankWidth = new JLabel("Tank Width:");
+		springLayout.putConstraint(SpringLayout.NORTH, lblTankWidth, 13, SpringLayout.SOUTH, lblTankSpecifications);
+		springLayout.putConstraint(SpringLayout.WEST, lblTankWidth, 10, SpringLayout.WEST, getContentPane());
+		getContentPane().add(lblTankWidth);
+		
+		JLabel lblTankLength = new JLabel("Tank Length: ");
+		springLayout.putConstraint(SpringLayout.NORTH, lblTankLength, 21, SpringLayout.SOUTH, lblTankWidth);
+		springLayout.putConstraint(SpringLayout.EAST, lblTankLength, 0, SpringLayout.EAST, lblCichlidName);
+		getContentPane().add(lblTankLength);
+		
+		JLabel lblTankHeight = new JLabel("Tank Height: ");
+		springLayout.putConstraint(SpringLayout.NORTH, lblWaterTemperaturecelsius, 23, SpringLayout.SOUTH, lblTankHeight);
+		springLayout.putConstraint(SpringLayout.NORTH, lblTankHeight, 20, SpringLayout.SOUTH, lblTankLength);
+		springLayout.putConstraint(SpringLayout.EAST, lblTankHeight, 0, SpringLayout.EAST, lblCichlidName);
+		getContentPane().add(lblTankHeight);
+		
+		tankWidthField = new JTextField();
+		tankWidthField.setText("20.0");
+		tankWidthField.setEditable(false);
+		springLayout.putConstraint(SpringLayout.WEST, tankWidthField, 14, SpringLayout.EAST, lblTankWidth);
+		springLayout.putConstraint(SpringLayout.NORTH, tankWidthField, 0, SpringLayout.NORTH, lblTankWidth);
+		getContentPane().add(tankWidthField);
+		tankWidthField.setColumns(10);
+		String tankWidthS = tankWidthField.getText().toString();
+		final float tankWidthC = Float.parseFloat(tankWidthS);
+		
+		
+		
+		tankLengthField = new JTextField();
+		tankLengthField.setText("20.0");
+		tankLengthField.setEditable(false);
+		springLayout.putConstraint(SpringLayout.NORTH, tankLengthField, -3, SpringLayout.NORTH, lblTankLength);
+		springLayout.putConstraint(SpringLayout.WEST, tankLengthField, 6, SpringLayout.EAST, lblTankLength);
+		getContentPane().add(tankLengthField);
+		tankLengthField.setColumns(10);
+		String tankLengthS = tankLengthField.getText().toString();
+		final float tankLengthC = Float.parseFloat(tankLengthS);
+		
+		
+		tankHeightField = new JTextField();
+		tankHeightField.setText("20.0");
+		tankHeightField.setEditable(false);
+		springLayout.putConstraint(SpringLayout.NORTH, tankHeightField, 16, SpringLayout.SOUTH, tankLengthField);
+		springLayout.putConstraint(SpringLayout.WEST, tankHeightField, 6, SpringLayout.EAST, lblTankHeight);
+		getContentPane().add(tankHeightField);
+		tankHeightField.setColumns(10);
+		String tankHeightS = tankHeightField.getText().toString();
+		final float tankHeightC = Float.parseFloat(tankHeightS);
+		
+		
+		JLabel lblAddPlantsLater = new JLabel("add Plants later.");
+		springLayout.putConstraint(SpringLayout.NORTH, lblAddPlantsLater, 30, SpringLayout.SOUTH, lblWaterTemperaturecelsius);
+		springLayout.putConstraint(SpringLayout.WEST, lblAddPlantsLater, 0, SpringLayout.WEST, lblPleasePickA);
+		getContentPane().add(lblAddPlantsLater);
+		
+		JButton btnRunSimulation = new JButton("Run Simulation");
+		springLayout.putConstraint(SpringLayout.WEST, btnRunSimulation, 0, SpringLayout.WEST, lblPleasePickA);
+		springLayout.putConstraint(SpringLayout.SOUTH, btnRunSimulation, 0, SpringLayout.SOUTH, outputData);
+		getContentPane().add(btnRunSimulation);
+		btnRunSimulation.addActionListener(new ActionListener() {
 			
+			public void actionPerformed(ActionEvent e)
+			{
+		
+				tank.setCichlidCount(tankFishCount);
+				System.out.println("Cichlid Count: " + tank.getCichlidCount());
+				tank.setPlantCount(0);
+				System.out.println("Plant Count: " + tank.getPlantCount());
+				tank.setTankWidth(tankWidthC);
+				System.out.println("Tank Width: " + tank.getTankWidth());	
+				tank.setTankLength(tankLengthC);
+				System.out.println("Tank Length: " + tank.getTankLength());
+				tank.setTankHeight(tankHeightC);
+				System.out.println("Tank Height: " + tank.getTankHeight());
+			}
+		});
+		
 	
 		this.setVisible(true);
 		
