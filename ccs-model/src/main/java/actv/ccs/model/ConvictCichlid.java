@@ -6,6 +6,7 @@ public class ConvictCichlid extends Object{
 	private float [] location;
 	private FishState state;
 	private float aggroLevel;
+	private float cautionLevel;
 	private float length;
 	private float height;
 	private float weight;
@@ -34,7 +35,7 @@ public class ConvictCichlid extends Object{
 	public void setState(FishState state) {
 		this.state = state;
 	}
-	public float getAggro()
+	public float getAggroLevel()
 	{
 		return aggroLevel;
 	}
@@ -74,13 +75,23 @@ public class ConvictCichlid extends Object{
 	{
 		this.name = s;
 	}
-	public int getID()
-	{
+
+	
+	public float getCautionLevel() {
+		return cautionLevel;
+	}
+
+	public void setCautionLevel(float cautionLevel) {
+		this.cautionLevel = cautionLevel;
+	}
+
+	public int getCichlidID() {
 		return cichlidID;
 	}
-	public void setID(int id)
-	{
-		this.cichlidID = id;
+
+	public void setCichlidID(int cichlidID) {
+		this.cichlidID = cichlidID;
 	}
+
 	
 }

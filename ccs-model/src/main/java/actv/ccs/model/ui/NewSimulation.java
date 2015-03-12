@@ -404,7 +404,7 @@ public class NewSimulation extends JFrame {
 		c.setHeight(5);
 		c.setWeight(10);
 		c.setName("Shark");
-		c.setID(0);
+		c.setCichlidID(0);
 		return c;
 	}
 	
