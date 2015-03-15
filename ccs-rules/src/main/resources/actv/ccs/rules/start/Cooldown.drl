@@ -1,0 +1,23 @@
+package actv.ccs.rules.start;
+
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.type.FishState;
+import actv.ccs.fact.CoolingDown;
+
+
+rule "Cooldown"
+	ruleflow-group "start"
+	salience 1000
+
+	when
+		$cc : ConvictCichlid( state == FishState.CAUTION );
+					
+		$cd : CoolingDown( convictCichlid == $cc, 
+						   endTime >= System.currentTimeMillis());
+	then
+		retract($cd);
+		modify($cc){
+			setCautionLevel($cc.getBaseCautionLevel()),
+			setState(FishState.IDLE);
+		}
+end

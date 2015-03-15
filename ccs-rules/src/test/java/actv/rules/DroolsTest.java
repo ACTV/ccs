@@ -6,45 +6,50 @@ import java.util.List;
 
 import org.drools.KnowledgeBase;
 import org.drools.builder.KnowledgeBuilder;
-import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
 import org.drools.command.Command;
 import org.drools.command.CommandFactory;
-import org.drools.compiler.PackageBuilderConfiguration;
 import org.drools.io.ResourceFactory;
-import org.drools.rule.builder.dialect.mvel.MVELDialectConfiguration;
 import org.drools.runtime.StatelessKnowledgeSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
+
+import actv.ccs.CCSKnowledgeBase;
 
 /**
  * 
- * Setup for a JUnit test of a rule.
+ * 	Create/Execute a stateless session to unit test a rule.
  *
  */
 public class DroolsTest{
 	private StatelessKnowledgeSession sks; 
 	private String startProc;
+	private Logger log = LoggerFactory.getLogger(DroolsTest.class);
 	
 	public DroolsTest(String drl, String flowFile, String startProc){
-		// Set up default Drools dialect to MVEL
-		MVELDialectConfiguration conf=(MVELDialectConfiguration)new PackageBuilderConfiguration().getDialectConfiguration("mvel");
-		conf.setStrict(false);
-		conf.getPackageBuilderConfiguration().setDefaultDialect("mvel");
-		  
-		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
+		// Retrieve KnowledgeBuilder
+		KnowledgeBuilder kbuilder = CCSKnowledgeBase.initKBuilder();
 		
 		try{ 
+			// Add rule and flow file to the KnowledgeBuilder
 			ClassPathResource flow = new ClassPathResource(flowFile);
 			kbuilder.add(ResourceFactory.newUrlResource(flow.getURL()), ResourceType.BPMN2);
-//			kbuilder.add(ResourceFactory.newClassPathResource(drl, getClass()), ResourceType.DRL);
-			byte[] drlByte = drl.getBytes();
-			kbuilder.add(ResourceFactory.newByteArrayResource(drlByte), ResourceType.DRL);
+			kbuilder.add(ResourceFactory.newClassPathResource(drl), ResourceType.DRL);
+			
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 		
+		if(kbuilder.hasErrors()){
+			System.out.println(kbuilder.getErrors());
+			return;
+		}
+		
+		// Create KnowledgeBase from KnowledgeBuilder
 		KnowledgeBase kb = kbuilder.newKnowledgeBase();
 		
+		// Initialize a stateless knowledge session
 		sks = kb.newStatelessKnowledgeSession();
 		
 		this.startProc = startProc;
@@ -52,9 +57,11 @@ public class DroolsTest{
 	
 	public void execute(Object...objects){
 		List<Command<?>> l = new ArrayList<Command<?>>();
+		
 		// Insert objects (and start process) into a list for batch execution
-		for(Object obj : objects)
+		for(Object obj : objects){
 			l.add(CommandFactory.newInsert(obj));
+		}
 		l.add(CommandFactory.newStartProcess(startProc));
 		
 		sks.execute(CommandFactory.newBatchExecution(l));

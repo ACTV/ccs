@@ -2,17 +2,23 @@ package actv.ccs.rules.start;
 
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
+import actv.ccs.fact.CoolingDown;
 
 rule "Start"
 	ruleflow-group "start"
-	salience 1000
+	salience 10000
 
 	when
-		$cc : ConvictCichlid();
-		
+		$cc : ConvictCichlid(	
+					state != FishState.CAUTION,
+					$baseCautionLevel : baseCautionLevel != null,
+					$baseCautionLevel != cautionLevel );
+					
+		not( exists CoolingDown(convictCichlid == $cc));
 	then
+		insert( new CoolingDown($cc, $baseCautionLevel * .5));
 		modify($cc){
-			setCautionLevel($cc.getCautionLevel() * 1.6),
+			setCautionLevel($baseCautionLevel * 1.6f),
 			setState(FishState.CAUTION);
 		}
 end

@@ -2,6 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <parent>
+    <groupId>org.drools</groupId>
+    <artifactId>droolsjbpm-parent</artifactId>
+    <version>5.5.0.Final</version>
+  </parent>
+
   <groupId>actv</groupId>
   <artifactId>ccs-rules</artifactId>
   <version>0.0.1-SNAPSHOT</version>
@@ -17,68 +23,59 @@
   <dependencies>
   	<dependency>
 		<groupId>actv</groupId>
-		<artifactId>ccs-model</artifactId>
+		<artifactId>ccs</artifactId>
 		<version>${project.version}</version>
 	</dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
-    </dependency>
+      </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>knowledge-api</artifactId>
-      <version>5.5.0.Final</version>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>knowledge-internal-api</artifactId>
-      <version>5.5.0.Final</version>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-jsr94</artifactId>
       <version>5.5.0.Final</version>
     </dependency>
-    
-
+    -->
 	<dependency>
 		<groupId>org.drools</groupId>
 		<artifactId>drools-core</artifactId>
-		<version>5.5.0.Final</version>
-	</dependency>
+		</dependency>
     <dependency>
     	<groupId>org.drools</groupId>
     	<artifactId>drools-compiler</artifactId>
-    	<version>5.5.0.Final</version>
-    </dependency>
+    	</dependency>
+    <dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-core</artifactId>
+	</dependency>
 	<dependency>
 		<groupId>org.jbpm</groupId>
 		<artifactId>jbpm-flow</artifactId>
-		<version>5.4.0.Final</version>
 	</dependency>
+	
     <dependency>
 		<groupId>org.jbpm</groupId>
 		<artifactId>jbpm-bpmn2</artifactId>
-		<version>5.4.0.Final</version>
 	</dependency>
     <dependency>
 		<groupId>org.jbpm</groupId>
 		<artifactId>jbpm-flow-builder</artifactId>
-		<version>5.4.0.Final</version>
 	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-core</artifactId>
-		<version>4.1.5.RELEASE</version>
-	</dependency>
+
 	<dependency>
 		<groupId>org.mvel</groupId>
 		<artifactId>mvel2</artifactId>
-		<version>2.2.4.Final</version>
 	</dependency>
   </dependencies>
-  
   <build>
   <pluginManagement>
   <plugins>
