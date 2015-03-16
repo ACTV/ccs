@@ -16,6 +16,13 @@ import javax.swing.border.EtchedBorder;
 
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
+import javax.swing.BoxLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class RunSimulation extends JFrame {
 	
@@ -24,8 +31,6 @@ public class RunSimulation extends JFrame {
 	private SimulationWorld world;
 	private TankView tV;
 	
-	private JButton pauseButton = new JButton("Pause");
-	
 	public RunSimulation()
 	{
 		setTitle("Convict Cichlid Fish Simulator Test 1");
@@ -33,33 +38,65 @@ public class RunSimulation extends JFrame {
 		
 		
 		world = new SimulationWorld();
-		tV = new TankView(world);
 		
 		
 		// create menu bar
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
+		tV = new TankView(world);
 		
 		
 		// center panel for map
 		tV.setBorder(new EtchedBorder());
 		tV.setBackground(Color.orange);
-		this.add(tV, BorderLayout.CENTER);
 		
 		// Bottom Panel for Data Output
 		JPanel dataPanel = new JPanel();
 		dataPanel.setLayout(new GridLayout(2,2));
 		dataPanel.setBorder(new EtchedBorder());
-		getContentPane().add(dataPanel, BorderLayout.SOUTH);
-		
-		JTextPane outputDataHere = new JTextPane();
-		dataPanel.add(outputDataHere);
 		
 		// output fish data to one side ... this is good for now.
 		JLabel printData = new JLabel("Data Output");
-		dataPanel.add(printData);
 		
-		dataPanel.add(pauseButton);
+		JTextPane outputDataHere = new JTextPane();
+		outputDataHere.setText("Here would be where the fish hp goes... something along the lines of a Final Fantasy battle gui");
+		
+		JButton btnPauseButton = new JButton("Pause Button");
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(outputDataHere, GroupLayout.PREFERRED_SIZE, 510, GroupLayout.PREFERRED_SIZE)
+								.addComponent(printData))
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(btnPauseButton))
+						.addComponent(tV, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 982, GroupLayout.PREFERRED_SIZE))
+					.addGap(137)
+					.addComponent(dataPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(245)
+							.addComponent(dataPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(145)
+							.addComponent(printData, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(outputDataHere, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(tV, GroupLayout.PREFERRED_SIZE, 392, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnPauseButton)))
+					.addContainerGap())
+		);
+		getContentPane().setLayout(groupLayout);
 		
 		
 		
@@ -106,5 +143,4 @@ public class RunSimulation extends JFrame {
 		
 		return bar;
 	}
-
 }
