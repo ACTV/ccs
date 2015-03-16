@@ -10,15 +10,18 @@ rule "Start"
 
 	when
 		$cc : ConvictCichlid(	
-					state != FishState.CAUTION,
 					$baseCautionLevel : baseCautionLevel != null,
-					$baseCautionLevel != cautionLevel );
+					$baseSpeed : baseSpeed != null,
+					(cautionLevel != ($baseCautionLevel * 1.6f) || 
+					 speed != ($baseSpeed * 1.6f) ||
+					 state != FishState.CAUTION));
 					
 		not( exists CoolingDown(convictCichlid == $cc));
 	then
 		insert( new CoolingDown($cc, $baseCautionLevel * .5));
 		modify($cc){
 			setCautionLevel($baseCautionLevel * 1.6f),
+			setSpeed($baseSpeed * 1.6f),
 			setState(FishState.CAUTION);
 		}
 end

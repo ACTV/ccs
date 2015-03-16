@@ -14,6 +14,8 @@ public class ConvictCichlid extends Object{
 	private float weight;
 	private String name;
 	private int cichlidID;
+	private float speed;
+	private float baseSpeed;
 	
 	
 	public ConvictCichlid(){
@@ -109,6 +111,22 @@ public class ConvictCichlid extends Object{
 
 	public void setBaseAggroLevel(float baseAggroLevel) {
 		this.baseAggroLevel = baseAggroLevel;
+	}
+
+	public float getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	public float getBaseSpeed() {
+		return baseSpeed;
+	}
+
+	public void setBaseSpeed(float baseSpeed) {
+		this.baseSpeed = baseSpeed;
 	}
 
 	
