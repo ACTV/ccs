@@ -518,32 +518,27 @@ public class NewSimulation extends JFrame {
 		// File
 		JMenu file = new JMenu("File");
 		// sub testing
-		JMenuItem mItem1 = new JMenuItem("test");
+		JMenuItem mItem1 = new JMenuItem("exit");
 		file.add(mItem1);
 		bar.add(file);
 		// Edit
-		JMenu edit = new JMenu("Edit");
-		JMenuItem mItem2 = new JMenuItem("hadooekn");
-		edit.add(mItem2);
-		bar.add(edit);
 		// Save
-		JMenu save = new JMenu("Save");
-		JMenuItem mItem3 = new JMenuItem("stuff");
-		save.add(mItem3);		
-		bar.add(save);
 		// Load
 		JMenu load = new JMenu("Load");
-		JMenuItem mItem4 = new JMenuItem("boo");
+		JMenuItem mItem4 = new JMenuItem("Load a previous simulation");
+		/*
+		 * will have to ask later on how you guys want to load the data, is there a special format on how to read the file data?
+		 */
 		load.add(mItem4);
 		bar.add(load);
 		// Help
 		JMenu help = new JMenu("Help");
-		JMenuItem mItem5 = new JMenuItem("bom");
+		JMenuItem mItem5 = new JMenuItem("Manual");
 		help.add(mItem5);
 		bar.add(help);
 		// About
 		JMenu about = new JMenu("About");
-		JMenuItem mItem6 = new JMenuItem("hi");
+		JMenuItem mItem6 = new JMenuItem("Read This!");
 		about.add(mItem6);		
 		bar.add(about);
 		
