@@ -1,9 +1,7 @@
 package actv.ccs.model.ui;
 
 import java.io.IOException;
-
-import actv.ccs.model.ConvictCichlid;
-import actv.ccs.model.type.*;
+import java.sql.*;
 
 
 public class Main {
@@ -25,6 +23,23 @@ public class Main {
 	//	SaveWindow newSW = new SaveWindow();
 		NewSimulation newS = new NewSimulation();
 	//	RunSimulation testRun = new RunSimulation();
+		
+		// going to try ucanaccess fun 
+		
+		// alright so ucanaccess works. here's the link to download it, put it into your referenced libraries etc. 
+		// http://ucanaccess.sourceforge.net/site.html
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
+	
+		Statement s = conn.createStatement();
+		ResultSet rs = s.executeQuery("SELECT [Type] FROM [FishPool]");
+		while (rs.next())
+			System.out.println(rs.getString(1));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 
