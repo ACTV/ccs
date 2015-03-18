@@ -10,12 +10,12 @@ import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.rules.DroolsTest;
 
-public class CooldownTest extends DroolsTest {
+public class CalmTest extends DroolsTest {
 	private ConvictCichlid cc;
 	private Auditor auditor;
 	
-	public CooldownTest(){
-		super(	"actv/ccs/rules/start/Cooldown.drl", 
+	public CalmTest(){
+		super(	"actv/ccs/rules/start/Calm.drl", 
 				"actv/ccs/flow/swim.bpmn",
 				"swim");
 	}
@@ -23,21 +23,21 @@ public class CooldownTest extends DroolsTest {
 	@Before
 	public void setCC(){
 		cc = new ConvictCichlid();
-		cc.setBaseCautionLevel(5.00f);
-		cc.setCautionLevel(cc.getBaseCautionLevel() * 1.6f);
+		cc.setSpeed(9.00f);
+		cc.setBaseSpeed(5.00f);
 		cc.setState(FishState.CAUTION);
 		auditor = new Auditor();
 	}
 	
 	@Test
 	public void testValid(){
-		execute(auditor, cc, new CoolingDown(cc, System.currentTimeMillis()+100));
+		execute(auditor, cc);
 		Assert.assertEquals(FishState.IDLE, cc.getState());
-		Assert.assertEquals(cc.getBaseCautionLevel(), cc.getCautionLevel(), .01);
+		Assert.assertEquals(cc.getBaseSpeed(), cc.getSpeed(), .01);
 	}
 	
 	@Test
-	public void testInvalid_NotCC(){
+	public void testInvalid_NotCoolingDown(){
 		execute(auditor, cc, new CoolingDown(new ConvictCichlid(), System.currentTimeMillis()+100));
 		Assert.assertEquals(FishState.CAUTION, cc.getState());	
 	}

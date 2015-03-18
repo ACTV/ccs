@@ -8,18 +8,17 @@ import actv.ccs.fact.Auditor;
 
 rule "Cooldown"
 	ruleflow-group "swim"
-	salience 1000
 
 	when
 		$auditor :  Auditor()
-		$cc : ConvictCichlid( state == FishState.CAUTION );
+		$cc : ConvictCichlid( state == FishState.CAUTION,
+							  speed != baseSpeed,
+							  $baseSpeed : baseSpeed );
 					
-		$cd : CoolingDown( convictCichlid == $cc, 
-						   endTime >= System.currentTimeMillis());
+		not (exists CoolingDown());
 	then
-		retract($cd);
 		modify($cc){
-			setCautionLevel($cc.getBaseCautionLevel()),
+			setSpeed($baseSpeed),
 			setState(FishState.IDLE);
 		}
 		modify($auditor){

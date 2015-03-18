@@ -7,6 +7,11 @@ import org.drools.KnowledgeBase;
 import org.drools.builder.KnowledgeBuilder;
 import org.drools.command.Command;
 import org.drools.command.CommandFactory;
+import org.drools.event.rule.DefaultAgendaEventListener;
+import org.drools.event.rule.ObjectInsertedEvent;
+import org.drools.event.rule.ObjectRetractedEvent;
+import org.drools.event.rule.ObjectUpdatedEvent;
+import org.drools.event.rule.WorkingMemoryEventListener;
 import org.drools.runtime.StatelessKnowledgeSession;
 
 import actv.ccs.CCSKnowledgeBase;
@@ -35,6 +40,21 @@ public class DroolsTest{
 		// Initialize a stateless knowledge session
 		sks = kb.newStatelessKnowledgeSession();
 		
+		sks.addEventListener(new WorkingMemoryEventListener() {
+			
+			public void objectUpdated(ObjectUpdatedEvent event) {
+				System.out.println("Updated " + event.getObject().toString());
+			}
+			
+			public void objectRetracted(ObjectRetractedEvent event) {
+				// TODO Auto-generated method stub
+			}
+			
+			public void objectInserted(ObjectInsertedEvent event) {
+				// TODO Auto-generated method stub
+			}
+		});
+
 		this.startProc = startProc;
 	}
 	

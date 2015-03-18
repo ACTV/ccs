@@ -1,0 +1,29 @@
+package actv.ccs.rules.idle;
+
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.type.FishState;
+import actv.ccs.fact.CoolingDown;
+import actv.ccs.fact.Auditor;
+
+
+rule "Idle"
+	ruleflow-group "idle"
+	salience 1000
+
+	when
+		$auditor :  Auditor()
+		$cc : ConvictCichlid( state == FishState.IDLE,
+							  (idleWaitTime == null ||
+							  idleWaitTime == 0 ||
+							  idleWaitTime % 30 == 0),
+							  $iwt : idleWaitTime);
+		
+		not( exists CoolingDown());
+	then
+		modify($cc){
+			setIdleWaitTime($iwt+1);
+		}
+		modify($auditor){
+			getRulesFired().add(drools.getRule().getName());
+		}
+end
