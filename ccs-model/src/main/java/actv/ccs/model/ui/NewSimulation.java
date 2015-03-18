@@ -73,6 +73,7 @@ public class NewSimulation extends JFrame {
 		
 		setTitle("Convict Cichlid Fish Simulator New Simulation Test");
 		setSize(1000,600);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		poolOfFish = new String [] {"addyourownfish", "Stringer Bell", "Marlo Stanfield", "James McNulty", "The Bunk"};
 		
 		// create menu bar

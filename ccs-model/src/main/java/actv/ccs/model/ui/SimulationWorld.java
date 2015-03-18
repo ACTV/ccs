@@ -2,6 +2,7 @@ package actv.ccs.model.ui;
 
 import java.awt.*;
 
+import actv.ccs.listener.CCChangeListener;
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
 
@@ -13,6 +14,7 @@ public class SimulationWorld {
 	public SimulationWorld()
 	{		
 		cichlid = getFromDB();
+		cichlid.addPropertyChangeListener(new CCChangeListener());
 		
 		ConvictCichlidController controller = new ConvictCichlidController(cichlid, this);
 		TankController tankController = new TankController(tank, this);

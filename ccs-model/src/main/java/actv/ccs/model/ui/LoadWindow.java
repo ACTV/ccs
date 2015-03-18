@@ -34,6 +34,7 @@ public class LoadWindow extends JFrame {
 		
 		this.setSize(250, 110);
 		this.setVisible(true);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	public class LoadAction implements ActionListener {

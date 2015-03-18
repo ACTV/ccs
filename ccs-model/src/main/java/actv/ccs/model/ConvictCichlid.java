@@ -1,8 +1,10 @@
 package actv.ccs.model;
 
+import java.beans.PropertyChangeSupport;
+
 import actv.ccs.model.type.FishState;
 
-public class ConvictCichlid extends Object{
+public class ConvictCichlid extends PropertyChangeSupport{
 	private float [] location;
 	private FishState state;
 	private float aggroLevel;
@@ -16,10 +18,11 @@ public class ConvictCichlid extends Object{
 	private int cichlidID;
 	private float speed;
 	private float baseSpeed;
+	private long idleWaitTime;
 	
 	
 	public ConvictCichlid(){
-		super();
+		super(ConvictCichlid.class);
 		state = FishState.NONE;
 	}
 	
@@ -127,6 +130,14 @@ public class ConvictCichlid extends Object{
 
 	public void setBaseSpeed(float baseSpeed) {
 		this.baseSpeed = baseSpeed;
+	}
+
+	public long getIdleWaitTime() {
+		return idleWaitTime;
+	}
+
+	public void setIdleWaitTime(long idleWaitTime) {
+		this.idleWaitTime = idleWaitTime;
 	}
 
 	
