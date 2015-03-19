@@ -35,6 +35,8 @@ public class NewSimulation extends JFrame {
 	private JTextField HeightTextField;
 	private JTextArea outputData;
 	
+	private ResultSet rs;
+	
 	private int tankFishCount;
 	private int tankPlantCount;
 	private int fishID = 0;
@@ -137,11 +139,12 @@ public class NewSimulation extends JFrame {
 		}*/
 		
 		Connection conn;
+		comboBox.addItem("");
 		try {
 			conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
 	
 		Statement s = conn.createStatement();
-		ResultSet rs = s.executeQuery("SELECT * FROM [FishPool]");
+		rs = s.executeQuery("SELECT * FROM [FishPool]");
 		while (rs.next())
 		{
 			String name = rs.getString("Type"); //Field from database ex. FishA, FishB
@@ -171,10 +174,9 @@ public class NewSimulation extends JFrame {
 				try {
 					conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
 				Statement s = conn.createStatement();
-				ResultSet rs;
 				if (selectedFish.equals("Fish A"))
 				{
-					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE ='Fish A'");
+					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
 				}
 				else if (selectedFish.equals("Fish B"))
 				{
@@ -186,7 +188,7 @@ public class NewSimulation extends JFrame {
 				}
 				while (rs.next())
 				{
-					String name = rs.getString("Name"); //Field from database ex. FishA, FishB
+					String name = rs.getString("Type"); //Field from database ex. FishA, FishB
 		        	String weight = rs.getString("Weight");
 		        	String width = rs.getString("Width");
 		        	String height = rs.getString("Height");
@@ -390,7 +392,7 @@ public class NewSimulation extends JFrame {
 		getContentPane().add(lblSizewidthX);
 		
 		NameTextField = new JTextField();
-		NameTextField.setText("Goddamn Sharks");
+		NameTextField.setText("");
 		springLayout.putConstraint(SpringLayout.NORTH, NameTextField, 6, SpringLayout.SOUTH, lblIfNot);
 		springLayout.putConstraint(SpringLayout.WEST, NameTextField, 75, SpringLayout.EAST, lblCichlidName);
 		getContentPane().add(NameTextField);
@@ -398,31 +400,31 @@ public class NewSimulation extends JFrame {
 		cichlidNameA = NameTextField.getText().toString();
 		
 		WeightTextField = new JTextField();
-		WeightTextField.setText("150.0");
+		WeightTextField.setText("");
 		springLayout.putConstraint(SpringLayout.NORTH, WeightTextField, 0, SpringLayout.NORTH, lblWeightkg);
 		springLayout.putConstraint(SpringLayout.WEST, WeightTextField, 0, SpringLayout.WEST, NameTextField);
 		getContentPane().add(WeightTextField);
 		WeightTextField.setColumns(10);
 		String weightS = WeightTextField.getText().toString();
-		final float weightC = Float.parseFloat(weightS);
+//		final float weightC = Float.parseFloat(weightS);
 		
 		WidthTextField = new JTextField();
-		WidthTextField.setText("12.0");
+		WidthTextField.setText("");
 		springLayout.putConstraint(SpringLayout.NORTH, WidthTextField, 0, SpringLayout.NORTH, lblSizewidthX);
 		springLayout.putConstraint(SpringLayout.EAST, WidthTextField, 0, SpringLayout.EAST, NameTextField);
 		getContentPane().add(WidthTextField);
 		WidthTextField.setColumns(10);
 		String widthS = WidthTextField.getText().toString();
-		final float widthC = Float.parseFloat(widthS);
+//		final float widthC = Float.parseFloat(widthS);
 		
 		HeightTextField = new JTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, HeightTextField, 0, SpringLayout.NORTH, WidthTextField);
-		HeightTextField.setText("100.0");
+		HeightTextField.setText("");
 		getContentPane().add(HeightTextField);
 		HeightTextField.setColumns(10);
 		
 		String heightS = HeightTextField.getText().toString();
-		final float heightC = Float.parseFloat(heightS);
+	//	final float heightC = Float.parseFloat(heightS);
 		
 		JLabel x = new JLabel("X");
 		springLayout.putConstraint(SpringLayout.NORTH, x, 79, SpringLayout.SOUTH, comboBox);
@@ -445,7 +447,7 @@ public class NewSimulation extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 		
-			fishID++;	
+/*			fishID++;	
 			controller.setID(fishID);	
 			String cichlidNameT = NameTextField.getText().toString();
 			controller.setName(cichlidNameT);
@@ -468,7 +470,7 @@ public class NewSimulation extends JFrame {
 			
 		
 			cichlidNameB = controller.getName();
-			
+	*/		
 			controller.updateView();
 			tank.setCichlidCount(tankFishCount++);
 		
