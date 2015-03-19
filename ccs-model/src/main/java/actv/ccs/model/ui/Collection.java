@@ -1,5 +1,8 @@
-package actv.ccs.model.ui;
+package a4;
 
-public class Collection {
+import java.util.Vector;
 
+public interface Collection {
+	public void add(GameObject obj);
+	public Vector<GameObject> getObjects();
 }
