@@ -35,10 +35,10 @@ public class ConvictCichlidController {
 	{
 		return cichlid.getAggroLevel();
 	}
-	private void setAggroLevel(float a)
+	public void setAggroLevel(float a)
 	{
 		cichlid.setAggroLevel(a); 
-	}
+	}	
 	public float getLength()
 	{
 		return cichlid.getLength();
@@ -79,7 +79,14 @@ public class ConvictCichlidController {
 	{
 		cichlid.setCichlidID(i);
 	}
-	
+	public String getGender()
+	{
+		return cichlid.getGender();
+	}
+	public void setGender(String s)
+	{
+		cichlid.setGender(s);
+	}
 	public void updateView()
 	{
 		world.printData(cichlid.getState(), cichlid.getLocation(), cichlid.getAggroLevel(), cichlid.getLength(), cichlid.getHeight(), cichlid.getWeight(), cichlid.getName(), cichlid.getCichlidID());
