@@ -174,7 +174,7 @@ public class NewSimulation extends JFrame {
 				ResultSet rs;
 				if (selectedFish.equals("Fish A"))
 				{
-					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Name='Fish A'");
+					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE ='Fish A'");
 				}
 				else if (selectedFish.equals("Fish B"))
 				{
@@ -219,7 +219,7 @@ public class NewSimulation extends JFrame {
 					aggroLevelTextField.setText(aggro);
 					String aggroS = aggroLevelTextField.getText().toString();
 					float aggroC = Float.parseFloat(aggroS);
-					controller.setBaseAggroLevel(aggroC);
+					controller.setAggroLevel(aggroC);
 					
 					NameTextField.setEditable(false);
 					WeightTextField.setEditable(false);
@@ -231,9 +231,9 @@ public class NewSimulation extends JFrame {
 					controller.updateView();		
 				}
 				conn.close();
-				} catch (SQLException e) {
+				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					e1.printStackTrace();
 				}
 				//if (selectedFish.equals("Stringer Bell"))
 				//{
