@@ -47,6 +47,8 @@ public class NewSimulation extends JFrame {
 	
 	// need to fix logger
  	private static Logger logger = Logger.getLogger("LoggingToFile");
+ 	private JTextField genderTextField;
+ 	private JTextField aggroLevelTextField;
  	
 /* updates are from latest to oldest (top to bottom)
  * 
@@ -419,14 +421,13 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.EAST, x, -734, SpringLayout.EAST, getContentPane());
 		getContentPane().add(x);
 		
-		JLabel lblAddInGender = new JLabel("add in gender, age later on.");
-		springLayout.putConstraint(SpringLayout.NORTH, lblAddInGender, 23, SpringLayout.SOUTH, lblSizewidthX);
-		springLayout.putConstraint(SpringLayout.WEST, lblAddInGender, 0, SpringLayout.WEST, lblPleasePickA);
-		getContentPane().add(lblAddInGender);
+		JLabel Genderlbl = new JLabel("Gender");
+		springLayout.putConstraint(SpringLayout.NORTH, Genderlbl, 16, SpringLayout.SOUTH, lblSizewidthX);
+		springLayout.putConstraint(SpringLayout.WEST, Genderlbl, 10, SpringLayout.WEST, getContentPane());
+		getContentPane().add(Genderlbl);
 		
 		JButton btnGenerateFish = new JButton("Generate Fish");
-		springLayout.putConstraint(SpringLayout.NORTH, btnGenerateFish, 6, SpringLayout.SOUTH, x);
-		springLayout.putConstraint(SpringLayout.WEST, btnGenerateFish, 18, SpringLayout.EAST, lblAddInGender);
+		springLayout.putConstraint(SpringLayout.WEST, btnGenerateFish, 165, SpringLayout.WEST, getContentPane());
 		getContentPane().add(btnGenerateFish);
 		btnGenerateFish.addActionListener(new ActionListener() {
 			
@@ -507,12 +508,12 @@ public class NewSimulation extends JFrame {
 		});
 		
 		JLabel lblWaterTemperaturecelsius = new JLabel("Water Temperature (Celsius)");
+		springLayout.putConstraint(SpringLayout.WEST, lblWaterTemperaturecelsius, 6, SpringLayout.WEST, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, waterTemperatureSlider, 0, SpringLayout.SOUTH, lblWaterTemperaturecelsius);
-		springLayout.putConstraint(SpringLayout.EAST, lblWaterTemperaturecelsius, 0, SpringLayout.EAST, lblAddInGender);
 		getContentPane().add(lblWaterTemperaturecelsius);
 		
 		JLabel lblTankSpecifications = new JLabel("Tank Specifications:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblTankSpecifications, 56, SpringLayout.SOUTH, lblAddInGender);
+		springLayout.putConstraint(SpringLayout.NORTH, lblTankSpecifications, 63, SpringLayout.SOUTH, Genderlbl);
 		springLayout.putConstraint(SpringLayout.WEST, lblTankSpecifications, 10, SpringLayout.WEST, getContentPane());
 		getContentPane().add(lblTankSpecifications);
 		
@@ -533,6 +534,7 @@ public class NewSimulation extends JFrame {
 		getContentPane().add(lblTankHeight);
 		
 		tankWidthField = new JTextField();
+		springLayout.putConstraint(SpringLayout.SOUTH, btnGenerateFish, -33, SpringLayout.NORTH, tankWidthField);
 		tankWidthField.setText("20.0");
 		tankWidthField.setEditable(false);
 		springLayout.putConstraint(SpringLayout.WEST, tankWidthField, 14, SpringLayout.EAST, lblTankWidth);
@@ -573,6 +575,24 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.WEST, btnRunSimulation, 0, SpringLayout.WEST, lblPleasePickA);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnRunSimulation, 0, SpringLayout.SOUTH, outputData);
 		getContentPane().add(btnRunSimulation);
+		
+		genderTextField = new JTextField();
+		genderTextField.setEditable(false);
+		springLayout.putConstraint(SpringLayout.SOUTH, genderTextField, 0, SpringLayout.SOUTH, Genderlbl);
+		springLayout.putConstraint(SpringLayout.EAST, genderTextField, 0, SpringLayout.EAST, NameTextField);
+		getContentPane().add(genderTextField);
+		genderTextField.setColumns(10);
+		
+		JLabel lblAggroLevel = new JLabel("Aggro Level");
+		springLayout.putConstraint(SpringLayout.WEST, lblAggroLevel, 0, SpringLayout.WEST, lblPleasePickA);
+		getContentPane().add(lblAggroLevel);
+		
+		aggroLevelTextField = new JTextField();
+		springLayout.putConstraint(SpringLayout.SOUTH, lblAggroLevel, 0, SpringLayout.SOUTH, aggroLevelTextField);
+		springLayout.putConstraint(SpringLayout.NORTH, aggroLevelTextField, 6, SpringLayout.SOUTH, genderTextField);
+		springLayout.putConstraint(SpringLayout.WEST, aggroLevelTextField, 0, SpringLayout.WEST, NameTextField);
+		getContentPane().add(aggroLevelTextField);
+		aggroLevelTextField.setColumns(10);
 		btnRunSimulation.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e)
@@ -591,7 +611,12 @@ public class NewSimulation extends JFrame {
 				logger.info("Tank Temperature: " + tank.getTankTemperature());
 				System.out.println("Running Simulation");
 				
-				rS = new RunSimulation();
+				try {
+					rS = new RunSimulation();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				CloseJFrame();
 			}
 		});

@@ -26,28 +26,24 @@ import javax.swing.KeyStroke;
  */
 public class MainFrame extends JFrame
 {
-    private JPanel buttonPanel, glVeiwPanel;
+    private JPanel buttonPanel, glViewPanel;
     private MainFunction ptrFunc;
     
     MainFrame(MainFunction ptrFunc, GLCanvas GLc)
     {
-        
-        setTitle("a1");
-        setSize(800,500);
+        setTitle("Victor's Simulation Window");
+        setSize(800,300);
         this.ptrFunc = ptrFunc;
         setVisible(true);   
-        createButtons();
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        glVeiwPanel = new JPanel();
-        glVeiwPanel.setSize(600,600);
-        //glVeiwPanel.add(GLc);
-        //glVeiwPanel.setVisible(true);
+      //  createButtons();
+        glViewPanel = new JPanel();
+        glViewPanel.setSize(600,600);
+        //glViewPanel.add(GLc);
+        //glViewPanel.setVisible(true);
         //add(glVeiwPanel);
-        add(GLc);//add OPENGL wingow to frame
-        glVeiwPanel.addMouseWheelListener(ptrFunc);
-        glVeiwPanel.addMouseMotionListener(ptrFunc);
-        
-        
+        add(GLc);//add OPENGL window to frame
+      //  glViewPanel.addMouseWheelListener(ptrFunc);
+      //  glViewPanel.addMouseMotionListener(ptrFunc);
         
     }
  
