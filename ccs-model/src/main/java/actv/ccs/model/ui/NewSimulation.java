@@ -191,7 +191,7 @@ public class NewSimulation extends JFrame {
 		        	String width = rs.getString("Width");
 		        	String height = rs.getString("Height");
 		        	String gender = rs.getString("Gender");
-		        	String aggro = rs.getString("AggroLevel");
+		        	String aggro = rs.getString("AggroLevel"); //default to 10
 		        	
 		        	NameTextField.setText(name);
 					String cichlidNameT = NameTextField.getText().toString();
