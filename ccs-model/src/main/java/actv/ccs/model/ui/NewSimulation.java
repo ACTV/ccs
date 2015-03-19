@@ -3,6 +3,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Logger;
 import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
@@ -98,6 +103,56 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.WEST, comboBox, 6, SpringLayout.EAST, lblPleasePickA);
 		springLayout.putConstraint(SpringLayout.EAST, comboBox, -587, SpringLayout.EAST, getContentPane());
 		getContentPane().add(comboBox);
+		
+		//http://stackoverflow.com/questions/17887927/adding-items-to-a-jcombobox
+		
+		class ComboItem
+		{
+		    private String key;
+		    private String value;
+
+		    public ComboItem(String key, String value)
+		    {
+		        this.key = key;
+		        this.value = value;
+		    }
+
+		    @Override
+		    public String toString()
+		    {
+		        return key;
+		    }
+
+		    public String getKey()
+		    {
+		        return key;
+		    }
+
+		    public String getValue()
+		    {
+		        return value;
+		    }
+		}
+		
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
+	
+		Statement s = conn.createStatement();
+		ResultSet rs = s.executeQuery("SELECT * FROM [FishPool]");
+		while (rs.next())
+		{
+			String name = rs.getString("Name"); //Field from database ex. FishA, FishB
+        	String value = rs.getString((1)); 
+
+        ComboItem comboItem = new ComboItem(name, value); 
+        comboBox.addItem(comboItem); 
+		}
+		conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// find a way to get the database merger here
 		
