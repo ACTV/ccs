@@ -210,12 +210,23 @@ public class NewSimulation extends JFrame {
 					HeightTextField.setText(height);
 					String heightS = HeightTextField.getText().toString();
 					float heightC = Float.parseFloat(heightS);
-					controller.setHeight(heightC);	
+					controller.setHeight(heightC);
+					
+					genderTextField.setText(gender);
+					String genderS = genderTextField.getText().toString();
+					controller.setGender(genderS);
+					
+					aggroLevelTextField.setText(aggro);
+					String aggroS = aggroLevelTextField.getText().toString();
+					float aggroC = Float.parseFloat(aggroS);
+					controller.setBaseAggroLevel(aggroC);
 					
 					NameTextField.setEditable(false);
 					WeightTextField.setEditable(false);
 					WidthTextField.setEditable(false);
 					HeightTextField.setEditable(false);
+					genderTextField.setEditable(false);
+					
 					
 					controller.updateView();		
 				}
