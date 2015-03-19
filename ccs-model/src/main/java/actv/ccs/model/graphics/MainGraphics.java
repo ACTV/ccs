@@ -217,7 +217,7 @@ System.out.println("ffefefef");
         System.out.println("ffefefef");
         gl.glBufferData(GL.GL_ARRAY_BUFFER, hnd.limit() * 4, hnd, GL.GL_STATIC_DRAW);
 
-        cubeTexId = MainGraghics.loadTexture(drawable, cubeMapTexSrc);
+        cubeTexId = MainGraphics.loadTexture(drawable, cubeMapTexSrc);
 
     }
     
@@ -513,7 +513,6 @@ System.out.println("whatIgetnow!!!!!!!!!!!!!!!!!:" + uniShaderLocs[3][1]);
         offset.put(1, y);
     }
 
-    @Override
     public void init(GLAutoDrawable drawable)
     {
         GL4 GL = (GL4) drawable.getGL();
@@ -719,12 +718,11 @@ System.out.println("whatIgetnow!!!!!!!!!!!!!!!!!:" + uniShaderLocs[3][1]);
     
     
 
-    @Override
+
     public void dispose(GLAutoDrawable drawable)
     {
     }
 
-    @Override
     public void display(GLAutoDrawable drawable)
     {
         GL4 GL = (GL4) drawable.getGL();
@@ -868,8 +866,6 @@ System.out.println("whatIgetnow!!!!!!!!!!!!!!!!!:" + uniShaderLocs[3][1]);
        gl.glDrawArrays(GL_PATCHES, 0, 16);
     }
     
-
-    @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height)
     {
     }

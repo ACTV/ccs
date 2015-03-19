@@ -93,7 +93,6 @@ public class MainFunction implements ActionListener, MouseWheelListener, KeyList
                
     }
  
-    @Override
     public void actionPerformed(ActionEvent e)
     {
  
@@ -127,14 +126,12 @@ public class MainFunction implements ActionListener, MouseWheelListener, KeyList
         return cmds[index]; //returns command object
     }
 
-    @Override
     public void mouseWheelMoved(MouseWheelEvent e)
     {
         Point3D pt = mg.getLightPos();
         mg.incLightPos(0,0,(float)( pt.getZ() /100)); //adds or subtracts from the speed varible dt
     }
 
-    @Override
     public void keyTyped(KeyEvent e)
     {
         //System.out.printf("ffff");
@@ -144,7 +141,6 @@ public class MainFunction implements ActionListener, MouseWheelListener, KeyList
     
     
     private static boolean showAxis = false;
-    @Override
     public void keyPressed(KeyEvent e)
     {
 
@@ -299,7 +295,6 @@ public class MainFunction implements ActionListener, MouseWheelListener, KeyList
         
     }
 
-    @Override
     public void keyReleased(KeyEvent e)
     {
         //System.out.printf("ffff");
@@ -342,13 +337,12 @@ public class MainFunction implements ActionListener, MouseWheelListener, KeyList
     
    // private void orbitOjectYaxis()
 
-    @Override
+
     public void mouseDragged(MouseEvent e)
     {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
     public void mouseMoved(MouseEvent e)
     {
         Point2D p =  e.getPoint();
