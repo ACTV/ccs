@@ -98,13 +98,13 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.WEST, lblPleasePickA, 10, SpringLayout.WEST, label);
 		getContentPane().add(lblPleasePickA);
 		
-		JComboBox comboBox = new JComboBox(poolOfFish);
+		JComboBox comboBox = new JComboBox();
 		springLayout.putConstraint(SpringLayout.NORTH, comboBox, 0, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, comboBox, 6, SpringLayout.EAST, lblPleasePickA);
 		springLayout.putConstraint(SpringLayout.EAST, comboBox, -587, SpringLayout.EAST, getContentPane());
 		getContentPane().add(comboBox);
 		
-		//http://stackoverflow.com/questions/17887927/adding-items-to-a-jcombobox
+		/*//http://stackoverflow.com/questions/17887927/adding-items-to-a-jcombobox
 		
 		class ComboItem
 		{
@@ -132,7 +132,7 @@ public class NewSimulation extends JFrame {
 		    {
 		        return value;
 		    }
-		}
+		}*/
 		
 		Connection conn;
 		try {
@@ -142,11 +142,10 @@ public class NewSimulation extends JFrame {
 		ResultSet rs = s.executeQuery("SELECT * FROM [FishPool]");
 		while (rs.next())
 		{
-			String name = rs.getString("Name"); //Field from database ex. FishA, FishB
-        	String value = rs.getString((1)); 
-
-        ComboItem comboItem = new ComboItem(name, value); 
-        comboBox.addItem(comboItem); 
+			String name = rs.getString("Type"); //Field from database ex. FishA, FishB
+        	//String value = rs.getString((1)); 
+        //ComboItem comboItem = new ComboItem(name, value); 
+        comboBox.addItem(name); 
 		}
 		conn.close();
 		} catch (SQLException e) {
@@ -166,24 +165,47 @@ public class NewSimulation extends JFrame {
 				JComboBox<String> combo = (JComboBox<String>) e.getSource();
 				String selectedFish = (String) combo.getSelectedItem();
 				
-				if (selectedFish.equals("Stringer Bell"))
+				Connection conn;
+				try {
+					conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
+				Statement s = conn.createStatement();
+				ResultSet rs;
+				if (selectedFish.equals("Fish A"))
 				{
-					NameTextField.setText("Stringer Bell");
+					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Name='Fish A'");
+				}
+				else if (selectedFish.equals("Fish B"))
+				{
+					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
+				}
+				else if (selectedFish.equals("Fish C"))
+				{
+					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
+				}
+				while (rs.next())
+				{
+					String name = rs.getString("Name"); //Field from database ex. FishA, FishB
+		        	String weight = rs.getString("Weight");
+		        	String width = rs.getString("Width");
+		        	String height = rs.getString("Height");
+		        	String gender = rs.getString("Gender");
+		        	String aggro = rs.getString("AggroLevel");
+		        	
+		        	NameTextField.setText(name);
 					String cichlidNameT = NameTextField.getText().toString();
 					controller.setName(cichlidNameT);
 					
-					
-					WeightTextField.setText("10.0");
+				    WeightTextField.setText(weight);
 					String weightS = WeightTextField.getText().toString();
 					float weightC = Float.parseFloat(weightS);
 					controller.setWeight(weightC);
 					
-					WidthTextField.setText("1.0");
+					WidthTextField.setText(width);
 					String widthS = WidthTextField.getText().toString();
 					float widthC = Float.parseFloat(widthS);
 					controller.setLength(widthC);
 					
-					HeightTextField.setText("3.0");
+					HeightTextField.setText(height);
 					String heightS = HeightTextField.getText().toString();
 					float heightC = Float.parseFloat(heightS);
 					controller.setHeight(heightC);	
@@ -193,10 +215,44 @@ public class NewSimulation extends JFrame {
 					WidthTextField.setEditable(false);
 					HeightTextField.setEditable(false);
 					
-					controller.updateView();					
-					
+					controller.updateView();		
 				}
-				else if (selectedFish.equals("Marlo Stanfield"))
+				conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//if (selectedFish.equals("Stringer Bell"))
+				//{
+					//NameTextField.setText("Stringer Bell");
+					//String cichlidNameT = NameTextField.getText().toString();
+					//controller.setName(cichlidNameT);
+					
+					
+					//WeightTextField.setText("10.0");
+					//String weightS = WeightTextField.getText().toString();
+					//float weightC = Float.parseFloat(weightS);
+					//controller.setWeight(weightC);
+					
+					//WidthTextField.setText("1.0");
+					//String widthS = WidthTextField.getText().toString();
+					//float widthC = Float.parseFloat(widthS);
+					//controller.setLength(widthC);
+					
+					//HeightTextField.setText("3.0");
+					//String heightS = HeightTextField.getText().toString();
+					//float heightC = Float.parseFloat(heightS);
+					//controller.setHeight(heightC);	
+					
+					//NameTextField.setEditable(false);
+					//WeightTextField.setEditable(false);
+					//WidthTextField.setEditable(false);
+					//HeightTextField.setEditable(false);
+					
+					//controller.updateView();					
+					
+				//}
+				/*else if (selectedFish.equals("Marlo Stanfield"))
 				{
 					NameTextField.setText("Marlo Stanfield");
 					String cichlidNameT = NameTextField.getText().toString();
@@ -295,7 +351,7 @@ public class NewSimulation extends JFrame {
 					HeightTextField.setEditable(true);
 					
 					System.out.println("do nothing");
-				}
+				}*/
 				
 			}
 		});
