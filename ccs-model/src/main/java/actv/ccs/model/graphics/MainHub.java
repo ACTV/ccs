@@ -41,7 +41,7 @@ public class MainHub
     
     public MainHub(String mainFilePath) throws IOException 
     {
-        GLc = new GLCanvas();///////UPDATE THIS!!!!!!!!!!!!!!!!!
+    	GLc = new GLCanvas();///////UPDATE THIS!!!!!!!!!!!!!!!!!
         attachedShapes = new GeoShape[1];
         
         //when out of IDE

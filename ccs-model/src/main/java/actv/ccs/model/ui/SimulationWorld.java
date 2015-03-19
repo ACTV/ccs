@@ -19,6 +19,7 @@ public class SimulationWorld {
 		ConvictCichlidController controller = new ConvictCichlidController(cichlid, this);
 		TankController tankController = new TankController(tank, this);
 		
+		
 	}
 	
 	public void printData(FishState state, float[] location, float aggroLevel, float length, float height, float weight, String name, int id){

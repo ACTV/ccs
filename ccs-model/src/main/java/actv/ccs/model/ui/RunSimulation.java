@@ -15,36 +15,38 @@ import javax.swing.JTextPane;
 import javax.swing.border.EtchedBorder;
 
 import actv.ccs.model.*;
+import actv.ccs.model.graphics.*;
 import actv.ccs.model.type.FishState;
+
 import javax.swing.BoxLayout;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.io.IOException;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class RunSimulation extends JFrame {
-	
+public class RunSimulation extends JFrame{
+	private String mainFilePath = "";
 	private ConvictCichlid cichlid;
 	private TankObject tank;
 	private SimulationWorld world;
 	private TankView tV;
-	
-	public RunSimulation()
+	private MainHub mH;
+	public RunSimulation() throws IOException
 	{
 		setTitle("Convict Cichlid Fish Simulator Test 1");
 		setSize(1000,600);
 		
-		
+	//	mH = new MainHub(mainFilePath);
 		world = new SimulationWorld();
-		
-		
 		// create menu bar
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
 		tV = new TankView(world);
-		
 		
 		// center panel for map
 		tV.setBorder(new EtchedBorder());
