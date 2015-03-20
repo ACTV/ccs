@@ -25,6 +25,7 @@ public class NewSimulation extends JFrame {
 	
 	private ConvictCichlid cichlid;
 	private TankObject tank;
+	private String cichlidNameZ;
 	private SimulationWorld world;
 	private ConvictCichlidController controller;
 	private RunSimulation rS;
@@ -393,6 +394,7 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.NORTH, lblCichlidName, 8, SpringLayout.SOUTH, lblIfNot);
 		springLayout.putConstraint(SpringLayout.WEST, lblCichlidName, 10, SpringLayout.WEST, getContentPane());
 		getContentPane().add(lblCichlidName);
+		cichlidNameZ = NameTextField.getText().toString();
 		
  		JLabel lblWeightkg = new JLabel("Weight (kg): ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblWeightkg, 6, SpringLayout.SOUTH, lblCichlidName);
@@ -489,15 +491,15 @@ public class NewSimulation extends JFrame {
 				try {
 					conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
 				Statement s = conn.createStatement();
-				if (selectedFish.equals("Fish A"))
+				if (cichlidNameZ.equals("Fish A"))
 				{
 					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
 				}
-				else if (selectedFish.equals("Fish B"))
+				else if (cichlidNameZ.equals("Fish B"))
 				{
 					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
 				}
-				else if (selectedFish.equals("Fish C"))
+				else if (cichlidNameZ.equals("Fish C"))
 				{
 					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
 				}
