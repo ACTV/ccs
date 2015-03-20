@@ -4,21 +4,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.drools.KnowledgeBase;
+import org.drools.KnowledgeBaseConfiguration;
+import org.drools.KnowledgeBaseFactory;
 import org.drools.builder.KnowledgeBuilder;
 import org.drools.builder.KnowledgeBuilderConfiguration;
 import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
 import org.drools.command.Command;
-import org.drools.command.CommandFactory;
+import org.drools.conf.EventProcessingOption;
 import org.drools.event.rule.ObjectInsertedEvent;
 import org.drools.event.rule.ObjectRetractedEvent;
 import org.drools.event.rule.ObjectUpdatedEvent;
 import org.drools.event.rule.WorkingMemoryEventListener;
 import org.drools.io.ResourceFactory;
+import org.drools.runtime.KnowledgeSessionConfiguration;
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.runtime.conf.ClockTypeOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
+
+import actv.ccs.model.CCSMemoryObject;
 
 /*
  * 
@@ -41,7 +47,7 @@ public class CCSKnowledgeBase {
 	 * 
 	 * Static entrypoint for main game
 	 */
-	public static void executeSession(Object...objs){
+	public static void executeSession(ArrayList<CCSMemoryObject> objs){
 		StatefulKnowledgeSession sks = setupSession();
 		insertObjects(sks, objs);
 		
@@ -55,29 +61,23 @@ public class CCSKnowledgeBase {
 		
 	}
 	
-	public static void executeInfiniteSession(Object...objs){
-		StatefulKnowledgeSession sks = setupSession();
+	public static StatefulKnowledgeSession executeInfiniteSession(ArrayList<CCSMemoryObject> objs){
+		final StatefulKnowledgeSession sks = setupSession();
 		insertObjects(sks, objs);
 		
 		long start_time = System.currentTimeMillis();
-		sks.fireUntilHalt();
-		sks.halt();
-		log.info("Execution time: {}", System.currentTimeMillis() - start_time);
-		sks.dispose();
-	}
-	
-	private static void insertObjects(StatefulKnowledgeSession sks, Object[] objs){
-		for(Object obj : objs){
-			//cmds.add(CommandFactory.newInsert(obj));
-			sks.insert(obj);
-		}
-		//cmds.add(CommandFactory.newStartProcess("start"));
-//		sks.startProcess("start");
-		sks.startProcess("swim");
+		
+		new Thread(){
+			public void run(){
+				sks.fireUntilHalt();
+			}
+		}.start();
+		
+		return sks;
 	}
 	
 	private static StatefulKnowledgeSession setupSession(){
-		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(getConfig()); 
+		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(getKnowledgeBuilderConfiguration()); 
 
 		//TODO: hardcoded the rules for now.
 		addDrl(kbuilder, "actv/ccs/rules/start/Cooldown.drl");
@@ -88,12 +88,12 @@ public class CCSKnowledgeBase {
 		addBpmn(kbuilder, "actv/ccs/flow/idle.bpmn");
 		addBpmn(kbuilder, "actv/ccs/flow/swim.bpmn");
 		
-		KnowledgeBase kb = kbuilder.newKnowledgeBase();
+		KnowledgeBase kb = KnowledgeBaseFactory.newKnowledgeBase(getKnowledgeBaseConfiguration());
 		
 		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
-		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession();
+		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
 
-		ArrayList<Command> cmds = new ArrayList<Command>();
+//		ArrayList<Command> cmds = new ArrayList<Command>();
 		
 		
 		//TODO Temporary event listener
@@ -115,18 +115,36 @@ public class CCSKnowledgeBase {
 		return sks;
 	}
 	
-	/**
-	 * 
-	 * Setup the KnowledgeBuilderConfiguration
-	 * 
-	 */
-	public static KnowledgeBuilderConfiguration getConfig(){
-		if(config == null){
-			// Set up default Drools dialect to Java
-			KnowledgeBuilderConfiguration config = KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration();
-			config.setProperty("drools.dialect.default", "mvel");
-		}
+	private static KnowledgeBuilderConfiguration getKnowledgeBuilderConfiguration(){
+		// Set up default Drools dialect to Java
+		KnowledgeBuilderConfiguration config = KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration();
+		config.setProperty("drools.dialect.default", "mvel");
 		return config;
+	}
+	
+	private static KnowledgeBaseConfiguration getKnowledgeBaseConfiguration(){
+		// Set up default Drools dialect to Java
+		KnowledgeBaseConfiguration config = KnowledgeBaseFactory.newKnowledgeBaseConfiguration();
+		config.setOption(EventProcessingOption.STREAM);
+		return config;
+	}
+	
+	private static KnowledgeSessionConfiguration getKnowledgeSessionConfiguration(){
+		// Set up default Drools dialect to Java
+		KnowledgeSessionConfiguration config = KnowledgeBaseFactory.newKnowledgeSessionConfiguration();
+		config.setOption(ClockTypeOption.get("pseudo"));
+		return config;
+	}
+	
+	
+	private static void insertObjects(StatefulKnowledgeSession sks, ArrayList<CCSMemoryObject> objs){
+		for(Object obj : objs){
+			//cmds.add(CommandFactory.newInsert(obj));
+			sks.insert(obj);
+		}
+		//cmds.add(CommandFactory.newStartProcess("start"));
+//		sks.startProcess("start");
+		sks.startProcess("swim");
 	}
 	
 	/**
@@ -135,7 +153,7 @@ public class CCSKnowledgeBase {
 	 * @return KnowledgeBuilder
 	 */
 	public static KnowledgeBuilder initKBuilder(String [] resources){
-		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(getConfig());
+		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(getKnowledgeBuilderConfiguration());
 		int startExt = 0;
 		// Add resources
 		for(String rsrc : resources){

@@ -1,5 +1,8 @@
 package actv.rules;
 
+import java.util.ArrayList;
+
+import org.drools.runtime.StatefulKnowledgeSession;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import actv.ccs.CCSKnowledgeBase;
 import actv.ccs.fact.Auditor;
+import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 
@@ -16,6 +20,7 @@ public class CCSKnowledgeBaseTest{
 	private ConvictCichlid cc;
 	private Auditor auditor;
 	private static Logger log = LoggerFactory.getLogger(CCSKnowledgeBaseTest.class);
+	private ArrayList<CCSMemoryObject> objs;
 
 	@Before
 	public void setupFish(){
@@ -29,10 +34,32 @@ public class CCSKnowledgeBaseTest{
 	
 	@Test
 	public void test_Package(){
+		log.info("test_Package:");
+		objs = new ArrayList<CCSMemoryObject>();
+		objs.add(cc);
+		objs.add(auditor);
 		
-		CCSKnowledgeBase.executeSession(cc, auditor);
+		CCSKnowledgeBase.executeSession(objs);
 		//Assert.assertEquals(FishState.IDLE, cc.getState());
 		Assert.assertTrue(auditor.getRulesFired().size() >= 1);
+	}
+	
+	@Test
+	public void testInfinite(){
+		log.info("testInfinite");
+		objs = new ArrayList<CCSMemoryObject>();
+		objs.add(cc);
+		objs.add(auditor);
+		
+		StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
+		long start = System.currentTimeMillis();
+		if(start + 10000 <= System.currentTimeMillis()){
+			sks.halt();
+			log.info("Halting session!");
+		}
+		log.info("auditor size: {}", auditor.getRulesFired().size());
+		Assert.assertTrue(auditor.getRulesFired().size() >= 0);
+		//Assert.assertTrue(auditor.getRulesFired().size() >= 1);
 	}
 	
 	@After

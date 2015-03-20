@@ -22,11 +22,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>actv</groupId>
-			<artifactId>ccs</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
@@ -38,8 +33,6 @@
 			<groupId>org.drools</groupId>
 			<artifactId>knowledge-internal-api</artifactId>
 		</dependency>
-		<!-- <dependency> <groupId>org.drools</groupId> <artifactId>drools-jsr94</artifactId> 
-			<version>5.5.0.Final</version> </dependency> -->
 		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-core</artifactId>

@@ -4,7 +4,7 @@ import java.beans.PropertyChangeSupport;
 
 import actv.ccs.model.type.FishState;
 
-public class ConvictCichlid extends PropertyChangeSupport{
+public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryObject{
 	private float [] location;
 	private FishState state;
 	private float aggroLevel;

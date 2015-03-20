@@ -24,6 +24,7 @@ public class IdleTest extends DroolsTest {
 	public void setCC(){
 		cc = new ConvictCichlid();
 		cc.setState(FishState.IDLE);
+		cc.setIdleWaitTime(0);
 		auditor = new Auditor();
 	}
 	
