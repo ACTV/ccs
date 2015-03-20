@@ -73,7 +73,7 @@ public class TankObject {
 		if (fishIDList == null)
 		{
 			fishIDList = new int[3];
-			fishIDList[0] = fishIDList[1] = fishIDList[2];
+			fishIDList[0] = fishIDList[1] = fishIDList[2] = 0;
 		}
 		return fishIDList;
 	}
