@@ -1,6 +1,5 @@
 package actv.ccs.model.ui;
 import java.awt.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -18,8 +17,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.event.*;
 
 import actv.ccs.model.*;
-import actv.ccs.model.state.FishState;
-import actv.ccs.model.objects.*;
+import actv.ccs.model.type.FishState;
+import actv.ccs.model.TankObject;
 
 
 public class NewSimulation extends JFrame {
