@@ -16,6 +16,8 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.*;
 
+import org.apache.commons.lang.ArrayUtils;
+
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
 import actv.ccs.model.TankObject;
@@ -502,12 +504,10 @@ public class NewSimulation extends JFrame {
 					String id = rs.getString("ID"); // added new string for ID
 				
 		        	int fishIDc = Integer.parseInt(id);
-		        	System.out.println("String ID: " + fishIDc);
 			        	
-		        		fishIDList[i] = fishIDc;
-		        		i++;
+		        		fishIDList = ArrayUtils.add(fishIDList, i, fishIDc);
 		        		System.out.println("arr: " + i + " ID: " + fishIDList[i]);
-		        	
+		        		i++;
 		        	
 //					controller.updateView();		
 				}
