@@ -32,16 +32,11 @@ import actv.ccs.model.CCSMemoryObject;
  * 
  */
 public class CCSKnowledgeBase {
-	//private static KnowledgeBuilder kbuilder;
+	private static KnowledgeBuilder kbuilder;
 	private static KnowledgeBuilderConfiguration config;
 	private static final String [] packages = { "actv/ccs/rules/start",
 												"actv/ccs/flow"};
 	private static final Logger log = LoggerFactory.getLogger(CCSKnowledgeBase.class); 
-	
-	public static String [] getPackages(){
-		return packages;
-	}
-	
 	
 	/**
 	 * 
@@ -52,7 +47,6 @@ public class CCSKnowledgeBase {
 		insertObjects(sks, objs);
 		
 		long start_time = System.currentTimeMillis();
-//		sks.execute(CommandFactory.newBatchExecution(cmds));
 		
 		sks.fireAllRules();
 		
@@ -64,8 +58,6 @@ public class CCSKnowledgeBase {
 	public static StatefulKnowledgeSession executeInfiniteSession(ArrayList<CCSMemoryObject> objs){
 		final StatefulKnowledgeSession sks = setupSession();
 		insertObjects(sks, objs);
-		
-		long start_time = System.currentTimeMillis();
 		
 		new Thread(){
 			public void run(){
@@ -93,58 +85,36 @@ public class CCSKnowledgeBase {
 		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
 		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
 
-//		ArrayList<Command> cmds = new ArrayList<Command>();
-		
-		
-		//TODO Temporary event listener
-		sks.addEventListener(new WorkingMemoryEventListener() {
-			
-			public void objectUpdated(ObjectUpdatedEvent event) {
-				// TODO Auto-generated method stub
-			}
-			
-			public void objectRetracted(ObjectRetractedEvent event) {
-				// TODO Auto-generated method stub
-			}
-			
-			public void objectInserted(ObjectInsertedEvent event) {
-				log.info("Inserted {}", event.getObject().toString());
-			}
-		});
+		sks.startProcess("swim");
+
+		sks.addEventListener((WorkingMemoryEventListener) new CCSListener());
 		
 		return sks;
 	}
 	
 	private static KnowledgeBuilderConfiguration getKnowledgeBuilderConfiguration(){
-		// Set up default Drools dialect to Java
+		// Set up default Drools dialect to mvel
 		KnowledgeBuilderConfiguration config = KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration();
 		config.setProperty("drools.dialect.default", "mvel");
 		return config;
 	}
 	
 	private static KnowledgeBaseConfiguration getKnowledgeBaseConfiguration(){
-		// Set up default Drools dialect to Java
 		KnowledgeBaseConfiguration config = KnowledgeBaseFactory.newKnowledgeBaseConfiguration();
 		config.setOption(EventProcessingOption.STREAM);
 		return config;
 	}
 	
 	private static KnowledgeSessionConfiguration getKnowledgeSessionConfiguration(){
-		// Set up default Drools dialect to Java
 		KnowledgeSessionConfiguration config = KnowledgeBaseFactory.newKnowledgeSessionConfiguration();
 		config.setOption(ClockTypeOption.get("pseudo"));
 		return config;
 	}
 	
-	
 	private static void insertObjects(StatefulKnowledgeSession sks, ArrayList<CCSMemoryObject> objs){
 		for(Object obj : objs){
-			//cmds.add(CommandFactory.newInsert(obj));
 			sks.insert(obj);
 		}
-		//cmds.add(CommandFactory.newStartProcess("start"));
-//		sks.startProcess("start");
-		sks.startProcess("swim");
 	}
 	
 	/**
@@ -177,12 +147,10 @@ public class CCSKnowledgeBase {
 
 	private static void addPackage(KnowledgeBuilder kbuilder, String pkg){
 		// Add the package(s)
-		// TODO: Remove hardcoded path(s) for scalability in the future
 		kbuilder.add(ResourceFactory.newClassPathResource(pkg), ResourceType.PKG);
 	}
 	
 	private static void addBpmn(KnowledgeBuilder kbuilder, String flowFile){
-		// Add rule and flow file to the KnowledgeBuilder
 		ClassPathResource flow = new ClassPathResource(flowFile);
 		try{
 			kbuilder.add(ResourceFactory.newUrlResource(flow.getURL()), ResourceType.BPMN2);
@@ -190,17 +158,5 @@ public class CCSKnowledgeBase {
 			e.printStackTrace();
 		}
 	}
-	
-/*	public void ExecuteCCSKB(ArrayList<TankObject> tankObjects){
-		KnowledgeBase kb = kbuilder.newKnowledgeBase();
-//		tankObjects.put("startProcess", "start");
-		
-		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession();
-		//TODO: Inserting objects into a stateful session with a hash map.
-		for(TankObject obj : resources){
-			sks.insert(obj);
-		}
-	}*/
-	
 
 }

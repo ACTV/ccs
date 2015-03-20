@@ -29,6 +29,8 @@ public class CCSKnowledgeBaseTest{
 		cc.setBaseAggroLevel(5.00f);
 		cc.setBaseCautionLevel(5.00f);
 		cc.setBaseSpeed(5.00f);
+		cc.setCautionLevel(2f);
+		cc.setIdleWaitTime(0);
 		auditor = new Auditor();
 	}
 	
@@ -53,13 +55,13 @@ public class CCSKnowledgeBaseTest{
 		
 		StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
 		long start = System.currentTimeMillis();
-		if(start + 10000 <= System.currentTimeMillis()){
+		/*if(start + 100000 > System.currentTimeMillis()){
 			sks.halt();
 			log.info("Halting session!");
-		}
+		}*/
 		log.info("auditor size: {}", auditor.getRulesFired().size());
-		Assert.assertTrue(auditor.getRulesFired().size() >= 0);
-		//Assert.assertTrue(auditor.getRulesFired().size() >= 1);
+		//Assert.assertTrue(auditor.getRulesFired().size() >= 0);
+		Assert.assertTrue(auditor.getRulesFired().size() >= 1);
 	}
 	
 	@After

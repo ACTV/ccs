@@ -13,6 +13,8 @@ import org.drools.event.rule.ObjectRetractedEvent;
 import org.drools.event.rule.ObjectUpdatedEvent;
 import org.drools.event.rule.WorkingMemoryEventListener;
 import org.drools.runtime.StatelessKnowledgeSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import actv.ccs.CCSKnowledgeBase;
 
@@ -24,6 +26,7 @@ import actv.ccs.CCSKnowledgeBase;
 public class DroolsTest{
 	private StatelessKnowledgeSession sks; 
 	private String startProc;
+	private static final Logger logger = LoggerFactory.getLogger(DroolsTest.class);
 	
 	public DroolsTest(String drl, String flowFile, String startProc){
 		// Retrieve KnowledgeBuilder
@@ -43,14 +46,14 @@ public class DroolsTest{
 		sks.addEventListener(new WorkingMemoryEventListener() {
 			
 			public void objectUpdated(ObjectUpdatedEvent event) {
-				System.out.println("Updated " + event.getObject().toString());
-			}
-			
-			public void objectRetracted(ObjectRetractedEvent event) {
-				// TODO Auto-generated method stub
+				logger.info("Updated {}", event.getObject().toString());
 			}
 			
 			public void objectInserted(ObjectInsertedEvent event) {
+				logger.info("Inserted {}", event.getObject().toString());
+			}
+
+			public void objectRetracted(ObjectRetractedEvent event) {
 				// TODO Auto-generated method stub
 			}
 		});
@@ -70,7 +73,9 @@ public class DroolsTest{
 			l.add(CommandFactory.newInsert(obj));
 		}
 		l.add(CommandFactory.newStartProcess(startProc));
-		
+
+		long start = System.currentTimeMillis();
 		sks.execute(CommandFactory.newBatchExecution(l));
+		logger.info("Execution time {}", System.currentTimeMillis() - start);
 	}
 }

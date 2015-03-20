@@ -11,12 +11,15 @@ rule "Cooldown"
 
 	when
 		$auditor :  Auditor()
+		not (exists CoolingDown());
+
 		$cc : ConvictCichlid( state == FishState.CAUTION,
 							  speed != baseSpeed,
 							  $baseSpeed : baseSpeed );
 					
-		not (exists CoolingDown());
+		not (exists IdleTimer(convictCichlid == $cc));
 	then
+		insert( new IdleTimer(System.currentTimeMillis() + $cc.getIdleWaitTime()));
 		modify($cc){
 			setSpeed($baseSpeed),
 			setState(FishState.IDLE);
