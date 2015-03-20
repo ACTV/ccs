@@ -1,6 +1,6 @@
 package actv.ccs.model.ui;
 
-import actv.ccs.model.objects.*;
+import actv.ccs.model.ConvictCichlid;
 
 public interface Iterator {
 

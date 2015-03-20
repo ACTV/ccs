@@ -1,11 +1,9 @@
 package actv.ccs.model.ui;
 
-import java.awt.*;
-
 import actv.ccs.listener.CCChangeListener;
-import actv.ccs.model.*;
-import actv.ccs.model.state.FishState;
-import actv.ccs.model.objects.*;
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.TankObject;
+import actv.ccs.model.type.FishState;
 
 public class SimulationWorld {
 	

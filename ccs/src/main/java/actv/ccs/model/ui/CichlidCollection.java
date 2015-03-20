@@ -2,7 +2,7 @@ package actv.ccs.model.ui;
 
 import java.util.Vector;
 
-import actv.ccs.model.objects.*;
+import actv.ccs.model.ConvictCichlid;
 
 public class CichlidCollection implements Iterable
 {

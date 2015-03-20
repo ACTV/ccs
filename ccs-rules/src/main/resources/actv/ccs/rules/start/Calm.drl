@@ -4,6 +4,7 @@ import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.ccs.fact.CoolingDown;
 import actv.ccs.fact.Auditor;
+import actv.ccs.fact.IdleTimer;
 
 
 rule "Cooldown"
@@ -19,7 +20,7 @@ rule "Cooldown"
 					
 		not (exists IdleTimer(convictCichlid == $cc));
 	then
-		insert( new IdleTimer(System.currentTimeMillis() + $cc.getIdleWaitTime()));
+		insert( new IdleTimer($cc, System.currentTimeMillis() + $cc.getIdleWaitTime()));
 		modify($cc){
 			setSpeed($baseSpeed),
 			setState(FishState.IDLE);
