@@ -506,12 +506,11 @@ public class NewSimulation extends JFrame {
 					String id = rs.getString("ID"); // added new string for ID
 				
 		        	int fishIDc = Integer.parseInt(id);
-		        	System.out.println("String ID: " + fishIDc);
-			        	
-		        		fishIDList[i] = fishIDc;
-		        		i++;
+			        	System.out.println("String ID: " + fishIDc);
+
+			        	fishIDList[i] = fishIDc;
+			        	i++;
 		        		System.out.println("arr: " + i + " ID: " + fishIDList[i]);
-		        	
 		        	
 //					controller.updateView();		
 				}
@@ -679,21 +678,6 @@ public class NewSimulation extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-				
-				/*
-				 *  This is the only code needed to start the engine (for now at least)
-				 */
-				final ArrayList<CCSMemoryObject> objs = new ArrayList<CCSMemoryObject>();
-				objs.add(cichlid);
-				new Thread(){
-					public void run(){
-						StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
-					}
-				}.start();
-				// End engine start
-				
-				
 				CloseJFrame();
 			}
 		});
