@@ -76,7 +76,8 @@ public class NewSimulation extends JFrame {
 		cichlid = getFromDB();
 		
 		// adding new int
-		fishIDList = new int [3];
+		
+		fishIDList = tank.getFishArr();
 		
 		FileHandler logFile = new FileHandler("Log2File.txt");
 		logFile.setFormatter(new SimpleFormatter());
@@ -506,12 +507,14 @@ public class NewSimulation extends JFrame {
 					String id = rs.getString("ID"); // added new string for ID
 				
 		        	int fishIDc = Integer.parseInt(id);
-			        	System.out.println("String ID: " + fishIDc);
-
-			        	fishIDList[i] = fishIDc;
-			        	i++;
-		        		System.out.println("arr: " + i + " ID: " + fishIDList[i]);
 		        	
+			        	fishIDList[i] = fishIDc;
+			        	tank.setFishArr(fishIDList);
+		        		System.out.println("arr: " + i + " ID: " + fishIDList[i]);
+		        		System.out.println("ff: " + tank.getFishArr()[i]);
+		        		i++;
+		        		
+		        		
 //					controller.updateView();		
 				}
 				conn.close();
