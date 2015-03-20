@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
@@ -16,6 +17,9 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.*;
 
+import org.drools.runtime.StatefulKnowledgeSession;
+
+import actv.ccs.CCSKnowledgeBase;
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
 import actv.ccs.model.TankObject;
@@ -681,6 +685,21 @@ public class NewSimulation extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+				
+				/*
+				 *  This is the only code needed to start the engine (for now at least)
+				 */
+				final ArrayList<CCSMemoryObject> objs = new ArrayList<CCSMemoryObject>();
+				objs.add(cichlid);
+				new Thread(){
+					public void run(){
+						StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
+					}
+				}.start();
+				// End engine start
+				
+				
 				CloseJFrame();
 			}
 		});

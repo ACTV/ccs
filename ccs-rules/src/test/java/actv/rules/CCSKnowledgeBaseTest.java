@@ -62,6 +62,7 @@ public class CCSKnowledgeBaseTest{
 		log.info("auditor size: {}", auditor.getRulesFired().size());
 		//Assert.assertTrue(auditor.getRulesFired().size() >= 0);
 		Assert.assertTrue(auditor.getRulesFired().size() >= 1);
+		sks.dispose();
 	}
 	
 	@After

@@ -46,6 +46,9 @@ public class CCSKnowledgeBase {
 		StatefulKnowledgeSession sks = setupSession();
 		insertObjects(sks, objs);
 		
+		//TODO: Not working anymore?
+		sks.startProcess("swim");
+				
 		long start_time = System.currentTimeMillis();
 		
 		sks.fireAllRules();
@@ -58,6 +61,9 @@ public class CCSKnowledgeBase {
 	public static StatefulKnowledgeSession executeInfiniteSession(ArrayList<CCSMemoryObject> objs){
 		final StatefulKnowledgeSession sks = setupSession();
 		insertObjects(sks, objs);
+		
+		//TODO: Not working anymore?
+		sks.startProcess("swim");
 		
 		new Thread(){
 			public void run(){
@@ -83,12 +89,12 @@ public class CCSKnowledgeBase {
 		KnowledgeBase kb = KnowledgeBaseFactory.newKnowledgeBase(getKnowledgeBaseConfiguration());
 		
 		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
+		
 		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
 
-		//TODO: Not working anymore?
-		sks.startProcess("swim");
+		
 
-		sks.addEventListener((WorkingMemoryEventListener) new CCSListener());
+		//sks.addEventListener(new CCSListener());
 		
 		return sks;
 	}
