@@ -13,9 +13,9 @@ public class TankView extends JPanel {
 	private GLCanvas glC;
 	private MainGraphics mg;
 
-	public TankView(SimulationWorld s)
+	public TankView(SimulationWorld s, GLCanvas glc)
 	{
-		glC = new GLCanvas();
+		add(glc);
 		sW = s;
 		// mg = new MainGraphics(glC, null, null, null, null, name);
 	}
