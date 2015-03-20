@@ -40,6 +40,8 @@ public class NewSimulation extends JFrame {
 	private int tankFishCount;
 	private int tankPlantCount;
 	private int fishID = 0;
+	private int fishIDList [];
+	private int i = 0; // figure out where to add the item
 	private String [] poolOfFish;
 	private String cichlidNameA;
 	private String cichlidNameB;
@@ -69,6 +71,9 @@ public class NewSimulation extends JFrame {
 		world = new SimulationWorld();
 		cichlid = getFromDB();
 		
+		
+		// adding new int
+		fishIDList = new int [3];
 		
 		FileHandler logFile = new FileHandler("Log2File.txt");
 		logFile.setFormatter(new SimpleFormatter());
@@ -188,12 +193,20 @@ public class NewSimulation extends JFrame {
 				}
 				while (rs.next())
 				{
+					String id = rs.getString("ID"); // added new string for ID
 					String name = rs.getString("Type"); //Field from database ex. FishA, FishB
 		        	String weight = rs.getString("Weight");
 		        	String width = rs.getString("Width");
 		        	String height = rs.getString("Height");
 		        	String gender = rs.getString("Gender");
 		        	String aggro = rs.getString("AggroLevel"); //default to 10
+		        	
+		        
+		        	int fishIDc = Integer.parseInt(id);
+		        	
+		        		fishIDList[i] = fishIDc;
+		        		
+		        		System.out.println("arr: " + i + " ID: " + fishIDList[i]);
 		        	
 		        	NameTextField.setText(name);
 					String cichlidNameT = NameTextField.getText().toString();
@@ -470,7 +483,43 @@ public class NewSimulation extends JFrame {
 			
 		
 			cichlidNameB = controller.getName();
-	*/		
+	*/	
+
+				Connection conn;
+				try {
+					conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
+				Statement s = conn.createStatement();
+				if (selectedFish.equals("Fish A"))
+				{
+					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
+				}
+				else if (selectedFish.equals("Fish B"))
+				{
+					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
+				}
+				else if (selectedFish.equals("Fish C"))
+				{
+					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
+				}
+				while (rs.next())
+				{
+					String id = rs.getString("ID"); // added new string for ID
+					
+		        
+		        	int fishIDc = Integer.parseInt(id);
+		        	
+		        		fishIDList[i] = fishIDc;
+		        		
+		        		System.out.println("arr: " + i + " ID: " + fishIDList[i]);
+		        	
+		        	
+					controller.updateView();		
+				}
+				conn.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			controller.updateView();
 			tank.setCichlidCount(tankFishCount++);
 		
