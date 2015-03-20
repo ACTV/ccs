@@ -1,9 +1,12 @@
 package actv.ccs.model.ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.IOException;
+import java.util.ArrayList;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,22 +15,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 
-import actv.ccs.model.*;
-import actv.ccs.model.graphics.*;
-import actv.ccs.model.objects.*;
-
-import javax.swing.BoxLayout;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.io.IOException;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import actv.ccs.CCSKnowledgeBase;
+import actv.ccs.model.CCSMemoryObject;
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.TankObject;
+import actv.ccs.model.graphics.MainHub;
 
 public class RunSimulation extends JFrame{
 	private String mainFilePath = "";
@@ -36,6 +31,7 @@ public class RunSimulation extends JFrame{
 	private SimulationWorld world;
 	private TankView tV;
 	private MainHub mH;
+	
 	public RunSimulation() throws IOException
 	{
 		setTitle("Convict Cichlid Fish Simulator Test 1");
@@ -101,9 +97,10 @@ public class RunSimulation extends JFrame{
 		getContentPane().setLayout(groupLayout);
 		
 		
-		
 		this.setVisible(true);
-		
+
+		ArrayList<CCSMemoryObject> objs = new ArrayList<CCSMemoryObject>();
+	//	StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
 	}
 
 
