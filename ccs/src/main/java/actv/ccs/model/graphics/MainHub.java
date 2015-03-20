@@ -39,7 +39,8 @@ public class MainHub
     
     //Setup, create and init all related classes 
     
-    public MainHub(String mainFilePath, Iterator ) throws IOException 
+   // public MainHub(String mainFilePath, Iterator ) throws IOException 
+    public MainHub(String mainFilePath) throws IOException 
     {
     	GLc = new GLCanvas();///////UPDATE THIS!!!!!!!!!!!!!!!!!
         attachedShapes = new GeoShape[1];

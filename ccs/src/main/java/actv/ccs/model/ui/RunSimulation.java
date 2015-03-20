@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.media.opengl.awt.GLCanvas;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -30,7 +31,7 @@ public class RunSimulation extends JFrame{
 	private TankObject tank;
 	private SimulationWorld world;
 	private TankView tV;
-	private MainHub mH;
+	private GLCanvas glc; 
 	
 	public RunSimulation() throws IOException
 	{
@@ -39,10 +40,11 @@ public class RunSimulation extends JFrame{
 		
 	//	mH = new MainHub(mainFilePath);
 		world = new SimulationWorld();
+		glc = new GLCanvas();
 		// create menu bar
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
-		tV = new TankView(world);
+		tV = new TankView(world, glc);
 		
 		// center panel for map
 		tV.setBorder(new EtchedBorder());

@@ -70,10 +70,16 @@ public class TankObject {
 	}
 	public int [] getFishArr()
 	{
+		if (fishIDList == null)
+		{
+			fishIDList = new int[3];
+			fishIDList[0] = fishIDList[1] = fishIDList[2];
+		}
 		return fishIDList;
 	}
 	public void setFishArr(int [] a)
 	{
 		fishIDList = a;
 	}
+	
 }

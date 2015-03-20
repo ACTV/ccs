@@ -71,7 +71,7 @@ public class NewSimulation extends JFrame {
 	{
 		
 		cichlid = new ConvictCichlid();
-		tank = new TankObject(20, 20, 20, 26, 0, 0); // array value default tank
+		tank = new TankObject(20, 20, 20, 26, 0, 0, fishIDList); // array value default tank
 		world = new SimulationWorld();
 		cichlid = getFromDB();
 		
