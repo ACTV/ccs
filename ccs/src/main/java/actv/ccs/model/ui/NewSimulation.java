@@ -678,6 +678,21 @@ public class NewSimulation extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+				
+				/*
+				 *  This is the only code needed to start the engine (for now at least)
+				 */
+				final ArrayList<CCSMemoryObject> objs = new ArrayList<CCSMemoryObject>();
+				objs.add(cichlid);
+				new Thread(){
+					public void run(){
+						StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
+					}
+				}.start();
+				// End engine start
+				
+				
 				CloseJFrame();
 			}
 		});
