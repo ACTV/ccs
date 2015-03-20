@@ -4,11 +4,12 @@ public class TankObject {
 	private float length;
 	private float width;
 	private float height;
+	private int fishIDList [];
 	private float temperature;
 	private int cichlidCount;
 	private int plantCount;
 	
-	public TankObject(float l, float w, float h, float t, int cC, int pC)
+	public TankObject(float l, float w, float h, float t, int cC, int pC, int [] ls)
 	{
 		this.length = l;
 		this.width = w;
@@ -16,6 +17,7 @@ public class TankObject {
 		this.temperature = t;
 		this.cichlidCount = cC;
 		this.plantCount = pC;	
+		this.fishIDList = ls;
 	}
 
 	public float getTankLength()
@@ -66,5 +68,12 @@ public class TankObject {
 	{
 		this.plantCount = p;
 	}
-	
+	public int [] getFishArr()
+	{
+		return fishIDList;
+	}
+	public void setFishArr(int [] a)
+	{
+		fishIDList = a;
+	}
 }

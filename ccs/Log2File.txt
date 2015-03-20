@@ -1,2 +1,14 @@
-Mar 20, 2015 10:43:33 AM actv.ccs.model.ui.NewSimulation <init>
+Mar 20, 2015 11:27:38 AM actv.ccs.model.ui.NewSimulation <init>
 INFO: Starting logging data
+Mar 20, 2015 11:28:04 AM actv.ccs.model.ui.NewSimulation$4 actionPerformed
+INFO: Tank Information
+Mar 20, 2015 11:28:04 AM actv.ccs.model.ui.NewSimulation$4 actionPerformed
+INFO: Cichlid Count: 1
+Mar 20, 2015 11:28:04 AM actv.ccs.model.ui.NewSimulation$4 actionPerformed
+INFO: Plant Count: 0
+Mar 20, 2015 11:28:04 AM actv.ccs.model.ui.NewSimulation$4 actionPerformed
+INFO: Tank Width: 20.0
+Mar 20, 2015 11:28:04 AM actv.ccs.model.ui.NewSimulation$4 actionPerformed
+INFO: Tank Length: 20.0
+Mar 20, 2015 11:28:04 AM actv.ccs.model.ui.NewSimulation$4 actionPerformed
+INFO: Tank Temperature: 26.0
