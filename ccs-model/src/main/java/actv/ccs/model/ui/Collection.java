@@ -1,8 +1,10 @@
-package a4;
+package actv.ccs.model.ui;
 
 import java.util.Vector;
 
+import actv.ccs.model.ConvictCichlid;
+
 public interface Collection {
-//	public void add(GameObject obj);
-//	public Vector<GameObject> getObjects();
+	public void add(ConvictCichlid obj);
+	public Vector<ConvictCichlid> getObjects();
 }
