@@ -19,6 +19,7 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 	private float speed;
 	private float baseSpeed;
 	private long idleWaitTime;
+	private String gender;
 	
 	
 	public ConvictCichlid(){
@@ -82,7 +83,14 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 	{
 		this.name = s;
 	}
-
+	public String getGender()
+	{
+		return gender;
+	}
+	public void setGender(String s)
+	{
+		this.gender = s;
+	}
 	
 	public float getCautionLevel() {
 		return cautionLevel;

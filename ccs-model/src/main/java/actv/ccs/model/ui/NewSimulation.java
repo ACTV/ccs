@@ -3,6 +3,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Logger;
 import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
@@ -30,6 +35,8 @@ public class NewSimulation extends JFrame {
 	private JTextField HeightTextField;
 	private JTextArea outputData;
 	
+	private ResultSet rs;
+	
 	private int tankFishCount;
 	private int tankPlantCount;
 	private int fishID = 0;
@@ -42,6 +49,8 @@ public class NewSimulation extends JFrame {
 	
 	// need to fix logger
  	private static Logger logger = Logger.getLogger("LoggingToFile");
+ 	private JTextField genderTextField;
+ 	private JTextField aggroLevelTextField;
  	
 /* updates are from latest to oldest (top to bottom)
  * 
@@ -93,11 +102,61 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.WEST, lblPleasePickA, 10, SpringLayout.WEST, label);
 		getContentPane().add(lblPleasePickA);
 		
-		JComboBox comboBox = new JComboBox(poolOfFish);
+		JComboBox comboBox = new JComboBox();
 		springLayout.putConstraint(SpringLayout.NORTH, comboBox, 0, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, comboBox, 6, SpringLayout.EAST, lblPleasePickA);
 		springLayout.putConstraint(SpringLayout.EAST, comboBox, -587, SpringLayout.EAST, getContentPane());
 		getContentPane().add(comboBox);
+		
+		/*//http://stackoverflow.com/questions/17887927/adding-items-to-a-jcombobox
+		
+		class ComboItem
+		{
+		    private String key;
+		    private String value;
+
+		    public ComboItem(String key, String value)
+		    {
+		        this.key = key;
+		        this.value = value;
+		    }
+
+		    @Override
+		    public String toString()
+		    {
+		        return key;
+		    }
+
+		    public String getKey()
+		    {
+		        return key;
+		    }
+
+		    public String getValue()
+		    {
+		        return value;
+		    }
+		}*/
+		
+		Connection conn;
+		comboBox.addItem("");
+		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
+	
+		Statement s = conn.createStatement();
+		rs = s.executeQuery("SELECT * FROM [FishPool]");
+		while (rs.next())
+		{
+			String name = rs.getString("Type"); //Field from database ex. FishA, FishB
+        	//String value = rs.getString((1)); 
+        //ComboItem comboItem = new ComboItem(name, value); 
+        comboBox.addItem(name); 
+		}
+		conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// find a way to get the database merger here
 		
@@ -111,37 +170,104 @@ public class NewSimulation extends JFrame {
 				JComboBox<String> combo = (JComboBox<String>) e.getSource();
 				String selectedFish = (String) combo.getSelectedItem();
 				
-				if (selectedFish.equals("Stringer Bell"))
+				Connection conn;
+				try {
+					conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
+				Statement s = conn.createStatement();
+				if (selectedFish.equals("Fish A"))
 				{
-					NameTextField.setText("Stringer Bell");
+					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
+				}
+				else if (selectedFish.equals("Fish B"))
+				{
+					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
+				}
+				else if (selectedFish.equals("Fish C"))
+				{
+					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
+				}
+				while (rs.next())
+				{
+					String name = rs.getString("Type"); //Field from database ex. FishA, FishB
+		        	String weight = rs.getString("Weight");
+		        	String width = rs.getString("Width");
+		        	String height = rs.getString("Height");
+		        	String gender = rs.getString("Gender");
+		        	String aggro = rs.getString("AggroLevel"); //default to 10
+		        	
+		        	NameTextField.setText(name);
 					String cichlidNameT = NameTextField.getText().toString();
 					controller.setName(cichlidNameT);
 					
-					
-					WeightTextField.setText("10.0");
+				    WeightTextField.setText(weight);
 					String weightS = WeightTextField.getText().toString();
 					float weightC = Float.parseFloat(weightS);
 					controller.setWeight(weightC);
 					
-					WidthTextField.setText("1.0");
+					WidthTextField.setText(width);
 					String widthS = WidthTextField.getText().toString();
 					float widthC = Float.parseFloat(widthS);
 					controller.setLength(widthC);
 					
-					HeightTextField.setText("3.0");
+					HeightTextField.setText(height);
 					String heightS = HeightTextField.getText().toString();
 					float heightC = Float.parseFloat(heightS);
-					controller.setHeight(heightC);	
+					controller.setHeight(heightC);
+					
+					genderTextField.setText(gender);
+					String genderS = genderTextField.getText().toString();
+					controller.setGender(genderS);
+					
+					aggroLevelTextField.setText(aggro);
+					String aggroS = aggroLevelTextField.getText().toString();
+					float aggroC = Float.parseFloat(aggroS);
+					controller.setAggroLevel(aggroC);
 					
 					NameTextField.setEditable(false);
 					WeightTextField.setEditable(false);
 					WidthTextField.setEditable(false);
 					HeightTextField.setEditable(false);
+					genderTextField.setEditable(false);
 					
-					controller.updateView();					
 					
+					controller.updateView();		
 				}
-				else if (selectedFish.equals("Marlo Stanfield"))
+				conn.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//if (selectedFish.equals("Stringer Bell"))
+				//{
+					//NameTextField.setText("Stringer Bell");
+					//String cichlidNameT = NameTextField.getText().toString();
+					//controller.setName(cichlidNameT);
+					
+					
+					//WeightTextField.setText("10.0");
+					//String weightS = WeightTextField.getText().toString();
+					//float weightC = Float.parseFloat(weightS);
+					//controller.setWeight(weightC);
+					
+					//WidthTextField.setText("1.0");
+					//String widthS = WidthTextField.getText().toString();
+					//float widthC = Float.parseFloat(widthS);
+					//controller.setLength(widthC);
+					
+					//HeightTextField.setText("3.0");
+					//String heightS = HeightTextField.getText().toString();
+					//float heightC = Float.parseFloat(heightS);
+					//controller.setHeight(heightC);	
+					
+					//NameTextField.setEditable(false);
+					//WeightTextField.setEditable(false);
+					//WidthTextField.setEditable(false);
+					//HeightTextField.setEditable(false);
+					
+					//controller.updateView();					
+					
+				//}
+				/*else if (selectedFish.equals("Marlo Stanfield"))
 				{
 					NameTextField.setText("Marlo Stanfield");
 					String cichlidNameT = NameTextField.getText().toString();
@@ -240,7 +366,7 @@ public class NewSimulation extends JFrame {
 					HeightTextField.setEditable(true);
 					
 					System.out.println("do nothing");
-				}
+				}*/
 				
 			}
 		});
@@ -266,7 +392,7 @@ public class NewSimulation extends JFrame {
 		getContentPane().add(lblSizewidthX);
 		
 		NameTextField = new JTextField();
-		NameTextField.setText("Goddamn Sharks");
+		NameTextField.setText("");
 		springLayout.putConstraint(SpringLayout.NORTH, NameTextField, 6, SpringLayout.SOUTH, lblIfNot);
 		springLayout.putConstraint(SpringLayout.WEST, NameTextField, 75, SpringLayout.EAST, lblCichlidName);
 		getContentPane().add(NameTextField);
@@ -274,31 +400,31 @@ public class NewSimulation extends JFrame {
 		cichlidNameA = NameTextField.getText().toString();
 		
 		WeightTextField = new JTextField();
-		WeightTextField.setText("150.0");
+		WeightTextField.setText("");
 		springLayout.putConstraint(SpringLayout.NORTH, WeightTextField, 0, SpringLayout.NORTH, lblWeightkg);
 		springLayout.putConstraint(SpringLayout.WEST, WeightTextField, 0, SpringLayout.WEST, NameTextField);
 		getContentPane().add(WeightTextField);
 		WeightTextField.setColumns(10);
 		String weightS = WeightTextField.getText().toString();
-		final float weightC = Float.parseFloat(weightS);
+//		final float weightC = Float.parseFloat(weightS);
 		
 		WidthTextField = new JTextField();
-		WidthTextField.setText("12.0");
+		WidthTextField.setText("");
 		springLayout.putConstraint(SpringLayout.NORTH, WidthTextField, 0, SpringLayout.NORTH, lblSizewidthX);
 		springLayout.putConstraint(SpringLayout.EAST, WidthTextField, 0, SpringLayout.EAST, NameTextField);
 		getContentPane().add(WidthTextField);
 		WidthTextField.setColumns(10);
 		String widthS = WidthTextField.getText().toString();
-		final float widthC = Float.parseFloat(widthS);
+//		final float widthC = Float.parseFloat(widthS);
 		
 		HeightTextField = new JTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, HeightTextField, 0, SpringLayout.NORTH, WidthTextField);
-		HeightTextField.setText("100.0");
+		HeightTextField.setText("");
 		getContentPane().add(HeightTextField);
 		HeightTextField.setColumns(10);
 		
 		String heightS = HeightTextField.getText().toString();
-		final float heightC = Float.parseFloat(heightS);
+	//	final float heightC = Float.parseFloat(heightS);
 		
 		JLabel x = new JLabel("X");
 		springLayout.putConstraint(SpringLayout.NORTH, x, 79, SpringLayout.SOUTH, comboBox);
@@ -308,21 +434,20 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.EAST, x, -734, SpringLayout.EAST, getContentPane());
 		getContentPane().add(x);
 		
-		JLabel lblAddInGender = new JLabel("add in gender, age later on.");
-		springLayout.putConstraint(SpringLayout.NORTH, lblAddInGender, 23, SpringLayout.SOUTH, lblSizewidthX);
-		springLayout.putConstraint(SpringLayout.WEST, lblAddInGender, 0, SpringLayout.WEST, lblPleasePickA);
-		getContentPane().add(lblAddInGender);
+		JLabel Genderlbl = new JLabel("Gender");
+		springLayout.putConstraint(SpringLayout.NORTH, Genderlbl, 16, SpringLayout.SOUTH, lblSizewidthX);
+		springLayout.putConstraint(SpringLayout.WEST, Genderlbl, 10, SpringLayout.WEST, getContentPane());
+		getContentPane().add(Genderlbl);
 		
 		JButton btnGenerateFish = new JButton("Generate Fish");
-		springLayout.putConstraint(SpringLayout.NORTH, btnGenerateFish, 6, SpringLayout.SOUTH, x);
-		springLayout.putConstraint(SpringLayout.WEST, btnGenerateFish, 18, SpringLayout.EAST, lblAddInGender);
+		springLayout.putConstraint(SpringLayout.WEST, btnGenerateFish, 165, SpringLayout.WEST, getContentPane());
 		getContentPane().add(btnGenerateFish);
 		btnGenerateFish.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e)
 			{
 		
-			fishID++;	
+/*			fishID++;	
 			controller.setID(fishID);	
 			String cichlidNameT = NameTextField.getText().toString();
 			controller.setName(cichlidNameT);
@@ -345,7 +470,7 @@ public class NewSimulation extends JFrame {
 			
 		
 			cichlidNameB = controller.getName();
-			
+	*/		
 			controller.updateView();
 			tank.setCichlidCount(tankFishCount++);
 		
@@ -396,12 +521,12 @@ public class NewSimulation extends JFrame {
 		});
 		
 		JLabel lblWaterTemperaturecelsius = new JLabel("Water Temperature (Celsius)");
+		springLayout.putConstraint(SpringLayout.WEST, lblWaterTemperaturecelsius, 6, SpringLayout.WEST, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, waterTemperatureSlider, 0, SpringLayout.SOUTH, lblWaterTemperaturecelsius);
-		springLayout.putConstraint(SpringLayout.EAST, lblWaterTemperaturecelsius, 0, SpringLayout.EAST, lblAddInGender);
 		getContentPane().add(lblWaterTemperaturecelsius);
 		
 		JLabel lblTankSpecifications = new JLabel("Tank Specifications:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblTankSpecifications, 56, SpringLayout.SOUTH, lblAddInGender);
+		springLayout.putConstraint(SpringLayout.NORTH, lblTankSpecifications, 63, SpringLayout.SOUTH, Genderlbl);
 		springLayout.putConstraint(SpringLayout.WEST, lblTankSpecifications, 10, SpringLayout.WEST, getContentPane());
 		getContentPane().add(lblTankSpecifications);
 		
@@ -422,6 +547,7 @@ public class NewSimulation extends JFrame {
 		getContentPane().add(lblTankHeight);
 		
 		tankWidthField = new JTextField();
+		springLayout.putConstraint(SpringLayout.SOUTH, btnGenerateFish, -33, SpringLayout.NORTH, tankWidthField);
 		tankWidthField.setText("20.0");
 		tankWidthField.setEditable(false);
 		springLayout.putConstraint(SpringLayout.WEST, tankWidthField, 14, SpringLayout.EAST, lblTankWidth);
@@ -462,6 +588,24 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.WEST, btnRunSimulation, 0, SpringLayout.WEST, lblPleasePickA);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnRunSimulation, 0, SpringLayout.SOUTH, outputData);
 		getContentPane().add(btnRunSimulation);
+		
+		genderTextField = new JTextField();
+		genderTextField.setEditable(false);
+		springLayout.putConstraint(SpringLayout.SOUTH, genderTextField, 0, SpringLayout.SOUTH, Genderlbl);
+		springLayout.putConstraint(SpringLayout.EAST, genderTextField, 0, SpringLayout.EAST, NameTextField);
+		getContentPane().add(genderTextField);
+		genderTextField.setColumns(10);
+		
+		JLabel lblAggroLevel = new JLabel("Aggro Level");
+		springLayout.putConstraint(SpringLayout.WEST, lblAggroLevel, 0, SpringLayout.WEST, lblPleasePickA);
+		getContentPane().add(lblAggroLevel);
+		
+		aggroLevelTextField = new JTextField();
+		springLayout.putConstraint(SpringLayout.SOUTH, lblAggroLevel, 0, SpringLayout.SOUTH, aggroLevelTextField);
+		springLayout.putConstraint(SpringLayout.NORTH, aggroLevelTextField, 6, SpringLayout.SOUTH, genderTextField);
+		springLayout.putConstraint(SpringLayout.WEST, aggroLevelTextField, 0, SpringLayout.WEST, NameTextField);
+		getContentPane().add(aggroLevelTextField);
+		aggroLevelTextField.setColumns(10);
 		btnRunSimulation.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e)
@@ -480,7 +624,12 @@ public class NewSimulation extends JFrame {
 				logger.info("Tank Temperature: " + tank.getTankTemperature());
 				System.out.println("Running Simulation");
 				
-				rS = new RunSimulation();
+				try {
+					rS = new RunSimulation();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				CloseJFrame();
 			}
 		});

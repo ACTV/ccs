@@ -11,7 +11,6 @@ public class TankView extends JPanel {
 	public TankView(SimulationWorld s)
 	{
 		sW = s;
-		
 	}
 	
 	// here is where i want to have sage engine information connected to here

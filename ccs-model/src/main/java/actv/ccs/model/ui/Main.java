@@ -28,18 +28,19 @@ public class Main {
 		
 		// alright so ucanaccess works. here's the link to download it, put it into your referenced libraries etc. 
 		// http://ucanaccess.sourceforge.net/site.html
-		Connection conn;
-		try {
-			conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
+		//Connection conn;
+		//try {
+			//conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
 	
-		Statement s = conn.createStatement();
-		ResultSet rs = s.executeQuery("SELECT [Type] FROM [FishPool]");
-		while (rs.next())
-			System.out.println(rs.getString(1));
-		} catch (SQLException e) {
+		//Statement s = conn.createStatement();
+		//ResultSet rs = s.executeQuery("SELECT * FROM [FishPool]");
+		//while (rs.next())
+			//System.out.println(rs.getString(1));
+		//} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			//e.printStackTrace();
+		//}
+		//Moved database connection to NewSimulation.java
 	}
 	
 
