@@ -24,7 +24,6 @@ import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
 import actv.ccs.model.TankObject;
 
-
 public class NewSimulation extends JFrame {
 	
 	private ConvictCichlid cichlid;
@@ -75,7 +74,6 @@ public class NewSimulation extends JFrame {
 		tank = new TankObject(20, 20, 20, 26, 0, 0); // array value default tank
 		world = new SimulationWorld();
 		cichlid = getFromDB();
-		
 		
 		// adding new int
 		fishIDList = new int [3];
@@ -206,13 +204,7 @@ public class NewSimulation extends JFrame {
 		        	String gender = rs.getString("Gender");
 		        	String aggro = rs.getString("AggroLevel"); //default to 10
 		        	
-		        
-		        	int fishIDc = Integer.parseInt(id);
-		        	
-		        		fishIDList[i] = fishIDc;
-		        		
-		        		System.out.println("arr: " + i + " ID: " + fishIDList[i]);
-		        	
+
 		        	NameTextField.setText(name);
 					String cichlidNameT = NameTextField.getText().toString();
 					controller.setName(cichlidNameT);
@@ -248,7 +240,7 @@ public class NewSimulation extends JFrame {
 					genderTextField.setEditable(false);
 					
 					
-					controller.updateView();		
+			//		controller.updateView();		
 				}
 				conn.close();
 				} catch (SQLException e1) {
@@ -398,7 +390,7 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.NORTH, lblCichlidName, 8, SpringLayout.SOUTH, lblIfNot);
 		springLayout.putConstraint(SpringLayout.WEST, lblCichlidName, 10, SpringLayout.WEST, getContentPane());
 		getContentPane().add(lblCichlidName);
-		cichlidNameZ = NameTextField.getText().toString();
+//		cichlidNameZ = NameTextField.getText().toString();
 		
  		JLabel lblWeightkg = new JLabel("Weight (kg): ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblWeightkg, 6, SpringLayout.SOUTH, lblCichlidName);
@@ -495,6 +487,8 @@ public class NewSimulation extends JFrame {
 				try {
 					conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
 				Statement s = conn.createStatement();
+				cichlidNameZ = NameTextField.getText().toString();
+
 				if (cichlidNameZ.equals("Fish A"))
 				{
 					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
@@ -510,23 +504,23 @@ public class NewSimulation extends JFrame {
 				while (rs.next())
 				{
 					String id = rs.getString("ID"); // added new string for ID
-					
-		        
+				
 		        	int fishIDc = Integer.parseInt(id);
-		        	
+		        	System.out.println("String ID: " + fishIDc);
+			        	
 		        		fishIDList[i] = fishIDc;
-		        		
+		        		i++;
 		        		System.out.println("arr: " + i + " ID: " + fishIDList[i]);
 		        	
 		        	
-					controller.updateView();		
+//					controller.updateView();		
 				}
 				conn.close();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			controller.updateView();
+	//		controller.updateView();
 			tank.setCichlidCount(tankFishCount++);
 		
 			int tankOutputCichlidTA = tank.getCichlidCount()+1;
