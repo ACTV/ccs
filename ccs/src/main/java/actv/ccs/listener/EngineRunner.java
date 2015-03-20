@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import actv.ccs.CCSKnowledgeBase;
+// import actv.rules.CCSKnowledgeBaseTest;
 
 /**
  * Singleton runner
