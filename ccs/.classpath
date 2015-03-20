@@ -22,20 +22,21 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/UCanAccess-2.0.9.4-bin/lib/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/UCanAccess-2.0.9.4-bin/lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/UCanAccess-2.0.9.4-bin/lib/hsqldb.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/UCanAccess-2.0.9.4-bin/lib/jackcess-2.0.8.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/UCanAccess-2.0.9.4-bin/ucanaccess-2.0.9.4.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/lib/gluegen.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/lib/gluegen-rt.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/lib/gluegen-rt-natives-windows-amd64.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/lib/graphicslib3D.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/lib/jogl-all.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/lib/jogl-all-natives-windows-amd64.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/lib/jogl-demos.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/lib/jogl-demos-data.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/lib/jogl-demos-util.jar"/>
-	<classpathentry kind="lib" path="E:/downloads/UCanAccess-2.0.9.4-bin/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/CSS/lib/gluegen.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/CSS/lib/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/CSS/lib/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/CSS/lib/graphicslib3D.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/CSS/lib/jogl-all.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/CSS/lib/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/CSS/lib/jogl-demos.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/CSS/lib/jogl-demos-data.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/CSS/lib/jogl-demos-util.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/CSS/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/CSS/lib/gluegen-java-src.zip"/>
+	<classpathentry kind="lib" path="D:/downloads/UCanAccess-2.0.9.4-bin/ucanaccess-2.0.9.4.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/UCanAccess-2.0.9.4-bin/lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/UCanAccess-2.0.9.4-bin/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/UCanAccess-2.0.9.4-bin/lib/hsqldb.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/UCanAccess-2.0.9.4-bin/lib/jackcess-2.0.8.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
