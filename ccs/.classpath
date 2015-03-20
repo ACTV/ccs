@@ -22,6 +22,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/ccs-rules"/>
 	<classpathentry kind="lib" path="D:/downloads/CSS/lib/gluegen.jar"/>
 	<classpathentry kind="lib" path="D:/downloads/CSS/lib/gluegen-rt.jar"/>
 	<classpathentry kind="lib" path="D:/downloads/CSS/lib/gluegen-rt-natives-windows-amd64.jar"/>
