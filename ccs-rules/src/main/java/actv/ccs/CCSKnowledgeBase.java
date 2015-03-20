@@ -85,6 +85,7 @@ public class CCSKnowledgeBase {
 		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
 		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
 
+		//TODO: Not working anymore?
 		sks.startProcess("swim");
 
 		sks.addEventListener((WorkingMemoryEventListener) new CCSListener());
