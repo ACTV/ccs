@@ -9,9 +9,11 @@ public class SimulationWorld {
 	
 	private ConvictCichlid cichlid;
 	private TankObject tank;
+	private CichlidCollection cList;
 	
 	public SimulationWorld()
 	{		
+		cList = new CichlidCollection();
 		cichlid = getFromDB();
 		cichlid.addPropertyChangeListener(new CCChangeListener());
 		
@@ -20,7 +22,61 @@ public class SimulationWorld {
 		
 		
 	}
-	
+/*	
+	public void spawnCichlids()
+	{
+
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
+		Statement s = conn.createStatement();
+
+		for (int i = 0; i < theArrayLoopThang.length(); i++)
+		{
+
+		
+
+		if (arrayloopthing[i] == 1)
+		{
+			rs = s.executeQuery("SELECT * FROM [FishPool] WHERE ID='1'");
+		}
+		else if (arrayloopthing[i] == 2)
+		{
+			rs = s.executeQuery("SELECT * FROM [FishPool] WHERE ID='2'");
+		}
+		else if (arrayloopthing[i] == 3)
+		{
+			rs = s.executeQuery("SELECT * FROM [FishPool] WHERE ID='3'");
+		}
+		while (rs.next())
+		{
+			String id = rs.getString("ID"); // added new string for ID
+			String name = rs.getString("Type"); //Field from database ex. FishA, FishB
+        	String weight = rs.getString("Weight");
+        	String width = rs.getString("Width");
+        	String height = rs.getString("Height");
+        	String gender = rs.getString("Gender");
+        	String aggro = rs.getString("AggroLevel"); //default to 10
+        	
+      		// name
+        	float weightS = Float.parseFloat(weight);
+			float widthC = Float.parseFloat(width);
+			float heightC = Float.parseFloat(height);
+			// gender
+			float aggroC = Float.parseFloat(aggroS);
+
+
+			cichlid = new ConvictCichlid(name, weightS, widthC, heightC, gender, aggroC);
+			// we'll need to add position later etc.
+		}
+		}
+		conn.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	*/
 	public void printData(FishState state, float[] location, float aggroLevel, float length, float height, float weight, String name, int id){
 		System.out.println("FishState is " + state);
 		System.out.println("Fish location is " + location);
@@ -42,6 +98,11 @@ public class SimulationWorld {
 		c.setName("Shark");
 		c.setCichlidID(0);
 		return c;
+	}
+	private static TankObject baseTank()
+	{
+		TankObject t = new TankObject(20, 20, 20, 26, 0, 0, new int [3]);
+		return t;
 	}
 
 }
