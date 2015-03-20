@@ -1,7 +1,7 @@
 package actv.ccs.model.ui;
 
-import actv.ccs.model.TankObject;
-import actv.ccs.model.type.FishState;
+import actv.ccs.model.objects.*;
+import actv.ccs.model.state.FishState;
 
 public class TankController {
 

@@ -2,7 +2,7 @@ package actv.ccs.model.objects;
 
 import java.beans.PropertyChangeSupport;
 
-import actv.ccs.model.type.FishState;
+import actv.ccs.model.state.FishState;
 
 public class ConvictCichlid extends PropertyChangeSupport{
 	private float [] location;

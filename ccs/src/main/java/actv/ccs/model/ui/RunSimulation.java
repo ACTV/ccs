@@ -16,7 +16,7 @@ import javax.swing.border.EtchedBorder;
 
 import actv.ccs.model.*;
 import actv.ccs.model.graphics.*;
-import actv.ccs.model.type.FishState;
+import actv.ccs.model.objects.*;
 
 import javax.swing.BoxLayout;
 

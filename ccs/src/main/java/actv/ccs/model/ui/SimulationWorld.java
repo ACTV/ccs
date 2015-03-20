@@ -4,7 +4,8 @@ import java.awt.*;
 
 import actv.ccs.listener.CCChangeListener;
 import actv.ccs.model.*;
-import actv.ccs.model.type.FishState;
+import actv.ccs.model.state.FishState;
+import actv.ccs.model.objects.*;
 
 public class SimulationWorld {
 	
