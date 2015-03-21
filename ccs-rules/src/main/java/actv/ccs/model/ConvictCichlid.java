@@ -21,12 +21,30 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 	private long idleWaitTime;
 	private String gender;
 	
-	
-	public ConvictCichlid(){
+	/*
+	public ConvictCichlid(float [] loc, FishState s, float aL, float bLA, float cL, float bCL, float len, float hei, float wei, String n, int id, float spd, float bSpd, long iTime, String gnd){
+		location = loc;
+		state = s;
+		aggroLevel = aL;
+		baseAggroLevel = bLA;
+		cautionLevel = cL;
+		baseCautionLevel = bCL;
+		length = len;
+		height = hei;
+		weight = wei;
+		name = n;
+		cichlidID = id;
+		speed = spd;
+		baseSpeed = bSpd;
+		idleWaitTime = iTime;
+		gender = gnd;
+	}
+	*/
+	public ConvictCichlid()
+	{
 		super(ConvictCichlid.class);
 		state = FishState.NONE;
 	}
-	
 	public float[] getLocation() {
 		if(location == null){
 			location = new float[2];
