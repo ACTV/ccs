@@ -10,5 +10,9 @@ Get rules to fire - hi
 Integrate with Graphics - HI
 Get rid of hardcoding in the rule file paths - low for now
 
+Christian's TO DO LIST:
+after first demo
+add tables for the pot and plant sizes (small, medium, large)
+double check sql queries for best possible situation for pulling larger amount of fish records
 
 Victor's TO DO LIST:
