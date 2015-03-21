@@ -1,5 +1,6 @@
 package actv.ccs.model.ui;
 
+import java.sql.*;
 import java.util.Vector;
 
 import actv.ccs.listener.CCChangeListener;
@@ -14,7 +15,8 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	private CichlidCollection cList;
 	private Vector<IObserver> observerList;
 	private int fishPoolArr [];
-	
+	private ResultSet rs;
+	private Connection conn;
 	public SimulationWorld()
 	{		
 		cList = new CichlidCollection();
@@ -28,31 +30,47 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		TankController tankController = new TankController(tank, this);
 		
 		
-		System.out.println("ahrray: " + fishPoolArr[0]);
+		spawnCichlids();
 	}
-/*	
+	
 	public void spawnCichlids()
 	{
-
+		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
+	
+		Statement s = conn.createStatement();
+		rs = s.executeQuery("SELECT * FROM [FishPool]");
+		while (rs.next())
+		{
+			String name = rs.getString("Type"); //Field from database ex. FishA, FishB
+        	//String value = rs.getString((1)); 
+        //ComboItem comboItem = new ComboItem(name, value); 
+			System.out.println(name);
+		}
+		conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+/*
 		Connection conn;
+		
 		try {
 			conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
 		Statement s = conn.createStatement();
 
-		for (int i = 0; i < theArrayLoopThang.length(); i++)
+		for (int i = 0; i < this.getFishArr().length; i++)
 		{
 
-		
-
-		if (arrayloopthing[i] == 1)
+		if (this.getFishArr()[i] == 1)
 		{
 			rs = s.executeQuery("SELECT * FROM [FishPool] WHERE ID='1'");
 		}
-		else if (arrayloopthing[i] == 2)
+		else if (this.getFishArr()[i] == 2)
 		{
 			rs = s.executeQuery("SELECT * FROM [FishPool] WHERE ID='2'");
 		}
-		else if (arrayloopthing[i] == 3)
+		else if (this.getFishArr()[i] == 3)
 		{
 			rs = s.executeQuery("SELECT * FROM [FishPool] WHERE ID='3'");
 		}
@@ -71,10 +89,12 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 			float widthC = Float.parseFloat(width);
 			float heightC = Float.parseFloat(height);
 			// gender
-			float aggroC = Float.parseFloat(aggroS);
+			float aggroC = Float.parseFloat(aggro);
 
 
-			cichlid = new ConvictCichlid(name, weightS, widthC, heightC, gender, aggroC);
+	//		cichlid = new ConvictCichlid(name, weightS, widthC, heightC, gender, aggroC);
+		System.out.println(id + name + weight + width + height + gender + aggro);
+		
 			// we'll need to add position later etc.
 		}
 		}
@@ -83,8 +103,9 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		*/
 	}
-	*/
+
 	public void add(ConvictCichlid c)
 	{
 		cList.add(c);
