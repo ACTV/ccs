@@ -1,2 +1,0 @@
-Mar 20, 2015 1:35:08 PM actv.ccs.model.ui.NewSimulation <init>
-INFO: Starting logging data
