@@ -186,6 +186,7 @@ public class NewSimulation extends JFrame {
 				if (selectedFish.equals("Fish A"))
 				{
 					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
+					
 				}
 				else if (selectedFish.equals("Fish B"))
 				{
@@ -491,7 +492,7 @@ public class NewSimulation extends JFrame {
 				cichlidNameZ = NameTextField.getText().toString();
 
 				if (cichlidNameZ.equals("Fish A"))
-				{
+				{	
 					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
 				}
 				else if (cichlidNameZ.equals("Fish B"))

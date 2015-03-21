@@ -1,0 +1,10 @@
+Albert's TO DO LIST:
+need to find a way to get the tank array from new simulation to simulation world - medium
+need to fix file menu - low
+need to merge graphics code - high. highest priority
+need to put objects on screen - highest
+Christian's TO DO LIST:
+
+Thomas' TO DO LIST:
+
+Victor's TO DO LIST:
