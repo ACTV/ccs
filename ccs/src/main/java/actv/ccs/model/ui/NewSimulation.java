@@ -508,10 +508,12 @@ public class NewSimulation extends JFrame {
 				
 		        	int fishIDc = Integer.parseInt(id);
 		        	
+		        		
 			        	fishIDList[i] = fishIDc;
 			        	tank.setFishArr(fishIDList);
-		        		System.out.println("arr: " + i + " ID: " + fishIDList[i]);
-		        		System.out.println("ff: " + tank.getFishArr()[i]);
+			        	world.setFishArr(fishIDList);
+		        		System.out.println("arr: " + i + " ID: " + world.getFishArr()[i]);
+		        		System.out.println("ff: " + world.getFishArr()[i]);
 		        		i++;
 		        		
 		        		
