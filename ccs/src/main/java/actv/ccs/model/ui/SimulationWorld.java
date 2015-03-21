@@ -10,7 +10,7 @@ import actv.ccs.model.type.FishState;
 
 public class SimulationWorld implements IObservable, ISimulationWorld {
 	
-	private ConvictCichlid cichlid;
+	private ConvictCichlid cichlid, cichlidA, cichlidB, cichlidC; // test
 	private TankObject tank;
 	private CichlidCollection cList;
 	private Vector<IObserver> observerList;
@@ -65,6 +65,7 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	String aggro = rsI.getString("AggroLevel"); //default to 10
 		        	
 		     //   	System.out.println( name + weight + width + height + gender + aggro);
+		        	cichlidA = new ConvictCichlid();
 		     
 				}
 			}
@@ -82,7 +83,7 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	String aggro = rsI.getString("AggroLevel"); //default to 10
 		        	
 		     //   	System.out.println( name + weight + width + height + gender + aggro);
-		     
+		        	cichlidB = new ConvictCichlid();
 				}
 			}
 			else if (id.equals("3"))
@@ -99,7 +100,7 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	String aggro = rsI.getString("AggroLevel"); //default to 10
 		        	
 		      //  	System.out.println(name + weight + width + height + gender + aggro);
-		     
+		        	cichlidC = new ConvictCichlid();
 				}
 			}
 		}
