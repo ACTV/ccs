@@ -12,6 +12,8 @@ import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
 import org.drools.command.Command;
 import org.drools.conf.EventProcessingOption;
+import org.drools.event.process.ProcessEventListener;
+import org.drools.event.rule.AgendaEventListener;
 import org.drools.event.rule.ObjectInsertedEvent;
 import org.drools.event.rule.ObjectRetractedEvent;
 import org.drools.event.rule.ObjectUpdatedEvent;
@@ -53,7 +55,7 @@ public class CCSKnowledgeBase {
 		
 		sks.fireAllRules();
 		
-		log.info("Execution time: {}", System.currentTimeMillis() - start_time);
+		log.debug("Execution time: {}", System.currentTimeMillis() - start_time);
 		sks.dispose();
 		
 	}
@@ -82,9 +84,15 @@ public class CCSKnowledgeBase {
 		addDrl(kbuilder, "actv/ccs/rules/start/Start.drl");
 		addDrl(kbuilder, "actv/ccs/rules/start/Calm.drl");
 		addDrl(kbuilder, "actv/ccs/rules/idle/Idle.drl");
+		addDrl(kbuilder, "actv/ccs/rules/Swim.drl");
 		addBpmn(kbuilder, "actv/ccs/flow/start.bpmn");
 		addBpmn(kbuilder, "actv/ccs/flow/idle.bpmn");
 		addBpmn(kbuilder, "actv/ccs/flow/swim.bpmn");
+		
+		if (kbuilder.hasErrors()){
+            log.error(kbuilder.getErrors().toString());
+            throw new RuntimeException(kbuilder.getErrors().toString());
+        }
 		
 		KnowledgeBase kb = KnowledgeBaseFactory.newKnowledgeBase(getKnowledgeBaseConfiguration());
 		
@@ -92,9 +100,9 @@ public class CCSKnowledgeBase {
 		
 		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
 
-		
-
-		//sks.addEventListener(new CCSListener());
+		sks.addEventListener((WorkingMemoryEventListener)new CCSListener());
+		sks.addEventListener((ProcessEventListener)new CCSListener());
+		sks.addEventListener((AgendaEventListener)new CCSListener());
 		
 		return sks;
 	}
@@ -114,7 +122,7 @@ public class CCSKnowledgeBase {
 	
 	private static KnowledgeSessionConfiguration getKnowledgeSessionConfiguration(){
 		KnowledgeSessionConfiguration config = KnowledgeBaseFactory.newKnowledgeSessionConfiguration();
-		config.setOption(ClockTypeOption.get("pseudo"));
+//		config.setOption(ClockTypeOption.get("pseudo"));
 		return config;
 	}
 	
@@ -149,6 +157,7 @@ public class CCSKnowledgeBase {
 	}
 	
 	private static void addDrl(KnowledgeBuilder kbuilder, String drl){
+		log.debug("Adding resource {}", drl);
 		kbuilder.add(ResourceFactory.newClassPathResource(drl), ResourceType.DRL);
 	}
 
@@ -158,6 +167,7 @@ public class CCSKnowledgeBase {
 	}
 	
 	private static void addBpmn(KnowledgeBuilder kbuilder, String flowFile){
+		log.debug("Adding resource {}", flowFile);
 		ClassPathResource flow = new ClassPathResource(flowFile);
 		try{
 			kbuilder.add(ResourceFactory.newUrlResource(flow.getURL()), ResourceType.BPMN2);

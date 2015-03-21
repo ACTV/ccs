@@ -9,23 +9,24 @@ import actv.ccs.fact.IdleTimer;
 
 rule "Idle"
 	ruleflow-group "swim"
-	salience 1000
+	
+	// Fire every 2 seconds
+	timer(int: 2s)
 
 	when
 		$auditor :  Auditor()
 		
 		$cc : ConvictCichlid( state == FishState.IDLE,
-							  idleWaitTime - System.currentTimeMillis() < 0,
 							  $iwt : idleWaitTime);
 		
-//	$it : IdleTimer(convictCichlid == $cc, idleTime > ($iwt - System.currentTimeMillis()))
 	then
 		modify($cc){
-			setIdleWaitTime(System.currentTimeMillis() + 4000);
+			setIdleWaitTime($cc.getIdleWaitTime + 1);
 		}
 		
 		modify($auditor){
 			getRulesFired().add(drools.getRule().getName());
 		}
-		System.out.println($cc.getIdleWaitTime());
 end
+
+
