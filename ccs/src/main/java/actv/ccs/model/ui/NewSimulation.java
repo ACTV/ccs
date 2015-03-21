@@ -150,7 +150,7 @@ public class NewSimulation extends JFrame {
 		Connection conn;
 		comboBox.addItem("");
 		try {
-			conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 	
 		Statement s = conn.createStatement();
 		rs = s.executeQuery("SELECT * FROM [FishPool]");
@@ -181,7 +181,7 @@ public class NewSimulation extends JFrame {
 				
 				Connection conn;
 				try {
-					conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
+					conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 				Statement s = conn.createStatement();
 				if (selectedFish.equals("Fish A"))
 				{
@@ -486,7 +486,7 @@ public class NewSimulation extends JFrame {
 
 				Connection conn;
 				try {
-					conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
+					conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 				Statement s = conn.createStatement();
 				cichlidNameZ = NameTextField.getText().toString();
 
