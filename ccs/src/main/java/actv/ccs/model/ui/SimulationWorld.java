@@ -43,15 +43,26 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		while (rs.next())
 		{
 			String id = rs.getString("ID"); //Field from database ex. FishA, FishB
+			int idS =  Integer.parseInt(id);
         	//String value = rs.getString((1)); 
         //ComboItem comboItem = new ComboItem(name, value); 
 			System.out.println(id);
+			
+			if (idS == '1')
+			{
+				System.out.println("fff");
+			}
+			else 
+			{
+				System.out.println("ddd");
+			}
 		}
 		conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 /*
 		Connection conn;
 		

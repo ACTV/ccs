@@ -150,7 +150,7 @@ public class NewSimulation extends JFrame {
 		Connection conn;
 		comboBox.addItem("");
 		try {
-			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+			conn = DriverManager.getConnection("jdbc:ucanaccess://E:\\FishPool.accdb");
 	
 		Statement s = conn.createStatement();
 		rs = s.executeQuery("SELECT * FROM [FishPool]");
@@ -492,29 +492,29 @@ public class NewSimulation extends JFrame {
 
 				if (cichlidNameZ.equals("Fish A"))
 				{
-					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
+					rs = s.executeQuery("SELECT ID FROM [FishPool] WHERE Type='Fish A'");
+		        	int a = s.executeUpdate("UPDATE SimulationFish set fishID = 1 where ID = 1");
+		        	System.out.println("a is " + a);
 				}
 				else if (cichlidNameZ.equals("Fish B"))
 				{
-					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
+					rs = s.executeQuery("SELECT ID FROM [FishPool] WHERE Type='Fish B'");
+		        	int b = s.executeUpdate("UPDATE SimulationFish set fishID = 2 where ID = 2");
+		        	System.out.println("b is " + b);
 				}
 				else if (cichlidNameZ.equals("Fish C"))
 				{
-					rs = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
+					rs = s.executeQuery("SELECT ID FROM [FishPool] WHERE Type='Fish C'");
+		        	int c = s.executeUpdate("UPDATE SimulationFish set fishID = 3 where ID = 3");
+		        	System.out.println("c is " + c);
 				}
 				while (rs.next())
 				{
 					String id = rs.getString("ID"); // added new string for ID
 				
 		        	int fishIDc = Integer.parseInt(id);
-		        	
-		        		
-			        	fishIDList[i] = fishIDc;
-			        	tank.setFishArr(fishIDList);
-			        	world.setFishArr(fishIDList);
-		        		System.out.println("arr: " + i + " ID: " + world.getFishArr()[i]);
-		        		System.out.println("ff: " + world.getFishArr()[i]);
-		        		i++;
+		        	System.out.println("arr: " + i + " ID: " + id);
+		        	i++;
 		        		
 		        		
 //					controller.updateView();		
