@@ -64,8 +64,25 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	String gender = rsI.getString("Gender");
 		        	String aggro = rsI.getString("AggroLevel"); //default to 10
 		        	
+		        	float weightW = Float.parseFloat(weight);
+		        	float widthW = Float.parseFloat(width);
+		        	float heightW = Float.parseFloat(height);
+		        	float aggroW = Float.parseFloat(aggro);
+		        	
 		     //   	System.out.println( name + weight + width + height + gender + aggro);
 		        	cichlidA = new ConvictCichlid();
+		        	
+		        	// set variables
+		        	cichlidA.setName(name);
+		        	cichlidA.setWeight(weightW);
+		        	cichlidA.setLength(widthW);
+		        	cichlidA.setHeight(heightW);
+		        	cichlidA.setGender(gender);
+		        	cichlidA.setAggroLevel(aggroW);
+		        	cichlidA.setBaseAggroLevel(5);
+		        	cichlidA.setBaseSpeed(5);
+		        	cichlidA.setBaseCautionLevel(0);
+		        	// need to add into database later caution, speed
 		     
 				}
 			}
