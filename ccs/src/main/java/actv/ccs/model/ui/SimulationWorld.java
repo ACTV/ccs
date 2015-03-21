@@ -13,10 +13,14 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	private TankObject tank;
 	private CichlidCollection cList;
 	private Vector<IObserver> observerList;
+	private int fishPoolArr [];
 	
 	public SimulationWorld()
 	{		
 		cList = new CichlidCollection();
+		fishPoolArr = new int [3];
+		fishPoolArr[0] = fishPoolArr[1] = fishPoolArr[2] = 0;
+		
 		cichlid = getFromDB();
 		cichlid.addPropertyChangeListener(new CCChangeListener());
 		
@@ -24,6 +28,7 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		TankController tankController = new TankController(tank, this);
 		
 		
+		System.out.println("ahrray: " + fishPoolArr[0]);
 	}
 /*	
 	public void spawnCichlids()
@@ -130,6 +135,19 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	{
 		TankObject t = new TankObject(20, 20, 20, 26, 0, 0, new int [3]);
 		return t;
+	}
+	public int [] getFishArr()
+	{
+		if (fishPoolArr == null)
+		{
+			fishPoolArr = new int[3];
+			fishPoolArr[0] = fishPoolArr[1] = fishPoolArr[2] = 0;
+		}
+		return fishPoolArr;
+	}
+	public void setFishArr(int [] a)
+	{
+		fishPoolArr = a;
 	}
 
 }
