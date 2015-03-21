@@ -9,6 +9,8 @@ public class SimulationWorldProxy implements IObservable, ISimulationWorld
 	 // calls to the actual GameWorld, and reject calls to methods 
 	 // which the outside should not be able to access in the GameWorld. 
 	 // PROXY
+	
+	// PROAWYXSOAgerg woxy doxy
 
 	private SimulationWorld realSW; // proxy
 
@@ -34,7 +36,5 @@ public class SimulationWorldProxy implements IObservable, ISimulationWorld
 	 public void notifyObservers() {
 		realSW.notifyObservers();
 	 }
-	 
-	 // heheheh
 
 } 
