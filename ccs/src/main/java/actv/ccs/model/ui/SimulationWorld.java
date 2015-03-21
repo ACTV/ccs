@@ -15,7 +15,7 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	private CichlidCollection cList;
 	private Vector<IObserver> observerList;
 	private int fishPoolArr [];
-	private ResultSet rs;
+	private ResultSet rs, rsI;
 	private Connection conn;
 	public SimulationWorld()
 	{		
@@ -36,25 +36,71 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	public void spawnCichlids()
 	{
 		try {
-			conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 	
 		Statement s = conn.createStatement();
-		rs = s.executeQuery("SELECT * FROM [FishPool]");
+		rs = s.executeQuery("SELECT fishID FROM [SimulationFish]");
 		while (rs.next())
 		{
-			String id = rs.getString("ID"); //Field from database ex. FishA, FishB
+			String id = rs.getString("fishID"); //Field from database ex. FishA, FishB
 			int idS =  Integer.parseInt(id);
-        	//String value = rs.getString((1)); 
-        //ComboItem comboItem = new ComboItem(name, value); 
-			System.out.println(id);
+
+			/*
+			 * so the issue is that we will need to remove the data from simulationworld whenever there's a new simulation etc. will delve on this more.
+			 */
 			
-			if (idS == '1')
+			System.out.println(idS);
+			
+			if (id.equals("1"))
 			{
-				System.out.println("fff");
+				rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
+				
+				while (rsI.next())
+				{
+					String name = rsI.getString("Type"); //Field from database ex. FishA, FishB
+		        	String weight = rsI.getString("Weight");
+		        	String width = rsI.getString("Width");
+		        	String height = rsI.getString("Height");
+		        	String gender = rsI.getString("Gender");
+		        	String aggro = rsI.getString("AggroLevel"); //default to 10
+		        	
+		     //   	System.out.println( name + weight + width + height + gender + aggro);
+		     
+				}
 			}
-			else 
+			else if (id.equals("2"))
 			{
-				System.out.println("ddd");
+				rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
+				
+				while (rsI.next())
+				{
+					String name = rsI.getString("Type"); //Field from database ex. FishA, FishB
+		        	String weight = rsI.getString("Weight");
+		        	String width = rsI.getString("Width");
+		        	String height = rsI.getString("Height");
+		        	String gender = rsI.getString("Gender");
+		        	String aggro = rsI.getString("AggroLevel"); //default to 10
+		        	
+		     //   	System.out.println( name + weight + width + height + gender + aggro);
+		     
+				}
+			}
+			else if (id.equals("3"))
+			{
+				rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
+				
+				while (rsI.next())
+				{
+					String name = rsI.getString("Type"); //Field from database ex. FishA, FishB
+		        	String weight = rsI.getString("Weight");
+		        	String width = rsI.getString("Width");
+		        	String height = rsI.getString("Height");
+		        	String gender = rsI.getString("Gender");
+		        	String aggro = rsI.getString("AggroLevel"); //default to 10
+		        	
+		      //  	System.out.println(name + weight + width + height + gender + aggro);
+		     
+				}
 			}
 		}
 		conn.close();
