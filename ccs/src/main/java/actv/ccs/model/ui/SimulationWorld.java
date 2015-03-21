@@ -42,10 +42,10 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		rs = s.executeQuery("SELECT * FROM [FishPool]");
 		while (rs.next())
 		{
-			String name = rs.getString("Type"); //Field from database ex. FishA, FishB
+			String id = rs.getString("ID"); //Field from database ex. FishA, FishB
         	//String value = rs.getString((1)); 
         //ComboItem comboItem = new ComboItem(name, value); 
-			System.out.println(name);
+			System.out.println(id);
 		}
 		conn.close();
 		} catch (SQLException e) {
