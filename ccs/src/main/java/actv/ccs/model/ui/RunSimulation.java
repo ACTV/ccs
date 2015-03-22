@@ -38,8 +38,10 @@ public class RunSimulation extends JFrame{
 	private SimulationWorld world;
 	private TankView tV;
 	private GLCanvas glc; 
-	private RuleEngineRunner runner;
 	private MainGraphics mg;
+	
+	//TODO Singleton to run the rule engine
+	private RuleEngineRunner runner;
 	
 	public RunSimulation() throws IOException
 	{
@@ -48,7 +50,7 @@ public class RunSimulation extends JFrame{
 		
 	//	mH = new MainHub(mainFilePath);
 		world = new SimulationWorld();
-		glc = new GLCanvas();
+		//glc = new GLCanvas();
 		
 		
 		
@@ -115,16 +117,39 @@ public class RunSimulation extends JFrame{
 		this.setVisible(true);
 		world.notifyObservers();
 		
-
+		
+		
+		/* **********************************************************************************************
+		 * TODO Start of the refactoring {
+		 * 
+		 * TODO 
+		 * 	1. MOVE THE FOLLOWING CODE TO THE APPROPRIATE PLACE IN THE PROGRAM [THIS WAS TEMPORARY ONLY]
+		 * 	2. Remove hardcoded cichlid and replace with generated ones
+		 * 	3. Remove hardcoded insertion of objects
+		 */
+		
 		// Temporary creation of cichlid for testing
 		cichlid = new ConvictCichlid();
-		cichlid.setState(FishState.IDLE);
+		cichlid.setState(FishState.NONE);
 		cichlid.setIdleWaitTime(0);
 		
-		// Start the rule engine
+		/* 
+		 * Starting the rule engine
+		 * 	Initialize the RuleEngineRunner singleton,
+		 * 		add objects to it,
+		 * 		.start() the runner
+		 * 
+		 * TODO replace the input of runner.newMap(...)
+		 * 	with a comma separated list of CCSMemoryObjects.
+		 */
 		runner = RuleEngineRunner.getInstance();
 		runner.newMap(cichlid, new Auditor());
 		runner.start();
+		
+		/*
+		 * TODO
+		 * 	} End of the refactoring
+		 ***********************************************************************************************/
 	}
 
 

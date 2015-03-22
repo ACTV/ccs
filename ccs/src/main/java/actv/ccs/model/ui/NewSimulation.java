@@ -150,7 +150,7 @@ public class NewSimulation extends JFrame {
 		Connection conn;
 		comboBox.addItem("");
 		try {
-			conn = DriverManager.getConnection("jdbc:ucanaccess://E:\\FishPool.accdb");
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 	
 		Statement s = conn.createStatement();
 		rs = s.executeQuery("SELECT * FROM [FishPool]");

@@ -1,5 +1,6 @@
 package actv.ccs.rules.start;
 
+
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.ccs.fact.CoolingDown;
@@ -7,21 +8,23 @@ import actv.ccs.fact.Auditor;
 
 
 rule "Cooldown"
-	ruleflow-group "swim"
-	salience 1000
+	ruleflow-group "swam"
+	salience 100
+	timer(int: 2s)
 
 	when
 		$auditor :  Auditor()
-		$cc : ConvictCichlid( state == FishState.CAUTION );
+		
+		$cc : ConvictCichlid(state == FishState.CAUTION)
 					
-		$cd : CoolingDown( convictCichlid == $cc, 
-						   endTime >= System.currentTimeMillis());
+		$cd : CoolingDown( convictCichlid == $cc);
 	then
 		retract($cd);
+		
 		modify($cc){
-			setCautionLevel($cc.getBaseCautionLevel()),
 			setState(FishState.IDLE);
 		}
+		
 		modify($auditor){
 			getRulesFired().add(drools.getRule().getName());
 		}

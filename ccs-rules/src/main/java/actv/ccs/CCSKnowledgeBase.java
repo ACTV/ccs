@@ -88,12 +88,12 @@ public class CCSKnowledgeBase{
 		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(getKnowledgeBuilderConfiguration()); 
 
 		//TODO: hardcoded the rules for now.
-		//addDrl(kbuilder, "actv/ccs/rules/start/Cooldown.drl");
 		addDrl(kbuilder, "actv/ccs/rules/start/CoolingDown.drl");
 		addDrl(kbuilder, "actv/ccs/rules/start/Start.drl");
+		addDrl(kbuilder, "actv/ccs/rules/start/InitializeCichlid.drl");
 		addDrl(kbuilder, "actv/ccs/rules/start/Calm.drl");
 		addDrl(kbuilder, "actv/ccs/rules/idle/Idle.drl");
-		addDrl(kbuilder, "actv/ccs/rules/Swim.drl");
+		//addDrl(kbuilder, "actv/ccs/rules/Swim.drl");
 		addBpmn(kbuilder, "actv/ccs/flow/start.bpmn");
 		addBpmn(kbuilder, "actv/ccs/flow/idle.bpmn");
 		addBpmn(kbuilder, "actv/ccs/flow/swim.bpmn");
