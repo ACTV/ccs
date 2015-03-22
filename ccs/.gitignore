@@ -1,4 +1,4 @@
 Log2File.*
-/target/**/*
 .classpath
 /target/
+/target/**/*.class
