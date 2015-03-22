@@ -30,7 +30,7 @@ import static javax.media.opengl.GL4.GL_TESS_EVALUATION_SHADER;
  */
 public class MainHub
 {
-    private MainFrame mF;
+   // private MainFrame mF;
     private MainFunction mf;
     private MainGraphics mg;
     private GLCanvas GLc; 
@@ -116,7 +116,7 @@ public class MainHub
         mg.setBGColor(Color.blue);
         ///////////////////END OF INIT////////////////////////////////////
         
-        mF = new MainFrame(mf,GLc);
+    //    mF = new MainFrame(mf,GLc);
     }
     
 }

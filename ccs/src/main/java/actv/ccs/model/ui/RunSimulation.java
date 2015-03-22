@@ -27,6 +27,7 @@ import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.TankObject;
+import actv.ccs.model.graphics.MainGraphics;
 import actv.ccs.model.graphics.MainHub;
 import actv.ccs.model.type.FishState;
 
@@ -38,6 +39,7 @@ public class RunSimulation extends JFrame{
 	private TankView tV;
 	private GLCanvas glc; 
 	private RuleEngineRunner runner;
+	private MainGraphics mg;
 	
 	public RunSimulation() throws IOException
 	{
@@ -47,10 +49,15 @@ public class RunSimulation extends JFrame{
 	//	mH = new MainHub(mainFilePath);
 		world = new SimulationWorld();
 		glc = new GLCanvas();
+		
+		
+		
 		// create menu bar
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
-		tV = new TankView(world, glc);
+		tV = new TankView(world, mg);
+		world.addObserver(tV); // observer
+		
 		
 		// center panel for map
 		tV.setBorder(new EtchedBorder());
@@ -106,6 +113,8 @@ public class RunSimulation extends JFrame{
 		
 		
 		this.setVisible(true);
+		world.notifyObservers();
+		
 
 		// Temporary creation of cichlid for testing
 		cichlid = new ConvictCichlid();

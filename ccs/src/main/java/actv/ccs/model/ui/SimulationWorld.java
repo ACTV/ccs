@@ -20,6 +20,7 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	public SimulationWorld()
 	{		
 		cList = new CichlidCollection();
+		observerList = new Vector<IObserver>();
 		fishPoolArr = new int [3];
 		fishPoolArr[0] = fishPoolArr[1] = fishPoolArr[2] = 0;
 		
@@ -126,59 +127,6 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-/*
-		Connection conn;
-		
-		try {
-			conn = DriverManager.getConnection("jdbc:ucanaccess://C:/FishPool.accdb");
-		Statement s = conn.createStatement();
-
-		for (int i = 0; i < this.getFishArr().length; i++)
-		{
-
-		if (this.getFishArr()[i] == 1)
-		{
-			rs = s.executeQuery("SELECT * FROM [FishPool] WHERE ID='1'");
-		}
-		else if (this.getFishArr()[i] == 2)
-		{
-			rs = s.executeQuery("SELECT * FROM [FishPool] WHERE ID='2'");
-		}
-		else if (this.getFishArr()[i] == 3)
-		{
-			rs = s.executeQuery("SELECT * FROM [FishPool] WHERE ID='3'");
-		}
-		while (rs.next())
-		{
-			String id = rs.getString("ID"); // added new string for ID
-			String name = rs.getString("Type"); //Field from database ex. FishA, FishB
-        	String weight = rs.getString("Weight");
-        	String width = rs.getString("Width");
-        	String height = rs.getString("Height");
-        	String gender = rs.getString("Gender");
-        	String aggro = rs.getString("AggroLevel"); //default to 10
-        	
-      		// name
-        	float weightS = Float.parseFloat(weight);
-			float widthC = Float.parseFloat(width);
-			float heightC = Float.parseFloat(height);
-			// gender
-			float aggroC = Float.parseFloat(aggro);
-
-
-	//		cichlid = new ConvictCichlid(name, weightS, widthC, heightC, gender, aggroC);
-		System.out.println(id + name + weight + width + height + gender + aggro);
-		
-			// we'll need to add position later etc.
-		}
-		}
-		conn.close();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		*/
 	}
 
 	public void add(ConvictCichlid c)
