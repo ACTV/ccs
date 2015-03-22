@@ -22,6 +22,10 @@ import org.drools.event.rule.WorkingMemoryEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Listener class for the Knowledge Session
+ * 
+ */
 public class CCSListener implements WorkingMemoryEventListener, ProcessEventListener, AgendaEventListener {
 	private static final Logger logger = LoggerFactory.getLogger(CCSListener.class);
 	
@@ -129,7 +133,6 @@ public class CCSListener implements WorkingMemoryEventListener, ProcessEventList
 	}
 
 	public void afterRuleFlowGroupDeactivated(RuleFlowGroupDeactivatedEvent event) {
-		// TODO Auto-generated method stub
-		
+		logger.info("Deactivated group {}", event.getRuleFlowGroup());
 	}
 }

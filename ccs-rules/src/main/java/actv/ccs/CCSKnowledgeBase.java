@@ -10,13 +10,12 @@ import org.drools.builder.KnowledgeBuilder;
 import org.drools.builder.KnowledgeBuilderConfiguration;
 import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
-import org.drools.command.Command;
 import org.drools.conf.EventProcessingOption;
+import org.drools.definition.KnowledgePackage;
+import org.drools.definition.process.Process;
+import org.drools.definition.rule.Rule;
 import org.drools.event.process.ProcessEventListener;
 import org.drools.event.rule.AgendaEventListener;
-import org.drools.event.rule.ObjectInsertedEvent;
-import org.drools.event.rule.ObjectRetractedEvent;
-import org.drools.event.rule.ObjectUpdatedEvent;
 import org.drools.event.rule.WorkingMemoryEventListener;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.KnowledgeSessionConfiguration;
@@ -33,12 +32,11 @@ import actv.ccs.model.CCSMemoryObject;
  * TODO Cleanup the code!!!
  * 
  */
-public class CCSKnowledgeBase {
-	private static KnowledgeBuilder kbuilder;
-	private static KnowledgeBuilderConfiguration config;
+public class CCSKnowledgeBase{
+	private static SessionThread sessionThread;
+	private static final Logger log = LoggerFactory.getLogger(CCSKnowledgeBase.class); 
 	private static final String [] packages = { "actv/ccs/rules/start",
 												"actv/ccs/flow"};
-	private static final Logger log = LoggerFactory.getLogger(CCSKnowledgeBase.class); 
 	
 	/**
 	 * 
@@ -48,7 +46,6 @@ public class CCSKnowledgeBase {
 		StatefulKnowledgeSession sks = setupSession();
 		insertObjects(sks, objs);
 		
-		//TODO: Not working anymore?
 		sks.startProcess("swim");
 				
 		long start_time = System.currentTimeMillis();
@@ -64,16 +61,22 @@ public class CCSKnowledgeBase {
 		final StatefulKnowledgeSession sks = setupSession();
 		insertObjects(sks, objs);
 		
-		//TODO: Not working anymore?
 		sks.startProcess("swim");
 		
-		new Thread(){
-			public void run(){
-				sks.fireUntilHalt();
-			}
-		}.start();
+		startTheSession(sks);
 		
 		return sks;
+	}
+	
+	private static void startTheSession(StatefulKnowledgeSession sks){
+		// Execute the rules on another thread
+		sessionThread = SessionThread.getInstance();
+		sessionThread.setStatefulKnowledgeSession(sks);
+		sessionThread.start();
+	}
+	
+	public static Thread getSessionThread(){
+		return sessionThread;
 	}
 	
 	private static StatefulKnowledgeSession setupSession(){
@@ -94,17 +97,31 @@ public class CCSKnowledgeBase {
             throw new RuntimeException(kbuilder.getErrors().toString());
         }
 		
+		for(KnowledgePackage kp : kbuilder.getKnowledgePackages()){
+			log.info("Knowledge Package: {}", kp.getName());
+			for(Rule r : kp.getRules()){
+				log.info("Rule: {}", r.getName());
+			}
+			for(Process p : kp.getProcesses()){
+				log.info("Process: {}", p.getName());
+			}
+		}
+		
 		KnowledgeBase kb = KnowledgeBaseFactory.newKnowledgeBase(getKnowledgeBaseConfiguration());
 		
 		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
 		
 		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
 
+		addEventListeners(sks);
+		
+		return sks;
+	}
+	
+	private static void addEventListeners(StatefulKnowledgeSession sks){
 		sks.addEventListener((WorkingMemoryEventListener)new CCSListener());
 		sks.addEventListener((ProcessEventListener)new CCSListener());
 		sks.addEventListener((AgendaEventListener)new CCSListener());
-		
-		return sks;
 	}
 	
 	private static KnowledgeBuilderConfiguration getKnowledgeBuilderConfiguration(){
@@ -123,6 +140,7 @@ public class CCSKnowledgeBase {
 	private static KnowledgeSessionConfiguration getKnowledgeSessionConfiguration(){
 		KnowledgeSessionConfiguration config = KnowledgeBaseFactory.newKnowledgeSessionConfiguration();
 //		config.setOption(ClockTypeOption.get("pseudo"));
+		config.setOption(ClockTypeOption.get("realtime"));
 		return config;
 	}
 	

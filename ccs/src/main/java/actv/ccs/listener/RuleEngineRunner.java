@@ -1,0 +1,98 @@
+package actv.ccs.listener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.runtime.rule.FactHandle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import actv.ccs.CCSKnowledgeBase;
+import actv.ccs.fact.Auditor;
+import actv.ccs.model.CCSMemoryObject;
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.type.FishState;
+
+/**
+ * Singleton CCS Knowledge rule base runner
+ * 
+ * @author TOM
+ *
+ */
+public class RuleEngineRunner extends Thread{
+	private static RuleEngineRunner instance = null;
+	private static Logger logger = LoggerFactory.getLogger(RuleEngineRunner.class);
+	private HashMap<String, CCSMemoryObject> map;
+	private ArrayList<String> cichlidId, objectId;
+	private boolean isSessionHalted = true;
+	
+	protected RuleEngineRunner(){}
+	
+	public static RuleEngineRunner getInstance(){
+		if(instance == null){
+			instance = new RuleEngineRunner();
+			instance.setName("Rule Engine Runner");
+		}
+		return instance;
+	}
+
+	public void newMap(CCSMemoryObject...objs){
+		String id;
+		boolean hasCichlid = false;
+		map = new HashMap<String, CCSMemoryObject>();
+		cichlidId = new ArrayList<String>();
+		objectId = new ArrayList<String>();
+		
+		/*
+		 * Insert objects into a hash map using the cichlid id as a key
+		 */
+		for(CCSMemoryObject obj : objs){
+			if(obj instanceof ConvictCichlid){
+				hasCichlid = true;
+				id = Integer.toString(((ConvictCichlid) obj).getCichlidID());
+				cichlidId.add(id);
+				map.put(id, (ConvictCichlid)obj);
+				
+			}else if(obj instanceof Auditor){
+				id = "Auditor";
+				objectId.add(id);
+				map.put( id, (Auditor)obj);
+			}else{
+				id = "Fact";
+				objectId.add(id);
+				map.put(id, obj);
+			}
+		}
+		
+		if(!hasCichlid){
+			logger.error("No convict cichlid in the tank!!");
+			//TODO implement exception
+			return;
+		}
+	}
+	
+	
+	public void run() {
+		logger.info("Executing KnowledgeBase!");
+		StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(new ArrayList<CCSMemoryObject>(map.values()));
+		isSessionHalted = false;
+		
+		while(true){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			ConvictCichlid cc = (ConvictCichlid)map.get(cichlidId.get(0));
+			
+			if(cc.getState() == FishState.IDLE && cc.getIdleWaitTime() >= 4){
+				sks.halt();
+				isSessionHalted = true;
+				logger.info(">>>>>>> Session halted!!");
+				break;
+			}
+		}
+	}
+}

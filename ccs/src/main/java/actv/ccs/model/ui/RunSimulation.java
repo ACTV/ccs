@@ -19,11 +19,16 @@ import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 
+import org.drools.runtime.StatefulKnowledgeSession;
+
 import actv.ccs.CCSKnowledgeBase;
+import actv.ccs.fact.Auditor;
+import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.TankObject;
 import actv.ccs.model.graphics.MainHub;
+import actv.ccs.model.type.FishState;
 
 public class RunSimulation extends JFrame{
 	private String mainFilePath = "";
@@ -32,6 +37,7 @@ public class RunSimulation extends JFrame{
 	private SimulationWorld world;
 	private TankView tV;
 	private GLCanvas glc; 
+	private RuleEngineRunner runner;
 	
 	public RunSimulation() throws IOException
 	{
@@ -101,8 +107,15 @@ public class RunSimulation extends JFrame{
 		
 		this.setVisible(true);
 
-		ArrayList<CCSMemoryObject> objs = new ArrayList<CCSMemoryObject>();
-	//	StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
+		// Temporary creation of cichlid for testing
+		cichlid = new ConvictCichlid();
+		cichlid.setState(FishState.IDLE);
+		cichlid.setIdleWaitTime(0);
+		
+		// Start the rule engine
+		runner = RuleEngineRunner.getInstance();
+		runner.newMap(cichlid, new Auditor());
+		runner.start();
 	}
 
 
