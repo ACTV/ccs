@@ -18,9 +18,7 @@ rule "Cooldown"
 							  speed != baseSpeed,
 							  $baseSpeed : baseSpeed );
 					
-		not (exists IdleTimer(convictCichlid == $cc));
 	then
-		insert( new IdleTimer($cc, System.currentTimeMillis() + $cc.getIdleWaitTime()));
 		modify($cc){
 			setSpeed($baseSpeed),
 			setState(FishState.IDLE);
