@@ -63,7 +63,11 @@ public class CCSKnowledgeBase{
 		
 		sks.startProcess("swim");
 		
-		startTheSession(sks);
+		new Thread(){
+			public void run(){
+				startTheSession(sks);
+			}
+		}.start();
 		
 		return sks;
 	}
@@ -72,7 +76,7 @@ public class CCSKnowledgeBase{
 		// Execute the rules on another thread
 		sessionThread = SessionThread.getInstance();
 		sessionThread.setStatefulKnowledgeSession(sks);
-		sessionThread.start();
+		sessionThread.run();
 	}
 	
 	public static Thread getSessionThread(){
