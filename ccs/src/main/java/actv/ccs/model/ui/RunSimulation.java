@@ -122,34 +122,31 @@ public class RunSimulation extends JFrame{
 		/* **********************************************************************************************
 		 * TODO Start of the refactoring {
 		 * 
-		 * TODO 
 		 * 	1. MOVE THE FOLLOWING CODE TO THE APPROPRIATE PLACE IN THE PROGRAM [THIS WAS TEMPORARY ONLY]
 		 * 	2. Remove hardcoded cichlid and replace with generated ones
 		 * 	3. Remove hardcoded insertion of objects
+		 *
+		 *	Temporary creation of cichlid for testing
 		 */
-		
-		// Temporary creation of cichlid for testing
 		cichlid = new ConvictCichlid();
 		cichlid.setState(FishState.NONE);
 		cichlid.setIdleWaitTime(0);
-		
 		/* 
-		 * Starting the rule engine
+		 * Starting the rule engine:
 		 * 	Initialize the RuleEngineRunner singleton,
 		 * 		add objects to it,
 		 * 		.start() the runner
-		 * 
-		 * TODO replace the input of runner.newMap(...)
-		 * 	with a comma separated list of CCSMemoryObjects.
 		 */
 		runner = RuleEngineRunner.getInstance();
 		runner.newMap(cichlid, new Auditor());
 		runner.start();
+		/*	
+		 * TODO replace the input of runner.newMap(...)
+		 * 	with a comma separated list of CCSMemoryObjects.
+		 * 
+		 * 
+		 * } End of the refactoring	********************************************************************/
 		
-		/*
-		 * TODO
-		 * 	} End of the refactoring
-		 ***********************************************************************************************/
 	}
 
 
