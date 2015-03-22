@@ -7,16 +7,15 @@ import org.drools.KnowledgeBase;
 import org.drools.builder.KnowledgeBuilder;
 import org.drools.command.Command;
 import org.drools.command.CommandFactory;
-import org.drools.event.rule.DefaultAgendaEventListener;
-import org.drools.event.rule.ObjectInsertedEvent;
-import org.drools.event.rule.ObjectRetractedEvent;
-import org.drools.event.rule.ObjectUpdatedEvent;
+import org.drools.event.process.ProcessEventListener;
+import org.drools.event.rule.AgendaEventListener;
 import org.drools.event.rule.WorkingMemoryEventListener;
 import org.drools.runtime.StatelessKnowledgeSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import actv.ccs.CCSKnowledgeBase;
+import actv.ccs.CCSListener;
 
 /**
  * 
@@ -43,20 +42,9 @@ public class DroolsTest{
 		// Initialize a stateless knowledge session
 		sks = kb.newStatelessKnowledgeSession();
 		
-		sks.addEventListener(new WorkingMemoryEventListener() {
-			
-			public void objectUpdated(ObjectUpdatedEvent event) {
-				logger.info("Updated {}", event.getObject().toString());
-			}
-			
-			public void objectInserted(ObjectInsertedEvent event) {
-				logger.info("Inserted {}", event.getObject().toString());
-			}
-
-			public void objectRetracted(ObjectRetractedEvent event) {
-				// TODO Auto-generated method stub
-			}
-		});
+		sks.addEventListener((WorkingMemoryEventListener)new CCSListener());
+		sks.addEventListener((ProcessEventListener)new CCSListener());
+		sks.addEventListener((AgendaEventListener)new CCSListener());
 
 		this.startProc = startProc;
 	}

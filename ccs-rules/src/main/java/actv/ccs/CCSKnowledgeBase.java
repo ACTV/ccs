@@ -40,7 +40,7 @@ public class CCSKnowledgeBase{
 	
 	/**
 	 * 
-	 * Static entrypoint for main game
+	 * Execute the stateful knowledge session with the call fireAllRules()
 	 */
 	public static void executeSession(ArrayList<CCSMemoryObject> objs){
 		StatefulKnowledgeSession sks = setupSession();
@@ -48,15 +48,16 @@ public class CCSKnowledgeBase{
 		
 		sks.startProcess("swim");
 				
-		long start_time = System.currentTimeMillis();
-		
 		sks.fireAllRules();
 		
-		log.debug("Execution time: {}", System.currentTimeMillis() - start_time);
 		sks.dispose();
-		
 	}
 	
+	/**
+	 * Execute the stateful knowledge session on a separate thread. Uses call fireUntilHalt()
+	 * @param objs
+	 * @return
+	 */
 	public static StatefulKnowledgeSession executeInfiniteSession(ArrayList<CCSMemoryObject> objs){
 		final StatefulKnowledgeSession sks = setupSession();
 		insertObjects(sks, objs);
@@ -87,7 +88,8 @@ public class CCSKnowledgeBase{
 		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(getKnowledgeBuilderConfiguration()); 
 
 		//TODO: hardcoded the rules for now.
-		addDrl(kbuilder, "actv/ccs/rules/start/Cooldown.drl");
+		//addDrl(kbuilder, "actv/ccs/rules/start/Cooldown.drl");
+		addDrl(kbuilder, "actv/ccs/rules/start/CoolingDown.drl");
 		addDrl(kbuilder, "actv/ccs/rules/start/Start.drl");
 		addDrl(kbuilder, "actv/ccs/rules/start/Calm.drl");
 		addDrl(kbuilder, "actv/ccs/rules/idle/Idle.drl");

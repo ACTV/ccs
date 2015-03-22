@@ -1,11 +1,8 @@
 package actv.rules;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.rule.FactHandle;
-import org.drools.time.SessionPseudoClock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,6 +19,7 @@ import actv.ccs.model.type.FishState;
 public class CCSKnowledgeBaseTest{
 	private ConvictCichlid cc;
 	private Auditor auditor;
+	private long start;
 	private static Logger log = LoggerFactory.getLogger(CCSKnowledgeBaseTest.class);
 	private ArrayList<CCSMemoryObject> objs;
 
@@ -35,43 +33,54 @@ public class CCSKnowledgeBaseTest{
 		cc.setCautionLevel(2f);
 		cc.setIdleWaitTime(0);
 		auditor = new Auditor();
+		start = System.currentTimeMillis();
+
 	}
 	
-	//@Test
+	@After
+	public void printTime(){
+		log.info("Execution time {}", System.currentTimeMillis() - start);
+	}
+	
+//	@Test
 	public void test_Package(){
 		log.info("test_Package:");
+		
 		objs = new ArrayList<CCSMemoryObject>();
 		objs.add(cc);
 		objs.add(auditor);
 		
 		CCSKnowledgeBase.executeSession(objs);
-		//Assert.assertEquals(FishState.IDLE, cc.getState());
+		
+		Assert.assertEquals(FishState.IDLE, cc.getState());
 		Assert.assertTrue(auditor.getRulesFired().size() >= 1);
 	}
 	
-	//@Test
+//	@Test
 	public void test_Package_IDLE(){
-		cc.setState(FishState.IDLE);
 		log.info("test_Package:");
+		
+		cc.setState(FishState.IDLE);
+		
 		objs = new ArrayList<CCSMemoryObject>();
 		objs.add(cc);
 		objs.add(auditor);
 		
 		CCSKnowledgeBase.executeSession(objs);
-		//Assert.assertEquals(FishState.IDLE, cc.getState());
+		
+		Assert.assertEquals(FishState.IDLE, cc.getState());
 		Assert.assertTrue(auditor.getRulesFired().size() >= 1);
 	}
 	
 	@Test
 	public void testInfinite(){
-		log.info(">>Testing infinite execution with initial START fish state");
+		log.info(">>Testing infinite execution with initial NONE fish state");
 		
 		objs = new ArrayList<CCSMemoryObject>();
 		objs.add(cc);
 		objs.add(auditor);
 		
 		StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
-		long start = System.currentTimeMillis();
 
 		try{
 			log.info("Sleeping thread...");
@@ -83,11 +92,11 @@ public class CCSKnowledgeBaseTest{
 		sks.halt();
 		sks.dispose();
 		
-		log.info("Execution time {}", System.currentTimeMillis() - start);
 		Assert.assertTrue(auditor.getRulesFired().size() >= 1);
+		Assert.assertTrue(auditor.getRulesFired().contains("Cooling Down"));
 	}
 	
-	//@Test
+	@Test
 	public void testInfinite_Idle(){
 		cc.setState(FishState.IDLE);
 		cc.setIdleWaitTime(2000);
@@ -99,7 +108,6 @@ public class CCSKnowledgeBaseTest{
 		objs.add(auditor);
 
 		StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
-		long start = System.currentTimeMillis();
 		
 		try {
 			Thread.sleep(5000);
@@ -111,11 +119,10 @@ public class CCSKnowledgeBaseTest{
 		sks.halt();
 		sks.dispose();
 		
-		log.info("Execution time {}", System.currentTimeMillis() - start);
 		Assert.assertEquals(2, auditor.getRulesFired().size());
 	}
 	
-	//@Test
+	@Test
 	public void testInfinite_Idle_ThreadSleep(){
 		cc.setState(FishState.IDLE);
 		cc.setIdleWaitTime(2000);
@@ -127,7 +134,6 @@ public class CCSKnowledgeBaseTest{
 		objs.add(auditor);
 
 		StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
-		long start = System.currentTimeMillis();
 		
 		log.info("Sleeping session thread for 2 seconds");
 		try {
@@ -148,22 +154,7 @@ public class CCSKnowledgeBaseTest{
 		sks.halt();
 		sks.dispose();
 		
-		log.info("Execution time {}", System.currentTimeMillis() - start);
 		Assert.assertEquals(3, auditor.getRulesFired().size());
 	}
 	
-	
-	@After
-	public void printFish(){
-		log.info("ConvictCichlid");
-		log.info("\tState: {}", cc.getState());
-		log.info("\tBase Aggro: {}", cc.getBaseAggroLevel());
-		log.info("\tBase Caution: {}", cc.getBaseCautionLevel());
-		log.info("\tCaution: {}", cc.getCautionLevel());
-		log.info("\tSpeed: {}", cc.getSpeed());
-		
-		for(String rule : auditor.getRulesFired()){
-			log.info("Rule fired: {}", rule);
-		}
-	}
 }
