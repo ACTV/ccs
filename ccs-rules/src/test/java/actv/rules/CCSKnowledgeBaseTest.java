@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import actv.ccs.CCSKnowledgeBase;
 import actv.ccs.fact.Auditor;
-import actv.ccs.fact.IdleTimer;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
