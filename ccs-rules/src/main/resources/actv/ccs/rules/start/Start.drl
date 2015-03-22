@@ -21,12 +21,14 @@ rule "Start"
 					
 		not( exists CoolingDown(convictCichlid == $cc));
 	then
-		insert( new CoolingDown($cc, System.currentTimeMillis() + 3000));
+		insert( new CoolingDown($cc));
+		
 		modify($cc){
 			setCautionLevel($baseCautionLevel * 1.6f),
 			setSpeed($baseSpeed * 1.6f),
 			setState(FishState.CAUTION);
 		}
+		 
 		modify($auditor){
 			getRulesFired().add(drools.getRule().getName());
 		}

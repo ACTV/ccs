@@ -8,16 +8,10 @@ import actv.ccs.model.ConvictCichlid;
  *
  */
 public class CoolingDown {
-	private double endTime;
 	private ConvictCichlid convictCichlid;
 
-	public CoolingDown(ConvictCichlid convictCichlid, double duration){
+	public CoolingDown(ConvictCichlid convictCichlid){
 		this.convictCichlid = convictCichlid;
-		this.endTime = System.currentTimeMillis() + (duration * 1000);
-	}
-
-	public double getEndTime() {
-		return endTime;
 	}
 
 	public ConvictCichlid getConvictCichlid() {

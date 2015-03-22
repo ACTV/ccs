@@ -38,7 +38,7 @@ public class CalmTest extends DroolsTest {
 	
 	@Test
 	public void testInvalid_NotCoolingDown(){
-		execute(auditor, cc, new CoolingDown(new ConvictCichlid(), System.currentTimeMillis()+100));
+		execute(auditor, cc, new CoolingDown(new ConvictCichlid()));
 		Assert.assertEquals(FishState.CAUTION, cc.getState());	
 	}
 	
