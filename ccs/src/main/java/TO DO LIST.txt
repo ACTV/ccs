@@ -1,5 +1,5 @@
 Albert's TO DO LIST:
-need to find a way to get the tank array from new simulation to simulation world - 90% done
+need to find a way to get the tank array from new simulation to simulation world - done
 need to fix file menu - low
 need to merge graphics code - high. highest priority
 need to put objects on screen - highest
