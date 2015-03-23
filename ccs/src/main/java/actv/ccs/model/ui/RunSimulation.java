@@ -54,22 +54,22 @@ public class RunSimulation extends JFrame{
 		world = new SimulationWorld();
 		//glc = new GLCanvas();
 		
-		mF = new MainFunction(mg);
+	//	mF = new MainFunction(mg);
 		
 		// create menu bar
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
-	//	tV = new TankView(world, mg);
-	//	world.addObserver(tV); // observer
+		tV = new TankView(world, mg);
+		world.addObserver(tV); // observer
 		
 		
 		// center panel for map
 	//	tV.setBorder(new EtchedBorder());
 	//	tV.setBackground(Color.orange);
 		
-		world.addObserver(mF);
-		mF.setBorder(new EtchedBorder());
-		mF.setBackground(Color.blue);
+		world.addObserver(tV);
+		tV.setBorder(new EtchedBorder());
+		tV.setBackground(Color.blue);
 		
 		// Bottom Panel for Data Output
 		JPanel dataPanel = new JPanel();
@@ -95,7 +95,7 @@ public class RunSimulation extends JFrame{
 								.addComponent(printData))
 							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addComponent(btnPauseButton))
-						.addComponent(mF, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 982, GroupLayout.PREFERRED_SIZE))
+						.addComponent(tV, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 982, GroupLayout.PREFERRED_SIZE))
 					.addGap(137)
 					.addComponent(dataPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -112,7 +112,7 @@ public class RunSimulation extends JFrame{
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(outputDataHere, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(mF, GroupLayout.PREFERRED_SIZE, 392, GroupLayout.PREFERRED_SIZE)
+							.addComponent(tV, GroupLayout.PREFERRED_SIZE, 392, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnPauseButton)))
 					.addContainerGap())

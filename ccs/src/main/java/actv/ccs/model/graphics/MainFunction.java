@@ -27,6 +27,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import actv.ccs.model.graphics.objects.GeoShape;
 import actv.ccs.model.ui.IObservable;
 import actv.ccs.model.ui.IObserver;
 import actv.ccs.model.ui.SimulationWorldProxy;
@@ -43,6 +44,7 @@ public class MainFunction extends JPanel implements ActionListener, MouseWheelLi
     private boolean swapDirection, paused, flagSaveLastLoc;
     private float dx, dy, dz, xaxis, yaxis, zaxis, speed;
     private final float db;
+    private GeoShape testGs;
     public MainFunction(MainGraphics mg)
     {
         this.mg = mg;
@@ -64,6 +66,15 @@ public class MainFunction extends JPanel implements ActionListener, MouseWheelLi
         gameTick = new Timer(15,this); //start the animation
         swapDirection = false;
         gameTick.start();
+        
+		float [] verts = new float [] {0,1,0,-1,-1,1,1,-1,1,1,-1,-1,-1,-1,-1};
+		
+		
+		// here's to trying to draw something on the screen.
+		testGs = new GeoShape(null, verts, null, null, 10, 10, 10);
+		//     public GeoShape(String string, float[] verts, float[] texCoords, String texFilePath, float x, float y, float z)
+		
+		System.out.println("testobj"  + testGs);
     }
     //pos is the init position
     static int pos = -900, dt = 2, mod = -1; //dt is the speed of the movment
@@ -105,6 +116,9 @@ public class MainFunction extends JPanel implements ActionListener, MouseWheelLi
  
    //     moveObjects();
         mg.paintScreen(); //refresh/update the opengl screen
+        
+        
+        // albert. error on screen. null pointer exception
         //System.out.printf("ffff");
     }
     

@@ -24,7 +24,7 @@ public class TankView extends JPanel implements IObserver {
 	public void update(IObservable o, Object obj)
 	{
 		obj = (SimulationWorldProxy) o;
-	//	repaint();
+		repaint();
 	}
 	public void paintComponent(Graphics g)
 	{
