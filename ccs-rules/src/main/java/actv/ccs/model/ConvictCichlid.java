@@ -1,10 +1,12 @@
 package actv.ccs.model;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.beans.PropertyChangeSupport;
 
 import actv.ccs.model.type.FishState;
 
-public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryObject {
+public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryObject, IDrawable {
 	private float [] location;
 	private FishState state;
 	private float aggroLevel;
@@ -164,6 +166,10 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 
 	public void setIdleWaitTime(long idleWaitTime) {
 		this.idleWaitTime = idleWaitTime;
+	}
+	public void draw(Graphics g) {
+		System.out.println("obh here");
+		
 	}
 
 	

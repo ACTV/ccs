@@ -7,6 +7,7 @@ import javax.media.opengl.awt.GLCanvas;
 
 import actv.ccs.model.*;
 import actv.ccs.model.graphics.*;
+import actv.ccs.model.IDrawable;
 
 
 public class TankView extends JPanel implements IObserver {
@@ -28,7 +29,13 @@ public class TankView extends JPanel implements IObserver {
 	}
 	public void paintComponent(Graphics g)
 	{
-		
+		super.paintComponents(g);
+		Iterator it = sW.getIterator();
+		while (it.hasNext())
+		{
+			IDrawable obj = (IDrawable) it.getNext();
+			obj.draw(g);
+		}
 	}
 	// here is where i want to have sage engine information connected to here
 }
