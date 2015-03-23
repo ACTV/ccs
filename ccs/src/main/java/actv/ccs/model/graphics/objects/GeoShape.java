@@ -109,7 +109,7 @@ public class GeoShape extends AbstractObject
         this.texCoords = texCoords;
         textFilePath = texFilePath;
         texID = normalBufferID = texBufferID = bufferID = -1;
-        loadModelFromFile(modelFilePath);
+  //      loadModelFromFile(modelFilePath);
         light = false;
     }
     

@@ -10,6 +10,7 @@ package actv.ccs.model.graphics;
 
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -21,14 +22,20 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
 import java.io.File;
+
 import javax.swing.AbstractAction;
+import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import actv.ccs.model.ui.IObservable;
+import actv.ccs.model.ui.IObserver;
+import actv.ccs.model.ui.SimulationWorldProxy;
 
 /**
  *
  * @author Victor
  */
-public class MainFunction implements ActionListener, MouseWheelListener, KeyListener, MouseMotionListener 
+public class MainFunction extends JPanel implements ActionListener, MouseWheelListener, KeyListener, MouseMotionListener, IObserver 
 {
     private MainGraphics mg;
     private AbstractAction cmds[];
@@ -96,7 +103,7 @@ public class MainFunction implements ActionListener, MouseWheelListener, KeyList
     public void actionPerformed(ActionEvent e)
     {
  
-        moveObjects();
+   //     moveObjects();
         mg.paintScreen(); //refresh/update the opengl screen
         //System.out.printf("ffff");
     }
@@ -350,4 +357,9 @@ public class MainFunction implements ActionListener, MouseWheelListener, KeyList
         mg.setLightPos(e.getX() /100.0f  ,e.getY()/100.0f ,(float) mg.getLightPos().getZ());
         System.out.println("mouse");
     }
+	public void update(IObservable o, Object obj)
+	{
+		obj = (SimulationWorldProxy) o;
+	//	repaint();
+	}
 }

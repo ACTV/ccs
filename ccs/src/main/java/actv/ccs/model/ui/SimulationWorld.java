@@ -7,11 +7,13 @@ import actv.ccs.listener.CCChangeListener;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.TankObject;
 import actv.ccs.model.type.FishState;
+import actv.ccs.model.graphics.objects.*;
 
 public class SimulationWorld implements IObservable, ISimulationWorld {
 	
 	private ConvictCichlid cichlid, cichlidA, cichlidB, cichlidC; // test
 	private TankObject tank;
+	private GeoShape testObj;
 	private CichlidCollection cList;
 	private Vector<IObserver> observerList;
 	private int fishPoolArr [];
@@ -30,6 +32,14 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		ConvictCichlidController controller = new ConvictCichlidController(cichlid, this);
 		TankController tankController = new TankController(tank, this);
 		
+		float [] verts = new float [] {0,1,0,-1,-1,1,1,-1,1,1,-1,-1,-1,-1,-1};
+		
+		
+		// here's to trying to draw something on the screen.
+		testObj = new GeoShape(null, verts, null, null, 10, 10, 10);
+		//     public GeoShape(String string, float[] verts, float[] texCoords, String texFilePath, float x, float y, float z)
+		
+		System.out.println("testobj"  + testObj);
 		
 		spawnCichlids();
 	}
