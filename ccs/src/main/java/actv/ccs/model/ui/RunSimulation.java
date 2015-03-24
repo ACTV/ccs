@@ -2,13 +2,21 @@ package actv.ccs.model.ui;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.media.opengl.awt.GLCanvas;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -41,6 +49,7 @@ public class RunSimulation extends JFrame{
 	private GLCanvas glc; 
 	private MainGraphics mg;
 	private MainFunction mF;
+	private ResultSet rs;
 	
 	
 	/*
@@ -87,10 +96,39 @@ public class RunSimulation extends JFrame{
 		outputDataHere.setText("Here would be where the fish hp goes... something along the lines of a Final Fantasy battle gui");
 		
 		JButton btnPauseButton = new JButton("Pause Button");
+		
+		JButton endSimulationButton = new JButton("End Simulation");
+		endSimulationButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				
+				Connection conn;
+				try {
+					conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+				Statement s = conn.createStatement();
+		        	int a = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 1");
+		        	System.out.println("a is " + a);
+		        	int b = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 2");
+		        	System.out.println("b is " + b);
+		        	int c = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 3");
+		        	System.out.println("c is " + b);
+
+				conn.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	
+				// close the game
+				System.exit(0);
+			}
+		});
+
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
@@ -98,7 +136,9 @@ public class RunSimulation extends JFrame{
 								.addComponent(outputDataHere, GroupLayout.PREFERRED_SIZE, 510, GroupLayout.PREFERRED_SIZE)
 								.addComponent(printData))
 							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(btnPauseButton))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(endSimulationButton)
+								.addComponent(btnPauseButton)))
 						.addComponent(tV, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 982, GroupLayout.PREFERRED_SIZE))
 					.addGap(137)
 					.addComponent(dataPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -118,7 +158,9 @@ public class RunSimulation extends JFrame{
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(tV, GroupLayout.PREFERRED_SIZE, 392, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnPauseButton)))
+							.addComponent(btnPauseButton)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(endSimulationButton)))
 					.addContainerGap())
 		);
 		getContentPane().setLayout(groupLayout);
