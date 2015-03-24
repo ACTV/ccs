@@ -3,6 +3,7 @@ package actv.ccs.model;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.beans.PropertyChangeSupport;
+import java.util.Random;
 
 import actv.ccs.model.type.FishState;
 
@@ -168,7 +169,8 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 		this.idleWaitTime = idleWaitTime;
 	}
 	public void draw(Graphics g) {
-		System.out.println("obh here");
+		Random rand = new Random(); // placeholder for cichlid locations?
+		g.fillOval(rand.nextInt((100-1)+1),rand.nextInt((100-1)+1), 30, 30);
 		
 	}
 

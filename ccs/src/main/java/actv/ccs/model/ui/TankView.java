@@ -18,7 +18,7 @@ public class TankView extends JPanel implements IObserver {
 	public TankView(SimulationWorld s, MainGraphics m)
 	{
 		sW = s;
-		this.mg = m;
+		System.out.println("ddw");
 
 	}
 	
@@ -35,7 +35,9 @@ public class TankView extends JPanel implements IObserver {
 		{
 			IDrawable obj = (IDrawable) it.getNext();
 			obj.draw(g);
+			System.out.println("drawww");
 		}
+
 	}
 	// here is where i want to have sage engine information connected to here
 }

@@ -94,7 +94,8 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	cichlidA.setBaseSpeed(5);
 		        	cichlidA.setBaseCautionLevel(0);
 		        	// need to add into database later caution, speed
-		     
+		        	System.out.println("heey aadded a cichlid!");
+		        	cList.add(cichlidA);
 				}
 			}
 			else if (id.equals("2"))
@@ -110,8 +111,24 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	String gender = rsI.getString("Gender");
 		        	String aggro = rsI.getString("AggroLevel"); //default to 10
 		        	
+		        	float weightW = Float.parseFloat(weight);
+		        	float widthW = Float.parseFloat(width);
+		        	float heightW = Float.parseFloat(height);
+		        	float aggroW = Float.parseFloat(aggro);
+		        	
 		     //   	System.out.println( name + weight + width + height + gender + aggro);
 		        	cichlidB = new ConvictCichlid();
+		        	cichlidB.setName(name);
+		        	cichlidB.setWeight(weightW);
+		        	cichlidB.setLength(widthW);
+		        	cichlidB.setHeight(heightW);
+		        	cichlidB.setGender(gender);
+		        	cichlidB.setAggroLevel(aggroW);
+		        	cichlidB.setBaseAggroLevel(5);
+		        	cichlidB.setBaseSpeed(5);
+		        	cichlidB.setBaseCautionLevel(0);
+		        	
+		        	cList.add(cichlidB);
 				}
 			}
 			else if (id.equals("3"))
@@ -129,6 +146,24 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	
 		      //  	System.out.println(name + weight + width + height + gender + aggro);
 		        	cichlidC = new ConvictCichlid();
+		        	
+		        	float weightW = Float.parseFloat(weight);
+		        	float widthW = Float.parseFloat(width);
+		        	float heightW = Float.parseFloat(height);
+		        	float aggroW = Float.parseFloat(aggro);
+		        	
+		     //   	System.out.println( name + weight + width + height + gender + aggro);
+		        	cichlidC.setName(name);
+		        	cichlidC.setWeight(weightW);
+		        	cichlidC.setLength(widthW);
+		        	cichlidC.setHeight(heightW);
+		        	cichlidC.setGender(gender);
+		        	cichlidC.setAggroLevel(aggroW);
+		        	cichlidC.setBaseAggroLevel(5);
+		        	cichlidC.setBaseSpeed(5);
+		        	cichlidC.setBaseCautionLevel(0);
+		        	
+		        	cList.add(cichlidC);
 				}
 			}
 		}
