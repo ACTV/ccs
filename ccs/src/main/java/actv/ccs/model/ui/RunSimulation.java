@@ -42,6 +42,10 @@ public class RunSimulation extends JFrame{
 	private MainGraphics mg;
 	private MainFunction mF;
 	
+	
+	/*
+	 * need to add a button to say when you click a button, then you close the simulation and set the SimulationFish fishID to null so it makes the illusion of creating an object to be null.
+	 */
 	//TODO Singleton to run the rule engine
 	private RuleEngineRunner runner;
 	
