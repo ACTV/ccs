@@ -65,7 +65,7 @@ import javax.media.opengl.glu.GLU;
  */
 public class MainGraphics implements GLEventListener
 {
-
+//TEST
     private GLCanvas GLc;
     private int rndPrograms[], tVertexArray[] = new int[1], texLoc[], vLoc[], norLoc[], samplers[], samplers2[] = new int[1] , txLoc0, txLoc1,
             uniShaderLocs[][], pipes[] = new int[6], cubeTexId;
