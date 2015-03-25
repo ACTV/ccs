@@ -103,16 +103,6 @@ public class CCSKnowledgeBase{
             throw new RuntimeException(kbuilder.getErrors().toString());
         }
 		
-		for(KnowledgePackage kp : kbuilder.getKnowledgePackages()){
-			log.info("Knowledge Package: {}", kp.getName());
-			for(Rule r : kp.getRules()){
-				log.info("Rule: {}", r.getName());
-			}
-			for(Process p : kp.getProcesses()){
-				log.info("Process: {}", p.getName());
-			}
-		}
-		
 		KnowledgeBase kb = KnowledgeBaseFactory.newKnowledgeBase(getKnowledgeBaseConfiguration());
 		
 		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
@@ -181,7 +171,6 @@ public class CCSKnowledgeBase{
 	}
 	
 	private static void addDrl(KnowledgeBuilder kbuilder, String drl){
-		log.debug("Adding resource {}", drl);
 		kbuilder.add(ResourceFactory.newClassPathResource(drl), ResourceType.DRL);
 	}
 
@@ -191,7 +180,6 @@ public class CCSKnowledgeBase{
 	}
 	
 	private static void addBpmn(KnowledgeBuilder kbuilder, String flowFile){
-		log.debug("Adding resource {}", flowFile);
 		ClassPathResource flow = new ClassPathResource(flowFile);
 		try{
 			kbuilder.add(ResourceFactory.newUrlResource(flow.getURL()), ResourceType.BPMN2);
