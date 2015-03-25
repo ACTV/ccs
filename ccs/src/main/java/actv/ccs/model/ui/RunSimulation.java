@@ -106,7 +106,7 @@ public class RunSimulation extends JFrame{
 				Connection conn;
 				try {
 					conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
-				Statement s = conn.createStatement();
+					Statement s = conn.createStatement();
 		        	int a = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 1");
 		        	System.out.println("a is " + a);
 		        	int b = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 2");
@@ -114,8 +114,15 @@ public class RunSimulation extends JFrame{
 		        	int c = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 3");
 		        	System.out.println("c is " + b);
 
-				conn.close();
+		        	conn.close();
+		        	
+		        	runner.closeSession();
+		        	runner.join();
+		        	
 				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}

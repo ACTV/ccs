@@ -22,10 +22,10 @@ import actv.ccs.model.type.FishState;
  */
 public class RuleEngineRunner extends Thread{
 	private static RuleEngineRunner instance = null;
-	private static Logger logger = LoggerFactory.getLogger(RuleEngineRunner.class);
 	private HashMap<String, CCSMemoryObject> map;
 	private ArrayList<String> cichlidId, objectId;
-	private boolean isSessionHalted = true;
+	private static boolean isRunning = false;
+	private static Logger logger = LoggerFactory.getLogger(RuleEngineRunner.class);
 	
 	protected RuleEngineRunner(){}
 	
@@ -67,15 +67,41 @@ public class RuleEngineRunner extends Thread{
 		
 		if(!hasCichlid){
 			logger.error("No convict cichlid in the tank!!");
-			//TODO implement exception
+			//TODO implement exception?
 			return;
 		}
+	}
+	
+	public void closeSession() throws InterruptedException{
+		logger.info("Closing the session!");
+		CCSKnowledgeBase.disposeSession();
+		isRunning = false;
+	}
+	
+	public int pauseSession(){
+		if(isRunning){
+			int ret = CCSKnowledgeBase.pauseSession();
+			isRunning = false;
+			return ret;
+		}
+		return -1;
+	}
+	
+	public int resumeSession(){
+		if(!isRunning){
+			int ret = CCSKnowledgeBase.resumeSession();
+			isRunning = true;
+			return ret;
+		}
+		return -1;
 	}
 	
 	
 	public void run() {
 		logger.info("Executing KnowledgeBase!");
-		StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(new ArrayList<CCSMemoryObject>(map.values()));
+		CCSKnowledgeBase.executeInfiniteSession(new ArrayList<CCSMemoryObject>(map.values()));
+		isRunning = true;
+		/*
 		isSessionHalted = false;
 		
 		while(true){
@@ -94,5 +120,6 @@ public class RuleEngineRunner extends Thread{
 				break;
 			}
 		}
+		*/
 	}
 }

@@ -80,7 +80,7 @@ public class CCSKnowledgeBaseTest{
 		objs.add(cc);
 		objs.add(auditor);
 		
-		StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
+		CCSKnowledgeBase.executeInfiniteSession(objs);
 
 		try{
 			log.info("Sleeping thread...");
@@ -89,8 +89,7 @@ public class CCSKnowledgeBaseTest{
 			e.printStackTrace();
 		}
 		
-		sks.halt();
-		sks.dispose();
+		CCSKnowledgeBase.disposeSession();
 		
 		Assert.assertTrue(auditor.getRulesFired().size() >= 1);
 		Assert.assertTrue(auditor.getRulesFired().contains("Cooling Down"));
@@ -107,7 +106,7 @@ public class CCSKnowledgeBaseTest{
 		objs.add(cc);
 		objs.add(auditor);
 
-		StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
+		CCSKnowledgeBase.executeInfiniteSession(objs);
 		
 		try {
 			Thread.sleep(5000);
@@ -116,45 +115,9 @@ public class CCSKnowledgeBaseTest{
 			e.printStackTrace();
 		}
 		
-		sks.halt();
-		sks.dispose();
+		CCSKnowledgeBase.disposeSession();
 		
 		Assert.assertEquals(2, auditor.getRulesFired().size());
-	}
-	
-	@Test
-	public void testInfinite_Idle_ThreadSleep(){
-		cc.setState(FishState.IDLE);
-		cc.setIdleWaitTime(2000);
-		
-		log.info(">>Testing infinite Idle with a session thread sleep");
-		
-		objs = new ArrayList<CCSMemoryObject>();
-		objs.add(cc);
-		objs.add(auditor);
-
-		StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
-		
-		log.info("Sleeping session thread for 2 seconds");
-		try {
-			CCSKnowledgeBase.getSessionThread().sleep(2000);;
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		log.info("Waking session thread after 2 seconds");
-		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		sks.halt();
-		sks.dispose();
-		
-		Assert.assertEquals(3, auditor.getRulesFired().size());
 	}
 	
 }

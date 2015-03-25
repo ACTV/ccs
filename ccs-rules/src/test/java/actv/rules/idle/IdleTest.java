@@ -45,7 +45,7 @@ public class IdleTest extends DroolsTest {
 		objs.add(cc);
 		objs.add(auditor);
 		
-		StatefulKnowledgeSession sks = CCSKnowledgeBase.executeInfiniteSession(objs);
+		CCSKnowledgeBase.executeInfiniteSession(objs);
 		
 		//Sleep the thread for 10 seconds to allow for interval execution
 		try {
@@ -55,6 +55,7 @@ public class IdleTest extends DroolsTest {
 			e.printStackTrace();
 		}
 		
+		CCSKnowledgeBase.disposeSession();
 		Assert.assertTrue(auditor.getRulesFired().size() >= 4);
 	}
 	

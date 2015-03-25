@@ -58,7 +58,7 @@ public class CCSKnowledgeBase{
 	 * @param objs
 	 * @return
 	 */
-	public static StatefulKnowledgeSession executeInfiniteSession(ArrayList<CCSMemoryObject> objs){
+	public static int executeInfiniteSession(ArrayList<CCSMemoryObject> objs){
 		final StatefulKnowledgeSession sks = setupSession();
 		insertObjects(sks, objs);
 		
@@ -70,18 +70,44 @@ public class CCSKnowledgeBase{
 			}
 		}.start();
 		
-		return sks;
+		return sks.getId();
 	}
 	
 	private static void startTheSession(StatefulKnowledgeSession sks){
-		// Execute the rules on another thread
-		sessionThread = SessionThread.getInstance();
-		sessionThread.setStatefulKnowledgeSession(sks);
-		sessionThread.run();
+		if(sessionThread == null){
+			// Execute the rules on another thread
+			sessionThread = SessionThread.getInstance();
+			sessionThread.setStatefulKnowledgeSession(sks);
+			sessionThread.run();
+		}
 	}
 	
-	public static Thread getSessionThread(){
-		return sessionThread;
+	public static void disposeSession(){
+		if(sessionThread != null && sessionThread.isRunning()){
+			sessionThread.terminate();
+			try {
+				sessionThread.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static int pauseSession(){
+		if(sessionThread != null && sessionThread.isRunning()){
+			sessionThread.pauseSession();
+			return sessionThread.getStatefulKnowledgeSession().getId();
+		}
+		return -1;
+	}
+
+	public static int resumeSession(){
+		if(sessionThread != null && !sessionThread.isRunning()){
+			sessionThread.resumeSession();
+			return sessionThread.getStatefulKnowledgeSession().getId();
+		}
+		return -1;
 	}
 	
 	private static StatefulKnowledgeSession setupSession(){
