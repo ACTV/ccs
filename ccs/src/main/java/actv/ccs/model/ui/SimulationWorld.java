@@ -28,10 +28,7 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		
 		cichlid = getFromDB();
 		cichlid.addPropertyChangeListener(new CCChangeListener());
-		
-		ConvictCichlidController controller = new ConvictCichlidController(cichlid, this);
-		TankController tankController = new TankController(tank, this);
-		
+			
 		float [] verts = new float [] {0,1,0,-1,-1,1,1,-1,1,1,-1,-1,-1,-1,-1};
 		
 		
@@ -42,8 +39,44 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		System.out.println("testobj"  + testObj);
 		
 		spawnCichlids();
+		spawnTank();
 	}
+	public void spawnTank()
+	{
+		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 	
+		Statement s = conn.createStatement();
+		rs = s.executeQuery("SELECT * FROM [TankData]");
+		while (rs.next())
+		{
+			String length = rs.getString("Length");
+			String width = rs.getString("Width");
+			String height = rs.getString("Height");
+			String temperature = rs.getString("Temperature");
+			String cCount = rs.getString("cichlidCount");
+			String pCount = rs.getString("plantCount");
+			
+			float lw = Float.parseFloat(length);
+			float ww = Float.parseFloat(width);
+			float hw = Float.parseFloat(height);
+			float tw = Float.parseFloat(temperature);
+			int cW = Integer.parseInt(cCount);
+			int pC = Integer.parseInt(pCount);
+			
+			tank = new TankObject(lw, ww, hw, tw, cW, pC);
+			System.out.println("tank : gerg " + lw );
+			System.out.println("tank : gergff " + cCount );
+			
+			
+		}
+		conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	public void spawnCichlids()
 	{
 		try {
@@ -56,10 +89,6 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 			String id = rs.getString("fishID"); //Field from database ex. FishA, FishB
 			int idS =  Integer.parseInt(id);
 
-			/*
-			 * so the issue is that we will need to remove the data from simulationworld whenever there's a new simulation etc. will delve on this more.
-			 */
-			
 			System.out.println(idS);
 			
 			if (id.equals("1"))
@@ -172,6 +201,8 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		spawnTank();
 	}
 
 	public void add(ConvictCichlid c)
@@ -222,7 +253,7 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	}
 	private static TankObject baseTank()
 	{
-		TankObject t = new TankObject(20, 20, 20, 26, 0, 0, new int [3]);
+		TankObject t = new TankObject(20, 20, 20, 26, 0, 0);
 		return t;
 	}
 	public int [] getFishArr()

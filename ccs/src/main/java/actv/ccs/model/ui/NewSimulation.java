@@ -71,18 +71,13 @@ public class NewSimulation extends JFrame {
 	{
 		
 		cichlid = new ConvictCichlid();
-		tank = new TankObject(20, 20, 20, 26, 0, 0, fishIDList); // array value default tank
+		tank = new TankObject(20, 20, 20, 26, 0, 0); // array value default tank
 		world = new SimulationWorld();
 		cichlid = getFromDB();
 		
 		// adding new int
 		
 		fishIDList = tank.getFishArr();
-		
-		FileHandler logFile = new FileHandler("Log2File.txt");
-		logFile.setFormatter(new SimpleFormatter());
-		logger.addHandler(logFile);
-		logger.info("Starting logging data");
 		
 		tankFishCount = tank.getCichlidCount();
 		tankPlantCount = tank.getCichlidCount();
@@ -253,13 +248,8 @@ public class NewSimulation extends JFrame {
 			}
 		});
 		
-		JLabel lblIfNot = new JLabel("if not ... we can make a cichlid now!");
-		springLayout.putConstraint(SpringLayout.NORTH, lblIfNot, 23, SpringLayout.SOUTH, lblPleasePickA);
-		springLayout.putConstraint(SpringLayout.WEST, lblIfNot, 0, SpringLayout.WEST, lblPleasePickA);
-		getContentPane().add(lblIfNot);
-		
 		JLabel lblCichlidName = new JLabel("Cichlid Name: ");
-		springLayout.putConstraint(SpringLayout.NORTH, lblCichlidName, 8, SpringLayout.SOUTH, lblIfNot);
+		springLayout.putConstraint(SpringLayout.NORTH, lblCichlidName, 45, SpringLayout.SOUTH, lblPleasePickA);
 		springLayout.putConstraint(SpringLayout.WEST, lblCichlidName, 10, SpringLayout.WEST, getContentPane());
 		getContentPane().add(lblCichlidName);
 //		cichlidNameZ = NameTextField.getText().toString();
@@ -275,14 +265,16 @@ public class NewSimulation extends JFrame {
 		getContentPane().add(lblSizewidthX);
 		
 		NameTextField = new JTextField();
+		NameTextField.setEditable(false);
+		springLayout.putConstraint(SpringLayout.NORTH, NameTextField, 37, SpringLayout.SOUTH, comboBox);
 		NameTextField.setText("");
-		springLayout.putConstraint(SpringLayout.NORTH, NameTextField, 6, SpringLayout.SOUTH, lblIfNot);
 		springLayout.putConstraint(SpringLayout.WEST, NameTextField, 75, SpringLayout.EAST, lblCichlidName);
 		getContentPane().add(NameTextField);
 		NameTextField.setColumns(10);
 		cichlidNameA = NameTextField.getText().toString();
 		
 		WeightTextField = new JTextField();
+		WeightTextField.setEditable(false);
 		WeightTextField.setText("");
 		springLayout.putConstraint(SpringLayout.NORTH, WeightTextField, 0, SpringLayout.NORTH, lblWeightkg);
 		springLayout.putConstraint(SpringLayout.WEST, WeightTextField, 0, SpringLayout.WEST, NameTextField);
@@ -292,6 +284,7 @@ public class NewSimulation extends JFrame {
 //		final float weightC = Float.parseFloat(weightS);
 		
 		WidthTextField = new JTextField();
+		WidthTextField.setEditable(false);
 		WidthTextField.setText("");
 		springLayout.putConstraint(SpringLayout.NORTH, WidthTextField, 0, SpringLayout.NORTH, lblSizewidthX);
 		springLayout.putConstraint(SpringLayout.EAST, WidthTextField, 0, SpringLayout.EAST, NameTextField);
@@ -301,6 +294,7 @@ public class NewSimulation extends JFrame {
 //		final float widthC = Float.parseFloat(widthS);
 		
 		HeightTextField = new JTextField();
+		HeightTextField.setEditable(false);
 		springLayout.putConstraint(SpringLayout.NORTH, HeightTextField, 0, SpringLayout.NORTH, WidthTextField);
 		HeightTextField.setText("");
 		getContentPane().add(HeightTextField);
@@ -341,19 +335,19 @@ public class NewSimulation extends JFrame {
 				{
 					rs = s.executeQuery("SELECT ID FROM [FishPool] WHERE Type='Fish A'");
 		        	int a = s.executeUpdate("UPDATE SimulationFish set fishID = 1 where ID = 1");
-		        	System.out.println("a is " + a);
+		        	tankFishCount++;
 				}
 				else if (cichlidNameZ.equals("Fish B"))
 				{
 					rs = s.executeQuery("SELECT ID FROM [FishPool] WHERE Type='Fish B'");
 		        	int b = s.executeUpdate("UPDATE SimulationFish set fishID = 2 where ID = 2");
-		        	System.out.println("b is " + b);
+		        	tankFishCount++;
 				}
 				else if (cichlidNameZ.equals("Fish C"))
 				{
 					rs = s.executeQuery("SELECT ID FROM [FishPool] WHERE Type='Fish C'");
 		        	int c = s.executeUpdate("UPDATE SimulationFish set fishID = 3 where ID = 3");
-		        	System.out.println("c is " + c);
+		        	tankFishCount++;
 				}
 				while (rs.next())
 				{
@@ -362,23 +356,14 @@ public class NewSimulation extends JFrame {
 		        	int fishIDc = Integer.parseInt(id);
 		        	System.out.println("arr: " + i + " ID: " + id);
 		        	i++;
-		        		
-		        		
-//					controller.updateView();		
 				}
 				conn.close();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-	//		controller.updateView();
-			tank.setCichlidCount(tankFishCount++);
-		
-			int tankOutputCichlidTA = tank.getCichlidCount()+1;
-			String outputToTextArea = ("added " + cichlidNameB + " to the tank, therefore there are " + tankOutputCichlidTA +
-					" convict cichlids in the tank.");
-			
-			outputData.setText(outputToTextArea);
+
+			outputData.setText("added fish to tank");
 
 			}
 		});
@@ -501,6 +486,7 @@ public class NewSimulation extends JFrame {
 		getContentPane().add(lblAggroLevel);
 		
 		aggroLevelTextField = new JTextField();
+		aggroLevelTextField.setEditable(false);
 		springLayout.putConstraint(SpringLayout.SOUTH, lblAggroLevel, 0, SpringLayout.SOUTH, aggroLevelTextField);
 		springLayout.putConstraint(SpringLayout.NORTH, aggroLevelTextField, 6, SpringLayout.SOUTH, genderTextField);
 		springLayout.putConstraint(SpringLayout.WEST, aggroLevelTextField, 0, SpringLayout.WEST, NameTextField);
@@ -513,16 +499,33 @@ public class NewSimulation extends JFrame {
 		
 				logger.info("Tank Information");
 				tank.setCichlidCount(tankFishCount);
-				logger.info("Cichlid Count: " + tank.getCichlidCount());
 				tank.setPlantCount(0);
-				logger.info("Plant Count: " + tank.getPlantCount());
-				tank.setTankWidth(tankWidthC);
-				logger.info("Tank Width: " + tank.getTankWidth());	
+				tank.setTankWidth(tankWidthC);	
 				tank.setTankLength(tankLengthC);
-				logger.info("Tank Length: " + tank.getTankLength());
 				tank.setTankHeight(tankHeightC);
-				logger.info("Tank Temperature: " + tank.getTankTemperature());
 				System.out.println("Running Simulation");
+				Connection conn;
+				try {
+					conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+			
+				Statement s = conn.createStatement();
+				rs = s.executeQuery("SELECT fishID FROM [SimulationFish]");
+				while (rs.next())
+				{
+					int a = s.executeUpdate("UPDATE TankData set length = " + tank.getTankLength() + " where ID = 1");
+					int b = s.executeUpdate("UPDATE TankData set width = " + tank.getTankWidth() + " where ID = 1");
+					int c = s.executeUpdate("UPDATE TankData set height = " + tank.getTankHeight() + " where ID = 1");
+					int d = s.executeUpdate("UPDATE TankData set temperature = " + tank.getTankTemperature() + " where ID = 1");
+					int z = s.executeUpdate("UPDATE TankData set cichlidCount = " + tank.getCichlidCount() + " where ID = 1");
+					int f = s.executeUpdate("UPDATE TankData set plantCount = " + tank.getPlantCount() + " where ID = 1");
+						
+				}
+				conn.close();
+				} catch (SQLException Ex) {
+					// TODO Auto-generated catch block
+					Ex.printStackTrace();
+				}
+
 				
 				try {
 					rS = new RunSimulation();

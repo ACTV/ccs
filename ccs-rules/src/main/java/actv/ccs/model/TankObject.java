@@ -9,7 +9,7 @@ public class TankObject {
 	private int cichlidCount;
 	private int plantCount;
 	
-	public TankObject(float l, float w, float h, float t, int cC, int pC, int [] ls)
+	public TankObject(float l, float w, float h, float t, int cC, int pC)
 	{
 		this.length = l;
 		this.width = w;
@@ -17,7 +17,6 @@ public class TankObject {
 		this.temperature = t;
 		this.cichlidCount = cC;
 		this.plantCount = pC;	
-		this.fishIDList = ls;
 	}
 
 	public float getTankLength()
