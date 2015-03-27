@@ -22,19 +22,26 @@ import javax.swing.KeyStroke;
 
 /**
  * GUI functions are found here
+ * 
+ * This is where the main jframe or jpanel GLC handle is defined. A few inner 
+ * J parameters can be accessed through here.
+ * 
+ * 
+ * 
  * @author Victor
  */
 public class MainFrame extends JFrame
 {
     private JPanel buttonPanel, glViewPanel;
     private MainFunction ptrFunc;
+    private GLCanvas Glc;
     
-    MainFrame(MainFunction ptrFunc, GLCanvas GLc)
+    MainFrame(GLCanvas GLc)
     {
         setTitle("Victor's Simulation Window");
         setSize(800,300);
         this.ptrFunc = ptrFunc;
-        setVisible(true);   
+        //setVisible(true);   
       //  createButtons();
         glViewPanel = new JPanel();
         glViewPanel.setSize(600,600);
@@ -42,34 +49,30 @@ public class MainFrame extends JFrame
         //glViewPanel.setVisible(true);
         //add(glVeiwPanel);
         add(GLc);//add OPENGL window to frame
+        this.Glc = GLc;
       //  glViewPanel.addMouseWheelListener(ptrFunc);
       //  glViewPanel.addMouseMotionListener(ptrFunc);
         
     }
  
     
-    private void createButtons()
+    public JPanel getGLCPanel()   //get the panel that can SEE the graghics
     {
-        buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(7,1));
-        //setup and add buttons
-        JButton hndlJButton = new JButton("Toggle up/down or left or right");
-        hndlJButton.addActionListener(ptrFunc.getCommand(1));
-        hndlJButton.addKeyListener(ptrFunc);
-        hndlJButton.addMouseMotionListener(ptrFunc);
-        hndlJButton.addMouseWheelListener(ptrFunc);
-        buttonPanel.add(hndlJButton);
+        JPanel ret = new JPanel();
         
-        hndlJButton = new JButton("Toggle BG color");
-        hndlJButton.addActionListener(ptrFunc.getCommand(0));
-        buttonPanel.add(hndlJButton);
+        ret.add(Glc);
         
-        hndlJButton = new JButton("Change triangle color");
-        hndlJButton.addActionListener(ptrFunc.getCommand(2));
-        buttonPanel.add(hndlJButton);
-        
-        add(buttonPanel,BorderLayout.WEST);
-        
+        return ret;
+    }
+    
+    public JFrame getGLCFrame()   //get the Frame that can SEE the graghics
+    {   
+        return this;
+    }
+    
+    public void visible(boolean x)
+    {
+        setVisible(x);
     }
 }
 

@@ -6,6 +6,7 @@
 package actv.ccs.model.graphics;
 
 import actv.ccs.model.graphics.objects.*;
+import actv.ccs.model.ui.Iterator;
 import graphicslib3D.Matrix3D;
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
@@ -61,6 +62,11 @@ import javax.media.opengl.glu.GLU;
 /**
  * ALL JOGL and opengl stuff is in here!
  *
+ * 
+ * 
+ * The main logic of the graghics routine. This is where the main graghics
+ * draw calls are here.
+ * 
  * @author Victor
  */
 public class MainGraphics implements GLEventListener
@@ -80,13 +86,15 @@ public class MainGraphics implements GLEventListener
     private float[] cubeMapCoord, cubeMapVerts;
     private int GL_CC;
     private int GL_PROGRAM_SEPERABLE;
+    private Iterator  itr;
+    
 
-    public MainGraphics(GLCanvas GLc, shaderObject shadSrc[][], GeoShape shapes[], GeoShape attatchedShapes[], PositionalLight pl, String cubeMapSrc)
+    public MainGraphics(GLCanvas GLc, shaderObject shadSrc[][], PositionalLight pl, String cubeMapSrc,Iterator itr)
     {
         this.GLc = GLc;
-        this.shapes = shapes;
-        this.attachedShapes = attatchedShapes;
         this.shadSrc = shadSrc; 
+        this.itr = itr;
+        
         camera = new Camera[1];
         light = pl;
         uniShaderLocs = new int[shadSrc.length][];
@@ -139,7 +147,7 @@ public class MainGraphics implements GLEventListener
 
         int offset = 0;
 
-        for (int i = 0; i < shapes.length; i++)
+        for (int i = 0; i < shapes.length; i++) //gona change this later for iterator logic
         {
             shapes[i].setTexLoc(texLoc[shapes[i].getAttribID()]);
             shapes[i].setvLoc(vLoc[shapes[i].getAttribID()]);
@@ -454,9 +462,10 @@ System.out.println("whatIgetnow!!!!!!!!!!!!!!!!!:" + uniShaderLocs[3][1]);
 
     private void drawObjects(GLAutoDrawable drawable)
     {
-        for (int i = 0; i < shapes.length; i++)
-        {
-            shapes[i].draw2(drawable, camera[0], null, rndPrograms, pipes, uniShaderLocs);
+        
+        while(itr.hasNext())
+        {    
+            itr.getNext().draw2(drawable, camera[0], null, rndPrograms, pipes, uniShaderLocs);
         }
 
     }

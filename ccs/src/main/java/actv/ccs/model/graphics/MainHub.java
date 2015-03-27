@@ -7,6 +7,7 @@
 package actv.ccs.model.graphics;
 
 import actv.ccs.model.graphics.objects.*;
+import actv.ccs.model.ui.Iterator;
 import graphicslib3D.Material;
 import graphicslib3D.Point3D;
 import graphicslib3D.light.AmbientLight;
@@ -23,6 +24,7 @@ import static javax.media.opengl.GL3.GL_GEOMETRY_SHADER;
 import javax.media.opengl.GL4;
 import static javax.media.opengl.GL4.GL_TESS_CONTROL_SHADER;
 import static javax.media.opengl.GL4.GL_TESS_EVALUATION_SHADER;
+import javax.swing.JPanel;
 
 /**
  * Main class thats is the back bone of it all
@@ -33,15 +35,19 @@ import static javax.media.opengl.GL4.GL_TESS_EVALUATION_SHADER;
  *and resource sharing. To use the graghics engine, you must init this class first
  * its constructor.
  * 
+ * This will handle mostly everything, assuming the client end programer correctly
+ * supplies the resources it needs using correct abstractObject 
  * 
-
+ * From here, you cam get a jframe/jpanel with a GLC context enabled.
  * 
+ * All of the graghics sub systems instances are located here also
  */
 public class MainHub
 {
    // private MainFrame mF;
     private MainFunction mf;
     private MainGraphics mg;
+    private MainFrame mF;
     private GLCanvas GLc; 
     private String mainFilePath;
     private GeoShape shapes[], attachedShapes[];
@@ -125,7 +131,17 @@ public class MainHub
         mg.setBGColor(Color.blue);
         ///////////////////END OF INIT////////////////////////////////////
         
-    //    mF = new MainFrame(mf,GLc);
+        mF = new MainFrame(GLc);
+    }
+    
+    public JPanel getGLcContextJPanel()
+    {
+        return mF.getGLCPanel();
+    }
+    
+    public JFrame getGLcContextFrame()
+    {
+        return mF.getGLCFrame();
     }
     
 }
