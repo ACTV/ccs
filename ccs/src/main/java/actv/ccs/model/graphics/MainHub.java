@@ -27,6 +27,15 @@ import static javax.media.opengl.GL4.GL_TESS_EVALUATION_SHADER;
 /**
  * Main class thats is the back bone of it all
  * @author Victor
+ * 
+ * 
+ * The purpose of this class is to handle all the order and time senitive inits
+ *and resource sharing. To use the graghics engine, you must init this class first
+ * its constructor.
+ * 
+ * 
+
+ * 
  */
 public class MainHub
 {
@@ -40,7 +49,7 @@ public class MainHub
     //Setup, create and init all related classes 
     
    // public MainHub(String mainFilePath, Iterator ) throws IOException 
-    public MainHub(String mainFilePath) throws IOException 
+    public MainHub(String mainFilePath, Iterator itr ) throws IOException 
     {
     	GLc = new GLCanvas();///////UPDATE THIS!!!!!!!!!!!!!!!!!
         attachedShapes = new GeoShape[1];
