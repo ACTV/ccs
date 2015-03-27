@@ -39,7 +39,6 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		System.out.println("testobj"  + testObj);
 		
 		spawnCichlids();
-		spawnTank();
 	}
 	public void spawnTank()
 	{
@@ -122,6 +121,9 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	cichlidA.setBaseAggroLevel(5);
 		        	cichlidA.setBaseSpeed(5);
 		        	cichlidA.setBaseCautionLevel(0);
+		        	cichlidA.setX(Math.random()*900); // starting variables
+		        	cichlidA.setY(Math.random()*300);
+		        	cichlidA.setDirection(100);
 		        	// need to add into database later caution, speed
 		        	System.out.println("heey aadded a cichlid!");
 		        	cList.add(cichlidA);
@@ -156,7 +158,9 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	cichlidB.setBaseAggroLevel(5);
 		        	cichlidB.setBaseSpeed(5);
 		        	cichlidB.setBaseCautionLevel(0);
-		        	
+		        	cichlidB.setX(Math.random()*900); // starting variables
+		        	cichlidB.setY(Math.random()*300);
+		        	cichlidB.setDirection(100);
 		        	cList.add(cichlidB);
 				}
 			}
@@ -191,7 +195,9 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	cichlidC.setBaseAggroLevel(5);
 		        	cichlidC.setBaseSpeed(5);
 		        	cichlidC.setBaseCautionLevel(0);
-		        	
+		        	cichlidC.setX(Math.random()*900); // here is the starting position
+		        	cichlidC.setY(Math.random()*300);
+		        	cichlidC.setDirection(100);
 		        	cList.add(cichlidC);
 				}
 			}

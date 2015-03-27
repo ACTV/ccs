@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+
+
 import javax.media.opengl.awt.GLCanvas;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -25,6 +27,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 
 import org.drools.runtime.StatefulKnowledgeSession;
@@ -40,7 +43,7 @@ import actv.ccs.model.graphics.MainGraphics;
 import actv.ccs.model.graphics.MainHub;
 import actv.ccs.model.type.FishState;
 
-public class RunSimulation extends JFrame{
+public class RunSimulation extends JFrame implements ActionListener {
 	private String mainFilePath = "";
 	private ConvictCichlid cichlid;
 	private TankObject tank;
@@ -50,6 +53,7 @@ public class RunSimulation extends JFrame{
 	private MainGraphics mg;
 	private MainFunction mF;
 	private ResultSet rs;
+	private Timer timer;
 	
 	
 	/*
@@ -205,9 +209,22 @@ public class RunSimulation extends JFrame{
 		 * 
 		 * 
 		 * } End of the refactoring	********************************************************************/
+		timer = new Timer(500, this);
+		timer.start();
 		
 	}
-
+	public void actionPerformed(ActionEvent e) {
+		double time = 0;
+		time++;
+		 Iterator iteraz = world.getIterator(); // iterate to remove flagged objects from game
+		 while (iteraz.hasNext())
+		 {
+			 ConvictCichlid obj = (ConvictCichlid)	iteraz.getNext();
+				  obj.move(time);
+		 }
+			 	world.notifyObservers();
+			 	repaint();
+	 }
 
 	private JMenuBar createJMenu() { 
 		// creating menubar
