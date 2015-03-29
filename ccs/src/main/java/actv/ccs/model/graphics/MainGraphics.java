@@ -133,9 +133,15 @@ public class MainGraphics implements GLEventListener
     {
         GL4 gl = (GL4) drawable.getGL();
         int count = 0;
-        for (GeoShape shape : shapes)
+        
+        GeoShape obj;
+        
+        itr.reset();
+        
+        while(itr.hasNext())
         {
-            count += shape.getNumNeededBuffers();
+            obj = itr.getNext();
+            count += obj.getNumNeededBuffers();
         }
 
         //for (int k = 0; k < attachedShapes.length; k++)
@@ -147,7 +153,7 @@ public class MainGraphics implements GLEventListener
 
         int offset = 0;
         
-        GeoShape obj;
+        
             
         
         itr.reset();
@@ -474,7 +480,7 @@ System.out.println("whatIgetnow!!!!!!!!!!!!!!!!!:" + uniShaderLocs[3][1]);
         
         while(itr.hasNext())
         {    
-     //       itr.getNext().draw2(drawable, camera[0], null, rndPrograms, pipes, uniShaderLocs);
+           itr.getNext().draw2(drawable, camera[0], null, rndPrograms, pipes, uniShaderLocs);
         }
 
     }
@@ -749,18 +755,18 @@ System.out.println("whatIgetnow!!!!!!!!!!!!!!!!!:" + uniShaderLocs[3][1]);
         GL.glClearBufferfv(GL_COLOR, 0, bgColor);
         GL.glClear(GL_DEPTH_BUFFER_BIT);
         
-        drawCubeMap(drawable);
+        //drawCubeMap(drawable);
         
         drawObjects(drawable);
         
-        drawLightIndicator(drawable);
+        //drawLightIndicator(drawable);
         
-        //drawBezierSurface(drawable);    //GORDON: HERE IS THE TESSELATION SHADER 
+        //drawBezierSurface(drawable);    //
         
-        if (showAxis)
-        {
-            drawAxis(drawable);
-        }
+        //if (showAxis)
+        //{
+        //    drawAxis(drawable);
+        //}
         
         
 
