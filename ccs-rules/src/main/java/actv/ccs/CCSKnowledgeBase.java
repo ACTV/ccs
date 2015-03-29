@@ -73,6 +73,33 @@ public class CCSKnowledgeBase{
 		return sks.getId();
 	}
 	
+	/**
+	 * Execute the stateful knowledge session on a separate thread. Uses call fireUntilHalt()
+	 * Does add all the rules to the knowledge builder
+	 * @param objs
+	 * @return
+	 */
+	public static int executeInfiniteSession(String drl, String bpmn, String flow, ArrayList<CCSMemoryObject> objs){
+		KnowledgeBuilder kbuilder = initKBuilder(new String[]{drl, bpmn});
+		
+		KnowledgeBase kb = KnowledgeBaseFactory.newKnowledgeBase(getKnowledgeBaseConfiguration());
+		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
+		
+		final StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
+		
+		insertObjects(sks, objs);
+		
+		sks.startProcess(flow);
+		
+		new Thread(){
+			public void run(){
+				startTheSession(sks);
+			}
+		}.start();
+		
+		return sks.getId();
+	}
+	
 	private static void startTheSession(StatefulKnowledgeSession sks){
 		if(sessionThread == null){
 			// Execute the rules on another thread
@@ -119,7 +146,8 @@ public class CCSKnowledgeBase{
 		addDrl(kbuilder, "actv/ccs/rules/start/InitializeCichlid.drl");
 		addDrl(kbuilder, "actv/ccs/rules/start/Calm.drl");
 		addDrl(kbuilder, "actv/ccs/rules/idle/Idle.drl");
-		//addDrl(kbuilder, "actv/ccs/rules/Swim.drl");
+		addDrl(kbuilder, "actv/ccs/rules/idle/Move.drl");
+
 		addBpmn(kbuilder, "actv/ccs/flow/start.bpmn");
 		addBpmn(kbuilder, "actv/ccs/flow/idle.bpmn");
 		addBpmn(kbuilder, "actv/ccs/flow/swim.bpmn");
