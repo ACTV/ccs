@@ -38,20 +38,20 @@ public class CCSKnowledgeBase{
 	private static final String [] packages = { "actv/ccs/rules/start",
 												"actv/ccs/flow"};
 	
-	/**
-	 * 
-	 * Execute the stateful knowledge session with the call fireAllRules()
-	 */
-	public static void executeSession(ArrayList<CCSMemoryObject> objs){
-		StatefulKnowledgeSession sks = setupSession();
-		insertObjects(sks, objs);
-		
-		sks.startProcess("swim");
-				
-		sks.fireAllRules();
-		
-		sks.dispose();
-	}
+//	/**
+//	 * 
+//	 * Execute the stateful knowledge session with the call fireAllRules()
+//	 */
+//	public static void executeSession(ArrayList<CCSMemoryObject> objs){
+//		StatefulKnowledgeSession sks = setupSession();
+//		insertObjects(sks, objs);
+//		
+//		sks.startProcess("swim");
+//				
+//		sks.fireAllRules();
+//		
+//		sks.dispose();
+//	}
 	
 	/**
 	 * Execute the stateful knowledge session on a separate thread. Uses call fireUntilHalt()
@@ -90,6 +90,7 @@ public class CCSKnowledgeBase{
 		insertObjects(sks, objs);
 		
 		sks.startProcess(flow);
+		addEventListeners(sks);
 		
 		new Thread(){
 			public void run(){
@@ -201,7 +202,6 @@ public class CCSKnowledgeBase{
 	}
 	
 	/**
-	 * Requires a comma-separated list of paths to resources
 	 * @param String
 	 * @return KnowledgeBuilder
 	 */

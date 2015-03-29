@@ -1,34 +1,27 @@
 package actv.rules.start;
 
-import org.drools.runtime.StatefulKnowledgeSession;
+import java.util.ArrayList;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import actv.ccs.fact.Auditor;
 import actv.ccs.fact.CoolingDown;
+import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
-import actv.rules.DroolsStreamTest;
+import actv.rules.DroolsTest;
 
-public class CoolingDownTest extends DroolsStreamTest {
-	private StatefulKnowledgeSession sks;
+public class CoolingDownTest extends DroolsTest {
 	private ConvictCichlid cc;
 	private Auditor auditor;
+	private ArrayList<CCSMemoryObject> objs;
 	
 	public CoolingDownTest(){
 		super(	"actv/ccs/rules/start/CoolingDown.drl", 
 				"actv/ccs/flow/swim.bpmn",
 				"swim");
-	}
-	
-	private void sleep(int millis){
-		try {
-			Thread.sleep(millis);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	@Before
@@ -38,17 +31,18 @@ public class CoolingDownTest extends DroolsStreamTest {
 		cc.setCautionLevel(cc.getBaseCautionLevel() * 1.6f);
 		cc.setState(FishState.CAUTION);
 		auditor = new Auditor();
+		
+		objs = new ArrayList<CCSMemoryObject>();
+		objs.add(auditor);
 	}
 	
 	@Test
 	public void testValid(){
-		
-		sks = execute(auditor, cc, new CoolingDown(cc));
 
-		sleep(3000);
+		objs.add(cc);
+		objs.add(new CoolingDown(cc));
 		
-		sks.halt();
-		sks.dispose();
+		executeStateful(3000, objs);
 		
 		Assert.assertEquals(FishState.IDLE, cc.getState());
 		Assert.assertEquals(cc.getBaseCautionLevel(), cc.getCautionLevel(), .01);
@@ -56,13 +50,11 @@ public class CoolingDownTest extends DroolsStreamTest {
 	
 	@Test
 	public void testInvalid_NotCC(){
-		sks = execute(auditor, cc, new CoolingDown(new ConvictCichlid()));
+
+		objs.add(cc);
+		objs.add(new CoolingDown(new ConvictCichlid()));
 		
-		sleep(3000);
-		
-		sks.halt();
-		sks.dispose();
-		
+		executeStateful(2000, objs);
 		Assert.assertEquals(FishState.CAUTION, cc.getState());	
 	}
 	
@@ -70,13 +62,10 @@ public class CoolingDownTest extends DroolsStreamTest {
 	public void testInvalid_FishState(){
 		cc = new ConvictCichlid();
 		cc.setState(FishState.IDLE);
+
+		objs.add(cc);
 		
-		sks = execute(auditor, cc);
-		
-		sleep(3000);
-		
-		sks.halt();
-		sks.dispose();
+		executeStateful(2000, objs);
 		
 		Assert.assertEquals(FishState.IDLE, cc.getState());
 	}

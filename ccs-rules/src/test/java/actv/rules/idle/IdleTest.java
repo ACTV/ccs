@@ -1,17 +1,11 @@
 package actv.rules.idle;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.rule.FactHandle;
-import org.drools.time.SessionPseudoClock;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import actv.ccs.CCSKnowledgeBase;
 import actv.ccs.fact.Auditor;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
@@ -22,6 +16,7 @@ public class IdleTest extends DroolsTest {
 	private ConvictCichlid cc;
 	private Auditor auditor;
 	private long start;
+	private ArrayList<CCSMemoryObject> objs;
 	
 	public IdleTest(){
 		super(	"actv/ccs/rules/idle/Idle.drl", 
@@ -35,28 +30,21 @@ public class IdleTest extends DroolsTest {
 		cc.setState(FishState.IDLE);
 		cc.setIdleWaitTime(System.currentTimeMillis());
 		auditor = new Auditor();
+		
+		objs = new ArrayList<CCSMemoryObject>();
+		objs.add(auditor);
 		start = System.currentTimeMillis();
+		
 	}
 	
 	@Test
-	public void test(){
+	public void test_IdleOnly(){
 		cc.setIdleWaitTime(0);
-		ArrayList<CCSMemoryObject> objs = new ArrayList<CCSMemoryObject>();
+		
 		objs.add(cc);
-		objs.add(auditor);
 		
-		CCSKnowledgeBase.executeInfiniteSession(objs);
+		executeStateful(4000, objs);
 		
-		//Sleep the thread for 10 seconds to allow for interval execution
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		CCSKnowledgeBase.disposeSession();
-		Assert.assertTrue(auditor.getRulesFired().size() >= 4);
 	}
 	
 	@After

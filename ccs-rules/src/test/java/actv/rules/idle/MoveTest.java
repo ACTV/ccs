@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import actv.ccs.CCSKnowledgeBase;
 import actv.ccs.fact.Auditor;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
@@ -37,19 +36,7 @@ public class MoveTest extends DroolsTest {
 		objs.add(cc);
 		objs.add(auditor);
 		
-		CCSKnowledgeBase.executeInfiniteSession("actv/ccs/rules/idle/Move.drl", 
-												"actv/ccs/flow/swim.bpmn", 
-												"swim", 
-												objs);
-		
-		try {
-			Thread.sleep(8000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		CCSKnowledgeBase.disposeSession();
+		executeStateful(4000, objs);
 		
 		System.out.println("Rules: " + auditor.getRulesFired().size());
 		System.out.println("Direction: " + cc.getDirection());

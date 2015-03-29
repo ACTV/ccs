@@ -2,7 +2,6 @@ package actv.rules;
 
 import java.util.ArrayList;
 
-import org.drools.runtime.StatefulKnowledgeSession;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,10 +30,11 @@ public class CCSKnowledgeBaseTest{
 		cc.setBaseCautionLevel(5.00f);
 		cc.setBaseSpeed(5.00f);
 		cc.setCautionLevel(2f);
+		cc.setDirection(100);
 		cc.setIdleWaitTime(0);
+		
 		auditor = new Auditor();
 		start = System.currentTimeMillis();
-
 	}
 	
 	@After
@@ -50,7 +50,7 @@ public class CCSKnowledgeBaseTest{
 		objs.add(cc);
 		objs.add(auditor);
 		
-		CCSKnowledgeBase.executeSession(objs);
+		CCSKnowledgeBase.executeInfiniteSession(objs);
 		
 		Assert.assertEquals(FishState.IDLE, cc.getState());
 		Assert.assertTrue(auditor.getRulesFired().size() >= 1);
@@ -66,7 +66,7 @@ public class CCSKnowledgeBaseTest{
 		objs.add(cc);
 		objs.add(auditor);
 		
-		CCSKnowledgeBase.executeSession(objs);
+		CCSKnowledgeBase.executeInfiniteSession(objs);
 		
 		Assert.assertEquals(FishState.IDLE, cc.getState());
 		Assert.assertTrue(auditor.getRulesFired().size() >= 1);
@@ -93,6 +93,13 @@ public class CCSKnowledgeBaseTest{
 		
 		Assert.assertTrue(auditor.getRulesFired().size() >= 1);
 		Assert.assertTrue(auditor.getRulesFired().contains("Cooling Down"));
+		
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
@@ -118,6 +125,13 @@ public class CCSKnowledgeBaseTest{
 		CCSKnowledgeBase.disposeSession();
 		
 		Assert.assertEquals(2, auditor.getRulesFired().size());
+		
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }
