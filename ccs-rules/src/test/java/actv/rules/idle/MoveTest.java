@@ -36,7 +36,7 @@ public class MoveTest extends DroolsTest {
 		objs.add(cc);
 		objs.add(auditor);
 		
-		executeStateful(4000, objs);
+		executeStateful(5000, objs);
 		
 		System.out.println("Rules: " + auditor.getRulesFired().size());
 		System.out.println("Direction: " + cc.getDirection());

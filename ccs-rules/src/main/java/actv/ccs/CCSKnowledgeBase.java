@@ -11,9 +11,6 @@ import org.drools.builder.KnowledgeBuilderConfiguration;
 import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
 import org.drools.conf.EventProcessingOption;
-import org.drools.definition.KnowledgePackage;
-import org.drools.definition.process.Process;
-import org.drools.definition.rule.Rule;
 import org.drools.event.process.ProcessEventListener;
 import org.drools.event.rule.AgendaEventListener;
 import org.drools.event.rule.WorkingMemoryEventListener;
@@ -37,21 +34,6 @@ public class CCSKnowledgeBase{
 	private static final Logger log = LoggerFactory.getLogger(CCSKnowledgeBase.class); 
 	private static final String [] packages = { "actv/ccs/rules/start",
 												"actv/ccs/flow"};
-	
-//	/**
-//	 * 
-//	 * Execute the stateful knowledge session with the call fireAllRules()
-//	 */
-//	public static void executeSession(ArrayList<CCSMemoryObject> objs){
-//		StatefulKnowledgeSession sks = setupSession();
-//		insertObjects(sks, objs);
-//		
-//		sks.startProcess("swim");
-//				
-//		sks.fireAllRules();
-//		
-//		sks.dispose();
-//	}
 	
 	/**
 	 * Execute the stateful knowledge session on a separate thread. Uses call fireUntilHalt()

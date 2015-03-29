@@ -8,7 +8,9 @@ import java.util.Random;
 
 rule "Move"
 	ruleflow-group "swim"
-	timer(int: 2s)
+	
+	// Chance to move every 4 seconds
+	timer(int: 4s)
 	
 	when
 		$auditor :  Auditor()

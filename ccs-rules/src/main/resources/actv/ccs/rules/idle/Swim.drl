@@ -1,0 +1,21 @@
+package actv.ccs.rules.idle;
+
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.type.FishState;
+
+rule "Swim"
+	ruleflow-group "swam"
+	
+	timer(int: 4s)
+	
+	when
+		$auditor : Auditor()
+		
+		$cc : ConvictCichlid(state == FishState.IDLE);
+		
+	then
+		Random r = new Random();
+		double p = r.nextDouble();
+		
+		update($cc);
+end
