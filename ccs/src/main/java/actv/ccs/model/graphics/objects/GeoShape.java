@@ -253,7 +253,7 @@ public class GeoShape extends AbstractObject
         }
           
    
-        setupLights(drawable,camera.getViewMat(),progs, uniforms);
+        //setupLights(drawable,camera.getViewMat(),progs, uniforms);
         
         gl.glBindBuffer(GL.GL_ARRAY_BUFFER, bufferID);
         gl.glVertexAttribPointer(vLoc, 3, GL.GL_FLOAT, false, 0, 0);
@@ -273,7 +273,7 @@ public class GeoShape extends AbstractObject
         {
             //gl.glUseProgramStages(pipes[0], GL_GEOMETRY_SHADER_BIT,progs[4][0]);  //GEOSHADER NOT WORKING!!!!
             
-            gl.glUseProgram(progs[4]);
+            gl.glUseProgram(progs[1]);
             
             //gl.glUniformMatrix4fv(camera.getTex_mv_loc(), 1, false, mv.getFloatValues(), 0);
             //gl.glUniformMatrix4fv(camera.getTex_proj_loc(), 1, false, camera.getPerspectiveMat().getFloatValues(), 0);
@@ -296,11 +296,11 @@ public class GeoShape extends AbstractObject
         
         if(normalBufferID != -1 && norLoc != -1)
         {
-            gl.glBindBuffer(GL.GL_ARRAY_BUFFER,normalBufferID); 
+            /*gl.glBindBuffer(GL.GL_ARRAY_BUFFER,normalBufferID); 
             gl.glVertexAttribPointer(norLoc, 4, GL.GL_FLOAT, false, 0, 0);
             gl.glEnableVertexAttribArray(2);
             
-            
+            */
             //gl.glEnableVertexAttribArray(1);
             //gl.glEnableVertexAttribArray(0);
         }

@@ -201,7 +201,7 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 		 g2d.transform(myScale);
 		 g2d.transform(myTranslate);
 		 g2d.transform(this.getRotate());
-		 g2d.fillOval(0, 0, 50, 50);
+		 g2d.fillOval(0, 0, (int) this.getLength(), (int) this.getHeight());
 		 g2d.setTransform(at);
 	 }
 	public void setY(double Y)

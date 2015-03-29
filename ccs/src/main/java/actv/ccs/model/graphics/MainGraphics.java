@@ -133,9 +133,15 @@ public class MainGraphics implements GLEventListener
     {
         GL4 gl = (GL4) drawable.getGL();
         int count = 0;
-        for (GeoShape shape : shapes)
+        
+        GeoShape obj;
+        
+        itr.reset();
+        
+        while(itr.hasNext())
         {
-            count += shape.getNumNeededBuffers();
+            obj = itr.getNext();
+            count += obj.getNumNeededBuffers();
         }
 
         //for (int k = 0; k < attachedShapes.length; k++)
@@ -146,13 +152,20 @@ public class MainGraphics implements GLEventListener
         gl.glGenBuffers(count, bufferIDs, 0);
 
         int offset = 0;
-
-        for (int i = 0; i < shapes.length; i++) //gona change this later for iterator logic
-        {
-            shapes[i].setTexLoc(texLoc[shapes[i].getAttribID()]);
-            shapes[i].setvLoc(vLoc[shapes[i].getAttribID()]);
-            shapes[i].setNorLoc(norLoc[shapes[i].getAttribID()]);
-            offset += shapes[i].loadIntoBuffer(offset, bufferIDs, drawable);
+        
+        
+            
+        
+        itr.reset();
+        
+        while(itr.hasNext())
+        {    
+            obj = itr.getNext();
+        
+            obj.setTexLoc(texLoc[obj.getAttribID()]);
+            obj.setvLoc(vLoc[obj.getAttribID()]);
+            obj.setNorLoc(norLoc[obj.getAttribID()]);
+            offset += obj.loadIntoBuffer(offset, bufferIDs, drawable);
         }
 
         /* for (int i = 0; i < attachedShapes.length; i++)
@@ -463,9 +476,11 @@ System.out.println("whatIgetnow!!!!!!!!!!!!!!!!!:" + uniShaderLocs[3][1]);
     private void drawObjects(GLAutoDrawable drawable)
     {
         
+        itr.reset();
+        
         while(itr.hasNext())
         {    
-            itr.getNext().draw2(drawable, camera[0], null, rndPrograms, pipes, uniShaderLocs);
+           itr.getNext().draw2(drawable, camera[0], null, rndPrograms, pipes, uniShaderLocs);
         }
 
     }
@@ -740,18 +755,18 @@ System.out.println("whatIgetnow!!!!!!!!!!!!!!!!!:" + uniShaderLocs[3][1]);
         GL.glClearBufferfv(GL_COLOR, 0, bgColor);
         GL.glClear(GL_DEPTH_BUFFER_BIT);
         
-        drawCubeMap(drawable);
+        //drawCubeMap(drawable);
         
         drawObjects(drawable);
         
-        drawLightIndicator(drawable);
+        //drawLightIndicator(drawable);
         
-        //drawBezierSurface(drawable);    //GORDON: HERE IS THE TESSELATION SHADER 
+        //drawBezierSurface(drawable);    //
         
-        if (showAxis)
-        {
-            drawAxis(drawable);
-        }
+        //if (showAxis)
+        //{
+        //    drawAxis(drawable);
+        //}
         
         
 

@@ -30,35 +30,40 @@ public class CichlidCollection implements Iterable
 	}
 	private class CichlidIterator implements Iterator 
 	{
-		private int index;
-		
-		public CichlidIterator()
-		{
-			index = -1;
-		}
-		public boolean hasNext()
-		{
-			if (cichlidCollection.size() <= 0)
-			{
-				return false;
-			}
-			if (index == cichlidCollection.size() - 1)
-			{
-				return false;
-			}
-			return true;
-		}
-		public ConvictCichlid getNext()
-		{
-			index++;
-			return cichlidCollection.elementAt(index);
-		}
-		public void remove()
-		{
-			if (index > -1)
-			//	cichlidCollection.remove(index);
-				cichlidCollection.removeElementAt(index);
-		}
+            private int index;
+
+            public CichlidIterator()
+            {
+                    index = -1;
+            }
+            public boolean hasNext()
+            {
+                if (cichlidCollection.size() <= 0)
+                {
+                        return false;
+                }
+                if (index == cichlidCollection.size() - 1)
+                {
+                        return false;
+                }
+                return true;
+            }
+            public ConvictCichlid getNext()
+            {
+                    index++;
+                    return cichlidCollection.elementAt(index);
+            }
+            public void remove()
+            {
+                    if (index > -1)
+                    //	cichlidCollection.remove(index);
+                            cichlidCollection.removeElementAt(index);
+            }
+
+            public void reset()
+            {
+                index = 0;
+            }
 
 	}
 }

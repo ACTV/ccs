@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 
 
+
+
 import javax.media.opengl.awt.GLCanvas;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -37,6 +39,8 @@ import actv.ccs.fact.Auditor;
 import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.IDrawable;
+import actv.ccs.model.IMovable;
 import actv.ccs.model.TankObject;
 import actv.ccs.model.graphics.MainFunction;
 import actv.ccs.model.graphics.MainGraphics;
@@ -50,8 +54,7 @@ public class RunSimulation extends JFrame implements ActionListener {
 	private SimulationWorld world;
 	private TankView tV;
 	private GLCanvas glc; 
-	private MainGraphics mg;
-	private MainFunction mF;
+        private MainHub mH;
 	private ResultSet rs;
 	private Timer timer;
 	
@@ -76,7 +79,9 @@ public class RunSimulation extends JFrame implements ActionListener {
 		// create menu bar
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
-		tV = new TankView(world, mg);
+                mH = new MainHub(".",world.getIterator());  // This is where the graghics will be init.
+                
+		tV = new TankView(world,mH.getGLC());
 		world.addObserver(tV); // observer
 		
 		
@@ -177,8 +182,7 @@ public class RunSimulation extends JFrame implements ActionListener {
 		getContentPane().setLayout(groupLayout);
 		
 		
-		this.setVisible(true);
-		world.notifyObservers();
+
 		
 		
 		
@@ -209,9 +213,11 @@ public class RunSimulation extends JFrame implements ActionListener {
 		 * 
 		 * 
 		 * } End of the refactoring	********************************************************************/
+
 		timer = new Timer(500, this);
 		timer.start();
-		
+		this.setVisible(true);
+		world.notifyObservers();
 	}
 	public void actionPerformed(ActionEvent e) {
 		double time = 0;
@@ -219,8 +225,9 @@ public class RunSimulation extends JFrame implements ActionListener {
 		 Iterator iteraz = world.getIterator(); // iterate to remove flagged objects from game
 		 while (iteraz.hasNext())
 		 {
-			 ConvictCichlid obj = (ConvictCichlid)	iteraz.getNext();
+			 IMovable obj = (IMovable) iteraz.getNext();
 				  obj.move(time);
+				  System.out.println("mmoooveee");
 		 }
 			 	world.notifyObservers();
 			 	repaint();
