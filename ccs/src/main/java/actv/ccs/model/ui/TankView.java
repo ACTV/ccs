@@ -16,17 +16,21 @@ public class TankView extends JPanel implements IObserver {
 	private SimulationWorld sW;
 	private GLCanvas glC;
 	private MainGraphics mg;
-	AffineTransform worldToND, ndToScreen, theVTM, inverseVTM;
+	//AffineTransform worldToND, ndToScreen, theVTM, inverseVTM;
 	private boolean pauseView;
-	private double winLeft = 0;
-	private double winWidth = 1000;
-	private double winBottom = 0;
-	private double winHeight = 500;
-	public TankView(SimulationWorld s, MainGraphics m)
+	//private double winLeft = 0;
+	//private double winWidth = 1000;
+	//private double winBottom = 0;
+	//private double winHeight = 500;
+	public TankView(SimulationWorld s, GLCanvas glc)
 	{
-		sW = s;
+            add(glc);
+            sW = s;
 	}
 	
+        
+        //NOT REALLY NEEDED. KEEPING IT HERE FOR REFERENCE -VICTOR HUBA
+        /*
 	public void update(IObservable o, Object obj)
 	{
 		obj = (SimulationWorldProxy) o;
@@ -70,6 +74,7 @@ public class TankView extends JPanel implements IObserver {
 		at.scale(x, -y);
 		return at;
 	}	
+        */
 	// here is where i want to have sage engine information connected to here
 }
 

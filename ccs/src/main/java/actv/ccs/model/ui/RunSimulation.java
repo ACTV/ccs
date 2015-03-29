@@ -54,8 +54,7 @@ public class RunSimulation extends JFrame implements ActionListener {
 	private SimulationWorld world;
 	private TankView tV;
 	private GLCanvas glc; 
-	private MainGraphics mg;
-	private MainFunction mF;
+        private MainHub mH;
 	private ResultSet rs;
 	private Timer timer;
 	
@@ -80,7 +79,9 @@ public class RunSimulation extends JFrame implements ActionListener {
 		// create menu bar
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
-		tV = new TankView(world, mg);
+                mH = new MainHub(".",world.getIterator());  // This is where the graghics will be init.
+                
+		tV = new TankView(world,mH.getGLC());
 		world.addObserver(tV); // observer
 		
 		
