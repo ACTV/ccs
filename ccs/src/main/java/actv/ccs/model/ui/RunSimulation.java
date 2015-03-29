@@ -43,7 +43,7 @@ import actv.ccs.model.graphics.MainGraphics;
 import actv.ccs.model.graphics.MainHub;
 import actv.ccs.model.type.FishState;
 
-public class RunSimulation extends JFrame implements ActionListener {
+public class RunSimulation extends JFrame {
 	private String mainFilePath = "";
 	private ConvictCichlid cichlid;
 	private TankObject tank;
@@ -209,11 +209,10 @@ public class RunSimulation extends JFrame implements ActionListener {
 		 * 
 		 * 
 		 * } End of the refactoring	********************************************************************/
-		timer = new Timer(500, this);
-		timer.start();
+
 		
 	}
-	public void actionPerformed(ActionEvent e) {
+/*	public void actionPerformed(ActionEvent e) {
 		double time = 0;
 		time++;
 		 Iterator iteraz = world.getIterator(); // iterate to remove flagged objects from game
@@ -225,7 +224,7 @@ public class RunSimulation extends JFrame implements ActionListener {
 			 	world.notifyObservers();
 			 	repaint();
 	 }
-
+*/
 	private JMenuBar createJMenu() { 
 		// creating menubar
 		JMenuBar bar = new JMenuBar();

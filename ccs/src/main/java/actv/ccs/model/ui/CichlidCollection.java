@@ -59,6 +59,10 @@ public class CichlidCollection implements Iterable
 			//	cichlidCollection.remove(index);
 				cichlidCollection.removeElementAt(index);
 		}
+		public void reset() {
+			// TODO Auto-generated method stub
+			
+		}
 
 	}
 }
