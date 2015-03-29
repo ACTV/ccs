@@ -2,7 +2,6 @@ package actv.rules.idle;
 
 import java.util.ArrayList;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,14 +11,13 @@ import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.rules.DroolsTest;
 
-public class IdleTest extends DroolsTest {
+public class MoveTest extends DroolsTest {
 	private ConvictCichlid cc;
 	private Auditor auditor;
-	private long start;
 	private ArrayList<CCSMemoryObject> objs;
 	
-	public IdleTest(){
-		super(	"actv/ccs/rules/idle/Idle.drl", 
+	public MoveTest(){
+		super(	"actv/ccs/rules/idle/Move.drl", 
 				"actv/ccs/flow/swim.bpmn",
 				"swim");
 	}
@@ -28,29 +26,20 @@ public class IdleTest extends DroolsTest {
 	public void setCC(){
 		cc = new ConvictCichlid();
 		cc.setState(FishState.IDLE);
-		cc.setIdleWaitTime(System.currentTimeMillis());
+		cc.setDirection(100);
 		auditor = new Auditor();
-		
-		objs = new ArrayList<CCSMemoryObject>();
-		objs.add(auditor);
-		start = System.currentTimeMillis();
-		
 	}
 	
 	@Test
-	public void test_IdleOnly(){
-		cc.setIdleWaitTime(0);
-		
+	public void test(){
+		objs = new ArrayList<CCSMemoryObject>();
 		objs.add(cc);
+		objs.add(auditor);
 		
 		executeStateful(4000, objs);
 		
-	}
-	
-	@After
-	public void printExecutionTime(){
-		System.out.println("Execution time: " + (System.currentTimeMillis() - start));
+		System.out.println("Rules: " + auditor.getRulesFired().size());
+		System.out.println("Direction: " + cc.getDirection());
 	}
 
-	
 }

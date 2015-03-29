@@ -474,7 +474,7 @@ System.out.println("whatIgetnow!!!!!!!!!!!!!!!!!:" + uniShaderLocs[3][1]);
         
         while(itr.hasNext())
         {    
-            itr.getNext().draw2(drawable, camera[0], null, rndPrograms, pipes, uniShaderLocs);
+     //       itr.getNext().draw2(drawable, camera[0], null, rndPrograms, pipes, uniShaderLocs);
         }
 
     }

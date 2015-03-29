@@ -25,8 +25,6 @@ public class TankView extends JPanel implements IObserver {
 	public TankView(SimulationWorld s, MainGraphics m)
 	{
 		sW = s;
-	
-
 	}
 	
 	public void update(IObservable o, Object obj)

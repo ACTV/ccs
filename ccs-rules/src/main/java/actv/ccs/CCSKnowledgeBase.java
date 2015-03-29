@@ -38,20 +38,20 @@ public class CCSKnowledgeBase{
 	private static final String [] packages = { "actv/ccs/rules/start",
 												"actv/ccs/flow"};
 	
-	/**
-	 * 
-	 * Execute the stateful knowledge session with the call fireAllRules()
-	 */
-	public static void executeSession(ArrayList<CCSMemoryObject> objs){
-		StatefulKnowledgeSession sks = setupSession();
-		insertObjects(sks, objs);
-		
-		sks.startProcess("swim");
-				
-		sks.fireAllRules();
-		
-		sks.dispose();
-	}
+//	/**
+//	 * 
+//	 * Execute the stateful knowledge session with the call fireAllRules()
+//	 */
+//	public static void executeSession(ArrayList<CCSMemoryObject> objs){
+//		StatefulKnowledgeSession sks = setupSession();
+//		insertObjects(sks, objs);
+//		
+//		sks.startProcess("swim");
+//				
+//		sks.fireAllRules();
+//		
+//		sks.dispose();
+//	}
 	
 	/**
 	 * Execute the stateful knowledge session on a separate thread. Uses call fireUntilHalt()
@@ -63,6 +63,34 @@ public class CCSKnowledgeBase{
 		insertObjects(sks, objs);
 		
 		sks.startProcess("swim");
+		
+		new Thread(){
+			public void run(){
+				startTheSession(sks);
+			}
+		}.start();
+		
+		return sks.getId();
+	}
+	
+	/**
+	 * Execute the stateful knowledge session on a separate thread. Uses call fireUntilHalt()
+	 * Does add all the rules to the knowledge builder
+	 * @param objs
+	 * @return
+	 */
+	public static int executeInfiniteSession(String drl, String bpmn, String flow, ArrayList<CCSMemoryObject> objs){
+		KnowledgeBuilder kbuilder = initKBuilder(new String[]{drl, bpmn});
+		
+		KnowledgeBase kb = KnowledgeBaseFactory.newKnowledgeBase(getKnowledgeBaseConfiguration());
+		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
+		
+		final StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
+		
+		insertObjects(sks, objs);
+		
+		sks.startProcess(flow);
+		addEventListeners(sks);
 		
 		new Thread(){
 			public void run(){
@@ -119,7 +147,8 @@ public class CCSKnowledgeBase{
 		addDrl(kbuilder, "actv/ccs/rules/start/InitializeCichlid.drl");
 		addDrl(kbuilder, "actv/ccs/rules/start/Calm.drl");
 		addDrl(kbuilder, "actv/ccs/rules/idle/Idle.drl");
-		//addDrl(kbuilder, "actv/ccs/rules/Swim.drl");
+		addDrl(kbuilder, "actv/ccs/rules/idle/Move.drl");
+
 		addBpmn(kbuilder, "actv/ccs/flow/start.bpmn");
 		addBpmn(kbuilder, "actv/ccs/flow/idle.bpmn");
 		addBpmn(kbuilder, "actv/ccs/flow/swim.bpmn");
@@ -173,7 +202,6 @@ public class CCSKnowledgeBase{
 	}
 	
 	/**
-	 * Requires a comma-separated list of paths to resources
 	 * @param String
 	 * @return KnowledgeBuilder
 	 */
