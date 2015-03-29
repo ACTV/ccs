@@ -123,7 +123,7 @@ public class MainHub
        
         //attachedShapes[0].setMaterial(Material.SILVER);
        
-        mg = new MainGraphics(GLc,shdSource, shapes, attachedShapes,pl,mainFilePath + "cubemap" + File.separator + "skybox2.png");
+        mg = new MainGraphics(GLc,shdSource,pl,mainFilePath + "cubemap" + File.separator + "skybox2.png",itr);
         mf = new MainFunction(mg);
         
         //INIT varibles or/and classes HERE before they are displayed in the window//////

@@ -146,13 +146,20 @@ public class MainGraphics implements GLEventListener
         gl.glGenBuffers(count, bufferIDs, 0);
 
         int offset = 0;
-
-        for (int i = 0; i < shapes.length; i++) //gona change this later for iterator logic
-        {
-            shapes[i].setTexLoc(texLoc[shapes[i].getAttribID()]);
-            shapes[i].setvLoc(vLoc[shapes[i].getAttribID()]);
-            shapes[i].setNorLoc(norLoc[shapes[i].getAttribID()]);
-            offset += shapes[i].loadIntoBuffer(offset, bufferIDs, drawable);
+        
+        GeoShape obj;
+            
+        
+        itr.reset();
+        
+        while(itr.hasNext())
+        {    
+            obj = itr.getNext();
+        
+            obj.setTexLoc(texLoc[obj.getAttribID()]);
+            obj.setvLoc(vLoc[obj.getAttribID()]);
+            obj.setNorLoc(norLoc[obj.getAttribID()]);
+            offset += obj.loadIntoBuffer(offset, bufferIDs, drawable);
         }
 
         /* for (int i = 0; i < attachedShapes.length; i++)
@@ -462,6 +469,8 @@ System.out.println("whatIgetnow!!!!!!!!!!!!!!!!!:" + uniShaderLocs[3][1]);
 
     private void drawObjects(GLAutoDrawable drawable)
     {
+        
+        itr.reset();
         
         while(itr.hasNext())
         {    
