@@ -28,6 +28,7 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 	private long idleWaitTime;
 	private String gender;
 	private AffineTransform myTranslate, myRotate, myScale;
+	private Color color;
 	
 	/*
 	public ConvictCichlid(float [] loc, FishState s, float aL, float bLA, float cL, float bCL, float len, float hei, float wei, String n, int id, float spd, float bSpd, long iTime, String gnd){
@@ -196,13 +197,14 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 
 	 public void draw(Graphics2D g2d) // draw object
 	 {	
-		 g2d.setColor(Color.black);
+		 g2d.setColor(getColor());
 		 AffineTransform at = g2d.getTransform();
 		 g2d.transform(myScale);
 		 g2d.transform(myTranslate);
 		 g2d.transform(this.getRotate());
-		 g2d.fillOval(0, 0, (int) this.getLength(), (int) this.getHeight());
+		 g2d.fillOval(0, 0, (int) this.getLength() + 100, (int) this.getHeight() +  100);
 		 g2d.setTransform(at);
+
 	 }
 	public void setY(double Y)
 	{
@@ -248,6 +250,14 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 	 public int getDirection() // accessors and mutators
 	 {
 		 return direction;
+	 }
+	 public Color getColor()
+	 {
+		 return color;
+	 }
+	 public void setColor(Color c)
+	 {
+		 this.color = c;
 	 }
 	
 }

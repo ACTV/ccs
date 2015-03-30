@@ -1,5 +1,6 @@
 package actv.ccs.model.ui;
 
+import java.awt.Color;
 import java.sql.*;
 import java.util.Vector;
 
@@ -123,12 +124,13 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	cichlidA.setBaseAggroLevel(5);
 		        	cichlidA.setBaseSpeed(5);
 		        	cichlidA.setBaseCautionLevel(0);
-		        	cichlidA.setX(Math.random()*100); // starting variables
-		        	cichlidA.setY(Math.random()*100);
-		        	cichlidA.setDirection(10);
+		        	cichlidA.setX(300); // starting variables
+		        	cichlidA.setY(300);
+		        	cichlidA.setDirection(0);
+		        	cichlidA.setColor(Color.GREEN);
 		        	cList.add(cichlidA);
-		        	System.out.println("a: " + cichlidA.getX());
-		        	System.out.println("b: " + cichlidA.getY());
+		        	
+		        	System.out.println("name: " + cichlidA.getName() + "color"  + cichlidA.getColor());
 		        	
 				}
 			}
@@ -162,12 +164,13 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	cichlidB.setBaseAggroLevel(5);
 		        	cichlidB.setBaseSpeed(5);
 		        	cichlidB.setBaseCautionLevel(0);
-		        	cichlidB.setX(Math.random()*50); // starting variables
-		        	cichlidB.setY(Math.random()*50);
-		        	cichlidB.setDirection(10);
+		        	cichlidB.setX(500); // starting variables
+		        	cichlidB.setY(300);
+		        	cichlidB.setDirection(100);
+		        	cichlidB.setColor(Color.blue);
 		        	cList.add(cichlidB);
-		        	System.out.println("c: " + cichlidB.getX());
-		        	System.out.println("d: " + cichlidB.getY());
+		        	
+		        	System.out.println("name: " + cichlidB.getName() + "color"  + cichlidB.getColor());
 				}
 			}
 			else if (id.equals("3"))
@@ -183,7 +186,6 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	String gender = rsI.getString("Gender");
 		        	String aggro = rsI.getString("AggroLevel"); //default to 10
 		        	
-		      //  	System.out.println(name + weight + width + height + gender + aggro);
 		        	cichlidC = new ConvictCichlid();
 		        	
 		        	float weightW = Float.parseFloat(weight);
@@ -191,8 +193,6 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	float heightW = Float.parseFloat(height);
 		        	float aggroW = Float.parseFloat(aggro);
 		        	
-		     //   	System.out.println( name + weight + width + height + gender + aggro);
-	
 		        	cichlidC.setName(name);
 		        	cichlidC.setWeight(weightW);
 		        	cichlidC.setLength(widthW);
@@ -201,14 +201,14 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	cichlidC.setAggroLevel(aggroW);
 		        	cichlidC.setBaseAggroLevel(5);
 		        	cichlidC.setBaseSpeed(5);
-		        	cichlidC.setBaseCautionLevel(0);
-		        	cichlidC.setX(Math.random()*30); // here is the starting position
-		        	cichlidC.setY(Math.random()*30);
+		        	cichlidC.setBaseCautionLevel(300);
+		        	cichlidC.setX(100); // here is the starting position
+		        	cichlidC.setY(100);
 		        	cichlidC.setDirection(10);
+		        	cichlidC.setColor(Color.red);
 		        	cList.add(cichlidC);
 
-		        	System.out.println("e: " + cichlidC.getX());
-		        	System.out.println("f: " + cichlidC.getY());
+		        	System.out.println("name: " + cichlidC.getName() + "color"  + cichlidC.getColor());
 
 				}
 			}

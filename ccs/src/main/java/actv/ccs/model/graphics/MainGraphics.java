@@ -134,7 +134,7 @@ public class MainGraphics implements GLEventListener
         GL4 gl = (GL4) drawable.getGL();
         int count = 0;
         
-        GeoShape obj;
+    /*    GeoShape obj;
         
         itr.reset();
         
@@ -480,7 +480,7 @@ System.out.println("whatIgetnow!!!!!!!!!!!!!!!!!:" + uniShaderLocs[3][1]);
         
         while(itr.hasNext())
         {    
-           itr.getNext().draw2(drawable, camera[0], null, rndPrograms, pipes, uniShaderLocs);
+    //       itr.getNext().draw2(drawable, camera[0], null, rndPrograms, pipes, uniShaderLocs);
         }
 
     }

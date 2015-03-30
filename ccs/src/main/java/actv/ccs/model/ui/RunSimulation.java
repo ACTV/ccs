@@ -79,19 +79,15 @@ public class RunSimulation extends JFrame implements ActionListener {
 		// create menu bar
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
-                mH = new MainHub(".",world.getIterator());  // This is where the graghics will be init.
-                
-		tV = new TankView(world,mH.getGLC());
+      //          mH = new MainHub(".",world.getIterator());  // This is where the graghics will be init.
+        tV = new TankView(world);        
+	//	tV = new TankView(world,mH.getGLC());
 		world.addObserver(tV); // observer
 		
-		
-		// center panel for map
-	//	tV.setBorder(new EtchedBorder());
-	//	tV.setBackground(Color.orange);
-		
+				
 		world.addObserver(tV);
 		tV.setBorder(new EtchedBorder());
-		tV.setBackground(Color.blue);
+		tV.setBackground(Color.white);
 		
 		// Bottom Panel for Data Output
 		JPanel dataPanel = new JPanel();
@@ -227,7 +223,6 @@ public class RunSimulation extends JFrame implements ActionListener {
 		 {
 			 IMovable obj = (IMovable) iteraz.getNext();
 				  obj.move(time);
-				  System.out.println("mmoooveee");
 		 }
 			 	world.notifyObservers();
 			 	repaint();
@@ -251,7 +246,6 @@ public class RunSimulation extends JFrame implements ActionListener {
 		// Save
 		JMenu save = new JMenu("Save");
 		JMenuItem mItem3 = new JMenuItem("stuff");
-		save.add(mItem3);		
 		bar.add(save);
 		// Load
 		JMenu load = new JMenu("Load");
