@@ -12,6 +12,7 @@ import actv.ccs.model.type.FishState;
 public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryObject, IDrawable, IMovable {
 	private float [] location;
 	private double xLoc,yLoc; // location stuff test
+	private double startX, startY;
 	private int direction; 
 	private FishState state;
 	private float aggroLevel;
@@ -29,35 +30,17 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 	private String gender;
 	private AffineTransform myTranslate, myRotate, myScale;
 	private Color color;
-	
-	/*
-	public ConvictCichlid(float [] loc, FishState s, float aL, float bLA, float cL, float bCL, float len, float hei, float wei, String n, int id, float spd, float bSpd, long iTime, String gnd){
-		location = loc;
-		state = s;
-		aggroLevel = aL;
-		baseAggroLevel = bLA;
-		cautionLevel = cL;
-		baseCautionLevel = bCL;
-		length = len;
-		height = hei;
-		weight = wei;
-		name = n;
-		cichlidID = id;
-		speed = spd;
-		baseSpeed = bSpd;
-		idleWaitTime = iTime;
-		gender = gnd;
-	}
-	*/
+
 	public ConvictCichlid()
 	{
 		super(ConvictCichlid.class);
 		state = FishState.NONE;
 		myTranslate = new AffineTransform();
-		myTranslate.translate(xLoc, yLoc);
+		myTranslate.translate(startX, startY);
 		myScale = new AffineTransform();
 		myRotate = new AffineTransform();
 	}
+	
 	public float[] getLocation() {
 		if(location == null){
 			location = new float[2];
@@ -202,7 +185,7 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 		 g2d.transform(myScale);
 		 g2d.transform(myTranslate);
 		 g2d.transform(this.getRotate());
-		 g2d.fillOval(0, 0, (int) this.getLength() + 100, (int) this.getHeight() +  100);
+		 g2d.fillOval((int) this.getStartX(), (int) this.getStartY(), (int) this.getLength() + 100, (int) this.getHeight() +  100);
 		 g2d.setTransform(at);
 
 	 }
@@ -236,7 +219,7 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 	}
 	public void move(double time)
 	{
-		 double deltaX, deltaY; // add to new Location later
+	 double deltaX, deltaY; // add to new Location later
 	 double timeDist = time; // get the elapsed time
 	 double spd = getBaseSpeed(); // get the current speed
 	 double dist = spd * timeDist; // find the distance from speed * time
@@ -246,6 +229,12 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 		  myTranslate.translate( deltaX, deltaY);
 		  this.setX(myTranslate.getTranslateX() );
 		  this.setY(myTranslate.getTranslateY() );
+		  
+		  System.out.println("x: " + getX());
+		  System.out.println("y: " + getY());
+		  System.out.println("d: " + getDirection());
+		  
+		  
 	}
 	 public int getDirection() // accessors and mutators
 	 {
@@ -259,5 +248,21 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 	 {
 		 this.color = c;
 	 }
+		public void setStartY(double Y)
+		{
+			startY = Y;
+		}
+		public double getStartY()
+		{
+			return startY;
+		}
+		public void setStartX(double X)
+		{
+			startX = X;
+		}
+		public double getStartX()
+		{
+			return startX;
+		}
 	
 }
