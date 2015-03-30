@@ -41,6 +41,11 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		
 		spawnCichlids();
 	}
+	
+	public CichlidCollection getCichlidCollection(){
+		return cList;
+	}
+	
 	public void spawnTank()
 	{
 		

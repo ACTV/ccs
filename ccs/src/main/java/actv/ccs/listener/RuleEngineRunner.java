@@ -13,6 +13,8 @@ import actv.ccs.fact.Auditor;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
+import actv.ccs.model.ui.CichlidCollection;
+import actv.ccs.model.ui.Iterator;
 
 /**
  * Singleton CCS Knowledge rule base runner
@@ -37,17 +39,35 @@ public class RuleEngineRunner extends Thread{
 		return instance;
 	}
 
-	public void newMap(CCSMemoryObject...objs){
+	public void newMap(CichlidCollection cc){
 		String id;
 		boolean hasCichlid = false;
 		map = new HashMap<String, CCSMemoryObject>();
 		cichlidId = new ArrayList<String>();
 		objectId = new ArrayList<String>();
 		
+		// Add the fish
+		Iterator itr = cc.getIterator();
+		while(itr.hasNext()){
+			ConvictCichlid c = itr.getNext();
+			if(c instanceof ConvictCichlid){
+				hasCichlid = true;
+				id = Integer.toString(c.getCichlidID());
+				cichlidId.add(id);
+				map.put(id, c);	
+			}
+		}
+		
+		// Add the auditor
+		id = "Auditor";
+		objectId.add(id);
+		map.put(id,  new Auditor());
+		
 		/*
 		 * Insert objects into a hash map using the cichlid id as a key
 		 */
-		for(CCSMemoryObject obj : objs){
+		/*
+		for(CCSMemoryObject obj : cc){
 			if(obj instanceof ConvictCichlid){
 				hasCichlid = true;
 				id = Integer.toString(((ConvictCichlid) obj).getCichlidID());
@@ -64,6 +84,7 @@ public class RuleEngineRunner extends Thread{
 				map.put(id, obj);
 			}
 		}
+	 */
 		
 		if(!hasCichlid){
 			logger.error("No convict cichlid in the tank!!");
