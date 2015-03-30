@@ -35,10 +35,14 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 	{
 		super(ConvictCichlid.class);
 		state = FishState.NONE;
+		this.setX(this.getStartX());
+		this.setY(this.getStartY());
 		myTranslate = new AffineTransform();
-		myTranslate.translate(startX, startY);
+		myTranslate.translate(this.getX(), this.getY());
 		myScale = new AffineTransform();
 		myRotate = new AffineTransform();
+		
+
 	}
 	
 	public float[] getLocation() {
@@ -223,15 +227,17 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 	 double timeDist = time; // get the elapsed time
 	 double spd = getBaseSpeed(); // get the current speed
 	 double dist = spd * timeDist; // find the distance from speed * time
+	 System.out.println("xaaa: " +  this.getX());
+	 System.out.println("yaaa: " +  this.getY());
 	 
-	 deltaX = (Math.cos(Math.toRadians(0 - getDirection() ))*dist); // fill delta X and y
-		 deltaY = (Math.sin(Math.toRadians(0 - getDirection() ))*dist);
+	 deltaX = (Math.cos(Math.toRadians(this.getX() - getDirection() ))*dist); // fill delta X and y
+		 deltaY = (Math.sin(Math.toRadians(this.getY() - getDirection() ))*dist);
 		  myTranslate.translate( deltaX, deltaY);
 		  this.setX(myTranslate.getTranslateX() );
 		  this.setY(myTranslate.getTranslateY() );
 		  
-		  System.out.println("x: " + getX());
-		  System.out.println("y: " + getY());
+		  System.out.println("x: " + deltaX);
+		  System.out.println("y: " + deltaY);
 		  System.out.println("d: " + getDirection());
 		  
 		  
