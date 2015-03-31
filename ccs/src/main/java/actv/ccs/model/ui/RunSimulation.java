@@ -57,7 +57,6 @@ public class RunSimulation extends JFrame implements ActionListener {
         private MainHub mH;
 	private ResultSet rs;
 	private Timer timer;
-	private RuleEngineRunner runner;
 	
 	public RunSimulation() throws IOException
 	{
@@ -115,13 +114,7 @@ public class RunSimulation extends JFrame implements ActionListener {
 
 		        	conn.close();
 		        	
-		        	runner.closeSession();
-		        	runner.join();
-		        	
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -171,15 +164,7 @@ public class RunSimulation extends JFrame implements ActionListener {
 		);
 		getContentPane().setLayout(groupLayout);
 		
-		/* 
-		 * Starting the rule engine:
-		 * 	Initialize the RuleEngineRunner singleton,
-		 * 		add objects to it,
-		 * 		.start() the runner
-		 */
-		runner = RuleEngineRunner.getInstance();
-		runner.newMap(world.getCichlidCollection());
-		runner.start();
+		world.startRunner();
 
 		timer = new Timer(500, this);
 		timer.start();

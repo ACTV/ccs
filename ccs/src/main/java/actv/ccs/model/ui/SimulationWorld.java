@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.Vector;
 
 import actv.ccs.listener.CCChangeListener;
+import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.TankObject;
 import actv.ccs.model.type.FishState;
@@ -20,6 +21,8 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	private int fishPoolArr [];
 	private ResultSet rs, rsI;
 	private Connection conn;
+	private RuleEngineRunner runner;
+
 	public SimulationWorld()
 	{		
 		cList = new CichlidCollection();
@@ -44,6 +47,32 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	
 	public CichlidCollection getCichlidCollection(){
 		return cList;
+	}
+	
+	/* 
+	 * Starting the rule engine:
+	 * 	Initialize the RuleEngineRunner singleton,
+	 * 		add objects to it,
+	 * 		.start() the runner
+	 */
+	public void startRunner(){
+		if(runner == null){
+			runner = RuleEngineRunner.getInstance();
+			runner.newMap(cList);
+			runner.start();
+		}
+	}
+	
+	public void stopRunner(){
+		if(runner.isAlive()){
+			try {
+				runner.closeSession();
+				runner.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void spawnTank()
