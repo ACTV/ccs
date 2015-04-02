@@ -227,8 +227,8 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 	 double timeDist = time; // get the elapsed time
 	 double spd = getBaseSpeed(); // get the current speed
 	 double dist = spd * timeDist; // find the distance from speed * time
-	 System.out.println("xaaa: " +  this.getX());
-	 System.out.println("yaaa: " +  this.getY());
+	 System.out.println("starting x: " +  this.getX());
+	 System.out.println("starting y: " +  this.getY());
 	 
 	 deltaX = (Math.cos(Math.toRadians(this.getX() - getDirection() ))*dist); // fill delta X and y
 		 deltaY = (Math.sin(Math.toRadians(this.getY() - getDirection() ))*dist);
@@ -236,10 +236,15 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 		  this.setX(myTranslate.getTranslateX() );
 		  this.setY(myTranslate.getTranslateY() );
 		  
-		  System.out.println("x: " + deltaX);
-		  System.out.println("y: " + deltaY);
-		  System.out.println("d: " + getDirection());
+		  System.out.println("new x: " + this.getX());
+		  System.out.println("new y: " + this.getY());
 		  
+		  if ( (this.getX() > 900) || this.getY() < -150 || (this.getX() < 0) || (this.getY() > 430) )
+		  {
+			  this.setBaseSpeed(0);
+			  System.out.println("BOUNDS HAVE BEEN MET. PREPARE FOR YOUR DOOM!");
+			  // then set the state to idle
+		  }
 		  
 	}
 	 public int getDirection() // accessors and mutators
