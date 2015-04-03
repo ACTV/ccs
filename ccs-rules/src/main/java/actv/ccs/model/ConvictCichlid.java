@@ -9,7 +9,7 @@ import java.util.Random;
 
 import actv.ccs.model.type.FishState;
 
-public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryObject, IDrawable, IMovable {
+public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryObject, IDrawable, IMovable, ICollider {
 	private float [] location;
 	private double xLoc,yLoc; // location stuff test
 	private double startX, startY;
@@ -241,8 +241,8 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 		  
 		  if ( (this.getX() > 900) || this.getY() < -150 || (this.getX() < 0) || (this.getY() > 430) )
 		  {
-			  this.setBaseSpeed(0);
 			  System.out.println("BOUNDS HAVE BEEN MET. PREPARE FOR YOUR DOOM!");
+			  this.reverse();
 			  // then set the state to idle
 		  }
 		  
@@ -259,21 +259,61 @@ public class ConvictCichlid extends PropertyChangeSupport implements CCSMemoryOb
 	 {
 		 this.color = c;
 	 }
-		public void setStartY(double Y)
-		{
-			startY = Y;
-		}
-		public double getStartY()
-		{
-			return startY;
-		}
-		public void setStartX(double X)
-		{
-			startX = X;
-		}
-		public double getStartX()
-		{
-			return startX;
-		}
+	public void setStartY(double Y)
+	{
+		startY = Y;
+	}
+	public double getStartY()
+	{
+		return startY;
+	}
+	public void setStartX(double X)
+	{
+		startX = X;
+	}
+	public double getStartX()
+	{
+		return startX;
+	}
+	public void reverse()
+	{
+		this.setDirection(-direction);
+		this.setBaseSpeed(-baseSpeed);
+	}
+	public boolean collidesWith(ICollider o)
+	{
+		boolean result = false; // create boolean
 	
+		// get both object centers
+		int fObjCenterX  = (int) ((int) this.getX() + (getLength()/2));
+		int fObjCenterY = (int) ((int) this.getY() + (getHeight()/2)); 
+		
+		int sObjCenterX = (int) ((int) ((ConvictCichlid) o).getX() + ((ConvictCichlid) o).getLength()/2); 
+		int sObjCenterY = (int) ((int) ((ConvictCichlid) o).getY() + ((ConvictCichlid) o).getHeight()/2);
+		
+		// get distance between o1bjects (x,y)
+		int dx = fObjCenterX - sObjCenterX;
+		int dy = fObjCenterY - sObjCenterY;
+		int dist = (dx*dx + dy*dy); // get distance
+		
+		// find square of radii
+		int fObjRadius = (int) (getLength()/2);
+		int sObjRadius = (int) (((ConvictCichlid) o).getLength()/2);
+		int radSquared = ( fObjRadius*fObjRadius + 2*fObjRadius*sObjRadius+ sObjRadius*sObjRadius); // a^2 + 2ab + b^2
+		if (dist <= radSquared)
+		{
+			result = true;
+		}
+		return result;
+	}
+	public void handleCollision(ICollider otherObject)
+	{
+	
+	if (otherObject instanceof ConvictCichlid) 
+	{
+		((ConvictCichlid) otherObject).setSpeed(0);
+		this.setSpeed(0);
+		System.out.println("CICHLID COLLISSION! cichlid!!!");
+		}
+	}
 }
