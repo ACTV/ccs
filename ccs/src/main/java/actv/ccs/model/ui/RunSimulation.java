@@ -58,13 +58,6 @@ public class RunSimulation extends JFrame implements ActionListener {
 	private ResultSet rs;
 	private Timer timer;
 	
-	
-	/*
-	 * need to add a button to say when you click a button, then you close the simulation and set the SimulationFish fishID to null so it makes the illusion of creating an object to be null.
-	 */
-	//TODO Singleton to run the rule engine
-	private RuleEngineRunner runner;
-	
 	public RunSimulation() throws IOException
 	{
 		setTitle("Convict Cichlid Fish Simulator Test 1");
@@ -121,13 +114,7 @@ public class RunSimulation extends JFrame implements ActionListener {
 
 		        	conn.close();
 		        	
-		        	runner.closeSession();
-		        	runner.join();
-		        	
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -177,38 +164,7 @@ public class RunSimulation extends JFrame implements ActionListener {
 		);
 		getContentPane().setLayout(groupLayout);
 		
-		
-
-		
-		
-		
-		/* **********************************************************************************************
-		 * TODO Start of the refactoring {
-		 * 
-		 * 	1. MOVE THE FOLLOWING CODE TO THE APPROPRIATE PLACE IN THE PROGRAM [THIS WAS TEMPORARY ONLY]
-		 * 	2. Remove hardcoded cichlid and replace with generated ones
-		 * 	3. Remove hardcoded insertion of objects
-		 *
-		 *	Temporary creation of cichlid for testing
-		 */
-		cichlid = new ConvictCichlid();
-		cichlid.setState(FishState.NONE);
-		cichlid.setIdleWaitTime(0);
-		/* 
-		 * Starting the rule engine:
-		 * 	Initialize the RuleEngineRunner singleton,
-		 * 		add objects to it,
-		 * 		.start() the runner
-		 */
-		runner = RuleEngineRunner.getInstance();
-		runner.newMap(cichlid, new Auditor());
-		runner.start();
-		/*	
-		 * TODO replace the input of runner.newMap(...)
-		 * 	with a comma separated list of CCSMemoryObjects.
-		 * 
-		 * 
-		 * } End of the refactoring	********************************************************************/
+		world.startRunner();
 
 		timer = new Timer(500, this);
 		timer.start();

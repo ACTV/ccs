@@ -9,7 +9,6 @@ what else should i do?
 WHAT ELSE SHOULD I DO?!?!?!?! working on sds.
 
 Thomas' TO DO LIST:
-Get rules to fire - hi
 Integrate with Graphics - HI
 Get rid of hardcoding in the rule file paths - low for now
 

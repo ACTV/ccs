@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.Vector;
 
 import actv.ccs.listener.CCChangeListener;
+import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.TankObject;
 import actv.ccs.model.type.FishState;
@@ -20,6 +21,8 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	private int fishPoolArr [];
 	private ResultSet rs, rsI;
 	private Connection conn;
+	private RuleEngineRunner runner;
+
 	public SimulationWorld()
 	{		
 		cList = new CichlidCollection();
@@ -41,6 +44,37 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		
 		spawnCichlids();
 	}
+	
+	public CichlidCollection getCichlidCollection(){
+		return cList;
+	}
+	
+	/* 
+	 * Starting the rule engine:
+	 * 	Initialize the RuleEngineRunner singleton,
+	 * 		add objects to it,
+	 * 		.start() the runner
+	 */
+	public void startRunner(){
+		if(runner == null){
+			runner = RuleEngineRunner.getInstance();
+			runner.newMap(cList);
+			runner.start();
+		}
+	}
+	
+	public void stopRunner(){
+		if(runner.isAlive()){
+			try {
+				runner.closeSession();
+				runner.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void spawnTank()
 	{
 		
@@ -104,17 +138,22 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	String height = rsI.getString("Height");
 		        	String gender = rsI.getString("Gender");
 		        	String aggro = rsI.getString("AggroLevel"); //default to 10
+		        	String xLocS = rsI.getString("StartingXPos");
+		        	String yLocS = rsI.getString("StartingYPos");
 		        	
 		        	float weightW = Float.parseFloat(weight);
 		        	float widthW = Float.parseFloat(width);
 		        	float heightW = Float.parseFloat(height);
 		        	float aggroW = Float.parseFloat(aggro);
+		        	double xStartW = Double.parseDouble(xLocS);
+		        	double yStartY = Double.parseDouble(yLocS);
+		        	
 		        	
 		     //   	System.out.println( name + weight + width + height + gender + aggro);
-		        	cichlidA = new ConvictCichlid();
-		        	
-		        	// set variables
 
+		        	cichlidA = new ConvictCichlid();
+		        	cichlidA.setStartX(xStartW);
+		        	cichlidA.setStartY(yStartY);
 		        	cichlidA.setName(name);
 		        	cichlidA.setWeight(weightW);
 		        	cichlidA.setLength(widthW);
@@ -124,13 +163,13 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	cichlidA.setBaseAggroLevel(5);
 		        	cichlidA.setBaseSpeed(5);
 		        	cichlidA.setBaseCautionLevel(0);
-		        	cichlidA.setX(300); // starting variables
-		        	cichlidA.setY(300);
+		        	cichlidA.setX(1000); // starting variables
+		        	cichlidA.setY(500);
 		        	cichlidA.setDirection(0);
 		        	cichlidA.setColor(Color.GREEN);
 		        	cList.add(cichlidA);
 		        	
-		        	System.out.println("name: " + cichlidA.getName() + "color"  + cichlidA.getColor());
+		        	System.out.println("name: " + cichlidA.getName() + "direction start"  + cichlidA.getDirection());
 		        	
 				}
 			}
@@ -146,15 +185,22 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	String height = rsI.getString("Height");
 		        	String gender = rsI.getString("Gender");
 		        	String aggro = rsI.getString("AggroLevel"); //default to 10
+		        	String xLocS = rsI.getString("StartingXPos");
+		        	String yLocS = rsI.getString("StartingYPos");
 		        	
 		        	float weightW = Float.parseFloat(weight);
 		        	float widthW = Float.parseFloat(width);
 		        	float heightW = Float.parseFloat(height);
 		        	float aggroW = Float.parseFloat(aggro);
+		        	double xStartW = Double.parseDouble(xLocS);
+		        	double yStartY = Double.parseDouble(yLocS);
+		        	
 		        	
 		     //   	System.out.println( name + weight + width + height + gender + aggro);
 
 		        	cichlidB = new ConvictCichlid();
+		        	cichlidB.setStartX(xStartW);
+		        	cichlidB.setStartY(yStartY);
 		        	cichlidB.setName(name);
 		        	cichlidB.setWeight(weightW);
 		        	cichlidB.setLength(widthW);
@@ -164,13 +210,10 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	cichlidB.setBaseAggroLevel(5);
 		        	cichlidB.setBaseSpeed(5);
 		        	cichlidB.setBaseCautionLevel(0);
-		        	cichlidB.setX(500); // starting variables
-		        	cichlidB.setY(300);
 		        	cichlidB.setDirection(100);
 		        	cichlidB.setColor(Color.blue);
 		        	cList.add(cichlidB);
-		        	
-		        	System.out.println("name: " + cichlidB.getName() + "color"  + cichlidB.getColor());
+
 				}
 			}
 			else if (id.equals("3"))
@@ -185,14 +228,22 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	String height = rsI.getString("Height");
 		        	String gender = rsI.getString("Gender");
 		        	String aggro = rsI.getString("AggroLevel"); //default to 10
-		        	
-		        	cichlidC = new ConvictCichlid();
+		        	String xLocS = rsI.getString("StartingXPos");
+		        	String yLocS = rsI.getString("StartingYPos");
 		        	
 		        	float weightW = Float.parseFloat(weight);
 		        	float widthW = Float.parseFloat(width);
 		        	float heightW = Float.parseFloat(height);
 		        	float aggroW = Float.parseFloat(aggro);
+		        	double xStartW = Double.parseDouble(xLocS);
+		        	double yStartY = Double.parseDouble(yLocS);
 		        	
+		        	
+		     //   	System.out.println( name + weight + width + height + gender + aggro);
+
+		        	cichlidC = new ConvictCichlid();
+		        	cichlidC.setStartX(xStartW);
+		        	cichlidC.setStartY(yStartY);
 		        	cichlidC.setName(name);
 		        	cichlidC.setWeight(weightW);
 		        	cichlidC.setLength(widthW);
