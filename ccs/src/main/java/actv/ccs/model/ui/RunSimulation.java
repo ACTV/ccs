@@ -72,7 +72,7 @@ public class RunSimulation extends JFrame implements ActionListener {
 		// create menu bar
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
-      //          mH = new MainHub(".",world.getIterator());  // This is where the graghics will be init.
+      //          mH = new MainHub(".",world.getIterator());  // This is where the graphics will be init.
         tV = new TankView(world);        
 	//	tV = new TankView(world,mH.getGLC());
 		world.addObserver(tV); // observer
