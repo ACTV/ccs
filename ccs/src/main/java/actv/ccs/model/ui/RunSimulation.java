@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 
 
+
 import javax.media.opengl.awt.GLCanvas;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -54,9 +55,10 @@ public class RunSimulation extends JFrame implements ActionListener {
 	private SimulationWorld world;
 	private TankView tV;
 	private GLCanvas glc; 
-        private MainHub mH;
+    private MainHub mH;
 	private ResultSet rs;
 	private Timer timer;
+	private int timerT;
 	
 	public RunSimulation() throws IOException
 	{
@@ -68,7 +70,24 @@ public class RunSimulation extends JFrame implements ActionListener {
 		//glc = new GLCanvas();
 		
 	//	mF = new MainFunction(mg);
-		
+		// here is where you get the time from the tank. 
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+			Statement s = conn.createStatement();
+			rs = s.executeQuery("SELECT * FROM [TankData] WHERE ID='1' ");
+			while (rs.next())
+			{
+			String id = rs.getString("Time"); // added new string for ID
+			timerT = Integer.parseInt(id);
+			System.out.println("rS: " + timerT);
+		}
+        	conn.close();
+        	
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		// create menu bar
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
@@ -166,14 +185,21 @@ public class RunSimulation extends JFrame implements ActionListener {
 		
 		world.startRunner();
 
-		timer = new Timer(500, this);
+		System.out.println("timer: " + timerT);
+
+		timer = new Timer(timerT, this);
 		timer.start();
 		this.setVisible(true);
 		world.notifyObservers();
 	}
 	public void actionPerformed(ActionEvent e) {
-		double time = 0;
+		double time = 0; // need to fix this later
 		time++;
+		
+		if (time == timerT)
+		{
+			System.out.println("CLOSE THIS SIMULATION THE TIMER HAS GONE CRAZY");
+		}
 		 Iterator iteraz = world.getIterator(); // iterate to remove flagged objects from game
 		 while (iteraz.hasNext())
 		 {

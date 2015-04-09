@@ -339,5 +339,26 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	{
 		fishPoolArr = a;
 	}
+	public int getTimer()
+	{
+		int timerT = 0;
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+			Statement s = conn.createStatement();
+			rs = s.executeQuery("SELECT * FROM [TankData] WHERE ID='1' ");
+			while (rs.next())
+			{
+			String id = rs.getString("Time"); // added new string for ID
+			timerT = Integer.parseInt(id);
+		}
+        	conn.close();
+        	
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		return timerT;
+	}
 
 }
