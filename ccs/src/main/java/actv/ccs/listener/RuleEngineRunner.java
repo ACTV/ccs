@@ -26,10 +26,10 @@ public class RuleEngineRunner extends Thread{
 	private static RuleEngineRunner instance = null;
 	private HashMap<String, CCSMemoryObject> map;
 	private ArrayList<String> cichlidId, objectId;
-	private static boolean isRunning = false;
+	private boolean isRunning = false;
 	private static Logger logger = LoggerFactory.getLogger(RuleEngineRunner.class);
 	
-	protected RuleEngineRunner(){}
+	private RuleEngineRunner(){}
 	
 	public static RuleEngineRunner getInstance(){
 		if(instance == null){
@@ -37,6 +37,10 @@ public class RuleEngineRunner extends Thread{
 			instance.setName("Rule Engine Runner");
 		}
 		return instance;
+	}
+	
+	public boolean isRunning(){
+		return this.isRunning;
 	}
 
 	public void newMap(CichlidCollection cc){

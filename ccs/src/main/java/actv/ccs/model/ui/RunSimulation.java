@@ -114,6 +114,9 @@ public class RunSimulation extends JFrame implements ActionListener {
 
 		        	conn.close();
 		        	
+		        	// End the Rules Knowledge Session
+		        	world.stopRunner();
+		        	
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

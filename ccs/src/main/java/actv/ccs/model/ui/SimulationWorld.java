@@ -64,7 +64,7 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	}
 	
 	public void stopRunner(){
-		if(runner.isAlive()){
+		if(runner.isRunning()){
 			try {
 				runner.closeSession();
 				runner.join();
