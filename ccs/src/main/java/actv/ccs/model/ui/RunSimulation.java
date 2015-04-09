@@ -47,6 +47,8 @@ import actv.ccs.model.graphics.MainFunction;
 import actv.ccs.model.graphics.MainGraphics;
 import actv.ccs.model.graphics.MainHub;
 import actv.ccs.model.type.FishState;
+import java.awt.FlowLayout;
+import javax.swing.border.LineBorder;
 
 public class RunSimulation extends JFrame implements ActionListener {
 	private String mainFilePath = "";
@@ -54,6 +56,7 @@ public class RunSimulation extends JFrame implements ActionListener {
 	private TankObject tank;
 	private SimulationWorld world;
 	private TankView tV;
+	private DataView dV;
 	private GLCanvas glc; 
     private MainHub mH;
 	private ResultSet rs;
@@ -92,25 +95,22 @@ public class RunSimulation extends JFrame implements ActionListener {
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
       //          mH = new MainHub(".",world.getIterator());  // This is where the graghics will be init.
+		dV = new DataView(world);
+		dV.setBorder(new LineBorder(new Color(0, 0, 0)));
         tV = new TankView(world);        
 	//	tV = new TankView(world,mH.getGLC());
 		world.addObserver(tV); // observer
+		world.addObserver(dV);
 		
-				
-		world.addObserver(tV);
 		tV.setBorder(new EtchedBorder());
 		tV.setBackground(Color.white);
 		
 		// Bottom Panel for Data Output
 		JPanel dataPanel = new JPanel();
-		dataPanel.setLayout(new GridLayout(2,2));
 		dataPanel.setBorder(new EtchedBorder());
 		
 		// output fish data to one side ... this is good for now.
 		JLabel printData = new JLabel("Data Output");
-		
-		JTextPane outputDataHere = new JTextPane();
-		outputDataHere.setText("Here would be where the fish hp goes... something along the lines of a Final Fantasy battle gui");
 		
 		JButton btnPauseButton = new JButton("Pause Button");
 		
@@ -150,37 +150,37 @@ public class RunSimulation extends JFrame implements ActionListener {
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(outputDataHere, GroupLayout.PREFERRED_SIZE, 510, GroupLayout.PREFERRED_SIZE)
-								.addComponent(printData))
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(printData)
+							.addPreferredGap(ComponentPlacement.RELATED, 811, Short.MAX_VALUE)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(endSimulationButton)
 								.addComponent(btnPauseButton)))
 						.addComponent(tV, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 982, GroupLayout.PREFERRED_SIZE))
-					.addGap(137)
-					.addComponent(dataPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(dV, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(752, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(0)
+					.addComponent(tV, GroupLayout.PREFERRED_SIZE, 392, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnPauseButton)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(245)
-							.addComponent(dataPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(145)
-							.addComponent(printData, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(outputDataHere, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
+							.addComponent(dV, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addContainerGap())
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(tV, GroupLayout.PREFERRED_SIZE, 392, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnPauseButton)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(endSimulationButton)))
-					.addContainerGap())
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(printData, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+								.addComponent(endSimulationButton))
+							.addGap(90))))
 		);
+		FlowLayout fl_dV = new FlowLayout(FlowLayout.LEFT, 5, 5);
+		dV.setLayout(fl_dV);
+		dataPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 1, 1));
 		getContentPane().setLayout(groupLayout);
 		
 		world.startRunner();
