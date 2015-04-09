@@ -8,16 +8,13 @@ public class DataView extends JPanel implements IObserver {
 	private SimulationWorld realSW;
 	private FlowLayout layout = new FlowLayout();
 	private JLabel timesOutTop;
-	private JLabel livesOutTop;
-	private JLabel scoreOutTop;
-	private JLabel soundOutTop;
 	
 	public DataView (SimulationWorld sw)
 	{
 		setLayout(layout);
 		realSW = sw;
 		// create JLabels of time, lives, score, and sound toggle 
-		timesOutTop = new JLabel("Time: ");	// create top scoreboard
+		timesOutTop = new JLabel("T: ");	// create top scoreboard
 		add(timesOutTop);	
 		setVisible(true);
 
@@ -28,9 +25,10 @@ public class DataView extends JPanel implements IObserver {
 		//  method setText(String) to update the label).
 		// update 
 		arg = (SimulationWorldProxy)o;
-		timesOutTop.setText("Time: " + Double.toString(realSW.getTimer())); // update the text whenever a change occurs in GameWorld
-		
-		
+		double timerdec= realSW.getTimer();
+		timerdec = timerdec--;
+		System.out.println("tiemrdd: " + timerdec);
+		timesOutTop.setText("T: " + timerdec ); // update the text whenever a change occurs in GameWorld
 	 }
 
 }

@@ -23,6 +23,7 @@ import actv.ccs.CCSKnowledgeBase;
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
 import actv.ccs.model.TankObject;
+import actv.ccs.sageTest.MyGame;
 
 public class NewSimulation extends JFrame {
 	
@@ -32,6 +33,7 @@ public class NewSimulation extends JFrame {
 	private SimulationWorld world;
 	private ConvictCichlidController controller;
 	private RunSimulation rS;
+	private MyGame myGame;
 	
 	private JTextField NameTextField;
 	private JTextField WeightTextField;
@@ -561,12 +563,15 @@ public class NewSimulation extends JFrame {
 				}
 
 				
-				try {
-					rS = new RunSimulation();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			//	try {
+				//	rS = new RunSimulation();
+					System.out.println("trying a swap to 3d3d3d3d");
+					new MyGame().start();
+		//		} catch (IOException e1) {
+			//		// TODO Auto-generated catch block
+			//		e1.printStackTrace();
+		//		}
+			//	new MyGame().start();
 				
 				CloseJFrame();
 			}

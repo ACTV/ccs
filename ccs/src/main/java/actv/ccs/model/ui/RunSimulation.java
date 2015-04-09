@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 
 
+
 import javax.media.opengl.awt.GLCanvas;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -43,12 +44,16 @@ import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.IDrawable;
 import actv.ccs.model.IMovable;
 import actv.ccs.model.TankObject;
-import actv.ccs.model.graphics.MainFunction;
-import actv.ccs.model.graphics.MainGraphics;
-import actv.ccs.model.graphics.MainHub;
 import actv.ccs.model.type.FishState;
+import actv.ccs.sageTest.MyGame;
+
 import java.awt.FlowLayout;
+
 import javax.swing.border.LineBorder;
+import javax.swing.JLayeredPane;
+import javax.swing.JInternalFrame;
+
+import java.awt.BorderLayout;
 
 public class RunSimulation extends JFrame implements ActionListener {
 	private String mainFilePath = "";
@@ -57,16 +62,21 @@ public class RunSimulation extends JFrame implements ActionListener {
 	private SimulationWorld world;
 	private TankView tV;
 	private DataView dV;
-	private GLCanvas glc; 
-    private MainHub mH;
 	private ResultSet rs;
 	private Timer timer;
 	private int timerT;
 	
-	public RunSimulation() throws IOException
+	public RunSimulation () throws IOException
 	{
 		setTitle("Convict Cichlid Fish Simulator Test 1");
 		setSize(1000,600);
+		
+		/*
+		 * so the thing i want to do is merge all of the sage code to the current iterations of ... everything.
+		 * so this is going to suck. i need to learn how to merge all of these functions.
+		 */
+		
+		
 		
 	//	mH = new MainHub(mainFilePath);
 		world = new SimulationWorld();
@@ -94,20 +104,18 @@ public class RunSimulation extends JFrame implements ActionListener {
 		// create menu bar
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
-      //          mH = new MainHub(".",world.getIterator());  // This is where the graghics will be init.
-		dV = new DataView(world);
-		dV.setBorder(new LineBorder(new Color(0, 0, 0)));
-        tV = new TankView(world);        
+        tV = new TankView(world);
+        dV = new DataView(world);
 	//	tV = new TankView(world,mH.getGLC());
-		world.addObserver(tV); // observer
+		world.addObserver(tV);
 		world.addObserver(dV);
 		
 		tV.setBorder(new EtchedBorder());
 		tV.setBackground(Color.white);
 		
 		// Bottom Panel for Data Output
-		JPanel dataPanel = new JPanel();
-		dataPanel.setBorder(new EtchedBorder());
+	//	JPanel dataPanel = new JPanel();
+	//	dataPanel.setBorder(new EtchedBorder());
 		
 		// output fish data to one side ... this is good for now.
 		JLabel printData = new JLabel("Data Output");
@@ -119,7 +127,6 @@ public class RunSimulation extends JFrame implements ActionListener {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				
 				Connection conn;
 				try {
 					conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
@@ -145,45 +152,60 @@ public class RunSimulation extends JFrame implements ActionListener {
 				System.exit(0);
 			}
 		});
-
+		
+		JLayeredPane layeredPane = new JLayeredPane();
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(tV, GroupLayout.PREFERRED_SIZE, 982, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(printData)
-							.addPreferredGap(ComponentPlacement.RELATED, 811, Short.MAX_VALUE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(endSimulationButton)
-								.addComponent(btnPauseButton)))
-						.addComponent(tV, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 982, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(dV, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(752, Short.MAX_VALUE))
+							.addGap(811)
+							.addComponent(btnPauseButton))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE)
+							.addGap(650)
+							.addComponent(endSimulationButton)))
+					.addGap(84))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(0)
 					.addComponent(tV, GroupLayout.PREFERRED_SIZE, 392, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnPauseButton)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnPauseButton)
+						.addComponent(printData, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(dV, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addContainerGap())
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(printData, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-								.addComponent(endSimulationButton))
-							.addGap(90))))
+						.addComponent(endSimulationButton)
+						.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))
+					.addGap(12))
 		);
-		FlowLayout fl_dV = new FlowLayout(FlowLayout.LEFT, 5, 5);
-		dV.setLayout(fl_dV);
-		dataPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 1, 1));
+		
+		DataView dataView = new DataView((SimulationWorld) null);
+		dataView.setBorder(new LineBorder(new Color(0, 0, 0)));
+		dataView.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		GroupLayout gl_layeredPane = new GroupLayout(layeredPane);
+		gl_layeredPane.setHorizontalGroup(
+			gl_layeredPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_layeredPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(dataView, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(18, Short.MAX_VALUE))
+		);
+		gl_layeredPane.setVerticalGroup(
+			gl_layeredPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_layeredPane.createSequentialGroup()
+					.addGap(5)
+					.addComponent(dataView, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(70, Short.MAX_VALUE))
+		);
+		layeredPane.setLayout(gl_layeredPane);
 		getContentPane().setLayout(groupLayout);
 		
 		world.startRunner();
@@ -194,6 +216,7 @@ public class RunSimulation extends JFrame implements ActionListener {
 		timer.start();
 		this.setVisible(true);
 		world.notifyObservers();
+		
 	}
 	public void actionPerformed(ActionEvent e) {
 		double time = 0; // need to fix this later

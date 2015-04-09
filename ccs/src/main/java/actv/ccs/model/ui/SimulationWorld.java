@@ -9,13 +9,12 @@ import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.TankObject;
 import actv.ccs.model.type.FishState;
-import actv.ccs.model.graphics.objects.*;
 
 public class SimulationWorld implements IObservable, ISimulationWorld {
 	
 	private ConvictCichlid cichlid, cichlidA, cichlidB, cichlidC; // test
 	private TankObject tank;
-	private GeoShape testObj;
+	private int timerT;
 	private CichlidCollection cList;
 	private Vector<IObserver> observerList;
 	private int fishPoolArr [];
@@ -29,18 +28,13 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		observerList = new Vector<IObserver>();
 		fishPoolArr = new int [3];
 		fishPoolArr[0] = fishPoolArr[1] = fishPoolArr[2] = 0;
+		getTimer();
 		
 		cichlid = getFromDB();
 		cichlid.addPropertyChangeListener(new CCChangeListener());
 			
 		float [] verts = new float [] {0,1,0,-1,-1,1,1,-1,1,1,-1,-1,-1,-1,-1};
 		
-		
-		// here's to trying to draw something on the screen.
-		testObj = new GeoShape(null, verts, null, null, 10, 10, 10);
-		//     public GeoShape(String string, float[] verts, float[] texCoords, String texFilePath, float x, float y, float z)
-		
-		System.out.println("testobj"  + testObj);
 		
 		spawnCichlids();
 	}
@@ -341,7 +335,7 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	}
 	public int getTimer()
 	{
-		int timerT = 0;
+		timerT = 0;
 		Connection conn;
 		try {
 			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
@@ -359,6 +353,10 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 			e2.printStackTrace();
 		}
 		return timerT;
+	}
+	public void setTimer()
+	{
+		
 	}
 
 }

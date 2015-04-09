@@ -8,14 +8,11 @@ import javax.swing.JPanel;
 import javax.media.opengl.awt.GLCanvas;
 
 import actv.ccs.model.*;
-import actv.ccs.model.graphics.*;
 import actv.ccs.model.IDrawable;
 
 
 public class TankView extends JPanel implements IObserver {
 	private SimulationWorld sW;
-	private GLCanvas glC;
-	private MainGraphics mg;
 	AffineTransform worldToND, ndToScreen, theVTM, inverseVTM;
 	private boolean pauseView;
 	private double winLeft = 0;
