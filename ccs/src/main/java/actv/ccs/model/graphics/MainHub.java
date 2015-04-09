@@ -44,7 +44,7 @@ import javax.swing.JPanel;
  */
 public class MainHub
 {
-   // private MainFrame mF;
+	
     private MainFunction mf;
     private MainGraphics mg;
     private MainFrame mF;

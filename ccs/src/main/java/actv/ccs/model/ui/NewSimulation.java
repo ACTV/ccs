@@ -43,6 +43,7 @@ public class NewSimulation extends JFrame {
 	
 	private int tankFishCount;
 	private int tankPlantCount;
+	private int tankTime;
 	private int fishID = 0;
 	private int fishIDList [];
 	private int i = 0; // figure out where to add the item
@@ -71,7 +72,7 @@ public class NewSimulation extends JFrame {
 	{
 		
 		cichlid = new ConvictCichlid();
-		tank = new TankObject(20, 20, 20, 26, 0, 0); // array value default tank
+		tank = new TankObject(20, 20, 20, 26, 0, 0, 0); // array value default tank
 		world = new SimulationWorld();
 		cichlid = getFromDB();
 		
@@ -465,11 +466,11 @@ public class NewSimulation extends JFrame {
 		
 		
 		JLabel lblAddPlantsLater = new JLabel("add Plants later.");
-		springLayout.putConstraint(SpringLayout.NORTH, lblAddPlantsLater, 30, SpringLayout.SOUTH, lblWaterTemperaturecelsius);
-		springLayout.putConstraint(SpringLayout.WEST, lblAddPlantsLater, 0, SpringLayout.WEST, lblPleasePickA);
+		springLayout.putConstraint(SpringLayout.WEST, lblAddPlantsLater, 10, SpringLayout.WEST, getContentPane());
 		getContentPane().add(lblAddPlantsLater);
 		
 		JButton btnRunSimulation = new JButton("Run Simulation");
+		springLayout.putConstraint(SpringLayout.SOUTH, lblAddPlantsLater, -18, SpringLayout.NORTH, btnRunSimulation);
 		springLayout.putConstraint(SpringLayout.WEST, btnRunSimulation, 0, SpringLayout.WEST, lblPleasePickA);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnRunSimulation, 0, SpringLayout.SOUTH, outputData);
 		getContentPane().add(btnRunSimulation);
@@ -492,6 +493,37 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.WEST, aggroLevelTextField, 0, SpringLayout.WEST, NameTextField);
 		getContentPane().add(aggroLevelTextField);
 		aggroLevelTextField.setColumns(10);
+		
+		JLabel lblSimulationRunTime = new JLabel("Simulation Run Time (seconds):");
+		springLayout.putConstraint(SpringLayout.WEST, lblSimulationRunTime, 0, SpringLayout.WEST, lblPleasePickA);
+		springLayout.putConstraint(SpringLayout.SOUTH, lblSimulationRunTime, -28, SpringLayout.NORTH, lblAddPlantsLater);
+		getContentPane().add(lblSimulationRunTime);
+		
+		JSlider timerSlider = new JSlider();
+		timerSlider.setMaximum(1000);
+		timerSlider.setMinimum(1);
+		springLayout.putConstraint(SpringLayout.WEST, timerSlider, 43, SpringLayout.EAST, lblSimulationRunTime);
+		springLayout.putConstraint(SpringLayout.SOUTH, timerSlider, 0, SpringLayout.SOUTH, lblSimulationRunTime);
+		getContentPane().add(timerSlider);
+		timerSlider.addChangeListener(new ChangeListener()
+		{
+			public void stateChanged(ChangeEvent e)
+			{
+				
+				JSlider slider = (JSlider) e.getSource();
+				int value = slider.getValue();
+				
+				if (!slider.getValueIsAdjusting())
+				{
+					
+					tank.setTimer(value);
+					System.out.println("value: " + value);
+					System.out.println("the value is changing " + tank.getTimer());
+				}
+			}
+		});
+		
+		
 		btnRunSimulation.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e)
@@ -503,21 +535,23 @@ public class NewSimulation extends JFrame {
 				tank.setTankWidth(tankWidthC);	
 				tank.setTankLength(tankLengthC);
 				tank.setTankHeight(tankHeightC);
+				System.out.println("time: " + tank.getTimer());
 				System.out.println("Running Simulation");
 				Connection conn;
 				try {
 					conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 			
 				Statement s = conn.createStatement();
-				rs = s.executeQuery("SELECT fishID FROM [SimulationFish]");
+				rs = s.executeQuery("SELECT ID FROM [TankData]");
 				while (rs.next())
 				{
-					int a = s.executeUpdate("UPDATE TankData set length = " + tank.getTankLength() + " where ID = 1");
-					int b = s.executeUpdate("UPDATE TankData set width = " + tank.getTankWidth() + " where ID = 1");
-					int c = s.executeUpdate("UPDATE TankData set height = " + tank.getTankHeight() + " where ID = 1");
-					int d = s.executeUpdate("UPDATE TankData set temperature = " + tank.getTankTemperature() + " where ID = 1");
+					int a = s.executeUpdate("UPDATE TankData set Length = " + tank.getTankLength() + " where ID = 1");
+					int b = s.executeUpdate("UPDATE TankData set Width = " + tank.getTankWidth() + " where ID = 1");
+					int c = s.executeUpdate("UPDATE TankData set Height = " + tank.getTankHeight() + " where ID = 1");
+					int d = s.executeUpdate("UPDATE TankData set Temperature = " + tank.getTankTemperature() + " where ID = 1");
 					int z = s.executeUpdate("UPDATE TankData set cichlidCount = " + tank.getCichlidCount() + " where ID = 1");
 					int f = s.executeUpdate("UPDATE TankData set plantCount = " + tank.getPlantCount() + " where ID = 1");
+					int g = s.executeUpdate("UPDATE TankData set Time = " + tank.getTimer() + " where ID = 1");
 						
 				}
 				conn.close();

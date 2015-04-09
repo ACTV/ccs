@@ -45,9 +45,9 @@ public class MainFrame extends JFrame
       //  createButtons();
         glViewPanel = new JPanel();
         glViewPanel.setSize(600,600);
-        //glViewPanel.add(GLc);
-        //glViewPanel.setVisible(true);
-        //add(glVeiwPanel);
+        glViewPanel.add(GLc);
+        glViewPanel.setVisible(true);
+        add(glViewPanel);
         add(GLc);//add OPENGL window to frame
         this.Glc = GLc;
       //  glViewPanel.addMouseWheelListener(ptrFunc);
