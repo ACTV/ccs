@@ -92,6 +92,7 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 			String temperature = rs.getString("Temperature");
 			String cCount = rs.getString("cichlidCount");
 			String pCount = rs.getString("plantCount");
+			String tTime = rs.getString("Time");
 			
 			float lw = Float.parseFloat(length);
 			float ww = Float.parseFloat(width);
@@ -99,10 +100,11 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 			float tw = Float.parseFloat(temperature);
 			int cW = Integer.parseInt(cCount);
 			int pC = Integer.parseInt(pCount);
+			int tP = Integer.parseInt(tTime);
 			
-			tank = new TankObject(lw, ww, hw, tw, cW, pC);
+			tank = new TankObject(lw, ww, hw, tw, cW, pC, tP);
 		//	System.out.println("tank : gerg " + lw );
-		//	System.out.println("tank : gergff " + cCount );
+			System.out.println("tank : gergff " + tank.getTimer() );
 			
 		}
 		conn.close();
@@ -321,7 +323,7 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	}
 	private static TankObject baseTank()
 	{
-		TankObject t = new TankObject(20, 20, 20, 26, 0, 0);
+		TankObject t = new TankObject(20, 20, 20, 26, 0, 0, 0);
 		return t;
 	}
 	public int [] getFishArr()
@@ -336,6 +338,27 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	public void setFishArr(int [] a)
 	{
 		fishPoolArr = a;
+	}
+	public int getTimer()
+	{
+		int timerT = 0;
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+			Statement s = conn.createStatement();
+			rs = s.executeQuery("SELECT * FROM [TankData] WHERE ID='1' ");
+			while (rs.next())
+			{
+			String id = rs.getString("Time"); // added new string for ID
+			timerT = Integer.parseInt(id);
+		}
+        	conn.close();
+        	
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		return timerT;
 	}
 
 }

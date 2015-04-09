@@ -8,8 +8,9 @@ public class TankObject {
 	private float temperature;
 	private int cichlidCount;
 	private int plantCount;
+	private int timer;
 	
-	public TankObject(float l, float w, float h, float t, int cC, int pC)
+	public TankObject(float l, float w, float h, float t, int cC, int pC, int time)
 	{
 		this.length = l;
 		this.width = w;
@@ -17,6 +18,7 @@ public class TankObject {
 		this.temperature = t;
 		this.cichlidCount = cC;
 		this.plantCount = pC;	
+		this.timer = time;
 	}
 
 	public float getTankLength()
@@ -80,5 +82,12 @@ public class TankObject {
 	{
 		fishIDList = a;
 	}
-	
+	public int getTimer()
+	{
+		return timer;
+	}
+	public void setTimer(int t)
+	{
+		this.timer = t;
+	}
 }

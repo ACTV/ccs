@@ -26,6 +26,10 @@ public class SimulationWorldProxy implements IObservable, ISimulationWorld
 	 {
 		 realSW.add(obj);
 	 }
+	 public int getTimer()
+	 {
+		 return realSW.getTimer();
+	 }
 	 public void removeObj (ConvictCichlid obj)
 	 {
 	 	// null

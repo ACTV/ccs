@@ -22,20 +22,20 @@ public class TankView extends JPanel implements IObserver {
 	private double winWidth = 1000;
 	private double winBottom = 0;
 	private double winHeight = 500;
-	
 	public TankView(SimulationWorld s)
 	{
             sW = s;
 	}
-// test	
-/*	public TankView(SimulationWorld s, GLCanvas glc)
+	
+// test
+	/*
+	public TankView(SimulationWorld s, GLCanvas glc)
 	{
             add(glc);
             sW = s;
 	}
-	*/
 	
-        
+      */  
         //NOT REALLY NEEDED. KEEPING IT HERE FOR REFERENCE -VICTOR HUBA
         
 	public void update(IObservable o, Object obj)
