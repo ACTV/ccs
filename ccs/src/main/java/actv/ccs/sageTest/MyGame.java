@@ -1,7 +1,13 @@
 package actv.ccs.sageTest;
 
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+import actv.ccs.model.ConvictCichlid;
 import graphicslib3D.Matrix3D;
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
@@ -26,7 +32,10 @@ public class MyGame extends BaseGame {
 	IDisplaySystem display;
 	ICamera camera;
 	private SkyBox skybox;
+	private Connection conn;
+	private ResultSet rs, rsI;
 	private TerrainBlock floor;
+	private TestCichlid cichlidA, cichlidB, cichlidC;
 	
 	public void initGame()
 	{
@@ -47,23 +56,14 @@ public class MyGame extends BaseGame {
 		camera.setPerspectiveFrustum(45, 1, 0.01, 1000);
 		camera.setLocation(new Point3D(1, 1, 20));
 		
+		spawnCichlids();
 		
 		// so instead of an array, it will be a group class that will hold the objects so instead of iterating ... it will go like that. so maybe i will have to change
 		// the convict cichlid iterator to become a scenenode iterator.
 		
 		
 		// this part will soon be the equivalent of spawnCichlids
-		TestCichlid test = new TestCichlid();
-		Matrix3D testT = test.getLocalTranslation(); // this is for position
-		testT.translate(2, -2, -8);
-		test.setLocalTranslation(testT);
-		Matrix3D testS = test.getLocalScale(); // this is for size of object
-		testS.scale(.5, .5, .7); // the scale might be too big so we will have to do the weight*.10
-		test.setLocalScale(testS);
-		Matrix3D testR = new Matrix3D(); // this is for the rotation of the object
-		testR.rotateX(30);
-		test.setLocalRotation(testR);
-		addGameWorldObject(test);
+
 		
 		// equivalent of spawn plants
 		
@@ -83,6 +83,125 @@ public class MyGame extends BaseGame {
 		 addGameWorldObject(zAxis);
 		 
 
+	}
+		public void spawnCichlids()
+		{
+			try {
+				conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+		
+			Statement s = conn.createStatement();
+			rs = s.executeQuery("SELECT fishID FROM [SimulationFish]");
+			while (rs.next())
+			{
+				String id = rs.getString("fishID"); //Field from database ex. FishA, FishB
+				int idS =  Integer.parseInt(id);
+
+				System.out.println(idS);
+				
+				if (id.equals("1"))
+				{
+					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
+					
+					while (rsI.next())
+					{
+						String name = rsI.getString("Type"); //Field from database ex. FishA, FishB
+			        	String weight = rsI.getString("Weight");
+			        	String width = rsI.getString("Width");
+			        	String height = rsI.getString("Height");
+			        	String gender = rsI.getString("Gender");
+			        	String aggro = rsI.getString("AggroLevel"); //default to 10
+			        	String xLocS = rsI.getString("StartingXPos");
+			        	String yLocS = rsI.getString("StartingYPos");
+			        	String zLocS = rsI.getString("StartingZPos");
+			        	
+			        	float weightW = Float.parseFloat(weight);
+			        	float widthW = Float.parseFloat(width);
+			        	float heightW = Float.parseFloat(height);
+			        	float aggroW = Float.parseFloat(aggro);
+			        	double xStartW = Double.parseDouble(xLocS);
+			        	double yStartY = Double.parseDouble(yLocS);
+			        	double zStartZ = Double.parseDouble(zLocS);
+			        	
+			    		cichlidA = new TestCichlid();
+			    		cichlidA.setName(name);
+			    		cichlidA.setGender(gender);
+			    		cichlidA.setAggroLevel(aggroW);
+			    		Matrix3D cichlidAT = cichlidA.getLocalTranslation(); // this is for position
+			    		cichlidAT.translate(xStartW, yStartY, zStartZ);
+			    		cichlidA.setLocalTranslation(cichlidAT);
+			    		Matrix3D cichlidAS = cichlidA.getLocalScale(); // this is for size of object
+			    		cichlidAS.scale(widthW*weightW*.100, heightW*weightW*.100, 0); // the scale might be too big so we will have to do the weight*.10
+			    		cichlidA.setLocalScale(cichlidAS);
+			    		Matrix3D cichlidAR = new Matrix3D(); // this is for the rotation of the object
+			    		cichlidAR.rotateX(30);
+			    		cichlidA.setLocalRotation(cichlidAR);
+			    		addGameWorldObject(cichlidA);
+ 	
+			    		
+					}
+				}
+				else if (id.equals("2"))
+				{
+					/*
+					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
+					
+					while (rsI.next())
+					{
+						String name = rsI.getString("Type"); //Field from database ex. FishA, FishB
+			        	String weight = rsI.getString("Weight");
+			        	String width = rsI.getString("Width");
+			        	String height = rsI.getString("Height");
+			        	String gender = rsI.getString("Gender");
+			        	String aggro = rsI.getString("AggroLevel"); //default to 10
+			        	String xLocS = rsI.getString("StartingXPos");
+			        	String yLocS = rsI.getString("StartingYPos");
+			        	
+			        	float weightW = Float.parseFloat(weight);
+			        	float widthW = Float.parseFloat(width);
+			        	float heightW = Float.parseFloat(height);
+			        	float aggroW = Float.parseFloat(aggro);
+			        	double xStartW = Double.parseDouble(xLocS);
+			        	double yStartY = Double.parseDouble(yLocS);
+			        	
+			        	
+
+			        	
+					}
+					*/
+				}
+				else if (id.equals("3"))
+				{
+				/*	rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
+					
+					while (rsI.next())
+					{
+						String name = rsI.getString("Type"); //Field from database ex. FishA, FishB
+			        	String weight = rsI.getString("Weight");
+			        	String width = rsI.getString("Width");
+			        	String height = rsI.getString("Height");
+			        	String gender = rsI.getString("Gender");
+			        	String aggro = rsI.getString("AggroLevel"); //default to 10
+			        	String xLocS = rsI.getString("StartingXPos");
+			        	String yLocS = rsI.getString("StartingYPos");
+			        	
+			        	float weightW = Float.parseFloat(weight);
+			        	float widthW = Float.parseFloat(width);
+			        	float heightW = Float.parseFloat(height);
+			        	float aggroW = Float.parseFloat(aggro);
+			        	double xStartW = Double.parseDouble(xLocS);
+			        	double yStartY = Double.parseDouble(yLocS);
+			        	
+			        	
+		
+					}
+					*/
+				}
+			}
+			conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	private void createScene() // the scene is the background of the fish tank ... non issue for now.
 	{
@@ -174,7 +293,11 @@ public class MyGame extends BaseGame {
 		{
 			if (s instanceof TestCichlid) // here will be where the objects will have be able to move, but i will implement that later.
 			{
-				s.translate(0.001f, 0, 0);
+				// for now the objects can move forward
+				Matrix3D sM = s.getLocalTranslation();
+				sM.translate(0, 0, .1f);
+				s.setLocalTranslation(sM);
+				s.updateWorldBound();
 			}
 		}
 	}
