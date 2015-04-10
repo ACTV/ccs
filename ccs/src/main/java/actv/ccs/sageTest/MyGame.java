@@ -56,8 +56,8 @@ public class MyGame extends BaseGame {
 		/*
 		 * as much as i hate it, it's going to look like the previous team's project where our view is pretty much the closest face out of the 4 sided aquarium.
 		 */
-		camera.setPerspectiveFrustum(45, 1, 0.01, 1000);
-		camera.setLocation(new Point3D(1, 1, 20));
+		camera.setPerspectiveFrustum(90, 1, 0.01, 1000);
+		camera.setLocation(new Point3D(10, 100, 20));
 		
 		spawnCichlids();
 		
@@ -76,9 +76,9 @@ public class MyGame extends BaseGame {
 		
 		// creating x, y, z lines for a basis
 		 Point3D origin = new Point3D(0,0,0);
-		 Point3D xEnd = new Point3D(100,0,0);
-		 Point3D yEnd = new Point3D(0,100,0);
-		 Point3D zEnd = new Point3D(0,0,100);
+		 Point3D xEnd = new Point3D(1000,0,0);
+		 Point3D yEnd = new Point3D(0,1000,0);
+		 Point3D zEnd = new Point3D(0,0,1000);
 		 Line xAxis = new Line (origin, xEnd, Color.red, 2);
 		 Line yAxis = new Line (origin, yEnd, Color.green, 2);
 		 Line zAxis = new Line (origin, zEnd, Color.blue, 2);
@@ -139,65 +139,90 @@ public class MyGame extends BaseGame {
 			    		cichlidAR.rotateX(30);
 			    		cichlidA.setLocalRotation(cichlidAR);
 			    		addGameWorldObject(cichlidA);
- 	
-			    		// the issue with this thing is that the function is automatically called when new game starts... maybe i can call this from something..
-					}
+
+			    	}
 				}
 				else if (id.equals("2"))
 				{
-					/*
 					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
 					
 					while (rsI.next())
 					{
-						String name = rsI.getString("Type"); //Field from database ex. FishA, FishB
-			        	String weight = rsI.getString("Weight");
-			        	String width = rsI.getString("Width");
-			        	String height = rsI.getString("Height");
-			        	String gender = rsI.getString("Gender");
-			        	String aggro = rsI.getString("AggroLevel"); //default to 10
-			        	String xLocS = rsI.getString("StartingXPos");
-			        	String yLocS = rsI.getString("StartingYPos");
-			        	
-			        	float weightW = Float.parseFloat(weight);
-			        	float widthW = Float.parseFloat(width);
-			        	float heightW = Float.parseFloat(height);
-			        	float aggroW = Float.parseFloat(aggro);
-			        	double xStartW = Double.parseDouble(xLocS);
-			        	double yStartY = Double.parseDouble(yLocS);
-			        	
-			        	
-
-			        	
+					String name = rsI.getString("Type"); //Field from database ex. FishA, FishB
+		        	String weight = rsI.getString("Weight");
+		        	String width = rsI.getString("Width");
+		        	String height = rsI.getString("Height");
+		        	String gender = rsI.getString("Gender");
+		        	String aggro = rsI.getString("AggroLevel"); //default to 10
+		        	String xLocS = rsI.getString("StartingXPos");
+		        	String yLocS = rsI.getString("StartingYPos");
+		        	String zLocS = rsI.getString("StartingZPos");
+		        	
+		        	float weightW = Float.parseFloat(weight);
+		        	float widthW = Float.parseFloat(width);
+		        	float heightW = Float.parseFloat(height);
+		        	float aggroW = Float.parseFloat(aggro);
+		        	double xStartW = Double.parseDouble(xLocS);
+		        	double yStartY = Double.parseDouble(yLocS);
+		        	double zStartZ = Double.parseDouble(zLocS);
+		        	
+		    		cichlidB = new TestCichlid();
+		    		cichlidB.setName(name);
+		    		cichlidB.setGender(gender);
+		    		cichlidB.setAggroLevel(aggroW);
+		    		Matrix3D cichlidBT = cichlidB.getLocalTranslation(); // this is for position
+		    		cichlidBT.translate(xStartW, yStartY, zStartZ);
+		    		cichlidB.setLocalTranslation(cichlidBT);
+		    		Matrix3D cichlidBS = cichlidB.getLocalScale(); // this is for size of object
+		    		cichlidBS.scale(widthW*weightW*.100, heightW*weightW*.100, 0); // the scale might be too big so we will have to do the weight*.10
+		    		cichlidB.setLocalScale(cichlidBS);
+		    		Matrix3D cichlidBR = new Matrix3D(); // this is for the rotation of the object
+		    		cichlidBR.rotateX(30);
+		    		cichlidB.setLocalRotation(cichlidBR);
+		    		addGameWorldObject(cichlidB);
+	
+		    		// the issue with this thing is that the function is automatically called when new game starts... maybe i can call this from something..
 					}
-					*/
 				}
 				else if (id.equals("3"))
 				{
-				/*	rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
+					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
 					
 					while (rsI.next())
 					{
-						String name = rsI.getString("Type"); //Field from database ex. FishA, FishB
-			        	String weight = rsI.getString("Weight");
-			        	String width = rsI.getString("Width");
-			        	String height = rsI.getString("Height");
-			        	String gender = rsI.getString("Gender");
-			        	String aggro = rsI.getString("AggroLevel"); //default to 10
-			        	String xLocS = rsI.getString("StartingXPos");
-			        	String yLocS = rsI.getString("StartingYPos");
-			        	
-			        	float weightW = Float.parseFloat(weight);
-			        	float widthW = Float.parseFloat(width);
-			        	float heightW = Float.parseFloat(height);
-			        	float aggroW = Float.parseFloat(aggro);
-			        	double xStartW = Double.parseDouble(xLocS);
-			        	double yStartY = Double.parseDouble(yLocS);
-			        	
-			        	
-		
+					String name = rsI.getString("Type"); //Field from database ex. FishA, FishB
+		        	String weight = rsI.getString("Weight");
+		        	String width = rsI.getString("Width");
+		        	String height = rsI.getString("Height");
+		        	String gender = rsI.getString("Gender");
+		        	String aggro = rsI.getString("AggroLevel"); //default to 10
+		        	String xLocS = rsI.getString("StartingXPos");
+		        	String yLocS = rsI.getString("StartingYPos");
+		        	String zLocS = rsI.getString("StartingZPos");
+		        	
+		        	float weightW = Float.parseFloat(weight);
+		        	float widthW = Float.parseFloat(width);
+		        	float heightW = Float.parseFloat(height);
+		        	float aggroW = Float.parseFloat(aggro);
+		        	double xStartW = Double.parseDouble(xLocS);
+		        	double yStartY = Double.parseDouble(yLocS);
+		        	double zStartZ = Double.parseDouble(zLocS);
+		        	
+		    		cichlidC = new TestCichlid();
+		    		cichlidC.setName(name);
+		    		cichlidC.setGender(gender);
+		    		cichlidC.setAggroLevel(aggroW);
+		    		Matrix3D cichlidCT = cichlidC.getLocalTranslation(); // this is for position
+		    		cichlidCT.translate(xStartW, yStartY, zStartZ);
+		    		cichlidC.setLocalTranslation(cichlidCT);
+		    		Matrix3D cichlidCS = cichlidC.getLocalScale(); // this is for size of object
+		    		cichlidCS.scale(widthW*weightW*.100, heightW*weightW*.100, 0); // the scale might be too big so we will have to do the weight*.10
+		    		cichlidC.setLocalScale(cichlidCS);
+		    		Matrix3D cichlidCR = new Matrix3D(); // this is for the rotation of the object
+		    		cichlidCR.rotateX(30);
+		    		cichlidC.setLocalRotation(cichlidCR);
+		    		addGameWorldObject(cichlidC);
 					}
-					*/
 				}
 			}
 			conn.close();
@@ -297,16 +322,17 @@ public class MyGame extends BaseGame {
 			if (s instanceof TestCichlid) // here will be where the objects will have be able to move, but i will implement that later.
 			{
 				// for now the objects can move forward
-				Matrix3D sM = s.getLocalTranslation();
+			/*	Matrix3D sM = s.getLocalTranslation();
 				sM.translate(0, 0, .1f);
 				s.setLocalTranslation(sM);
 				s.updateWorldBound();
+				*/
 			}
 		}
 	}
 	private IDisplaySystem createDisplaySystem()
 	 {
-	 IDisplaySystem display = new MyDisplaySystem(700, 300, 24, 20, false,
+	 IDisplaySystem display = new MyDisplaySystem(1000, 500, 24, 20, false,
 	 "sage.renderer.jogl.JOGLRenderer");
 	 System.out.print("\nWaiting for display creation...");
 	 int count = 0;
