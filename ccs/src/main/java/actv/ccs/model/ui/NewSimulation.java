@@ -573,6 +573,7 @@ public class NewSimulation extends JFrame {
 			//	new MyGame().start();
 				
 				CloseJFrame();
+				// +Exception in thread "AWT-EventQueue-0" java.lang.RuntimeException: Unable to create display
 			}
 		});
 		
@@ -640,5 +641,7 @@ public class NewSimulation extends JFrame {
 	public void CloseJFrame()
 	{
 		super.dispose();
+		new MyGame().start();
+		
 	}
 }

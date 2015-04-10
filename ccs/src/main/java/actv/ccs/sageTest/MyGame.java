@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import actv.ccs.model.ConvictCichlid;
 import graphicslib3D.Matrix3D;
@@ -14,6 +15,8 @@ import graphicslib3D.Vector3D;
 import sage.app.BaseGame;
 import sage.camera.ICamera;
 import sage.display.IDisplaySystem;
+import sage.input.IInputManager;
+import sage.input.InputManager;
 import sage.scene.Group;
 import sage.scene.SceneNode;
 import sage.scene.SkyBox;
@@ -137,7 +140,7 @@ public class MyGame extends BaseGame {
 			    		cichlidA.setLocalRotation(cichlidAR);
 			    		addGameWorldObject(cichlidA);
  	
-			    		
+			    		// the issue with this thing is that the function is automatically called when new game starts... maybe i can call this from something..
 					}
 				}
 				else if (id.equals("2"))
@@ -300,5 +303,41 @@ public class MyGame extends BaseGame {
 				s.updateWorldBound();
 			}
 		}
+	}
+	private IDisplaySystem createDisplaySystem()
+	 {
+	 IDisplaySystem display = new MyDisplaySystem(700, 300, 24, 20, false,
+	 "sage.renderer.jogl.JOGLRenderer");
+	 System.out.print("\nWaiting for display creation...");
+	 int count = 0;
+	 // wait until display creation completes or a timeout occurs
+	 while (!display.isCreated())
+	 {
+	 try
+	 { Thread.sleep(10); }
+	 catch (InterruptedException e)
+	 { throw new RuntimeException("Display creation interrupted"); }
+	 count++;
+	 System.out.print("+");
+	 if (count % 80 == 0) { System.out.println(); }
+	 if (count > 2000) // 20 seconds (approx.)
+	 { throw new RuntimeException("Unable to create display");
+	 }
+	 }
+	 System.out.println();
+	 return display ;
+	 }
+	
+	protected void initSystem()
+	{
+		IDisplaySystem display = createDisplaySystem();
+		setDisplaySystem(display);
+		
+		IInputManager inputManager = new InputManager();
+		setInputManager(inputManager);
+		
+		ArrayList<SceneNode> gameWorld = new ArrayList<SceneNode>();
+		setGameWorld(gameWorld);
+		
 	}
 }
