@@ -566,7 +566,6 @@ public class NewSimulation extends JFrame {
 			//	try {
 				//	rS = new RunSimulation();
 					System.out.println("trying a swap to 3d3d3d3d");
-					new MyGame().start();
 		//		} catch (IOException e1) {
 			//		// TODO Auto-generated catch block
 			//		e1.printStackTrace();

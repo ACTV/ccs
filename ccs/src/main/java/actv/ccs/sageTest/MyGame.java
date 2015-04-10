@@ -14,7 +14,7 @@ public class MyGame extends BaseGame {
 		display.setTitle("sage implementation of the pain");
 		
 		Rectangle rect1 = new Rectangle(0.3f, 0.3f);
-		
+		addGameWorldObject(rect1);
 		
 	}
 	public void update(float time)

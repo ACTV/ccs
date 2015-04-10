@@ -3,6 +3,8 @@ package actv.ccs.model.ui;
 import java.io.IOException;
 import java.sql.*;
 
+import actv.ccs.sageTest.MyGame;
+
 
 public class Main {
 
@@ -22,6 +24,7 @@ public class Main {
 	//	LoadWindow loadWindow = new LoadWindow();
 	//	SaveWindow newSW = new SaveWindow();
 		NewSimulation newS = new NewSimulation();
+		new MyGame().start();
 	//	RunSimulation testRun = new RunSimulation();
 		
 		// going to try ucanaccess fun 
