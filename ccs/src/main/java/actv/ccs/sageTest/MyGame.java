@@ -8,7 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import actv.ccs.model.ConvictCichlid;
+import actv.ccs.sageTest.actions.BackwardAction;
+import actv.ccs.sageTest.actions.ForwardAction;
+import actv.ccs.sageTest.actions.LeftAction;
+import actv.ccs.sageTest.actions.RightAction;
 import graphicslib3D.Matrix3D;
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
@@ -17,6 +20,7 @@ import sage.camera.ICamera;
 import sage.display.IDisplaySystem;
 import sage.input.IInputManager;
 import sage.input.InputManager;
+import sage.input.action.IAction;
 import sage.scene.Group;
 import sage.scene.SceneNode;
 import sage.scene.SkyBox;
@@ -43,8 +47,9 @@ public class MyGame extends BaseGame {
 	public void initGame()
 	{
 		initObjects();
-	//	 createScene();
-	//	 initTerrain();
+	//	createScene();
+	//	initTerrain();
+		initActions();
 	}
 	
 	protected void initObjects()
@@ -57,7 +62,7 @@ public class MyGame extends BaseGame {
 		 * as much as i hate it, it's going to look like the previous team's project where our view is pretty much the closest face out of the 4 sided aquarium.
 		 */
 		camera.setPerspectiveFrustum(90, 1, 0.01, 1000);
-		camera.setLocation(new Point3D(10, 100, 20));
+		camera.setLocation(new Point3D(10, 1, 100));
 		
 		spawnCichlids();
 		
@@ -85,7 +90,6 @@ public class MyGame extends BaseGame {
 		 addGameWorldObject(xAxis); addGameWorldObject(yAxis);
 		 addGameWorldObject(zAxis);
 		 
-
 	}
 		public void spawnCichlids()
 		{
@@ -283,6 +287,26 @@ public class MyGame extends BaseGame {
 	}
 	*/
 	 		
+	}
+	private void initActions()
+	{
+		IAction moveForwardA = new ForwardAction(cichlidA);
+		IAction moveForwardB = new ForwardAction(cichlidB);
+		IAction moveForwardC = new ForwardAction(cichlidC);
+
+		IAction moveBackA = new BackwardAction(cichlidA);
+		IAction moveBackB = new BackwardAction(cichlidB);
+		IAction moveBackC = new BackwardAction(cichlidC);
+
+		IAction moveLeftA = new LeftAction(cichlidA);
+		IAction moveLeftB = new LeftAction(cichlidB);
+		IAction moveLeftC = new LeftAction(cichlidC);
+		
+		IAction moveRightA = new RightAction(cichlidA);
+		IAction moveRightB = new RightAction(cichlidB);
+		IAction moveRightC = new RightAction(cichlidC);
+
+
 	}
 	private void initTerrain() // non issue
 	{

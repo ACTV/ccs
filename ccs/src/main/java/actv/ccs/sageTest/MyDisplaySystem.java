@@ -107,7 +107,10 @@ public class MyDisplaySystem implements IDisplaySystem
  public void setHeight(int height) {} 
  //public void setPredefinedCursor(int Cursor) {};
  public void  setRefreshRate(int rate) {}
- public void  setTitle(java.lang.String title) {}
+ public void setTitle(String newTitle)
+ {
+   this.myFrame.setTitle(newTitle);
+ }
  public void  setWidth(int width)  {}
  // restores the system to non-FSEM
  public void close(){ 
