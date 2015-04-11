@@ -316,8 +316,8 @@ public class MyGame extends BaseGame {
 		
 		IAction quitGame = new QuitAction(this);
 		
-	//	im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.ESCAPE, 
-	//			quitGame, IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
+		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.ESCAPE, 
+				quitGame, IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
 
 	}
 	private void initTerrain() // non issue
@@ -377,7 +377,7 @@ public class MyGame extends BaseGame {
 	}
 	private IDisplaySystem createDisplaySystem()
 	 {
-	 IDisplaySystem display = new MyDisplaySystem(1000, 500, 24, 20, false,
+	 IDisplaySystem display = new MyDisplaySystem(1500, 1000, 24, 20, false,
 	 "sage.renderer.jogl.JOGLRenderer");
 	 System.out.print("\nWaiting for display creation...");
 	 int count = 0;
@@ -420,11 +420,9 @@ public class MyGame extends BaseGame {
 			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 			Statement s = conn.createStatement();
         	int a = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 1");
-        	System.out.println("a is " + a);
         	int b = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 2");
-        	System.out.println("b is " + b);
         	int c = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 3");
-        	System.out.println("c is " + b);
+
 
         	conn.close();
         	// End the Rules Knowledge Session
