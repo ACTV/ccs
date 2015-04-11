@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import actv.ccs.sageTest.actions.BackwardAction;
 import actv.ccs.sageTest.actions.ForwardAction;
 import actv.ccs.sageTest.actions.LeftAction;
+import actv.ccs.sageTest.actions.QuitAction;
 import actv.ccs.sageTest.actions.RightAction;
 import graphicslib3D.Matrix3D;
 import graphicslib3D.Point3D;
@@ -37,6 +38,7 @@ import sage.texture.*;
 public class MyGame extends BaseGame {
 
 	IDisplaySystem display;
+	IInputManager im;
 	ICamera camera;
 	private SkyBox skybox;
 	private Connection conn;
@@ -46,6 +48,7 @@ public class MyGame extends BaseGame {
 	
 	public void initGame()
 	{
+		im = getInputManager();
 		initObjects();
 	//	createScene();
 	//	initTerrain();
@@ -290,6 +293,11 @@ public class MyGame extends BaseGame {
 	}
 	private void initActions()
 	{
+		String kbName = im.getKeyboardName(); // error here. it shouldn't be null
+		// sFindComponents f = new FindComponents();
+		
+		System.out.println("controller: " + kbName);
+		
 		IAction moveForwardA = new ForwardAction(cichlidA);
 		IAction moveForwardB = new ForwardAction(cichlidB);
 		IAction moveForwardC = new ForwardAction(cichlidC);
@@ -305,7 +313,11 @@ public class MyGame extends BaseGame {
 		IAction moveRightA = new RightAction(cichlidA);
 		IAction moveRightB = new RightAction(cichlidB);
 		IAction moveRightC = new RightAction(cichlidC);
-
+		
+		IAction quitGame = new QuitAction(this);
+		
+	//	im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.ESCAPE, 
+	//			quitGame, IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
 
 	}
 	private void initTerrain() // non issue
@@ -352,7 +364,16 @@ public class MyGame extends BaseGame {
 				s.updateWorldBound();
 				*/
 			}
+			
 		}
+		
+		/* 
+		 *  collision example here
+		 *  if (cichlidA.getWorldBound().contains(something something avadar)
+		 *  {
+		 *  	crahsevent etc. 
+		 *  }
+		 */
 	}
 	private IDisplaySystem createDisplaySystem()
 	 {
@@ -389,5 +410,28 @@ public class MyGame extends BaseGame {
 		ArrayList<SceneNode> gameWorld = new ArrayList<SceneNode>();
 		setGameWorld(gameWorld);
 		
+	}
+	protected void shutdown()
+	{
+		display.close();
+		// database clear?
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+			Statement s = conn.createStatement();
+        	int a = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 1");
+        	System.out.println("a is " + a);
+        	int b = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 2");
+        	System.out.println("b is " + b);
+        	int c = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 3");
+        	System.out.println("c is " + b);
+
+        	conn.close();
+        	// End the Rules Knowledge Session
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 	}
 }
