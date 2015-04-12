@@ -28,6 +28,7 @@ import sage.scene.Group;
 import sage.scene.HUDString;
 import sage.scene.SceneNode;
 import sage.scene.SkyBox;
+import sage.scene.bounding.BoundingSphere;
 import sage.scene.shape.Cube;
 import sage.scene.shape.Line;
 import sage.scene.shape.Pyramid;
@@ -52,6 +53,7 @@ public class MyGame extends BaseGame {
 	private TerrainBlock floor;
 	private TestCichlid cichlidA, cichlidB, cichlidC;
 	private SceneNode cameraGuy;
+	private Line yAxis1, zYPAxis, zyPtoxEnd3, pPart, zPart, yEndtoZPart, xEndtoZPart, xxPart, finishPart;
 	
 	public void initGame()
 	{
@@ -106,29 +108,36 @@ public class MyGame extends BaseGame {
 		 Line zAxis = new Line (origin, zEnd, Color.blue, 2); // Base 
 		 
 		// Line xAxis1 = new Line (xEnd1, xEnd3, Color.cyan, 2);
-		 Line yAxis1 = new Line (xEnd2, xEnd3, Color.GRAY, 2);
-		 Line zyPtoxEnd3 = new Line (new Point3D(100, 0, 0), new Point3D(100, 100, 0), Color.BLUE, 2);
-		 Line pPart = new Line(new Point3D(100, 0, 0), new Point3D(100, 0, 100), Color.green, 2);
-		 Line finishPart = new Line(new Point3D(0, 100, 0), new Point3D(100, 100, 0), Color.PINK, 2);
-		 Line yEndtoZPart = new Line(yEnd, new Point3D(0, 100, 100), Color.orange, 2);
-		 Line xEndtoZPart = new Line(new Point3D(0, 100, 100), new Point3D(100, 100, 100), Color.orange, 2);
-		 Line xxPart = new Line(new Point3D(100, 100, 0), new Point3D(100, 100, 100), Color.magenta, 2);
-		 Line zPart = new Line(zEnd, xEnd2, Color.orange, 2);
-		 Line zYPAxis = new Line(zEnd, zyP, Color.gray, 2);
+		 yAxis1 = new Line (xEnd2, xEnd3, Color.GRAY, 2);
+		 zyPtoxEnd3 = new Line (new Point3D(100, 0, 0), new Point3D(100, 100, 0), Color.BLUE, 2);
+		 pPart = new Line(new Point3D(100, 0, 0), new Point3D(100, 0, 100), Color.green, 2);
+		 finishPart = new Line(new Point3D(0, 100, 0), new Point3D(100, 100, 0), Color.PINK, 2);
+		 yEndtoZPart = new Line(yEnd, new Point3D(0, 100, 100), Color.orange, 2);
+		 xEndtoZPart = new Line(new Point3D(0, 100, 100), new Point3D(100, 100, 100), Color.orange, 2);
+		 xxPart = new Line(new Point3D(100, 100, 0), new Point3D(100, 100, 100), Color.magenta, 2);
+		 zPart = new Line(zEnd, xEnd2, Color.orange, 2);
+		 zYPAxis = new Line(zEnd, zyP, Color.gray, 2);
 		// Line zAxis1 = new Line (xEnd3, xEnd1, Color.MAGENTA, 2);
 		 
 		 
-	//	 addGameWorldObject(xAxis1);
 		 addGameWorldObject(yAxis1);
+		 yAxis1.updateWorldBound();
 		 addGameWorldObject(zYPAxis);
+		 zYPAxis.updateWorldBound();
 		 addGameWorldObject(zyPtoxEnd3);
+		 zyPtoxEnd3.updateWorldBound();
 		 addGameWorldObject(pPart);
+		 pPart.updateWorldBound();
 		 addGameWorldObject(zPart);
+		 zPart.updateWorldBound();
 		 addGameWorldObject(yEndtoZPart);
+		 yEndtoZPart.updateWorldBound();
 		 addGameWorldObject(xEndtoZPart);
+		 xEndtoZPart.updateWorldBound();
 		 addGameWorldObject(xxPart);
+		 xxPart.updateWorldBound();
 		 addGameWorldObject(finishPart);
-	//	 addGameWorldObject(zAxis1);
+		 finishPart.updateWorldBound();
 		 
 		 
 		 
@@ -143,6 +152,7 @@ public class MyGame extends BaseGame {
 		cameraGuy.translate(0, 0, 0);
 		cameraGuy.rotate(180, new Vector3D(0, 1, 0));
 		addGameWorldObject(cameraGuy);
+		cameraGuy.updateWorldBound();
 		
 	}
 	public void spawnCichlids()
@@ -196,6 +206,7 @@ public class MyGame extends BaseGame {
 			    		cichlidAR.rotateX(30);
 			    		cichlidA.setLocalRotation(cichlidAR);
 			    		addGameWorldObject(cichlidA);
+			    		cichlidA.updateWorldBound();
 
 			    	}
 				}
@@ -237,6 +248,7 @@ public class MyGame extends BaseGame {
 		    		cichlidBR.rotateX(30);
 		    		cichlidB.setLocalRotation(cichlidBR);
 		    		addGameWorldObject(cichlidB);
+		    		cichlidB.updateWorldBound();
 	
 		    		// the issue with this thing is that the function is automatically called when new game starts... maybe i can call this from something..
 					}
@@ -279,6 +291,7 @@ public class MyGame extends BaseGame {
 		    		cichlidCR.rotateX(30);
 		    		cichlidC.setLocalRotation(cichlidCR);
 		    		addGameWorldObject(cichlidC);
+		    		cichlidC.updateWorldBound();
 					}
 				}
 			}
@@ -423,20 +436,47 @@ public class MyGame extends BaseGame {
 			{
 				if (s == cichlidA)
 				{
-					// call move stuff here
+					s.translate(0, 0, .1f);
+					s.updateWorldBound();
 				}
 				if (s == cichlidB)
 				{
 					// call move stuff here
+					s.translate(0, 0, -.1f);
+					s.updateWorldBound();
 				}
 				if (s == cichlidC)
 				{
 					// call move stuff here
+					s.translate(0, 0.1f, 0.1f);
+					s.updateWorldBound();
 				}
 
 			}
 			
 		}
+		
+		/*
+		 * collision example
+		 *      if (tpt.getWorldBound().intersects(p1.getWorldBound()) && collidedWTeapot == false){
+         collidedWTeapot = true;
+         numCrashes++;
+         score1 += 100;
+         CrashEvent newCrash = new CrashEvent(numCrashes);
+         removeGameWorldObject(tpt);
+         eventMgr.triggerEvent(newCrash);
+      }
+		 */
+		/*
+		if (cichlidA.getWorldBound().intersects(yAxis1.getWorldBound()) || cichlidA.getWorldBound().intersects(zYPAxis.getWorldBound()) ||  cichlidA.getWorldBound().intersects(zyPtoxEnd3.getWorldBound())
+				||  cichlidA.getWorldBound().intersects(pPart.getWorldBound()) ||  cichlidA.getWorldBound().intersects(zPart.getWorldBound()) ||  cichlidA.getWorldBound().intersects(yEndtoZPart.getWorldBound())
+	||  cichlidA.getWorldBound().intersects(xEndtoZPart.getWorldBound()) ||  cichlidA.getWorldBound().intersects(xxPart.getWorldBound()) ||  cichlidA.getWorldBound().intersects(finishPart.getWorldBound()));
+		{
+			// here is where the shit happens. you can make a rule change here.
+			System.out.println("YOU HIT THE DAMN BOUNDS!!!");
+		}
+		*/
+		
 		
 		/* 
 		 *  collision example here
@@ -444,6 +484,10 @@ public class MyGame extends BaseGame {
 		 *  {
 		 *  	crahsevent etc. 
 		 *  }
+		 *  
+		 *  can also do bounds work here...
+		 *  let's set the bounds to be 100*20 etc. i'll think about the variables later.
+		 *  
 		 */
 	}
 	private IDisplaySystem createDisplaySystem()
