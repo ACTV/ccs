@@ -109,6 +109,10 @@ public class MyGame extends BaseGame {
 		 Line yAxis1 = new Line (xEnd2, xEnd3, Color.GRAY, 2);
 		 Line zyPtoxEnd3 = new Line (new Point3D(100, 0, 0), new Point3D(100, 100, 0), Color.BLUE, 2);
 		 Line pPart = new Line(new Point3D(100, 0, 0), new Point3D(100, 0, 100), Color.green, 2);
+		 Line finishPart = new Line(new Point3D(0, 100, 0), new Point3D(100, 100, 0), Color.PINK, 2);
+		 Line yEndtoZPart = new Line(yEnd, new Point3D(0, 100, 100), Color.orange, 2);
+		 Line xEndtoZPart = new Line(new Point3D(0, 100, 100), new Point3D(100, 100, 100), Color.orange, 2);
+		 Line xxPart = new Line(new Point3D(100, 100, 0), new Point3D(100, 100, 100), Color.magenta, 2);
 		 Line zPart = new Line(zEnd, xEnd2, Color.orange, 2);
 		 Line zYPAxis = new Line(zEnd, zyP, Color.gray, 2);
 		// Line zAxis1 = new Line (xEnd3, xEnd1, Color.MAGENTA, 2);
@@ -120,6 +124,10 @@ public class MyGame extends BaseGame {
 		 addGameWorldObject(zyPtoxEnd3);
 		 addGameWorldObject(pPart);
 		 addGameWorldObject(zPart);
+		 addGameWorldObject(yEndtoZPart);
+		 addGameWorldObject(xEndtoZPart);
+		 addGameWorldObject(xxPart);
+		 addGameWorldObject(finishPart);
 	//	 addGameWorldObject(zAxis1);
 		 
 		 
