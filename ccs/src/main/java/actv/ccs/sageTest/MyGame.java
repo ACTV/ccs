@@ -18,14 +18,19 @@ import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
 import sage.app.BaseGame;
 import sage.camera.ICamera;
+import sage.camera.JOGLCamera;
 import sage.display.IDisplaySystem;
 import sage.input.IInputManager;
 import sage.input.InputManager;
 import sage.input.action.IAction;
+import sage.renderer.IRenderer;
 import sage.scene.Group;
+import sage.scene.HUDString;
 import sage.scene.SceneNode;
 import sage.scene.SkyBox;
+import sage.scene.shape.Cube;
 import sage.scene.shape.Line;
+import sage.scene.shape.Pyramid;
 import sage.scene.shape.Rectangle;
 import sage.scene.state.RenderState.RenderStateType;
 import sage.scene.state.TextureState;
@@ -39,17 +44,20 @@ public class MyGame extends BaseGame {
 
 	IDisplaySystem display;
 	IInputManager im;
-	ICamera camera;
+	private ICamera camera;
+	private CameraOrbit cc;
 	private SkyBox skybox;
 	private Connection conn;
 	private ResultSet rs, rsI;
 	private TerrainBlock floor;
 	private TestCichlid cichlidA, cichlidB, cichlidC;
+	private SceneNode cameraGuy;
 	
 	public void initGame()
 	{
-		im = getInputManager();
 		initObjects();
+		spawnCichlids();
+		createPerson();
 	//	createScene();
 	//	initTerrain();
 		initActions();
@@ -60,14 +68,14 @@ public class MyGame extends BaseGame {
 		// this is for initializing objects
 		display = getDisplaySystem();
 		display.setTitle("sage implementation of the pain");
-		camera = display.getRenderer().getCamera(); // this is for the camera where we can modify so i can put to the side of the tank etc.
+		
+		camera = display.getRenderer().getCamera();
+		camera.setPerspectiveFrustum(45, 1, 0.01, 1000);
+		camera.setLocation(new Point3D(1, 1, 20));
 		/*
 		 * as much as i hate it, it's going to look like the previous team's project where our view is pretty much the closest face out of the 4 sided aquarium.
 		 */
-		camera.setPerspectiveFrustum(90, 1, 0.01, 1000);
-		camera.setLocation(new Point3D(10, 1, 100));
-		
-		spawnCichlids();
+
 		
 		// so instead of an array, it will be a group class that will hold the objects so instead of iterating ... it will go like that. so maybe i will have to change
 		// the convict cichlid iterator to become a scenenode iterator.
@@ -84,35 +92,69 @@ public class MyGame extends BaseGame {
 		
 		// creating x, y, z lines for a basis
 		 Point3D origin = new Point3D(0,0,0);
-		 Point3D xEnd = new Point3D(1000,0,0);
-		 Point3D yEnd = new Point3D(0,1000,0);
-		 Point3D zEnd = new Point3D(0,0,1000);
+		 Point3D xEnd1 = new Point3D(100, 100, 0);
+		 Point3D xEnd3 = new Point3D(100, 100, 100);
+		 Point3D xEnd2 = new Point3D(100, 0, 100);
+		 Point3D zyP = new Point3D(0, 100, 100);
+		 Point3D xEnd = new Point3D(100,0,0);
+		 Point3D yEnd = new Point3D(0,100,0);
+		 Point3D zEnd = new Point3D(0,0,100);
+		 
+		 // base 
 		 Line xAxis = new Line (origin, xEnd, Color.red, 2);
 		 Line yAxis = new Line (origin, yEnd, Color.green, 2);
-		 Line zAxis = new Line (origin, zEnd, Color.blue, 2);
-		 addGameWorldObject(xAxis); addGameWorldObject(yAxis);
+		 Line zAxis = new Line (origin, zEnd, Color.blue, 2); // Base 
+		 
+		// Line xAxis1 = new Line (xEnd1, xEnd3, Color.cyan, 2);
+		 Line yAxis1 = new Line (xEnd2, xEnd3, Color.GRAY, 2);
+		 Line zyPtoxEnd3 = new Line (new Point3D(100, 0, 0), new Point3D(100, 100, 0), Color.BLUE, 2);
+		 Line pPart = new Line(new Point3D(100, 0, 0), new Point3D(100, 0, 100), Color.green, 2);
+		 Line zPart = new Line(zEnd, xEnd2, Color.orange, 2);
+		 Line zYPAxis = new Line(zEnd, zyP, Color.gray, 2);
+		// Line zAxis1 = new Line (xEnd3, xEnd1, Color.MAGENTA, 2);
+		 
+		 
+	//	 addGameWorldObject(xAxis1);
+		 addGameWorldObject(yAxis1);
+		 addGameWorldObject(zYPAxis);
+		 addGameWorldObject(zyPtoxEnd3);
+		 addGameWorldObject(pPart);
+		 addGameWorldObject(zPart);
+	//	 addGameWorldObject(zAxis1);
+		 
+		 
+		 
+		 addGameWorldObject(xAxis); 
+		 addGameWorldObject(yAxis);
 		 addGameWorldObject(zAxis);
 		 
 	}
-		public void spawnCichlids()
-		{
-			try {
-				conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+	public void createPerson()
+	{
+		cameraGuy = new Cube("Cameraguy");
+		cameraGuy.translate(0, 0, 0);
+		cameraGuy.rotate(180, new Vector3D(0, 1, 0));
+		addGameWorldObject(cameraGuy);
 		
-			Statement s = conn.createStatement();
-			rs = s.executeQuery("SELECT fishID FROM [SimulationFish]");
-			while (rs.next())
-			{
-				String id = rs.getString("fishID"); //Field from database ex. FishA, FishB
-				int idS =  Integer.parseInt(id);
+	}
+	public void spawnCichlids()
+	{
+		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+		
+		Statement s = conn.createStatement();
+		rs = s.executeQuery("SELECT fishID FROM [SimulationFish]");
+		while (rs.next())
+		{
+			String id = rs.getString("fishID"); //Field from database ex. FishA, FishB
+			int idS =  Integer.parseInt(id);
 
-				System.out.println(idS);
+			System.out.println(idS);
 				
-				if (id.equals("1"))
-				{
-					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
-					
-					while (rsI.next())
+			if (id.equals("1"))
+			{
+				rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
+				while (rsI.next())
 					{
 						String name = rsI.getString("Type"); //Field from database ex. FishA, FishB
 			        	String weight = rsI.getString("Weight");
@@ -193,7 +235,7 @@ public class MyGame extends BaseGame {
 				}
 				else if (id.equals("3"))
 				{
-					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
+					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
 					
 					while (rsI.next())
 					{
@@ -241,26 +283,19 @@ public class MyGame extends BaseGame {
 	private void createScene() // the scene is the background of the fish tank ... non issue for now.
 	{
 	 	   skybox = new SkyBox("SkyBox", 10.0f, 10.0f, 10.0f); 
-	/* 	  
-	 		Texture northTex = TextureManager.loadTexture2D("src/a3/images/heightMapTest.JPG"); 
-	 		Texture southTex = TextureManager.loadTexture2D("src/a3/images/heightMapTest.JPG");
-	        Texture eastTex = TextureManager.loadTexture2D("src/a3/images/lotTest.jpg"); 
-	 		Texture westTex = TextureManager.loadTexture2D("src/a3/images/lotTest.jpg");
-	        Texture upTex = TextureManager.loadTexture2D("src/a3/images/clouds.jpg"); 
-	 		Texture downTex = TextureManager.loadTexture2D("src/a3/images/lot_floor.jpg");  
-	 		Texture testTerr = TextureManager.loadTexture2D("src/a3/images/squaresquare.bmp");
-	*/
-	 	   Texture testMountain = TextureManager.loadTexture2D("floorMountain.jpg");
-	 	   Texture skyThing = TextureManager.loadTexture2D("sky.jpg"); 
-	 	   skybox.setTexture(SkyBox.Face.North, skyThing); 
-	 	   skybox.setTexture(SkyBox.Face.South, skyThing);
-	       skybox.setTexture(SkyBox.Face.East, skyThing); 
-	 	   skybox.setTexture(SkyBox.Face.West, skyThing); 
+	 	  
+
+	 	   Texture testMountain = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/Images/floorMountain.bmp"); 
+	 	   Texture skyThing = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/Images/sky.jpg"); 
+	// 	   skybox.setTexture(SkyBox.Face.North, skyThing); 
+	// 	   skybox.setTexture(SkyBox.Face.South, skyThing);
+	//     skybox.setTexture(SkyBox.Face.East, skyThing); 
+	// 	   skybox.setTexture(SkyBox.Face.West, skyThing); 
 	// 	   skybox.setTexture(SkyBox.Face.Up, skyThing);
 	      
 	 	  addGameWorldObject(skybox);
 	      
-	 /*	   
+/*	 	  
 	 try {		 
 	 		AbstractHeightMap heightmap = null; 
 	 
@@ -272,7 +307,7 @@ public class MyGame extends BaseGame {
 	 		Vector3D scaleFactor = new Vector3D(new Point3D(1, 1, 1)); 
 
 	 		floor = new TerrainBlock("tblock", 512, scaleFactor, heightmap.getHeightData(), new Point3D( 0, 0, 0));
-	 		floor.setTexture(testMountain);
+	 	//	floor.setTexture(skyThing);
 	 		Matrix3D p1LotT = floor.getLocalTranslation();
 	 		p1LotT.translate(0.0f, -0.5f, 0.0f);
 	 		floor.setLocalTranslation(p1LotT);
@@ -289,35 +324,56 @@ public class MyGame extends BaseGame {
 		e.printStackTrace();
 	}
 	*/
+	
 	 		
 	}
 	private void initActions()
 	{
+		im = getInputManager();
 		String kbName = im.getKeyboardName(); // error here. it shouldn't be null
+		String mName = im.getMouseName();
 		// sFindComponents f = new FindComponents();
 		
-		System.out.println("controller: " + kbName);
+		cc = new CameraOrbit(camera, cameraGuy, im, mName);
 		
-		IAction moveForwardA = new ForwardAction(cichlidA);
-		IAction moveForwardB = new ForwardAction(cichlidB);
-		IAction moveForwardC = new ForwardAction(cichlidC);
+		System.out.println("controller: " + mName);
 
-		IAction moveBackA = new BackwardAction(cichlidA);
-		IAction moveBackB = new BackwardAction(cichlidB);
-		IAction moveBackC = new BackwardAction(cichlidC);
-
-		IAction moveLeftA = new LeftAction(cichlidA);
-		IAction moveLeftB = new LeftAction(cichlidB);
-		IAction moveLeftC = new LeftAction(cichlidC);
+	//	for this area, need to do a checker if A and B and C are called...	
+	//	IAction moveForwardA = new ForwardAction(cichlidA);
+	//	IAction moveForwardB = new ForwardAction(cichlidB);
+	//	IAction moveForwardC = new ForwardAction(cichlidC);
+		IAction moveForwardO = new ForwardAction(cameraGuy);
 		
-		IAction moveRightA = new RightAction(cichlidA);
-		IAction moveRightB = new RightAction(cichlidB);
-		IAction moveRightC = new RightAction(cichlidC);
+	//	IAction moveBackA = new BackwardAction(cichlidA);
+	//	IAction moveBackB = new BackwardAction(cichlidB);
+	//	IAction moveBackC = new BackwardAction(cichlidC);
+		IAction moveBackO = new BackwardAction(cameraGuy);
+		
+	//	IAction moveLeftA = new LeftAction(cichlidA);
+	//	IAction moveLeftB = new LeftAction(cichlidB);
+	//	IAction moveLeftC = new LeftAction(cichlidC);
+		IAction moveLeftO = new LeftAction(cameraGuy);
+		
+	//	IAction moveRightA = new RightAction(cichlidA);
+	//	IAction moveRightB = new RightAction(cichlidB);
+	//	IAction moveRightC = new RightAction(cichlidC);
+		IAction moveRightO = new RightAction(cameraGuy);
 		
 		IAction quitGame = new QuitAction(this);
 		
 		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.ESCAPE, 
 				quitGame, IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
+		// here is the movement options of the character ..
+		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.W, 
+				moveForwardO, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.S, 
+				moveBackO, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.A, 
+				moveLeftO, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.D, 
+				moveRightO, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		
+		
 
 	}
 	private void initTerrain() // non issue
@@ -327,9 +383,9 @@ public class MyGame extends BaseGame {
 			 new ImageBasedHeightMap("floorMountain.jpg");
 			 TerrainBlock imageTerrain = createTerBlock(myHeightMap);
 			 // create texture and texture state to color the terrain
-			 Texture grassTexture = TextureManager.loadTexture2D("stones.jpg");
+	//		 Texture grassTexture = TextureManager.loadTexture2D("stones.jpg");
 			 // apply the texture to the terrain
-			 imageTerrain.setTexture(grassTexture);
+	//		 imageTerrain.setTexture(grassTexture);
 			 addGameWorldObject(imageTerrain);
 
 	}
@@ -352,17 +408,24 @@ public class MyGame extends BaseGame {
 	public void update(float time) // this will be where the objects will move
 	{
 		super.update(time);
-		
+		cc.update(time);
 		for (SceneNode s: getGameWorld())
 		{
 			if (s instanceof TestCichlid) // here will be where the objects will have be able to move, but i will implement that later.
 			{
-				// for now the objects can move forward
-			/*	Matrix3D sM = s.getLocalTranslation();
-				sM.translate(0, 0, .1f);
-				s.setLocalTranslation(sM);
-				s.updateWorldBound();
-				*/
+				if (s == cichlidA)
+				{
+					// call move stuff here
+				}
+				if (s == cichlidB)
+				{
+					// call move stuff here
+				}
+				if (s == cichlidC)
+				{
+					// call move stuff here
+				}
+
 			}
 			
 		}
@@ -377,7 +440,7 @@ public class MyGame extends BaseGame {
 	}
 	private IDisplaySystem createDisplaySystem()
 	 {
-	 IDisplaySystem display = new MyDisplaySystem(1500, 1000, 24, 20, false,
+	 IDisplaySystem display = new MyDisplaySystem(1000, 500, 24, 20, false,
 	 "sage.renderer.jogl.JOGLRenderer");
 	 System.out.print("\nWaiting for display creation...");
 	 int count = 0;
@@ -432,4 +495,11 @@ public class MyGame extends BaseGame {
 		}
 
 	}
+	/*
+	protected void render()
+	{
+		renderer.setCamera(camera1);
+		super.render();
+	}
+	*/
 }
