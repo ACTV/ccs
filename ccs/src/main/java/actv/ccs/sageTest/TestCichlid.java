@@ -3,6 +3,8 @@ package actv.ccs.sageTest;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
@@ -10,7 +12,27 @@ import actv.ccs.model.ICollider;
 import actv.ccs.model.type.FishState;
 import sage.scene.TriMesh;
 
-public class TestCichlid extends TriMesh {
+public class TestCichlid extends TriMesh implements PropertyChangeSupportZ {
+	
+	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+	private double xLoc,yLoc; // location stuff test
+	private double startX, startY;
+	private int direction; 
+	private FishState state;
+	private float aggroLevel;
+	private float baseAggroLevel;
+	private float cautionLevel;
+	private float baseCautionLevel;
+	private float length;
+	private float height;
+	private float weight;
+	private String name;
+	private int cichlidID;
+	private float speed;
+	private float baseSpeed;
+	private long idleWaitTime;
+	private String gender;
+
 	private static float[] vrts = new float[] {0,1,0,-1,-1,1,1,-1,1,1,-1,-1,-1,-1,-1};
 	private static float[] cl = new float[] {1,0,0,1,0,1,0,1,0,0,1,1,1,1,0,1,1,0,1,1};
 	private static int[] triangles = new int[] {0,1,2,0,2,3,0,3,4,0,4,1,1,4,2,4,3,2};
@@ -29,23 +51,6 @@ public class TestCichlid extends TriMesh {
 		 this.setColorBuffer(colorBuf);
 		 this.setIndexBuffer(triangleBuf); 
 	} 
-	private double xLoc,yLoc; // location stuff test
-	private double startX, startY;
-	private int direction; 
-	private FishState state;
-	private float aggroLevel;
-	private float baseAggroLevel;
-	private float cautionLevel;
-	private float baseCautionLevel;
-	private float length;
-	private float height;
-	private float weight;
-	private String name;
-	private int cichlidID;
-	private float speed;
-	private float baseSpeed;
-	private long idleWaitTime;
-	private String gender;
 
 
 	public FishState getState() {
@@ -194,6 +199,24 @@ public class TestCichlid extends TriMesh {
 	public double getStartX()
 	{
 		return startX;
+	}
+
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		this.pcs.addPropertyChangeListener(listener);
+		
+	}
+
+
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		this.pcs.removePropertyChangeListener(listener);
+	}
+
+
+	public void firePropertyChange(String propertyName, Object oldValue,
+			Object newValue) {
+		this.pcs.firePropertyChange(propertyName, oldValue, newValue); 
+		
 	}
 
 
