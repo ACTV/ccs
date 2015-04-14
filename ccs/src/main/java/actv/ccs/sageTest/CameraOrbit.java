@@ -56,7 +56,7 @@ public class CameraOrbit {
      IAction zoomInAction = new ZoomInAction();
      IAction zoomOutAction = new ZoomOutAction();
 	 im.associateAction(cn, Axis.RX, orbitAction, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-		if (cn.equals("HID-compliant mouse"))
+	/*	if (cn.equals("HID-compliant mouse"))
 		{
 		System.out.println("mouse");
 		im.associateAction(cn, net.java.games.input.Component.Identifier.Button.LEFT, zoomInAction, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
@@ -64,6 +64,7 @@ public class CameraOrbit {
 		im.associateAction(cn, net.java.games.input.Component.Identifier.Button.RIGHT, zoomOutAction, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 			
 		}
+		*/
 	 }
 	 private class OrbitAroundAction extends AbstractInputAction
 	 {

@@ -25,6 +25,7 @@ import sage.input.InputManager;
 import sage.input.action.IAction;
 import sage.renderer.IRenderer;
 import sage.scene.Group;
+import sage.scene.*;
 import sage.scene.HUDString;
 import sage.scene.SceneNode;
 import sage.scene.SkyBox;
@@ -50,7 +51,9 @@ public class MyGame extends BaseGame {
 	private SkyBox skybox;
 	private Connection conn;
 	private ResultSet rs, rsI;
-	private TerrainBlock floor;
+	private TerrainBlock floor, leftWindowPane, BackWindowPane, RightWindowPane, ceilingWater;
+	private Texture skyThing;
+	private Rectangle ground, leftWall, rightWall, ceiling, backWall;
 	private TestCichlid cichlidA, cichlidB, cichlidC;
 	private SceneNode cameraGuy;
 	private Line yAxis1, zYPAxis, zyPtoxEnd3, pPart, zPart, yEndtoZPart, xEndtoZPart, xxPart, finishPart;
@@ -61,8 +64,10 @@ public class MyGame extends BaseGame {
 		spawnCichlids();
 		createPerson();
 	//	createScene();
-	//	initTerrain();
 		initActions();
+	//	createFishTank();
+		createBunkAssFishTank();
+		
 	}
 	
 	protected void initObjects()
@@ -307,13 +312,13 @@ public class MyGame extends BaseGame {
 	 	   skybox = new SkyBox("SkyBox", 10.0f, 10.0f, 10.0f); 
 	 	  
 
-	 	   Texture testMountain = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/Images/floorMountain.bmp"); 
-	 	   Texture skyThing = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/Images/sky.jpg"); 
-	// 	   skybox.setTexture(SkyBox.Face.North, skyThing); 
-	// 	   skybox.setTexture(SkyBox.Face.South, skyThing);
-	//     skybox.setTexture(SkyBox.Face.East, skyThing); 
-	// 	   skybox.setTexture(SkyBox.Face.West, skyThing); 
-	// 	   skybox.setTexture(SkyBox.Face.Up, skyThing);
+	 	  // Texture testMountain = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/Images/floorMountain.bmp"); 
+	 	   Texture thingSky = TextureManager.loadTexture2D("sky.jpg"); 
+	 	   skybox.setTexture(SkyBox.Face.North, thingSky); 
+	 	   skybox.setTexture(SkyBox.Face.South, thingSky);
+	 	   skybox.setTexture(SkyBox.Face.East, thingSky); 
+	 	   skybox.setTexture(SkyBox.Face.West, thingSky); 
+	 	   skybox.setTexture(SkyBox.Face.Up, thingSky);
 	      
 	 	  addGameWorldObject(skybox);
 	      
@@ -398,35 +403,84 @@ public class MyGame extends BaseGame {
 		
 
 	}
-	private void initTerrain() // non issue
+	public void createBunkAssFishTank()
 	{
-		   // create height map and terrain block
-			 ImageBasedHeightMap myHeightMap =
-			 new ImageBasedHeightMap("floorMountain.jpg");
-			 TerrainBlock imageTerrain = createTerBlock(myHeightMap);
-			 // create texture and texture state to color the terrain
-	//		 Texture grassTexture = TextureManager.loadTexture2D("stones.jpg");
-			 // apply the texture to the terrain
-	//		 imageTerrain.setTexture(grassTexture);
-			 addGameWorldObject(imageTerrain);
+	      // add a rectangle, and turn it into a plane
+	      ground = new Rectangle(200, 200);
+	      ground.rotate(90, new Vector3D(1,0,0));
+	      ground.translate(101.0f,-2f,101.0f);
+	      ground.setColor(Color.orange);
+	      addGameWorldObject(ground);
+	      
+	      leftWall = new Rectangle(200, 200);
+	      Matrix3D leftRot = new Matrix3D();
+	      leftRot.rotate(0, 90, 90);
+	      leftWall.setLocalRotation(leftRot);
+	      leftWall.translate(-0.1f,101f,101.0f);
+	      leftWall.setColor(Color.pink);
+	      addGameWorldObject(leftWall);
+	      
+	      rightWall = new Rectangle(200, 200);
+	      Matrix3D rightRot = new Matrix3D();
+	      rightRot.rotate(0, 90, 90);
+	      rightWall.setLocalRotation(rightRot);
+	      rightWall.translate(201.0f,101f,101.0f);
+	      rightWall.setColor(Color.blue);
+	      addGameWorldObject(rightWall);
+	      
+	      backWall = new Rectangle(200, 200);
+	      Matrix3D backRot = new Matrix3D();
+	      backRot.rotate(0, 0, 0);
+	      backWall.setLocalRotation(backRot);
+	      backWall.translate(101.0f,101.0f,0.0f);
+	      backWall.setColor(Color.green);
+	      addGameWorldObject(backWall);
+	      
+	      ceiling = new Rectangle(200, 200);
+	      Matrix3D ceilingRot = new Matrix3D();
+	      ceilingRot.rotate(90, 0, 0);
+	      ceiling.setLocalRotation(ceilingRot);
+	      ceiling.translate(101.0f, 201f, 101.0f);
+	      ceiling.setColor(Color.MAGENTA);
+	      addGameWorldObject(ceiling);
+	      
+	      
+	}
+	// 	private TerrainBlock floor, leftWindowPane, BackWindowPane, RightWindowPane, ceilingWater;
+	public void createFishTank() // issue with this.
+	{
+		Texture walls = TextureManager.loadTexture2D("lotTest.bmp");
+	    skyThing = TextureManager.loadTexture2D("lot_floor.jpg"); 
+		AbstractHeightMap heightMap = null;
+		heightMap = new ImageBasedHeightMap("floorMountain.jpg");
+		heightMap.load();
+		
+		Vector3D scaleFactor = new Vector3D(new Point3D(1, 1, 1));
+		
+		try
+		{
+			floor = new TerrainBlock("floor", 512, scaleFactor, heightMap.getHeightData(), new Point3D(0,0,0));
+	 		Matrix3D floorT = floor.getLocalTranslation();
+	 		floorT.translate(0.0f, 0.0f, 0.0f);
+	 		floor.setLocalTranslation(floorT);
+	 		Matrix3D floorScale = floor.getLocalScale();
+	 		floorScale.scale(0.42f, 0.5f, 0);
+	 		floor.setLocalScale(floorScale);
+	 		Matrix3D p1Rot = new Matrix3D();
+	 		p1Rot.rotateX(-90);
+	 		floor.setLocalRotation(p1Rot);
+	 		 Texture grassTexture = TextureManager.loadTexture2D("lot_floor.jpg");
+	 		 grassTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
 
+	 		floor.setTexture(grassTexture);
+		} catch (Exception pe)
+		{
+			pe.printStackTrace();
+		}
+			addGameWorldObject(floor);
 	}
-	private TerrainBlock createTerBlock(AbstractHeightMap heightMap) // issue
-	{
-		 float heightScale = 0.05f;
-		 Vector3D terrainScale = new Vector3D(1, heightScale, 1);
-		 // use the size of the height map as the size of the terrain
-		 int terrainSize = heightMap.getSize();
-		 // specify terrain origin so heightmap (0,0) is at world origin
-		 float cornerHeight =
-		 heightMap.getTrueHeightAtPoint(0, 0) * heightScale;
-		 Point3D terrainOrigin = new Point3D(0, -cornerHeight, 0);
-		 // create a terrain block using the height map
-		 String name = "Terrain:" + heightMap.getClass().getSimpleName();
-		 TerrainBlock tb = new TerrainBlock(name, terrainSize, terrainScale,
-		 heightMap.getHeightData(), terrainOrigin);
-		 return tb;
-	}
+
+
 	public void update(float time) // this will be where the objects will move
 	{
 		super.update(time);
