@@ -60,6 +60,11 @@ public class NewSimulation extends JFrame {
  	private static Logger logger = Logger.getLogger("LoggingToFile");
  	private JTextField genderTextField;
  	private JTextField aggroLevelTextField;
+ 	private JTextField objectNameTextField;
+ 	private JTextField objectTypeTextField;
+ 	private JTextField objectWidthTextField;
+ 	private JTextField objectHeightTextField;
+ 	private JTextField objectLengthTextField;
  	
 /* updates are from latest to oldest (top to bottom)
  * 
@@ -297,8 +302,8 @@ public class NewSimulation extends JFrame {
 //		final float widthC = Float.parseFloat(widthS);
 		
 		HeightTextField = new JTextField();
+		springLayout.putConstraint(SpringLayout.NORTH, HeightTextField, 0, SpringLayout.NORTH, lblSizewidthX);
 		HeightTextField.setEditable(false);
-		springLayout.putConstraint(SpringLayout.NORTH, HeightTextField, 0, SpringLayout.NORTH, WidthTextField);
 		HeightTextField.setText("");
 		getContentPane().add(HeightTextField);
 		HeightTextField.setColumns(10);
@@ -307,9 +312,9 @@ public class NewSimulation extends JFrame {
 	//	final float heightC = Float.parseFloat(heightS);
 		
 		JLabel x = new JLabel("X");
+		springLayout.putConstraint(SpringLayout.WEST, HeightTextField, 16, SpringLayout.EAST, x);
 		springLayout.putConstraint(SpringLayout.NORTH, x, 79, SpringLayout.SOUTH, comboBox);
 		springLayout.putConstraint(SpringLayout.SOUTH, x, -412, SpringLayout.SOUTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, HeightTextField, 38, SpringLayout.EAST, x);
 		springLayout.putConstraint(SpringLayout.WEST, x, 6, SpringLayout.EAST, WidthTextField);
 		springLayout.putConstraint(SpringLayout.EAST, x, -734, SpringLayout.EAST, getContentPane());
 		getContentPane().add(x);
@@ -373,22 +378,19 @@ public class NewSimulation extends JFrame {
 		
 		
 		outputData = new JTextArea();
-		springLayout.putConstraint(SpringLayout.NORTH, outputData, 279, SpringLayout.NORTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, outputData, 616, SpringLayout.WEST, getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, outputData, -59, SpringLayout.SOUTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, outputData, -22, SpringLayout.EAST, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, outputData, -32, SpringLayout.SOUTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, outputData, -10, SpringLayout.EAST, getContentPane());
 		outputData.setWrapStyleWord(true);
 		outputData.setLineWrap(true);
 		getContentPane().add(outputData);
 		outputData.setEditable(false);
 		
 		JLabel lblTestingoutputData = new JLabel("testingOutput Data");
-		springLayout.putConstraint(SpringLayout.SOUTH, lblTestingoutputData, -14, SpringLayout.NORTH, outputData);
-		springLayout.putConstraint(SpringLayout.EAST, lblTestingoutputData, -291, SpringLayout.EAST, getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, lblTestingoutputData, 0, SpringLayout.WEST, outputData);
+		springLayout.putConstraint(SpringLayout.SOUTH, lblTestingoutputData, -19, SpringLayout.NORTH, outputData);
 		getContentPane().add(lblTestingoutputData);
 		
 		JSlider waterTemperatureSlider = new JSlider();
-		springLayout.putConstraint(SpringLayout.EAST, waterTemperatureSlider, 0, SpringLayout.EAST, HeightTextField);
 		getContentPane().add(waterTemperatureSlider);
 		waterTemperatureSlider.addChangeListener(new ChangeListener()
 		{
@@ -409,6 +411,7 @@ public class NewSimulation extends JFrame {
 		});
 		
 		JLabel lblWaterTemperaturecelsius = new JLabel("Water Temperature (Celsius)");
+		springLayout.putConstraint(SpringLayout.WEST, waterTemperatureSlider, 29, SpringLayout.EAST, lblWaterTemperaturecelsius);
 		springLayout.putConstraint(SpringLayout.WEST, lblWaterTemperaturecelsius, 6, SpringLayout.WEST, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, waterTemperatureSlider, 0, SpringLayout.SOUTH, lblWaterTemperaturecelsius);
 		getContentPane().add(lblWaterTemperaturecelsius);
@@ -466,15 +469,11 @@ public class NewSimulation extends JFrame {
 		String tankHeightS = tankHeightField.getText().toString();
 		final float tankHeightC = Float.parseFloat(tankHeightS);
 		
-		
-		JLabel lblAddPlantsLater = new JLabel("add Plants later.");
-		springLayout.putConstraint(SpringLayout.WEST, lblAddPlantsLater, 10, SpringLayout.WEST, getContentPane());
-		getContentPane().add(lblAddPlantsLater);
-		
 		JButton btnRunSimulation = new JButton("Run Simulation");
-		springLayout.putConstraint(SpringLayout.SOUTH, lblAddPlantsLater, -18, SpringLayout.NORTH, btnRunSimulation);
+		springLayout.putConstraint(SpringLayout.NORTH, outputData, -1, SpringLayout.NORTH, btnRunSimulation);
+		springLayout.putConstraint(SpringLayout.WEST, outputData, 538, SpringLayout.EAST, btnRunSimulation);
 		springLayout.putConstraint(SpringLayout.WEST, btnRunSimulation, 0, SpringLayout.WEST, lblPleasePickA);
-		springLayout.putConstraint(SpringLayout.SOUTH, btnRunSimulation, 0, SpringLayout.SOUTH, outputData);
+		springLayout.putConstraint(SpringLayout.SOUTH, btnRunSimulation, -59, SpringLayout.SOUTH, getContentPane());
 		getContentPane().add(btnRunSimulation);
 		
 		genderTextField = new JTextField();
@@ -497,16 +496,189 @@ public class NewSimulation extends JFrame {
 		aggroLevelTextField.setColumns(10);
 		
 		JLabel lblSimulationRunTime = new JLabel("Simulation Run Time (seconds):");
-		springLayout.putConstraint(SpringLayout.WEST, lblSimulationRunTime, 0, SpringLayout.WEST, lblPleasePickA);
-		springLayout.putConstraint(SpringLayout.SOUTH, lblSimulationRunTime, -28, SpringLayout.NORTH, lblAddPlantsLater);
+		springLayout.putConstraint(SpringLayout.NORTH, lblSimulationRunTime, 19, SpringLayout.SOUTH, lblWaterTemperaturecelsius);
+		springLayout.putConstraint(SpringLayout.WEST, lblSimulationRunTime, 10, SpringLayout.WEST, getContentPane());
 		getContentPane().add(lblSimulationRunTime);
 		
 		JSlider timerSlider = new JSlider();
+		springLayout.putConstraint(SpringLayout.NORTH, timerSlider, 11, SpringLayout.NORTH, lblSimulationRunTime);
+		springLayout.putConstraint(SpringLayout.WEST, timerSlider, 0, SpringLayout.WEST, waterTemperatureSlider);
 		timerSlider.setMaximum(1000);
 		timerSlider.setMinimum(1);
-		springLayout.putConstraint(SpringLayout.WEST, timerSlider, 43, SpringLayout.EAST, lblSimulationRunTime);
-		springLayout.putConstraint(SpringLayout.SOUTH, timerSlider, 0, SpringLayout.SOUTH, lblSimulationRunTime);
 		getContentPane().add(timerSlider);
+		
+		JLabel lblScenarioStuffGoes = new JLabel("Scenario Stuff goes here ...");
+		springLayout.putConstraint(SpringLayout.SOUTH, lblScenarioStuffGoes, 0, SpringLayout.SOUTH, waterTemperatureSlider);
+		springLayout.putConstraint(SpringLayout.EAST, lblScenarioStuffGoes, -201, SpringLayout.EAST, getContentPane());
+		getContentPane().add(lblScenarioStuffGoes);
+		
+		JLabel lblPleasePickA_1 = new JLabel("Please pick a plant or object to put into the tank: ");
+		springLayout.putConstraint(SpringLayout.NORTH, lblPleasePickA_1, 0, SpringLayout.NORTH, label);
+		springLayout.putConstraint(SpringLayout.WEST, lblPleasePickA_1, 37, SpringLayout.EAST, comboBox);
+		getContentPane().add(lblPleasePickA_1);
+		
+		JComboBox objects_comboBox = new JComboBox();
+		springLayout.putConstraint(SpringLayout.NORTH, objects_comboBox, 0, SpringLayout.NORTH, label);
+		springLayout.putConstraint(SpringLayout.WEST, objects_comboBox, 28, SpringLayout.EAST, lblPleasePickA_1);
+		springLayout.putConstraint(SpringLayout.EAST, objects_comboBox, -55, SpringLayout.EAST, getContentPane());
+		getContentPane().add(objects_comboBox);
+		
+		Connection connn;
+		objects_comboBox.addItem("");
+		
+		JLabel lblObjectName = new JLabel("Object Name:");
+		springLayout.putConstraint(SpringLayout.NORTH, lblObjectName, 0, SpringLayout.NORTH, lblCichlidName);
+		springLayout.putConstraint(SpringLayout.WEST, lblObjectName, 270, SpringLayout.EAST, NameTextField);
+		getContentPane().add(lblObjectName);
+		
+		JLabel lblType = new JLabel(" Type:");
+		springLayout.putConstraint(SpringLayout.NORTH, lblType, 6, SpringLayout.SOUTH, lblObjectName);
+		springLayout.putConstraint(SpringLayout.WEST, lblType, 270, SpringLayout.EAST, WeightTextField);
+		springLayout.putConstraint(SpringLayout.SOUTH, lblType, 20, SpringLayout.SOUTH, lblObjectName);
+		getContentPane().add(lblType);
+		
+		JLabel lblWidth = new JLabel("Width:");
+		springLayout.putConstraint(SpringLayout.NORTH, lblWidth, 3, SpringLayout.NORTH, genderTextField);
+		springLayout.putConstraint(SpringLayout.WEST, lblWidth, 0, SpringLayout.WEST, lblObjectName);
+		getContentPane().add(lblWidth);
+		
+		JLabel lblHeight = new JLabel("Height:");
+		springLayout.putConstraint(SpringLayout.NORTH, lblHeight, 3, SpringLayout.NORTH, aggroLevelTextField);
+		springLayout.putConstraint(SpringLayout.WEST, lblHeight, 0, SpringLayout.WEST, lblObjectName);
+		getContentPane().add(lblHeight);
+		
+		JButton btnGenerateObject = new JButton("Generate Object");
+		springLayout.putConstraint(SpringLayout.NORTH, btnGenerateObject, 0, SpringLayout.NORTH, btnGenerateFish);
+		springLayout.putConstraint(SpringLayout.WEST, btnGenerateObject, 242, SpringLayout.EAST, btnGenerateFish);
+		getContentPane().add(btnGenerateObject);
+		
+		objectNameTextField = new JTextField();
+		objectNameTextField.setEditable(false);
+		springLayout.putConstraint(SpringLayout.NORTH, objectNameTextField, 39, SpringLayout.SOUTH, lblPleasePickA_1);
+		springLayout.putConstraint(SpringLayout.WEST, objectNameTextField, 20, SpringLayout.EAST, lblObjectName);
+		springLayout.putConstraint(SpringLayout.EAST, objectNameTextField, 119, SpringLayout.EAST, lblObjectName);
+		getContentPane().add(objectNameTextField);
+		objectNameTextField.setColumns(10);
+		
+		objectTypeTextField = new JTextField();
+		objectTypeTextField.setEditable(false);
+		springLayout.putConstraint(SpringLayout.NORTH, objectTypeTextField, -3, SpringLayout.NORTH, lblWeightkg);
+		springLayout.putConstraint(SpringLayout.WEST, objectTypeTextField, 0, SpringLayout.WEST, objectNameTextField);
+		getContentPane().add(objectTypeTextField);
+		objectTypeTextField.setColumns(10);
+		
+		objectWidthTextField = new JTextField();
+		objectWidthTextField.setEditable(false);
+		springLayout.putConstraint(SpringLayout.NORTH, objectWidthTextField, -3, SpringLayout.NORTH, Genderlbl);
+		springLayout.putConstraint(SpringLayout.WEST, objectWidthTextField, 0, SpringLayout.WEST, objectNameTextField);
+		getContentPane().add(objectWidthTextField);
+		objectWidthTextField.setColumns(10);
+		
+		objectHeightTextField = new JTextField();
+		objectHeightTextField.setEditable(false);
+		springLayout.putConstraint(SpringLayout.NORTH, objectHeightTextField, 0, SpringLayout.NORTH, aggroLevelTextField);
+		springLayout.putConstraint(SpringLayout.WEST, objectHeightTextField, 0, SpringLayout.WEST, objectNameTextField);
+		getContentPane().add(objectHeightTextField);
+		objectHeightTextField.setColumns(10);
+		
+		JLabel lblLength = new JLabel("Length:");
+		springLayout.putConstraint(SpringLayout.NORTH, lblLength, 0, SpringLayout.NORTH, lblSizewidthX);
+		springLayout.putConstraint(SpringLayout.WEST, lblLength, 0, SpringLayout.WEST, lblObjectName);
+		getContentPane().add(lblLength);
+		
+		objectLengthTextField = new JTextField();
+		objectLengthTextField.setEditable(false);
+		springLayout.putConstraint(SpringLayout.WEST, objectLengthTextField, 0, SpringLayout.WEST, objectNameTextField);
+		springLayout.putConstraint(SpringLayout.SOUTH, objectLengthTextField, 0, SpringLayout.SOUTH, WidthTextField);
+		getContentPane().add(objectLengthTextField);
+		objectLengthTextField.setColumns(10);
+		try {
+			connn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+	
+		Statement s = connn.createStatement();
+		rs = s.executeQuery("SELECT * FROM [Objects]");
+		while (rs.next())
+		{
+			String name = rs.getString("Name"); //Field from database ex. FishA, FishB
+        	//String value = rs.getString((1)); 
+        //ComboItem comboItem = new ComboItem(name, value); 
+        objects_comboBox.addItem(name); 
+		}
+		connn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		objects_comboBox.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+					// show fish values
+				JComboBox<String> combo = (JComboBox<String>) e.getSource();
+				String selectedObjects = (String) combo.getSelectedItem();
+				
+				Connection conn;
+				try {
+					conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+				Statement s = conn.createStatement();
+				if (selectedObjects.equals("Large Plant"))
+				{
+					rs = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Large Plant'");
+				}
+				else if (selectedObjects.equals("Medium Plant"))
+				{
+					rs = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Medium Plant'");
+				}
+				else if (selectedObjects.equals("Small Plant"))
+				{
+					rs = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Small Plant'");
+				}
+				else if (selectedObjects.equals("Large Pot"))
+				{
+					rs = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Large Pot'");
+				}
+				else if (selectedObjects.equals("Medium Pot"))
+				{
+					rs = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Medium Pot'");
+				}
+				else if (selectedObjects.equals("Small Pot"))
+				{
+					rs = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Small Pot'");
+				}
+				while (rs.next())
+				{
+					String id = rs.getString("ID"); // added new string for ID
+					String name = rs.getString("Name"); //Field from database ex. FishA, FishB
+					String type = rs.getString("Type");
+					String length = rs.getString("Length");
+					String width = rs.getString("Width");
+		        	String height = rs.getString("Height");
+	
+
+		        	objectNameTextField.setText(name);
+			
+					objectTypeTextField.setText(type);
+			
+				    objectLengthTextField.setText(length);
+				
+					objectWidthTextField.setText(width);
+				
+					objectHeightTextField.setText(height);
+				
+
+					
+					
+			//		controller.updateView();		
+				}
+				conn.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	
+				
+			}
+		});
 		timerSlider.addChangeListener(new ChangeListener()
 		{
 			public void stateChanged(ChangeEvent e)
