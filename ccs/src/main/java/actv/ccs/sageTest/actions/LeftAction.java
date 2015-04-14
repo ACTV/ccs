@@ -21,6 +21,7 @@ public class LeftAction extends AbstractInputAction{
       sM.translate(-0.1f,0,0);
       s.setLocalTranslation(sM);
       s.updateWorldBound();
+      System.out.println("pos: " + s.getLocalTranslation());
    }
 
 }

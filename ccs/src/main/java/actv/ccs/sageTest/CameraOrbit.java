@@ -27,9 +27,9 @@ public class CameraOrbit {
 	 { this.cam = cam;
 	 this.target = target;
 	 worldUpVec = new Vector3D(0,1,0);
-	 cameraDistanceFromTarget = 100.0f;
+	 cameraDistanceFromTarget = 1.0f;
 	 cameraAzimuth = 360; // start from BEHIND and ABOVE the target
-	 cameraElevation = 450.0f; // elevation is in degrees
+	 cameraElevation = 0.0f; // elevation is in degrees
 	 update(0.0f); // initialize camera state
 	 setupInput(inputMgr, controllerName);
 	 }

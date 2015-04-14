@@ -149,7 +149,7 @@ public class MyGame extends BaseGame {
 	public void createPerson()
 	{
 		cameraGuy = new Cube("Cameraguy");
-		cameraGuy.translate(0, 0, 0);
+		cameraGuy.translate(50, 50, 500);
 		cameraGuy.rotate(180, new Vector3D(0, 1, 0));
 		addGameWorldObject(cameraGuy);
 		cameraGuy.updateWorldBound();
