@@ -23,6 +23,7 @@ import sage.display.IDisplaySystem;
 import sage.input.IInputManager;
 import sage.input.InputManager;
 import sage.input.action.IAction;
+import sage.model.loader.OBJLoader;
 import sage.renderer.IRenderer;
 import sage.scene.*;
 import sage.scene.SceneNode.CULL_MODE;
@@ -43,8 +44,9 @@ public class MyGame extends BaseGame {
 
 	IDisplaySystem display;
 	IInputManager im;
-	private Pot largePot, mediumPot, smallPot;
-	private Plant largePlant, mediumPlant, smallPlant;
+//	private Pot largePot, mediumPot, smallPot;
+//	private Plant largePlant, mediumPlant, smallPlant;
+	private TriMesh largePlant, mediumPlant, smallPlant, largePot, mediumPot, smallPot;
 	private ICamera camera;
 	private CameraOrbit cc;
 	private SkyBox skybox;
@@ -196,20 +198,61 @@ public class MyGame extends BaseGame {
 			        	double yStartY = Double.parseDouble(yLocS);
 			        	double zStartZ = Double.parseDouble(zLocS);
 			        	
-			    		largePlant = new Plant();
+			        	OBJLoader loader = new OBJLoader();
+			    		largePlant = loader.loadModel("plantBlend.obj");
 			    		largePlant.setName(name);
 			    		Matrix3D largePlantT = largePlant.getLocalTranslation(); // this is for position
 			    		largePlantT.translate(xStartW, yStartY, zStartZ);
 			    		largePlant.setLocalTranslation(largePlantT);
 			    		Matrix3D largePlantS = largePlant.getLocalScale(); // this is for size of object
 			    		largePlantS.scale(lengthW, widthW, heightW); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
-
+			    		largePlant.setLocalScale(largePlantS);
+			    		
 			    		addGameWorldObject(largePlant);
+			    		largePlant.updateLocalBound();
+			    		largePlant.updateGeometricState(0, true);
 			    		largePlant.updateWorldBound();
 
 			    	}
-				}
-	
+			}
+			else if (id.equals("4"))
+			{
+				rsI = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Large Pot'");
+				while (rsI.next())
+					{
+						String name = rsI.getString("Name"); //Field from database 
+			        	String type = rsI.getString("Type");
+			        	String length = rsI.getString("Length");
+			        	String width = rsI.getString("Width");
+			        	String height = rsI.getString("Height");
+			        	String xLocS = rsI.getString("StartingXPos");
+			        	String yLocS = rsI.getString("StartingYPos");
+			        	String zLocS = rsI.getString("StartingZPos");
+			        	
+			        	float lengthW = Float.parseFloat(length);
+			        	float widthW = Float.parseFloat(width);
+			        	float heightW = Float.parseFloat(height);
+			        	double xStartW = Double.parseDouble(xLocS);
+			        	double yStartY = Double.parseDouble(yLocS);
+			        	double zStartZ = Double.parseDouble(zLocS);
+			        	
+			        	OBJLoader loader = new OBJLoader();
+			    		largePot = loader.loadModel("pot.obj");
+			    		largePot.setName(name);
+			    		Matrix3D largePotT = largePot.getLocalTranslation(); // this is for position
+			    		largePotT.translate(xStartW, yStartY, zStartZ);
+			    		largePot.setLocalTranslation(largePotT);
+			    		Matrix3D largePotS = largePlant.getLocalScale(); // this is for size of object
+			    		largePotS.scale(lengthW, widthW, heightW); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
+			    		largePot.setLocalScale(largePotS);
+			    		
+			    		addGameWorldObject(largePot);
+			    		largePot.updateLocalBound();
+			    		largePot.updateGeometricState(0, true);
+			    		largePot.updateWorldBound();
+
+			    	}
+			}	
 			}
 			conn.close();
 			} catch (SQLException e) {
