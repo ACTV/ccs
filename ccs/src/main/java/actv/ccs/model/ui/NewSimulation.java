@@ -29,7 +29,7 @@ public class NewSimulation extends JFrame {
 	
 	private ConvictCichlid cichlid;
 	private TankObject tank;
-	private String cichlidNameZ;
+	private String cichlidNameZ, objectNameA;
 	private SimulationWorld world;
 	private ConvictCichlidController controller;
 	private RunSimulation rS;
@@ -551,6 +551,72 @@ public class NewSimulation extends JFrame {
 		springLayout.putConstraint(SpringLayout.NORTH, btnGenerateObject, 0, SpringLayout.NORTH, btnGenerateFish);
 		springLayout.putConstraint(SpringLayout.WEST, btnGenerateObject, 242, SpringLayout.EAST, btnGenerateFish);
 		getContentPane().add(btnGenerateObject);
+		btnGenerateObject.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e)
+			{
+		
+
+				Connection conn;
+				try {
+					conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+				Statement s = conn.createStatement();
+				objectNameA = objectNameTextField.getText().toString();
+
+				if (objectNameA.equals("Large Plant"))
+				{
+					rs = s.executeQuery("SELECT ID FROM [Objects] WHERE Name='Large Plant'");
+		        	int a = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 1");
+		        	tankPlantCount++;
+				}
+				else if (objectNameA.equals("Medium Plant"))
+				{
+					rs = s.executeQuery("SELECT ID FROM [Objects] WHERE Name='Medium Plant'");
+		        	int b = s.executeUpdate("UPDATE SimulationObjects set objID = 2 where ID = 2");
+		        	tankPlantCount++;
+				}
+				else if (objectNameA.equals("Small Plant"))
+				{
+					rs = s.executeQuery("SELECT ID FROM [Objects] WHERE Name='Small Plant'");
+		        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 3");
+		        	tankPlantCount++;
+				}
+				else if (objectNameA.equals("Large Pot"))
+				{
+					rs = s.executeQuery("SELECT ID FROM [Objects] WHERE Name='Large Pot'");
+		        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 4");
+		        	tankPlantCount++;
+				}
+				else if (objectNameA.equals("Medium Pot"))
+				{
+					rs = s.executeQuery("SELECT ID FROM [Objects] WHERE Name='Medium Pot'");
+		        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 5");
+		        	tankPlantCount++;
+				}
+				else if (objectNameA.equals("Small Pot"))
+				{
+					rs = s.executeQuery("SELECT ID FROM [Objects] WHERE Name='Small Pot'");
+		        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 6");
+		        	tankPlantCount++;
+				}
+				while (rs.next())
+				{
+					String id = rs.getString("ID"); // added new string for ID
+				
+		        	int objID = Integer.parseInt(id);
+		        	System.out.println("obj arr: " + i + " ID: " + id);
+		        	i++;
+				}
+				conn.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			outputData.setText("added object to tank");
+
+			}
+		});
 		
 		objectNameTextField = new JTextField();
 		objectNameTextField.setEditable(false);

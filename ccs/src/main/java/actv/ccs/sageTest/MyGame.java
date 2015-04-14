@@ -43,6 +43,8 @@ public class MyGame extends BaseGame {
 
 	IDisplaySystem display;
 	IInputManager im;
+	private Pot largePot, mediumPot, smallPot;
+	private Plant largePlant, mediumPlant, smallPlant;
 	private ICamera camera;
 	private CameraOrbit cc;
 	private SkyBox skybox;
@@ -59,6 +61,7 @@ public class MyGame extends BaseGame {
 	{
 		initObjects();
 		spawnCichlids();
+		spawnObjects();
 		createPerson();
 	//	createScene();
 		initActions();
@@ -157,6 +160,62 @@ public class MyGame extends BaseGame {
 		addGameWorldObject(cameraGuy);
 		cameraGuy.updateWorldBound();
 		
+	}
+	public void spawnObjects()
+	{
+		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+		
+		Statement s = conn.createStatement();
+		rs = s.executeQuery("SELECT objID FROM [SimulationObjects]");
+		while (rs.next())
+		{
+			String id = rs.getString("objID"); //Field from database ex. largepot etc.
+			int idS =  Integer.parseInt(id);
+
+			System.out.println(idS);
+				
+			if (id.equals("1"))
+			{
+				rsI = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Large Plant'");
+				while (rsI.next())
+					{
+						String name = rsI.getString("Name"); //Field from database 
+			        	String type = rsI.getString("Type");
+			        	String length = rsI.getString("Length");
+			        	String width = rsI.getString("Width");
+			        	String height = rsI.getString("Height");
+			        	String xLocS = rsI.getString("StartingXPos");
+			        	String yLocS = rsI.getString("StartingYPos");
+			        	String zLocS = rsI.getString("StartingZPos");
+			        	
+			        	float lengthW = Float.parseFloat(length);
+			        	float widthW = Float.parseFloat(width);
+			        	float heightW = Float.parseFloat(height);
+			        	double xStartW = Double.parseDouble(xLocS);
+			        	double yStartY = Double.parseDouble(yLocS);
+			        	double zStartZ = Double.parseDouble(zLocS);
+			        	
+			    		largePlant = new Plant();
+			    		largePlant.setName(name);
+			    		Matrix3D largePlantT = largePlant.getLocalTranslation(); // this is for position
+			    		largePlantT.translate(xStartW, yStartY, zStartZ);
+			    		largePlant.setLocalTranslation(largePlantT);
+			    		Matrix3D largePlantS = largePlant.getLocalScale(); // this is for size of object
+			    		largePlantS.scale(lengthW, widthW, heightW); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
+
+			    		addGameWorldObject(largePlant);
+			    		largePlant.updateWorldBound();
+
+			    	}
+				}
+	
+			}
+			conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	public void spawnCichlids()
 	{
