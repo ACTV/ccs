@@ -486,10 +486,10 @@ public class MyGame extends BaseGame {
 	//	IAction moveRightO = new RightAction(cameraGuy);
 		
 		IAction quitGame = new QuitAction(this);
-	/*	
+
 		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.ESCAPE, 
 				quitGame, IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
-		// here is the movement options of the character ..
+	/*			// here is the movement options of the character ..
 		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.W, 
 				moveForwardO, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.S, 
