@@ -94,13 +94,13 @@ public class MyGame extends BaseGame {
 		
 		// creating x, y, z lines for a basis
 		 Point3D origin = new Point3D(0,0,0);
-		 Point3D xEnd1 = new Point3D(100, 100, 0);
-		 Point3D xEnd3 = new Point3D(100, 100, 100);
-		 Point3D xEnd2 = new Point3D(100, 0, 100);
-		 Point3D zyP = new Point3D(0, 100, 100);
-		 Point3D xEnd = new Point3D(100,0,0);
-		 Point3D yEnd = new Point3D(0,100,0);
-		 Point3D zEnd = new Point3D(0,0,100);
+		 Point3D xEnd1 = new Point3D(200, 200, 0);
+		 Point3D xEnd3 = new Point3D(200, 200, 200);
+		 Point3D xEnd2 = new Point3D(200, 0, 200);
+		 Point3D zyP = new Point3D(0, 200, 200);
+		 Point3D xEnd = new Point3D(200,0,0);
+		 Point3D yEnd = new Point3D(0,200,0);
+		 Point3D zEnd = new Point3D(0,0,200);
 		 
 		 // base 
 		 Line xAxis = new Line (origin, xEnd, Color.red, 2);
@@ -109,12 +109,12 @@ public class MyGame extends BaseGame {
 		 
 		// Line xAxis1 = new Line (xEnd1, xEnd3, Color.cyan, 2);
 		 yAxis1 = new Line (xEnd2, xEnd3, Color.GRAY, 2);
-		 zyPtoxEnd3 = new Line (new Point3D(100, 0, 0), new Point3D(100, 100, 0), Color.BLUE, 2);
-		 pPart = new Line(new Point3D(100, 0, 0), new Point3D(100, 0, 100), Color.green, 2);
-		 finishPart = new Line(new Point3D(0, 100, 0), new Point3D(100, 100, 0), Color.PINK, 2);
-		 yEndtoZPart = new Line(yEnd, new Point3D(0, 100, 100), Color.orange, 2);
-		 xEndtoZPart = new Line(new Point3D(0, 100, 100), new Point3D(100, 100, 100), Color.orange, 2);
-		 xxPart = new Line(new Point3D(100, 100, 0), new Point3D(100, 100, 100), Color.magenta, 2);
+		 zyPtoxEnd3 = new Line (new Point3D(200, 0, 0), new Point3D(200, 200, 0), Color.BLUE, 2);
+		 pPart = new Line(new Point3D(200, 0, 0), new Point3D(200, 0, 200), Color.green, 2);
+		 finishPart = new Line(new Point3D(0, 200, 0), new Point3D(200, 200, 0), Color.PINK, 2);
+		 yEndtoZPart = new Line(yEnd, new Point3D(0, 200, 200), Color.orange, 2);
+		 xEndtoZPart = new Line(new Point3D(0, 200, 200), new Point3D(200, 200, 200), Color.orange, 2);
+		 xxPart = new Line(new Point3D(200, 200, 0), new Point3D(200, 200, 200), Color.magenta, 2);
 		 zPart = new Line(zEnd, xEnd2, Color.orange, 2);
 		 zYPAxis = new Line(zEnd, zyP, Color.gray, 2);
 		// Line zAxis1 = new Line (xEnd3, xEnd1, Color.MAGENTA, 2);
@@ -148,8 +148,9 @@ public class MyGame extends BaseGame {
 	}
 	public void createPerson()
 	{
-		cameraGuy = new Cube("Cameraguy");
-		cameraGuy.translate(50, 50, 500);
+		cameraGuy = new CameraGuy();
+		cameraGuy.translate(100, 100, 500);
+		cameraGuy.scale(-1, -1, -1);
 		cameraGuy.rotate(180, new Vector3D(0, 1, 0));
 		addGameWorldObject(cameraGuy);
 		cameraGuy.updateWorldBound();
@@ -363,25 +364,25 @@ public class MyGame extends BaseGame {
 	//	IAction moveForwardA = new ForwardAction(cichlidA);
 	//	IAction moveForwardB = new ForwardAction(cichlidB);
 	//	IAction moveForwardC = new ForwardAction(cichlidC);
-		IAction moveForwardO = new ForwardAction(cameraGuy);
+	//	IAction moveForwardO = new ForwardAction(cameraGuy);
 		
 	//	IAction moveBackA = new BackwardAction(cichlidA);
 	//	IAction moveBackB = new BackwardAction(cichlidB);
 	//	IAction moveBackC = new BackwardAction(cichlidC);
-		IAction moveBackO = new BackwardAction(cameraGuy);
+	//	IAction moveBackO = new BackwardAction(cameraGuy);
 		
 	//	IAction moveLeftA = new LeftAction(cichlidA);
 	//	IAction moveLeftB = new LeftAction(cichlidB);
 	//	IAction moveLeftC = new LeftAction(cichlidC);
-		IAction moveLeftO = new LeftAction(cameraGuy);
+	//	IAction moveLeftO = new LeftAction(cameraGuy);
 		
 	//	IAction moveRightA = new RightAction(cichlidA);
 	//	IAction moveRightB = new RightAction(cichlidB);
 	//	IAction moveRightC = new RightAction(cichlidC);
-		IAction moveRightO = new RightAction(cameraGuy);
+	//	IAction moveRightO = new RightAction(cameraGuy);
 		
 		IAction quitGame = new QuitAction(this);
-		
+	/*	
 		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.ESCAPE, 
 				quitGame, IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
 		// here is the movement options of the character ..
@@ -393,7 +394,7 @@ public class MyGame extends BaseGame {
 				moveLeftO, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.D, 
 				moveRightO, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-		
+	*/
 		
 
 	}
