@@ -24,11 +24,8 @@ import sage.input.IInputManager;
 import sage.input.InputManager;
 import sage.input.action.IAction;
 import sage.renderer.IRenderer;
-import sage.scene.Group;
 import sage.scene.*;
-import sage.scene.HUDString;
-import sage.scene.SceneNode;
-import sage.scene.SkyBox;
+import sage.scene.SceneNode.CULL_MODE;
 import sage.scene.bounding.BoundingSphere;
 import sage.scene.shape.Cube;
 import sage.scene.shape.Line;
@@ -418,7 +415,8 @@ public class MyGame extends BaseGame {
 	      leftRot.rotate(0, 90, 90);
 	      leftWall.setLocalRotation(leftRot);
 	      leftWall.translate(-0.1f,101f,101.0f);
-	      leftWall.setColor(Color.pink);
+	      leftWall.setColor(Color.blue);
+	//      leftWall.setCullMode(CULL_MODE.ALWAYS);
 	      addGameWorldObject(leftWall);
 	      leftWall.updateWorldBound();
 	      
@@ -428,6 +426,7 @@ public class MyGame extends BaseGame {
 	      rightWall.setLocalRotation(rightRot);
 	      rightWall.translate(201.0f,101f,101.0f);
 	      rightWall.setColor(Color.blue);
+	 //     rightWall.setCullMode(CULL_MODE.ALWAYS);
 	      addGameWorldObject(rightWall);
 	      rightWall.updateWorldBound();
 	      
@@ -436,7 +435,8 @@ public class MyGame extends BaseGame {
 	      backRot.rotate(0, 0, 0);
 	      backWall.setLocalRotation(backRot);
 	      backWall.translate(101.0f,101.0f,0.0f);
-	      backWall.setColor(Color.green);
+	      backWall.setColor(Color.blue);
+	 //     backWall.setCullMode(CULL_MODE.ALWAYS);
 	      addGameWorldObject(backWall);
 	      backWall.updateWorldBound();
 	      
@@ -445,7 +445,8 @@ public class MyGame extends BaseGame {
 	      ceilingRot.rotate(90, 0, 0);
 	      ceiling.setLocalRotation(ceilingRot);
 	      ceiling.translate(101.0f, 201f, 101.0f);
-	      ceiling.setColor(Color.MAGENTA);
+	      ceiling.setColor(Color.blue);
+	 //     ceiling.setCullMode(CULL_MODE.ALWAYS);
 	      addGameWorldObject(ceiling);
 	      ceiling.updateWorldBound();
 	      
@@ -456,7 +457,7 @@ public class MyGame extends BaseGame {
 	      frontRot.rotate(0, 180, 0);
 	      frontWall.setLocalRotation(frontRot);
 	      frontWall.translate(101.0f,101.0f,201.0f);
-	      frontWall.setColor(new Color(0, 0, 0, 1));
+	      frontWall.setCullMode(CULL_MODE.ALWAYS);
 	      addGameWorldObject(frontWall);
 	      frontWall.updateWorldBound();
 	      
