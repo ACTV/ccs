@@ -313,7 +313,7 @@ public class MyGame extends BaseGame {
 			        	double zStartZ = Double.parseDouble(zLocS);
 			        	
 			        	OBJLoader loader3 = new OBJLoader();
-			    		largePot = loader3.loadModel("pot.obj");
+			    		largePot = loader3.loadModel("potBlend.obj");
 			    		largePot.setName(name);
 			    		Matrix3D largePotT = largePot.getLocalTranslation(); // this is for position
 			    		largePotT.translate(xStartW, yStartY, zStartZ);
@@ -351,7 +351,7 @@ public class MyGame extends BaseGame {
 			        	double zStartZ = Double.parseDouble(zLocS);
 			        	
 			        	OBJLoader loader4 = new OBJLoader();
-			    		mediumPot = loader4.loadModel("pot.obj");
+			    		mediumPot = loader4.loadModel("potBlend.obj");
 			    		mediumPot.setName(name);
 			    		Matrix3D mediumPotT = mediumPot.getLocalTranslation(); // this is for position
 			    		mediumPotT.translate(xStartW, yStartY, zStartZ);
@@ -389,7 +389,7 @@ public class MyGame extends BaseGame {
 			        	double zStartZ = Double.parseDouble(zLocS);
 			        	
 			        	OBJLoader loader5 = new OBJLoader();
-			    		smallPot = loader5.loadModel("pot.obj");
+			    		smallPot = loader5.loadModel("potBlend.obj");
 			    		smallPot.setName(name);
 			    		Matrix3D smallPotT = smallPot.getLocalTranslation(); // this is for position
 			    		smallPotT.translate(xStartW, yStartY, zStartZ);
