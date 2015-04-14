@@ -539,31 +539,115 @@ public class MyGame extends BaseGame {
          eventMgr.triggerEvent(newCrash);
       }
 		 */
-		if (cichlidA.getWorldBound().intersects(frontWall.getWorldBound())) 
-		{
-			System.out.println("hit the frontwall");
-		}
-		if (cichlidA.getWorldBound().intersects(backWall.getWorldBound())) 
-		{
-			System.out.println("hit the backwall");
-		}
-		if (cichlidA.getWorldBound().intersects(leftWall.getWorldBound())) 
-		{
-			System.out.println("hit the leftwall");
-		}
-		if (cichlidA.getWorldBound().intersects(rightWall.getWorldBound())) 
-		{
-			System.out.println("hit the rightwall");
-		}
-		if (cichlidA.getWorldBound().intersects(ceiling.getWorldBound())) 
-		{
-			System.out.println("hit the ceilingwall");
-		}
-		if (cichlidA.getWorldBound().intersects(ground.getWorldBound())) 
-		{
-			System.out.println("hit the groundwall");
-		}
+		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 		
+		Statement s = conn.createStatement();
+		rs = s.executeQuery("SELECT fishID FROM [SimulationFish]");
+		while (rs.next())
+		{
+			String id = rs.getString("fishID"); //Field from database ex. FishA, FishB
+			int idS =  Integer.parseInt(id);
+
+			System.out.println(idS);
+				
+			if (id.equals("1"))
+			{
+				if (cichlidA.getWorldBound().intersects(frontWall.getWorldBound())) 
+				{
+					System.out.println("hit the frontwall");
+				}
+				if (cichlidA.getWorldBound().intersects(backWall.getWorldBound())) 
+				{
+					System.out.println("hit the backwall");
+				}
+				if (cichlidA.getWorldBound().intersects(leftWall.getWorldBound())) 
+				{
+					System.out.println("hit the leftwall");
+				}
+				if (cichlidA.getWorldBound().intersects(rightWall.getWorldBound())) 
+				{
+					System.out.println("hit the rightwall");
+				}
+				if (cichlidA.getWorldBound().intersects(ceiling.getWorldBound())) 
+				{
+					System.out.println("hit the ceilingwall");
+				}
+				if (cichlidA.getWorldBound().intersects(ground.getWorldBound())) 
+				{
+					System.out.println("hit the groundwall");
+				}
+				
+
+			}
+			else if (id.equals("2"))
+			{
+				if (cichlidB.getWorldBound().intersects(frontWall.getWorldBound())) 
+				{
+					System.out.println("hit the frontwall");
+				}
+				if (cichlidB.getWorldBound().intersects(backWall.getWorldBound())) 
+				{
+					System.out.println("hit the backwall");
+				}
+				if (cichlidB.getWorldBound().intersects(leftWall.getWorldBound())) 
+				{
+					System.out.println("hit the leftwall");
+				}
+				if (cichlidB.getWorldBound().intersects(rightWall.getWorldBound())) 
+				{
+					System.out.println("hit the rightwall");
+				}
+				if (cichlidB.getWorldBound().intersects(ceiling.getWorldBound())) 
+				{
+					System.out.println("hit the ceilingwall");
+				}
+				if (cichlidB.getWorldBound().intersects(ground.getWorldBound())) 
+				{
+					System.out.println("hit the groundwall");
+				}
+				
+			}
+			else if (id.equals("3"))
+			{
+				if (cichlidC.getWorldBound().intersects(frontWall.getWorldBound())) 
+				{
+					System.out.println("hit the frontwall");
+				}
+				if (cichlidC.getWorldBound().intersects(backWall.getWorldBound())) 
+				{
+					System.out.println("hit the backwall");
+				}
+				if (cichlidC.getWorldBound().intersects(leftWall.getWorldBound())) 
+				{
+					System.out.println("hit the leftwall");
+				}
+				if (cichlidC.getWorldBound().intersects(rightWall.getWorldBound())) 
+				{
+					System.out.println("hit the rightwall");
+				}
+				if (cichlidC.getWorldBound().intersects(ceiling.getWorldBound())) 
+				{
+					System.out.println("hit the ceilingwall");
+				}
+				if (cichlidC.getWorldBound().intersects(ground.getWorldBound())) 
+				{
+					System.out.println("hit the groundwall");
+				}
+				
+			}
+				
+
+			
+		}
+		conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+			
+
 		
 		
 		/* 
