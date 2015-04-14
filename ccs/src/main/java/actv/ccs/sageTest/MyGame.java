@@ -53,7 +53,7 @@ public class MyGame extends BaseGame {
 	private ResultSet rs, rsI;
 	private TerrainBlock floor, leftWindowPane, BackWindowPane, RightWindowPane, ceilingWater;
 	private Texture skyThing;
-	private Rectangle ground, leftWall, rightWall, ceiling, backWall;
+	private Rectangle ground, leftWall, rightWall, ceiling, backWall, frontWall;
 	private TestCichlid cichlidA, cichlidB, cichlidC;
 	private SceneNode cameraGuy;
 	private Line yAxis1, zYPAxis, zyPtoxEnd3, pPart, zPart, yEndtoZPart, xEndtoZPart, xxPart, finishPart;
@@ -411,6 +411,7 @@ public class MyGame extends BaseGame {
 	      ground.translate(101.0f,-2f,101.0f);
 	      ground.setColor(Color.orange);
 	      addGameWorldObject(ground);
+	      ground.updateWorldBound();
 	      
 	      leftWall = new Rectangle(200, 200);
 	      Matrix3D leftRot = new Matrix3D();
@@ -419,6 +420,7 @@ public class MyGame extends BaseGame {
 	      leftWall.translate(-0.1f,101f,101.0f);
 	      leftWall.setColor(Color.pink);
 	      addGameWorldObject(leftWall);
+	      leftWall.updateWorldBound();
 	      
 	      rightWall = new Rectangle(200, 200);
 	      Matrix3D rightRot = new Matrix3D();
@@ -427,6 +429,7 @@ public class MyGame extends BaseGame {
 	      rightWall.translate(201.0f,101f,101.0f);
 	      rightWall.setColor(Color.blue);
 	      addGameWorldObject(rightWall);
+	      rightWall.updateWorldBound();
 	      
 	      backWall = new Rectangle(200, 200);
 	      Matrix3D backRot = new Matrix3D();
@@ -435,6 +438,7 @@ public class MyGame extends BaseGame {
 	      backWall.translate(101.0f,101.0f,0.0f);
 	      backWall.setColor(Color.green);
 	      addGameWorldObject(backWall);
+	      backWall.updateWorldBound();
 	      
 	      ceiling = new Rectangle(200, 200);
 	      Matrix3D ceilingRot = new Matrix3D();
@@ -443,7 +447,18 @@ public class MyGame extends BaseGame {
 	      ceiling.translate(101.0f, 201f, 101.0f);
 	      ceiling.setColor(Color.MAGENTA);
 	      addGameWorldObject(ceiling);
+	      ceiling.updateWorldBound();
 	      
+	      /*  
+	       * find transparency for this
+	      frontWall = new Rectangle(200, 200);
+	      Matrix3D frontRot = new Matrix3D();
+	      frontRot.rotate(0, 180, 0);
+	      frontWall.setLocalRotation(frontRot);
+	      frontWall.translate(101.0f,101.0f,201.0f);
+	      frontWall.setColor(Color.RED);
+	      addGameWorldObject(frontWall);
+	      */
 	      
 	}
 	// 	private TerrainBlock floor, leftWindowPane, BackWindowPane, RightWindowPane, ceilingWater;
