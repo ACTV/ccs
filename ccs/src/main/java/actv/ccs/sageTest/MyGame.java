@@ -449,16 +449,17 @@ public class MyGame extends BaseGame {
 	      addGameWorldObject(ceiling);
 	      ceiling.updateWorldBound();
 	      
-	      /*  
-	       * find transparency for this
+	      
+	      // find transparency for this
 	      frontWall = new Rectangle(200, 200);
 	      Matrix3D frontRot = new Matrix3D();
 	      frontRot.rotate(0, 180, 0);
 	      frontWall.setLocalRotation(frontRot);
 	      frontWall.translate(101.0f,101.0f,201.0f);
-	      frontWall.setColor(Color.RED);
+	      frontWall.setColor(new Color(0, 0, 0, 1));
 	      addGameWorldObject(frontWall);
-	      */
+	      frontWall.updateWorldBound();
+	      
 	      
 	}
 	// 	private TerrainBlock floor, leftWindowPane, BackWindowPane, RightWindowPane, ceilingWater;
@@ -537,15 +538,31 @@ public class MyGame extends BaseGame {
          eventMgr.triggerEvent(newCrash);
       }
 		 */
-		/*
-		if (cichlidA.getWorldBound().intersects(yAxis1.getWorldBound()) || cichlidA.getWorldBound().intersects(zYPAxis.getWorldBound()) ||  cichlidA.getWorldBound().intersects(zyPtoxEnd3.getWorldBound())
-				||  cichlidA.getWorldBound().intersects(pPart.getWorldBound()) ||  cichlidA.getWorldBound().intersects(zPart.getWorldBound()) ||  cichlidA.getWorldBound().intersects(yEndtoZPart.getWorldBound())
-	||  cichlidA.getWorldBound().intersects(xEndtoZPart.getWorldBound()) ||  cichlidA.getWorldBound().intersects(xxPart.getWorldBound()) ||  cichlidA.getWorldBound().intersects(finishPart.getWorldBound()));
+		if (cichlidA.getWorldBound().intersects(frontWall.getWorldBound())) 
 		{
-			// here is where the shit happens. you can make a rule change here.
-			System.out.println("YOU HIT THE DAMN BOUNDS!!!");
+			System.out.println("hit the frontwall");
 		}
-		*/
+		if (cichlidA.getWorldBound().intersects(backWall.getWorldBound())) 
+		{
+			System.out.println("hit the backwall");
+		}
+		if (cichlidA.getWorldBound().intersects(leftWall.getWorldBound())) 
+		{
+			System.out.println("hit the leftwall");
+		}
+		if (cichlidA.getWorldBound().intersects(rightWall.getWorldBound())) 
+		{
+			System.out.println("hit the rightwall");
+		}
+		if (cichlidA.getWorldBound().intersects(ceiling.getWorldBound())) 
+		{
+			System.out.println("hit the ceilingwall");
+		}
+		if (cichlidA.getWorldBound().intersects(ground.getWorldBound())) 
+		{
+			System.out.println("hit the groundwall");
+		}
+		
 		
 		
 		/* 
