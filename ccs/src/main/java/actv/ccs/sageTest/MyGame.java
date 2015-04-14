@@ -811,6 +811,12 @@ public class MyGame extends BaseGame {
         	int a = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 1");
         	int b = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 2");
         	int c = s.executeUpdate("UPDATE SimulationFish set fishID = 0 where ID = 3");
+        	int d = s.executeUpdate("UPDATE SimulationObjects set objID = 0 where ID = 1");
+        	int e = s.executeUpdate("UPDATE SimulationObjects set objID = 0 where ID = 2");
+        	int f = s.executeUpdate("UPDATE SimulationObjects set objID = 0 where ID = 3");
+        	int g = s.executeUpdate("UPDATE SimulationObjects set objID = 0 where ID = 4");
+        	int h = s.executeUpdate("UPDATE SimulationObjects set objID = 0 where ID = 5");
+        	int i = s.executeUpdate("UPDATE SimulationObjects set objID = 0 where ID = 6");
 
 
         	conn.close();
