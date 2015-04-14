@@ -215,6 +215,82 @@ public class MyGame extends BaseGame {
 
 			    	}
 			}
+			else if (id.equals("2"))
+			{
+				rsI = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Medium Plant'");
+				while (rsI.next())
+					{
+						String name = rsI.getString("Name"); //Field from database 
+			        	String type = rsI.getString("Type");
+			        	String length = rsI.getString("Length");
+			        	String width = rsI.getString("Width");
+			        	String height = rsI.getString("Height");
+			        	String xLocS = rsI.getString("StartingXPos");
+			        	String yLocS = rsI.getString("StartingYPos");
+			        	String zLocS = rsI.getString("StartingZPos");
+			        	
+			        	float lengthW = Float.parseFloat(length);
+			        	float widthW = Float.parseFloat(width);
+			        	float heightW = Float.parseFloat(height);
+			        	double xStartW = Double.parseDouble(xLocS);
+			        	double yStartY = Double.parseDouble(yLocS);
+			        	double zStartZ = Double.parseDouble(zLocS);
+			        	
+			        	OBJLoader loader1 = new OBJLoader();
+			    		mediumPlant = loader1.loadModel("plantBlend.obj");
+			    		mediumPlant.setName(name);
+			    		Matrix3D mediumPlantT = mediumPlant.getLocalTranslation(); // this is for position
+			    		mediumPlantT.translate(xStartW, yStartY, zStartZ);
+			    		mediumPlant.setLocalTranslation(mediumPlantT);
+			    		Matrix3D mediumPlantS = mediumPlant.getLocalScale(); // this is for size of object
+			    		mediumPlantS.scale(lengthW, widthW, heightW); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
+			    		mediumPlant.setLocalScale(mediumPlantS);
+			    		
+			    		addGameWorldObject(mediumPlant);
+			    		mediumPlant.updateLocalBound();
+			    		mediumPlant.updateGeometricState(0, true);
+			    		mediumPlant.updateWorldBound();
+
+			    	}
+			}
+			else if (id.equals("3"))
+			{
+				rsI = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Small Plant'");
+				while (rsI.next())
+					{
+						String name = rsI.getString("Name"); //Field from database 
+			        	String type = rsI.getString("Type");
+			        	String length = rsI.getString("Length");
+			        	String width = rsI.getString("Width");
+			        	String height = rsI.getString("Height");
+			        	String xLocS = rsI.getString("StartingXPos");
+			        	String yLocS = rsI.getString("StartingYPos");
+			        	String zLocS = rsI.getString("StartingZPos");
+			        	
+			        	float lengthW = Float.parseFloat(length);
+			        	float widthW = Float.parseFloat(width);
+			        	float heightW = Float.parseFloat(height);
+			        	double xStartW = Double.parseDouble(xLocS);
+			        	double yStartY = Double.parseDouble(yLocS);
+			        	double zStartZ = Double.parseDouble(zLocS);
+			        	
+			        	OBJLoader loader2 = new OBJLoader();
+			    		smallPlant = loader2.loadModel("plantBlend.obj");
+			    		smallPlant.setName(name);
+			    		Matrix3D smallPlantT = smallPlant.getLocalTranslation(); // this is for position
+			    		smallPlantT.translate(xStartW, yStartY, zStartZ);
+			    		smallPlant.setLocalTranslation(smallPlantT);
+			    		Matrix3D smallPlantS = smallPlant.getLocalScale(); // this is for size of object
+			    		smallPlantS.scale(lengthW, widthW, heightW); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
+			    		smallPlant.setLocalScale(smallPlantS);
+			    		
+			    		addGameWorldObject(smallPlant);
+			    		smallPlant.updateLocalBound();
+			    		smallPlant.updateGeometricState(0, true);
+			    		smallPlant.updateWorldBound();
+
+			    	}
+			}
 			else if (id.equals("4"))
 			{
 				rsI = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Large Pot'");
@@ -236,20 +312,96 @@ public class MyGame extends BaseGame {
 			        	double yStartY = Double.parseDouble(yLocS);
 			        	double zStartZ = Double.parseDouble(zLocS);
 			        	
-			        	OBJLoader loader = new OBJLoader();
-			    		largePot = loader.loadModel("pot.obj");
+			        	OBJLoader loader3 = new OBJLoader();
+			    		largePot = loader3.loadModel("pot.obj");
 			    		largePot.setName(name);
 			    		Matrix3D largePotT = largePot.getLocalTranslation(); // this is for position
 			    		largePotT.translate(xStartW, yStartY, zStartZ);
 			    		largePot.setLocalTranslation(largePotT);
 			    		Matrix3D largePotS = largePlant.getLocalScale(); // this is for size of object
-			    		largePotS.scale(lengthW, widthW, heightW); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
+			    		largePotS.scale(lengthW*10, widthW*10, heightW*10); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
 			    		largePot.setLocalScale(largePotS);
 			    		
 			    		addGameWorldObject(largePot);
 			    		largePot.updateLocalBound();
 			    		largePot.updateGeometricState(0, true);
 			    		largePot.updateWorldBound();
+
+			    	}
+			}
+			else if (id.equals("5"))
+			{
+				rsI = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Medium Pot'");
+				while (rsI.next())
+					{
+						String name = rsI.getString("Name"); //Field from database 
+			        	String type = rsI.getString("Type");
+			        	String length = rsI.getString("Length");
+			        	String width = rsI.getString("Width");
+			        	String height = rsI.getString("Height");
+			        	String xLocS = rsI.getString("StartingXPos");
+			        	String yLocS = rsI.getString("StartingYPos");
+			        	String zLocS = rsI.getString("StartingZPos");
+			        	
+			        	float lengthW = Float.parseFloat(length);
+			        	float widthW = Float.parseFloat(width);
+			        	float heightW = Float.parseFloat(height);
+			        	double xStartW = Double.parseDouble(xLocS);
+			        	double yStartY = Double.parseDouble(yLocS);
+			        	double zStartZ = Double.parseDouble(zLocS);
+			        	
+			        	OBJLoader loader4 = new OBJLoader();
+			    		mediumPot = loader4.loadModel("pot.obj");
+			    		mediumPot.setName(name);
+			    		Matrix3D mediumPotT = mediumPot.getLocalTranslation(); // this is for position
+			    		mediumPotT.translate(xStartW, yStartY, zStartZ);
+			    		mediumPot.setLocalTranslation(mediumPotT);
+			    		Matrix3D mediumPotS = largePlant.getLocalScale(); // this is for size of object
+			    		mediumPotS.scale(lengthW*10, widthW*10, heightW*10); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
+			    		mediumPot.setLocalScale(mediumPotS);
+			    		
+			    		addGameWorldObject(mediumPot);
+			    		mediumPot.updateLocalBound();
+			    		mediumPot.updateGeometricState(0, true);
+			    		mediumPot.updateWorldBound();
+
+			    	}
+			}	
+			else if (id.equals("6"))
+			{
+				rsI = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Small Pot'");
+				while (rsI.next())
+					{
+						String name = rsI.getString("Name"); //Field from database 
+			        	String type = rsI.getString("Type");
+			        	String length = rsI.getString("Length");
+			        	String width = rsI.getString("Width");
+			        	String height = rsI.getString("Height");
+			        	String xLocS = rsI.getString("StartingXPos");
+			        	String yLocS = rsI.getString("StartingYPos");
+			        	String zLocS = rsI.getString("StartingZPos");
+			        	
+			        	float lengthW = Float.parseFloat(length);
+			        	float widthW = Float.parseFloat(width);
+			        	float heightW = Float.parseFloat(height);
+			        	double xStartW = Double.parseDouble(xLocS);
+			        	double yStartY = Double.parseDouble(yLocS);
+			        	double zStartZ = Double.parseDouble(zLocS);
+			        	
+			        	OBJLoader loader5 = new OBJLoader();
+			    		smallPot = loader5.loadModel("pot.obj");
+			    		smallPot.setName(name);
+			    		Matrix3D smallPotT = smallPot.getLocalTranslation(); // this is for position
+			    		smallPotT.translate(xStartW, yStartY, zStartZ);
+			    		smallPot.setLocalTranslation(smallPotT);
+			    		Matrix3D smallPotS = smallPot.getLocalScale(); // this is for size of object
+			    		smallPotS.scale(lengthW*10, widthW*10, heightW*10); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
+			    		smallPot.setLocalScale(smallPotS);
+			    		
+			    		addGameWorldObject(smallPot);
+			    		smallPot.updateLocalBound();
+			    		smallPot.updateGeometricState(0, true);
+			    		smallPot.updateWorldBound();
 
 			    	}
 			}	
@@ -630,7 +782,7 @@ public class MyGame extends BaseGame {
 			
 		}
 		
-		/*
+		/* COMMENTING OUT. WILL FIX LATER - ALBERT
 		 * collision example
 		 *      if (tpt.getWorldBound().intersects(p1.getWorldBound()) && collidedWTeapot == false){
          collidedWTeapot = true;
@@ -641,6 +793,7 @@ public class MyGame extends BaseGame {
          eventMgr.triggerEvent(newCrash);
       }
 		 */
+		/*
 		try {
 			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 		
@@ -749,7 +902,7 @@ public class MyGame extends BaseGame {
 			
 		}
 			
-
+		*/
 		
 		
 		/* 
