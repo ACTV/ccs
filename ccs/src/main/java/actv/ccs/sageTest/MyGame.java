@@ -618,22 +618,22 @@ public class MyGame extends BaseGame {
 		System.out.println("controller: " + mName);
 
 	//	for this area, need to do a checker if A and B and C are called...	
-	//	IAction moveForwardA = new ForwardAction(cichlidA);
+		IAction moveForwardA = new ForwardAction(cichlidA);
 	//	IAction moveForwardB = new ForwardAction(cichlidB);
 	//	IAction moveForwardC = new ForwardAction(cichlidC);
 	//	IAction moveForwardO = new ForwardAction(cameraGuy);
 		
-	//	IAction moveBackA = new BackwardAction(cichlidA);
+		IAction moveBackA = new BackwardAction(cichlidA);
 	//	IAction moveBackB = new BackwardAction(cichlidB);
 	//	IAction moveBackC = new BackwardAction(cichlidC);
 	//	IAction moveBackO = new BackwardAction(cameraGuy);
 		
-	//	IAction moveLeftA = new LeftAction(cichlidA);
+		IAction moveLeftA = new LeftAction(cichlidA);
 	//	IAction moveLeftB = new LeftAction(cichlidB);
 	//	IAction moveLeftC = new LeftAction(cichlidC);
 	//	IAction moveLeftO = new LeftAction(cameraGuy);
 		
-	//	IAction moveRightA = new RightAction(cichlidA);
+		IAction moveRightA = new RightAction(cichlidA);
 	//	IAction moveRightB = new RightAction(cichlidB);
 	//	IAction moveRightC = new RightAction(cichlidC);
 	//	IAction moveRightO = new RightAction(cameraGuy);
@@ -642,16 +642,16 @@ public class MyGame extends BaseGame {
 
 		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.ESCAPE, 
 				quitGame, IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
-	/*			// here is the movement options of the character ..
+				// here is the movement options of the character ..
 		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.W, 
-				moveForwardO, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+				moveForwardA, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.S, 
-				moveBackO, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+				moveBackA, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.A, 
-				moveLeftO, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+				moveLeftA, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.D, 
-				moveRightO, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-	*/
+				moveRightA, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+	
 		
 
 	}
@@ -689,7 +689,7 @@ public class MyGame extends BaseGame {
 	      Matrix3D backRot = new Matrix3D();
 	      backRot.rotate(0, 0, 0);
 	      backWall.setLocalRotation(backRot);
-	      backWall.translate(101.0f,101.0f,0.0f);
+	      backWall.translate(101.0f,101.0f,-0.10f);
 	      backWall.setColor(Color.blue);
 	 //     backWall.setCullMode(CULL_MODE.ALWAYS);
 	      addGameWorldObject(backWall);
@@ -763,8 +763,8 @@ public class MyGame extends BaseGame {
 			{
 				if (s == cichlidA)
 				{
-					s.translate(0, 0, .1f);
-					s.updateWorldBound();
+				//	s.translate(0, 0, .1f);
+				//	s.updateWorldBound();
 				}
 				if (s == cichlidB)
 				{
@@ -794,7 +794,7 @@ public class MyGame extends BaseGame {
          eventMgr.triggerEvent(newCrash);
       }
 		 */
-		/*
+		
 		try {
 			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 		
@@ -805,11 +805,10 @@ public class MyGame extends BaseGame {
 			String id = rs.getString("fishID"); //Field from database ex. FishA, FishB
 			int idS =  Integer.parseInt(id);
 
-			System.out.println(idS);
 				
 			if (id.equals("1"))
 			{
-				if (cichlidA.getWorldBound().intersects(frontWall.getWorldBound())) 
+				/*	if (cichlidA.getWorldBound().intersects(frontWall.getWorldBound())) 
 				{
 					System.out.println("hit the frontwall");
 				}
@@ -833,8 +832,7 @@ public class MyGame extends BaseGame {
 				{
 					System.out.println("hit the groundwall");
 				}
-				
-
+			*/	
 			}
 			else if (id.equals("2"))
 			{
@@ -903,20 +901,6 @@ public class MyGame extends BaseGame {
 			
 		}
 			
-		*/
-		
-		
-		/* 
-		 *  collision example here
-		 *  if (cichlidA.getWorldBound().contains(something something avadar)
-		 *  {
-		 *  	crahsevent etc. 
-		 *  }
-		 *  
-		 *  can also do bounds work here...
-		 *  let's set the bounds to be 100*20 etc. i'll think about the variables later.
-		 *  
-		 */
 	}
 	private IDisplaySystem createDisplaySystem()
 	 {

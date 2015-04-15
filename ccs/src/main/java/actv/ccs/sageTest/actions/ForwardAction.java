@@ -20,7 +20,6 @@ public class ForwardAction extends AbstractInputAction{
       sM.translate(0,0,0.1f);
       s.setLocalTranslation(sM);
       s.updateWorldBound();
-      System.out.println("pos: " + s.getLocalTranslation());
    }
    
 }

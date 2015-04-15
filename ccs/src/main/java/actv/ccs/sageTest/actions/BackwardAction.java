@@ -23,6 +23,5 @@ public class BackwardAction extends AbstractInputAction{
       s.setLocalTranslation(sM);
       s.updateWorldBound();
       
-      System.out.println("pos: " + s.getLocalTranslation());
    }
 }
