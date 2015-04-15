@@ -29,6 +29,7 @@ import sage.scene.*;
 import sage.scene.SceneNode.CULL_MODE;
 import sage.scene.bounding.BoundingSphere;
 import sage.scene.shape.Cube;
+import sage.scene.shape.Cylinder;
 import sage.scene.shape.Line;
 import sage.scene.shape.Pyramid;
 import sage.scene.shape.Rectangle;
@@ -319,7 +320,7 @@ public class MyGame extends BaseGame {
 			    		largePotT.translate(xStartW, yStartY, zStartZ);
 			    		largePot.setLocalTranslation(largePotT);
 			    		Matrix3D largePotS = largePlant.getLocalScale(); // this is for size of object
-			    		largePotS.scale(lengthW*10, widthW*10, heightW*10); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
+			    		largePotS.scale(lengthW, widthW, heightW); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
 			    		largePot.setLocalScale(largePotS);
 			    		
 			    		addGameWorldObject(largePot);
@@ -357,7 +358,7 @@ public class MyGame extends BaseGame {
 			    		mediumPotT.translate(xStartW, yStartY, zStartZ);
 			    		mediumPot.setLocalTranslation(mediumPotT);
 			    		Matrix3D mediumPotS = largePlant.getLocalScale(); // this is for size of object
-			    		mediumPotS.scale(lengthW*10, widthW*10, heightW*10); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
+			    		mediumPotS.scale(lengthW, widthW, heightW); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
 			    		mediumPot.setLocalScale(mediumPotS);
 			    		
 			    		addGameWorldObject(mediumPot);
@@ -395,7 +396,7 @@ public class MyGame extends BaseGame {
 			    		smallPotT.translate(xStartW, yStartY, zStartZ);
 			    		smallPot.setLocalTranslation(smallPotT);
 			    		Matrix3D smallPotS = smallPot.getLocalScale(); // this is for size of object
-			    		smallPotS.scale(lengthW*10, widthW*10, heightW*10); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
+			    		smallPotS.scale(lengthW, widthW, heightW); // the scale might be too big so we largePlant.setLocalScale(largePlantS);
 			    		smallPot.setLocalScale(smallPotS);
 			    		
 			    		addGameWorldObject(smallPot);

@@ -584,19 +584,19 @@ public class NewSimulation extends JFrame {
 				else if (objectNameA.equals("Large Pot"))
 				{
 					rs = s.executeQuery("SELECT ID FROM [Objects] WHERE Name='Large Pot'");
-		        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 4");
+		        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 4 where ID = 4");
 		        	tankPlantCount++;
 				}
 				else if (objectNameA.equals("Medium Pot"))
 				{
 					rs = s.executeQuery("SELECT ID FROM [Objects] WHERE Name='Medium Pot'");
-		        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 5");
+		        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 5 where ID = 5");
 		        	tankPlantCount++;
 				}
 				else if (objectNameA.equals("Small Pot"))
 				{
 					rs = s.executeQuery("SELECT ID FROM [Objects] WHERE Name='Small Pot'");
-		        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 6");
+		        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 6 where ID = 6");
 		        	tankPlantCount++;
 				}
 				while (rs.next())
