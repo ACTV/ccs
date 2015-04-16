@@ -81,7 +81,7 @@ public class MyGame extends BaseGame {
 		// createScene();
 		initActions();
 		// createFishTank();
-		createBunkAssFishTank();
+		createFishTankWalls();
 		startRunner();
 
 	}
@@ -835,14 +835,14 @@ public class MyGame extends BaseGame {
 
 	}
 
-	public void createBunkAssFishTank() {
-		// Texture tex = TextureManager.loadTexture2D("sky.jpg");
+	public void createFishTankWalls() {
+		 Texture tex = TextureManager.loadTexture2D("sky.jpg");
 		// add a rectangle, and turn it into a plane
 		ground = new Rectangle(200, 200);
 		ground.rotate(90, new Vector3D(1, 0, 0));
 		ground.translate(101.0f, -2f, 101.0f);
 		ground.setColor(Color.orange);
-		// ground.setTexture(tex);
+		ground.setTexture(tex);
 		addGameWorldObject(ground);
 		ground.updateWorldBound();
 

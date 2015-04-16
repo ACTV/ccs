@@ -34,8 +34,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 
-import org.drools.runtime.StatefulKnowledgeSession;
-
 import actv.ccs.CCSKnowledgeBase;
 import actv.ccs.fact.Auditor;
 import actv.ccs.listener.RuleEngineRunner;

@@ -17,8 +17,6 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.*;
 
-import org.drools.runtime.StatefulKnowledgeSession;
-
 import actv.ccs.CCSKnowledgeBase;
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
