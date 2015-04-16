@@ -82,6 +82,37 @@ public class CCSKnowledgeBase{
 		
 		return sks.getId();
 	}
+
+	private static StatefulKnowledgeSession setupSession(){
+		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(getKnowledgeBuilderConfiguration()); 
+
+		//TODO: hardcoded the rules for now.
+		addDrl(kbuilder, "actv/ccs/rules/start/CoolingDown.drl");
+		addDrl(kbuilder, "actv/ccs/rules/start/Start.drl");
+		addDrl(kbuilder, "actv/ccs/rules/start/InitializeCichlid.drl");
+		addDrl(kbuilder, "actv/ccs/rules/start/Calm.drl");
+		addDrl(kbuilder, "actv/ccs/rules/idle/Idle.drl");
+		addDrl(kbuilder, "actv/ccs/rules/idle/Move.drl");
+
+		addBpmn(kbuilder, "actv/ccs/flow/start.bpmn");
+		addBpmn(kbuilder, "actv/ccs/flow/idle.bpmn");
+		addBpmn(kbuilder, "actv/ccs/flow/swim.bpmn");
+		
+		if (kbuilder.hasErrors()){
+            log.error(kbuilder.getErrors().toString());
+            throw new RuntimeException(kbuilder.getErrors().toString());
+        }
+		
+		KnowledgeBase kb = KnowledgeBaseFactory.newKnowledgeBase(getKnowledgeBaseConfiguration());
+		
+		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
+		
+		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
+
+		addEventListeners(sks);
+		
+		return sks;
+	}
 	
 	private static void startTheSession(StatefulKnowledgeSession sks){
 		if(sessionThread == null){
@@ -118,37 +149,6 @@ public class CCSKnowledgeBase{
 			return sessionThread.getStatefulKnowledgeSession().getId();
 		}
 		return -1;
-	}
-	
-	private static StatefulKnowledgeSession setupSession(){
-		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(getKnowledgeBuilderConfiguration()); 
-
-		//TODO: hardcoded the rules for now.
-		addDrl(kbuilder, "actv/ccs/rules/start/CoolingDown.drl");
-		addDrl(kbuilder, "actv/ccs/rules/start/Start.drl");
-		addDrl(kbuilder, "actv/ccs/rules/start/InitializeCichlid.drl");
-		addDrl(kbuilder, "actv/ccs/rules/start/Calm.drl");
-		addDrl(kbuilder, "actv/ccs/rules/idle/Idle.drl");
-		addDrl(kbuilder, "actv/ccs/rules/idle/Move.drl");
-
-		addBpmn(kbuilder, "actv/ccs/flow/start.bpmn");
-		addBpmn(kbuilder, "actv/ccs/flow/idle.bpmn");
-		addBpmn(kbuilder, "actv/ccs/flow/swim.bpmn");
-		
-		if (kbuilder.hasErrors()){
-            log.error(kbuilder.getErrors().toString());
-            throw new RuntimeException(kbuilder.getErrors().toString());
-        }
-		
-		KnowledgeBase kb = KnowledgeBaseFactory.newKnowledgeBase(getKnowledgeBaseConfiguration());
-		
-		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
-		
-		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
-
-		addEventListeners(sks);
-		
-		return sks;
 	}
 	
 	private static void addEventListeners(StatefulKnowledgeSession sks){
