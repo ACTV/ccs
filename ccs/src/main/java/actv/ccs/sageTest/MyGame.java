@@ -657,11 +657,13 @@ public class MyGame extends BaseGame {
 	}
 	public void createBunkAssFishTank()
 	{
+	//	 Texture tex = TextureManager.loadTexture2D("sky.jpg");
 	      // add a rectangle, and turn it into a plane
 	      ground = new Rectangle(200, 200);
 	      ground.rotate(90, new Vector3D(1,0,0));
 	      ground.translate(101.0f,-2f,101.0f);
 	      ground.setColor(Color.orange);
+	//      ground.setTexture(tex);
 	      addGameWorldObject(ground);
 	      ground.updateWorldBound();
 	      
@@ -805,34 +807,29 @@ public class MyGame extends BaseGame {
 			String id = rs.getString("fishID"); //Field from database ex. FishA, FishB
 			int idS =  Integer.parseInt(id);
 
+			/*
+			 * 	public Point3D returnTargetPos()
+	{
+		return new Point3D(target.getWorldTranslation().getCol(3));
+	}
+			 */
 				
 			if (id.equals("1"))
 			{
-				/*	if (cichlidA.getWorldBound().intersects(frontWall.getWorldBound())) 
+				if (frontWall.getWorldBound().contains(new Point3D(cichlidA.getWorldTranslation().getCol(3)))) 
 				{
 					System.out.println("hit the frontwall");
 				}
-				if (cichlidA.getWorldBound().intersects(backWall.getWorldBound())) 
+				
+			
+				// object collision example
+				if (largePlant.getWorldBound().intersects(cichlidA.getWorldBound()))
 				{
-					System.out.println("hit the backwall");
+					System.out.println("MAKE THIS THING GO SLOWER!!!");
+					cichlidA.translate(0, 0, -1f); // make the cichlid go in reverse
+					cichlidA.updateWorldBound();
 				}
-				if (cichlidA.getWorldBound().intersects(leftWall.getWorldBound())) 
-				{
-					System.out.println("hit the leftwall");
-				}
-				if (cichlidA.getWorldBound().intersects(rightWall.getWorldBound())) 
-				{
-					System.out.println("hit the rightwall");
-				}
-				if (cichlidA.getWorldBound().intersects(ceiling.getWorldBound())) 
-				{
-					System.out.println("hit the ceilingwall");
-				}
-				if (cichlidA.getWorldBound().intersects(ground.getWorldBound())) 
-				{
-					System.out.println("hit the groundwall");
-				}
-			*/	
+				
 			}
 			else if (id.equals("2"))
 			{
