@@ -1,5 +1,8 @@
 package actv.ccs.sageTest;
 
+import graphicslib3D.Point3D;
+import graphicslib3D.Vector3D;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -9,6 +12,7 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import actv.ccs.model.CCSMemoryObject;
+import actv.ccs.model.IMovable;
 import actv.ccs.model.type.FishState;
 import sage.scene.TriMesh;
 
@@ -16,9 +20,8 @@ public class TestCichlid extends TriMesh implements PropertyChangeSupportZ,
 		CCSMemoryObject {
 
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-	private double xLoc, yLoc; // location stuff test
-	private double startX, startY;
-	private int direction;
+	private Point3D location;
+	private Vector3D direction;
 	private FishState state;
 	private float aggroLevel;
 	private float baseAggroLevel;
@@ -108,7 +111,7 @@ public class TestCichlid extends TriMesh implements PropertyChangeSupportZ,
 		return gender;
 	}
 
-	public void setDirection(int direction) {
+	public void setDirection(Vector3D direction) {
 		this.direction = direction;
 	}
 
@@ -172,41 +175,20 @@ public class TestCichlid extends TriMesh implements PropertyChangeSupportZ,
 		this.idleWaitTime = idleWaitTime;
 	}
 
-	public void setY(double Y) {
-		yLoc = Y;
+	public void setLocation(Point3D location){
+		this.location = location;
+	}
+	
+	public void setlocation(double x, double y, double z){
+		this.location = new Point3D(x, y, z);
+	}
+	
+	public Point3D getLocation(){
+		return this.location;
 	}
 
-	public double getY() {
-		return yLoc;
-	}
-
-	public void setX(double X) {
-		xLoc = X;
-	}
-
-	public double getX() {
-		return xLoc;
-	}
-
-	public int getDirection() // accessors and mutators
-	{
+	public Vector3D getDirection(){ // accessors and mutators
 		return direction;
-	}
-
-	public void setStartY(double Y) {
-		startY = Y;
-	}
-
-	public double getStartY() {
-		return startY;
-	}
-
-	public void setStartX(double X) {
-		startX = X;
-	}
-
-	public double getStartX() {
-		return startX;
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {

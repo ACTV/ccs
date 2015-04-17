@@ -1,0 +1,35 @@
+package actv.ccs.rules.idle;
+
+import actv.ccs.sageTest.MoveActionFactory;
+import actv.ccs.sageTest.TestCichlid;
+import actv.ccs.model.type.FishState;
+import actv.ccs.fact.Auditor;
+import java.util.Random;
+
+rule "Swim"
+	ruleflow-group "swim"
+	
+	timer(int: 5s)
+	
+	when
+		$auditor : Auditor()
+		
+		$cc : TestCichlid(state == FishState.IDLE);
+		
+	then
+		Random r = new Random();
+		double p = r.nextDouble();
+		System.out.println("Swim: " + p);
+	
+		
+		if(p < .4){
+			MoveActionFactory.moveForward($cc, $cc.getBaseSpeed());
+			update($cc);
+			System.out.println("Swimming forward...");
+			
+			modify($auditor){
+				getRulesFired().add(drools.getRule().getName());
+			}
+		}
+		
+end
