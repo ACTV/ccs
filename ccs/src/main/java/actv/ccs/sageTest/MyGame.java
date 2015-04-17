@@ -36,6 +36,7 @@ import sage.scene.shape.Cylinder;
 import sage.scene.shape.Line;
 import sage.scene.shape.Pyramid;
 import sage.scene.shape.Rectangle;
+import sage.scene.state.RenderState;
 import sage.scene.state.RenderState.RenderStateType;
 import sage.scene.state.TextureState;
 import sage.terrain.AbstractHeightMap;
@@ -842,7 +843,16 @@ public class MyGame extends BaseGame {
 		ground.rotate(90, new Vector3D(1, 0, 0));
 		ground.translate(101.0f, -2f, 101.0f);
 		ground.setColor(Color.orange);
-		ground.setTexture(tex);
+		/*
+		// testing out new stuff
+		TextureState grassState;
+		tex.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
+		grassState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
+		grassState.setTexture(tex, 0);
+		grassState.setEnabled(true);
+		
+		ground.setRenderState(grassState);
+		*/
 		addGameWorldObject(ground);
 		ground.updateWorldBound();
 
@@ -945,16 +955,62 @@ public class MyGame extends BaseGame {
 				if (s == cichlidA) {
 					// s.translate(0, 0, .1f);
 					// s.updateWorldBound();
+					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+					if (loc.getX() > 200 || loc.getX() < 0.0)
+					{
+						System.out.println("X BOUNDS");
+						
+					}
+					if (loc.getY() > 200 || loc.getY() < 0.0)
+					{
+						System.out.println("Y BOUNDS");
+						
+					}
+					if (loc.getZ() > 200 || loc.getZ() < 0.0)
+					{
+						System.out.println("Z BOUNDS");
+						
+					}
+					
+					
 				}
 				if (s == cichlidB) {
 					// call move stuff here
-					s.translate(0, 0, -.1f);
-					s.updateWorldBound();
+					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+					if (loc.getX() > 200 || loc.getX() < 0.0)
+					{
+						System.out.println("X BOUNDS");
+						
+					}
+					if (loc.getY() > 200 || loc.getY() < 0.0)
+					{
+						System.out.println("Y BOUNDS");
+						
+					}
+					if (loc.getZ() > 200 || loc.getZ() < 0.0)
+					{
+						System.out.println("Z BOUNDS");
+						
+					}
 				}
 				if (s == cichlidC) {
 					// call move stuff here
-					s.translate(0, 0.1f, 0.1f);
-					s.updateWorldBound();
+					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+					if (loc.getX() > 200 || loc.getX() < 0.0)
+					{
+						System.out.println("X BOUNDS");
+						
+					}
+					if (loc.getY() > 200 || loc.getY() < 0.0)
+					{
+						System.out.println("Y BOUNDS");
+						
+					}
+					if (loc.getZ() > 200 || loc.getZ() < 0.0)
+					{
+						System.out.println("Z BOUNDS");
+						
+					}
 				}
 
 			}
@@ -968,6 +1024,9 @@ public class MyGame extends BaseGame {
 		 * score1 += 100; CrashEvent newCrash = new CrashEvent(numCrashes);
 		 * removeGameWorldObject(tpt); eventMgr.triggerEvent(newCrash); }
 		 */
+		
+		
+		
 
 		try {
 			conn = DriverManager
@@ -986,11 +1045,6 @@ public class MyGame extends BaseGame {
 				 */
 
 				if (id.equals("1")) {
-					if (frontWall.getWorldBound().contains(
-							new Point3D(cichlidA.getWorldTranslation()
-									.getCol(3)))) {
-						//System.out.println("hit the frontwall");
-					}
 
 					// object collision example
 //					if (((TriMesh)largePlant).getWorldBound().intersects(
@@ -1002,56 +1056,10 @@ public class MyGame extends BaseGame {
 //					}
 
 				} else if (id.equals("2")) {
-					if (cichlidB.getWorldBound().intersects(
-							frontWall.getWorldBound())) {
-						//System.out.println("hit the frontwall");
-					}
-					if (cichlidB.getWorldBound().intersects(
-							backWall.getWorldBound())) {
-						///System.out.println("hit the backwall");
-					}
-					if (cichlidB.getWorldBound().intersects(
-							leftWall.getWorldBound())) {
-					//	System.out.println("hit the leftwall");
-					}
-					if (cichlidB.getWorldBound().intersects(
-							rightWall.getWorldBound())) {
-						//System.out.println("hit the rightwall");
-					}
-					if (cichlidB.getWorldBound().intersects(
-							ceiling.getWorldBound())) {
-						//System.out.println("hit the ceilingwall");
-					}
-					if (cichlidB.getWorldBound().intersects(
-							ground.getWorldBound())) {
-						//System.out.println("hit the groundwall");
-					}
+
 
 				} else if (id.equals("3")) {
-					if (cichlidC.getWorldBound().intersects(
-							frontWall.getWorldBound())) {
-						//System.out.println("hit the frontwall");
-					}
-					if (cichlidC.getWorldBound().intersects(
-							backWall.getWorldBound())) {
-						//System.out.println("hit the backwall");
-					}
-					if (cichlidC.getWorldBound().intersects(
-							leftWall.getWorldBound())) {
-						//System.out.println("hit the leftwall");
-					}
-					if (cichlidC.getWorldBound().intersects(
-							rightWall.getWorldBound())) {
-						//System.out.println("hit the rightwall");
-					}
-					if (cichlidC.getWorldBound().intersects(
-							ceiling.getWorldBound())) {
-						//System.out.println("hit the ceilingwall");
-					}
-					if (cichlidC.getWorldBound().intersects(
-							ground.getWorldBound())) {
-						//System.out.println("hit the groundwall");
-					}
+
 
 				}
 
