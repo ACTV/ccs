@@ -9,11 +9,11 @@ import graphicslib3D.Vector3D;
 import graphicslib3D.Matrix3D;
 import sage.scene.SceneNode;
 import sage.scene.shape.*;
-public class UpForwardAction extends AbstractInputAction{ 
+public class DownBackAction extends AbstractInputAction{ 
    private SceneNode s;
    private Matrix3D sM;
    private float speed = 0.01f;
-   public UpForwardAction(SceneNode sn){ 
+   public DownBackAction(SceneNode sn){ 
       s = sn;
       sM = s.getLocalTranslation();
    }
@@ -23,7 +23,7 @@ public class UpForwardAction extends AbstractInputAction{
       s.updateWorldBound();
       */
 	   Matrix3D rot = s.getLocalRotation();
-	   Vector3D dir = new Vector3D(0,1,1);
+	   Vector3D dir = new Vector3D(0,-1,-1);
 	   dir = dir.mult(rot);
 	   dir.scale((double)(speed * time));
 	   s.translate((float)dir.getX(),(float)dir.getY(),(float)dir.getZ());

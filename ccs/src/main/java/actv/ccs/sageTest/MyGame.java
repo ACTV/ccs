@@ -12,10 +12,13 @@ import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.type.FishState;
 import actv.ccs.sageTest.actions.BackwardAction;
+import actv.ccs.sageTest.actions.DownBackAction;
+import actv.ccs.sageTest.actions.DownForwardAction;
 import actv.ccs.sageTest.actions.ForwardAction;
 import actv.ccs.sageTest.actions.LeftAction;
 import actv.ccs.sageTest.actions.QuitAction;
 import actv.ccs.sageTest.actions.RightAction;
+import actv.ccs.sageTest.actions.UpBackAction;
 import actv.ccs.sageTest.actions.UpForwardAction;
 import graphicslib3D.Matrix3D;
 import graphicslib3D.Point3D;
@@ -821,8 +824,9 @@ public class MyGame extends BaseGame {
 		// IAction moveRightO = new RightAction(cameraGuy);
 		
 		IAction upForwardA = new UpForwardAction(cichlidA);
-		
-
+		IAction upBackA = new UpBackAction(cichlidA);
+		IAction downForwardA = new DownForwardAction(cichlidA);
+		IAction downBackA = new DownBackAction(cichlidA);
 		IAction quitGame = new QuitAction(this);
 
 		im.associateAction(kbName,
@@ -844,7 +848,16 @@ public class MyGame extends BaseGame {
 
 		
 		im.associateAction(kbName,
-				net.java.games.input.Component.Identifier.Key._1, upForwardA,
+				net.java.games.input.Component.Identifier.Key.NUMPAD9, upForwardA,
+				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		im.associateAction(kbName,
+				net.java.games.input.Component.Identifier.Key.NUMPAD7, upBackA,
+				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		im.associateAction(kbName,
+				net.java.games.input.Component.Identifier.Key.NUMPAD3, downForwardA,
+				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		im.associateAction(kbName,
+				net.java.games.input.Component.Identifier.Key.NUMPAD1, downBackA,
 				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 	}
 
