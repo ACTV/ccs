@@ -16,6 +16,7 @@ import actv.ccs.sageTest.actions.ForwardAction;
 import actv.ccs.sageTest.actions.LeftAction;
 import actv.ccs.sageTest.actions.QuitAction;
 import actv.ccs.sageTest.actions.RightAction;
+import actv.ccs.sageTest.actions.UpForwardAction;
 import graphicslib3D.Matrix3D;
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
@@ -814,6 +815,9 @@ public class MyGame extends BaseGame {
 		// IAction moveRightB = new RightAction(cichlidB);
 		// IAction moveRightC = new RightAction(cichlidC);
 		// IAction moveRightO = new RightAction(cameraGuy);
+		
+		IAction upForwardA = new UpForwardAction(cichlidA);
+		
 
 		IAction quitGame = new QuitAction(this);
 
@@ -834,6 +838,10 @@ public class MyGame extends BaseGame {
 				net.java.games.input.Component.Identifier.Key.D, moveRightA,
 				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 
+		
+		im.associateAction(kbName,
+				net.java.games.input.Component.Identifier.Key._1, upForwardA,
+				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 	}
 
 	public void createFishTankWalls() {
