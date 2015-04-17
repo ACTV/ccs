@@ -93,6 +93,8 @@ public class CCSKnowledgeBase{
 		addDrl(kbuilder, "actv/ccs/rules/start/Calm.drl");
 		addDrl(kbuilder, "actv/ccs/rules/idle/Idle.drl");
 		addDrl(kbuilder, "actv/ccs/rules/idle/Move.drl");
+		addDrl(kbuilder, "actv/ccs/rules/idle/TestMove.drl");
+		addDrl(kbuilder, "actv/ccs/rules/idle/Swim.drl");
 
 		addBpmn(kbuilder, "actv/ccs/flow/start.bpmn");
 		addBpmn(kbuilder, "actv/ccs/flow/idle.bpmn");

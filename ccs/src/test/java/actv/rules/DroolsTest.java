@@ -1,7 +1,6 @@
 package actv.rules;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.drools.KnowledgeBase;
@@ -11,7 +10,6 @@ import org.drools.command.CommandFactory;
 import org.drools.event.process.ProcessEventListener;
 import org.drools.event.rule.AgendaEventListener;
 import org.drools.event.rule.WorkingMemoryEventListener;
-import org.drools.runtime.CommandExecutor;
 import org.drools.runtime.StatelessKnowledgeSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +40,6 @@ public class DroolsTest{
 	public void executeStateful(long threadSleep, ArrayList<CCSMemoryObject> objects){
 			
 		CCSKnowledgeBase.executeInfiniteSession(drl, bpmn, startProc, objects);
-
 		try {
 			Thread.sleep(threadSleep);
 		} catch (InterruptedException e) {

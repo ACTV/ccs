@@ -572,7 +572,9 @@ public class MyGame extends BaseGame {
 						//TODO: temporary
 						cichlidA.setBaseSpeed(3f);
 						cichlidA.setBaseCautionLevel(4f);
-						cichlidA.setDirection(100);
+						cichlidA.setBaseCautionLevel(4f);
+						cichlidA.setDirection(new Vector3D(1,1,0));
+						cichlidA.setlocation(xStartW,  yStartY, zStartZ);
 						cichlidA.setState(FishState.IDLE);
 						//
 						Matrix3D cichlidAT = cichlidA.getLocalTranslation(); // this
@@ -638,7 +640,8 @@ public class MyGame extends BaseGame {
 						//TODO: temporary
 						cichlidB.setBaseSpeed(3f);
 						cichlidB.setBaseCautionLevel(4f);
-						cichlidB.setDirection(20);
+						cichlidB.setDirection(new Vector3D(1,1,1));
+						cichlidB.setlocation(xStartW,  yStartY, zStartZ);
 						cichlidB.setState(FishState.IDLE);
 						//
 						Matrix3D cichlidBT = cichlidB.getLocalTranslation(); // this
@@ -704,7 +707,8 @@ public class MyGame extends BaseGame {
 						//TODO: temporary
 						cichlidC.setBaseSpeed(3f);
 						cichlidC.setBaseCautionLevel(4f);
-						cichlidC.setDirection(100);
+						cichlidC.setDirection(new Vector3D(-.5,.8,.1));
+						cichlidC.setlocation(xStartW,  yStartY, zStartZ);
 						cichlidC.setState(FishState.IDLE);
 						//
 						
