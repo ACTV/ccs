@@ -73,6 +73,7 @@ public class MyGame extends BaseGame {
 			xEndtoZPart, xxPart, finishPart;
 	private RuleEngineRunner runner;
 	private ArrayList<CCSMemoryObject> objs;
+	private boolean largePotC, mediumPotC, smallPotC, largePlantC, mediumPlantC, smallPlantC;
 
 	{
 		objs = new ArrayList<CCSMemoryObject>();
@@ -191,6 +192,13 @@ public class MyGame extends BaseGame {
 		addGameWorldObject(xAxis);
 		addGameWorldObject(yAxis);
 		addGameWorldObject(zAxis);
+		
+		largePlantC = false;
+		mediumPlantC = false;
+		smallPlantC = false;
+		largePotC = false;
+		mediumPotC = false;
+		smallPotC = false;				
 
 	}
 
@@ -268,6 +276,7 @@ public class MyGame extends BaseGame {
 						largePlant.updateLocalBound();
 						largePlant.updateGeometricState(0, true);
 						largePlant.updateWorldBound();
+						largePlantC = true;
 
 					}
 				} else if (id.equals("2")) {
@@ -318,6 +327,7 @@ public class MyGame extends BaseGame {
 						mediumPlant.updateLocalBound();
 						mediumPlant.updateGeometricState(0, true);
 						mediumPlant.updateWorldBound();
+						mediumPlantC = true;
 
 					}
 				} else if (id.equals("3")) {
@@ -370,6 +380,7 @@ public class MyGame extends BaseGame {
 						smallPlant.updateLocalBound();
 						smallPlant.updateGeometricState(0, true);
 						smallPlant.updateWorldBound();
+						smallPlantC = true;
 
 					}
 				} else if (id.equals("4")) {
@@ -419,6 +430,7 @@ public class MyGame extends BaseGame {
 						largePot.updateLocalBound();
 						largePot.updateGeometricState(0, true);
 						largePot.updateWorldBound();
+						largePotC = true;
 
 					}
 				} else if (id.equals("5")) {
@@ -468,6 +480,7 @@ public class MyGame extends BaseGame {
 						mediumPot.updateLocalBound();
 						mediumPot.updateGeometricState(0, true);
 						mediumPot.updateWorldBound();
+						mediumPotC = true;
 
 					}
 				} else if (id.equals("6")) {
@@ -517,6 +530,7 @@ public class MyGame extends BaseGame {
 						smallPot.updateLocalBound();
 						smallPot.updateGeometricState(0, true);
 						smallPot.updateWorldBound();
+						this.smallPotC = true;
 
 					}
 				}
@@ -995,6 +1009,13 @@ public class MyGame extends BaseGame {
 					{
 						System.out.println("Z BOUNDS");
 						
+					}
+					if (largePotC == true)
+					{
+						if (s.getWorldBound().intersects(largePot.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
 					}
 					
 					
