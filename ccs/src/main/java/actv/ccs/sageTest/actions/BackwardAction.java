@@ -14,14 +14,21 @@ public class BackwardAction extends AbstractInputAction{
    private SceneNode s;
    private Matrix3D sM;
 
-   public BackwardAction (SceneNode a){ 
-      s = a;
+   private float speed = 0.01f;
+   public BackwardAction(SceneNode sn){ 
+      s = sn;
       sM = s.getLocalTranslation();
    }
    public void performAction(float time, Event e){
-      sM.translate(0,0,-0.1f);
+      /* sM.translate(0,0,-0.1f);
       s.setLocalTranslation(sM);
       s.updateWorldBound();
-      
+      */
+	   Matrix3D rot = s.getLocalRotation();
+	   Vector3D dir = new Vector3D(0,0,-1);
+	   dir = dir.mult(rot);
+	   dir.scale((double)(speed * time));
+	   s.translate((float)dir.getX(),(float)dir.getY(),(float)dir.getZ());
+	   s.updateWorldBound();
    }
 }
