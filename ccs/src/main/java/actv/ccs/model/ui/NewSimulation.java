@@ -2,6 +2,7 @@ package actv.ccs.model.ui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Logger;
 import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
@@ -876,8 +878,17 @@ public class NewSimulation extends JFrame {
 	
 	public void CloseJFrame()
 	{
+		try {
+		System.out.println("WE DOIN STUFF");
+		ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/C", "run.bat");
+		Process p = pb.start();
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		super.dispose();
 		new MyGame().start();
-		
+
 	}
 }
