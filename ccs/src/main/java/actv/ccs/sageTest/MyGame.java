@@ -413,7 +413,7 @@ public class MyGame extends BaseGame {
 																				// position
 						largePotT.translate(xStartW, yStartY, zStartZ);
 						largePot.setLocalTranslation(largePotT);
-						Matrix3D largePotS = largePlant.getLocalScale(); // this
+						Matrix3D largePotS = largePot.getLocalScale(); // this
 																			// is
 																			// for
 																			// size
