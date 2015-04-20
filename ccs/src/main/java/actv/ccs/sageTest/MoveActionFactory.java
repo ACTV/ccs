@@ -18,6 +18,7 @@ public class MoveActionFactory {
 		dir = dir.mult(rot);
 		dir.scale((double) (speed * 1));
 		s.translate((float) dir.getX(), (float) dir.getY(), (float) dir.getZ());
+		((TestCichlid)s).setlocation(dir.getX(), dir.getY(), dir.getZ());
 		s.updateWorldBound();
 	}
 	

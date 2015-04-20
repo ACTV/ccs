@@ -72,12 +72,8 @@ public class MyGame extends BaseGame {
 	private Line yAxis1, zYPAxis, zyPtoxEnd3, pPart, zPart, yEndtoZPart,
 			xEndtoZPart, xxPart, finishPart;
 	private RuleEngineRunner runner;
-	private ArrayList<CCSMemoryObject> objs;
+	private ArrayList<CCSMemoryObject> objs = new ArrayList<CCSMemoryObject>();
 	private boolean largePotC, mediumPotC, smallPotC, largePlantC, mediumPlantC, smallPlantC;
-
-	{
-		objs = new ArrayList<CCSMemoryObject>();
-	}
 
 	public void initGame() {
 		initObjects();
