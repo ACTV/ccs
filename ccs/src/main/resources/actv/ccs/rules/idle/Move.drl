@@ -7,7 +7,7 @@ import actv.ccs.fact.Auditor;
 import java.util.Random;
 
 
-rule "Move Test"
+rule "Move"
 	ruleflow-group "swim"
 	
 	// Chance to move every 4 seconds
