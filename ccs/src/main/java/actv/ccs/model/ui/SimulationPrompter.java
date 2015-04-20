@@ -1,13 +1,24 @@
 package actv.ccs.model.ui;
 
 import javax.swing.JFrame;
+
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import actv.ccs.sageTest.MyGame;
 
 public class SimulationPrompter extends JFrame {
 	
@@ -33,6 +44,24 @@ public class SimulationPrompter extends JFrame {
 		springLayout.putConstraint(SpringLayout.NORTH, btnCreateYourOwn, 18, SpringLayout.SOUTH, lblPickAndStart);
 		springLayout.putConstraint(SpringLayout.WEST, btnCreateYourOwn, 10, SpringLayout.WEST, getContentPane());
 		getContentPane().add(btnCreateYourOwn);
+		btnCreateYourOwn.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e)
+			{
+		
+				try {
+					NewSimulation newSim = new NewSimulation();
+				} catch (SecurityException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				shutDown();
+				
+			}
+		});
 		
 		JButton btnChooseFromA = new JButton("Choose from a Preexisting Scenario");
 		springLayout.putConstraint(SpringLayout.NORTH, btnChooseFromA, 26, SpringLayout.SOUTH, btnCreateYourOwn);
@@ -87,5 +116,9 @@ public class SimulationPrompter extends JFrame {
 		getContentPane().add(btnRunSimulation);
 		
 		this.setVisible(true);	
+	}
+	public void shutDown()
+	{
+			super.dispose();
 	}
 }

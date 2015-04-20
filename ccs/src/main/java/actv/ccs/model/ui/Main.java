@@ -23,7 +23,7 @@ public class Main {
 	
 	//	LoadWindow loadWindow = new LoadWindow();
 	//	SaveWindow newSW = new SaveWindow();
-		NewSimulation newS = new NewSimulation();
+	//	NewSimulation newS = new NewSimulation();
 		SimulationPrompter prompterTest = new SimulationPrompter();
 	//	new MyGame().start();
 	//	RunSimulation testRun = new RunSimulation();
