@@ -1022,7 +1022,8 @@ public class MyGame extends BaseGame {
 	
 	if (timeCompare >= simulationTime)
 	{
-		System.out.println("RIGHT HERE IS WHERE I STOP EVERYTHING!!!");
+	 //	System.out.println("RIGHT HERE IS WHERE I STOP EVERYTHING!!!");
+	// this works	
 	}
 	
 		super.update(time);
@@ -1035,6 +1036,7 @@ public class MyGame extends BaseGame {
 				if (s == cichlidA) {
 					// s.translate(0, 0, .1f);
 					// s.updateWorldBound();
+					// bound collision
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
@@ -1051,11 +1053,64 @@ public class MyGame extends BaseGame {
 						System.out.println("Z BOUNDS");
 						
 					}
+					// object collision
 					if (largePotC == true)
 					{
-						if (s.getWorldBound().intersects(largePot.getWorldBound()))
+						if (cichlidA.getWorldBound().intersects(largePot.getWorldBound()))
 						{
 							System.out.println("mothafucking collisions");
+						}
+					}
+					if (largePlantC == true)
+					{
+						if (cichlidA.getWorldBound().intersects(largePlant.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (mediumPotC == true)
+					{
+						if (cichlidA.getWorldBound().intersects(mediumPot.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (mediumPlantC == true)
+					{
+						if (cichlidA.getWorldBound().intersects(mediumPlant.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (smallPlantC == true)
+					{
+						if (cichlidA.getWorldBound().intersects(smallPlant.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (smallPotC == true)
+					{
+						if (cichlidA.getWorldBound().intersects(smallPot.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					// cichlid collision
+					if (cichlidB != null)
+					{
+						if (cichlidA.getWorldBound().intersects(cichlidB.getWorldBound()))
+						{
+							System.out.println("a hits b");
+							// this is where shit goes down
+						}
+					}
+					if (cichlidC != null)
+					{
+						if (cichlidA.getWorldBound().intersects(cichlidC.getWorldBound()))
+						{
+							System.out.println("a hits c");
+							// this is where shit goes down
 						}
 					}
 					
@@ -1079,6 +1134,65 @@ public class MyGame extends BaseGame {
 						System.out.println("Z BOUNDS");
 						
 					}
+					if (largePotC == true)
+					{
+						if (cichlidB.getWorldBound().intersects(largePot.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (largePlantC == true)
+					{
+						if (cichlidB.getWorldBound().intersects(largePlant.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (mediumPotC == true)
+					{
+						if (cichlidB.getWorldBound().intersects(mediumPot.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (mediumPlantC == true)
+					{
+						if (cichlidB.getWorldBound().intersects(mediumPlant.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (smallPlantC == true)
+					{
+						if (cichlidB.getWorldBound().intersects(smallPlant.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (smallPotC == true)
+					{
+						if (cichlidB.getWorldBound().intersects(smallPot.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					// cichlid collision
+					if (cichlidA != null)
+					{
+						if (cichlidB.getWorldBound().intersects(cichlidA.getWorldBound()))
+						{
+							System.out.println("b hits a");
+							// this is where shit goes down
+						}
+					}
+					if (cichlidC != null)
+					{
+						if (cichlidB.getWorldBound().intersects(cichlidC.getWorldBound()))
+						{
+							System.out.println("b hits c");
+							// this is where shit goes down
+						}
+					}
 				}
 				if (s == cichlidC) {
 					// call move stuff here
@@ -1097,6 +1211,65 @@ public class MyGame extends BaseGame {
 					{
 						System.out.println("Z BOUNDS");
 						
+					}
+					if (largePotC == true)
+					{
+						if (cichlidC.getWorldBound().intersects(largePot.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (largePlantC == true)
+					{
+						if (cichlidC.getWorldBound().intersects(largePlant.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (mediumPotC == true)
+					{
+						if (cichlidC.getWorldBound().intersects(mediumPot.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (mediumPlantC == true)
+					{
+						if (cichlidC.getWorldBound().intersects(mediumPlant.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (smallPlantC == true)
+					{
+						if (cichlidC.getWorldBound().intersects(smallPlant.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					if (smallPotC == true)
+					{
+						if (cichlidC.getWorldBound().intersects(smallPot.getWorldBound()))
+						{
+							System.out.println("mothafucking collisions");
+						}
+					}
+					// cichlid collision
+					if (cichlidA != null)
+					{
+						if (cichlidC.getWorldBound().intersects(cichlidA.getWorldBound()))
+						{
+							System.out.println("c hits a");
+							// this is where shit goes down
+						}
+					}
+					if (cichlidB != null)
+					{
+						if (cichlidC.getWorldBound().intersects(cichlidA.getWorldBound()))
+						{
+							System.out.println("c hits b");
+							// this is where shit goes down
+						}
 					}
 				}
 
