@@ -75,7 +75,9 @@ public class MyGame extends BaseGame {
 	private RuleEngineRunner runner;
 	private ArrayList<CCSMemoryObject> objs = new ArrayList<CCSMemoryObject>();
 	private boolean largePotC, mediumPotC, smallPotC, largePlantC, mediumPlantC, smallPlantC;
-
+	private float simulationTime, time = 0;
+	private HUDString timeString;
+	
 	public void initGame() {
 		initObjects();
 		spawnCichlids();
@@ -86,6 +88,8 @@ public class MyGame extends BaseGame {
 		// createFishTank();
 		createFishTankWalls();
 		startRunner();
+		createHUD();
+		setUpTank();
 	}
 
 	private void startRunner() {
@@ -207,7 +211,40 @@ public class MyGame extends BaseGame {
 		cameraGuy.updateWorldBound();
 
 	}
+	public void createHUD()
+	{
+		timeString = new HUDString("Time = " + time);
+		timeString.setLocation(0, 0.05);
+		addGameWorldObject(timeString);
+		
+	}
+	public void setUpTank()
+	{
 
+		try 
+		{
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+
+			Statement s = conn.createStatement();
+			rs = s.executeQuery("SELECT * FROM [TankData] WHERE ID = 1");
+			while (rs.next()) 
+			{
+				String timeGrab = rs.getString("Time"); // Field from database ex.
+													// FishA, FishB
+				float timeParse = Float.parseFloat(timeGrab);
+
+				simulationTime = timeParse;
+				System.out.println("Here is the simulationTime! " + simulationTime);
+			}
+				
+		}	catch (Exception epp)
+				
+		{
+					epp.printStackTrace();
+		}
+				
+
+	}
 	public void spawnObjects() {
 		try {
 			conn = DriverManager
@@ -974,8 +1011,20 @@ public class MyGame extends BaseGame {
 		addGameWorldObject(floor);
 	}
 
-	public void update(float time) // this will be where the objects will move
+	public void update(float elapsedTimeMS) // this will be where the objects will move
 	{
+		
+		// creating timer thing
+		time += elapsedTimeMS;
+		timeString.setText("Time: " + time/1000);
+		float timeCompare = time/1000;
+
+	
+	if (timeCompare >= simulationTime)
+	{
+		System.out.println("RIGHT HERE IS WHERE I STOP EVERYTHING!!!");
+	}
+	
 		super.update(time);
 		cc.update(time);
 		for (SceneNode s : getGameWorld()) {
