@@ -1,5 +1,7 @@
 package actv.rules;
 
+import graphicslib3D.Vector3D;
+
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -30,7 +32,7 @@ public class CCSKnowledgeBaseTest{
 		cc.setBaseCautionLevel(5.00f);
 		cc.setBaseSpeed(5.00f);
 		cc.setCautionLevel(2f);
-		cc.setDirection(100);
+		cc.setDirection(new Vector3D(1,3,2));
 		cc.setIdleWaitTime(0);
 		
 		auditor = new Auditor();
@@ -40,36 +42,6 @@ public class CCSKnowledgeBaseTest{
 	@After
 	public void printTime(){
 		log.info("Execution time {}", System.currentTimeMillis() - start);
-	}
-	
-//	@Test
-	public void test_Package(){
-		log.info("test_Package:");
-		
-		objs = new ArrayList<CCSMemoryObject>();
-		objs.add(cc);
-		objs.add(auditor);
-		
-		CCSKnowledgeBase.executeInfiniteSession(objs);
-		
-		Assert.assertEquals(FishState.IDLE, cc.getState());
-		Assert.assertTrue(auditor.getRulesFired().size() >= 1);
-	}
-	
-//	@Test
-	public void test_Package_IDLE(){
-		log.info("test_Package:");
-		
-		cc.setState(FishState.IDLE);
-		
-		objs = new ArrayList<CCSMemoryObject>();
-		objs.add(cc);
-		objs.add(auditor);
-		
-		CCSKnowledgeBase.executeInfiniteSession(objs);
-		
-		Assert.assertEquals(FishState.IDLE, cc.getState());
-		Assert.assertTrue(auditor.getRulesFired().size() >= 1);
 	}
 	
 	@Test
@@ -90,16 +62,6 @@ public class CCSKnowledgeBaseTest{
 		}
 		
 		CCSKnowledgeBase.disposeSession();
-		
-		Assert.assertTrue(auditor.getRulesFired().size() >= 1);
-		Assert.assertTrue(auditor.getRulesFired().contains("Cooling Down"));
-		
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	@Test
@@ -123,15 +85,6 @@ public class CCSKnowledgeBaseTest{
 		}
 		
 		CCSKnowledgeBase.disposeSession();
-		
-		Assert.assertEquals(2, auditor.getRulesFired().size());
-		
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 }

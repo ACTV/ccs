@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.CCSMemoryObject;
+import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.ccs.sageTest.actions.BackwardAction;
 import actv.ccs.sageTest.actions.DownBackAction;
@@ -67,7 +68,7 @@ public class MyGame extends BaseGame {
 	private Texture skyThing;
 	private Rectangle ground, leftWall, rightWall, ceiling, backWall,
 			frontWall;
-	private TestCichlid cichlidA, cichlidB, cichlidC;
+	private ConvictCichlid cichlidA, cichlidB, cichlidC;
 	private SceneNode cameraGuy;
 	private Line yAxis1, zYPAxis, zyPtoxEnd3, pPart, zPart, yEndtoZPart,
 			xEndtoZPart, xxPart, finishPart;
@@ -85,7 +86,6 @@ public class MyGame extends BaseGame {
 		// createFishTank();
 		createFishTankWalls();
 		startRunner();
-
 	}
 
 	private void startRunner() {
@@ -578,7 +578,7 @@ public class MyGame extends BaseGame {
 						double zStartZ = Double.parseDouble(zLocS);
 
 						
-						cichlidA = new TestCichlid();
+						cichlidA = new ConvictCichlid();
 						cichlidA.setName(name);
 						cichlidA.setGender(gender);
 						cichlidA.setAggroLevel(aggroW);
@@ -613,11 +613,7 @@ public class MyGame extends BaseGame {
 						cichlidAR.rotateX(30);
 						cichlidA.setLocalRotation(cichlidAR);
 						addGameWorldObject(cichlidA);
-						if (cichlidA == null) {
-							System.out.println("cichlidA is null!?!");
-						} else {
-							objs.add(cichlidA);
-						}
+						objs.add(cichlidA);
 						cichlidA.updateWorldBound();
 
 					}
@@ -646,7 +642,7 @@ public class MyGame extends BaseGame {
 						double yStartY = Double.parseDouble(yLocS);
 						double zStartZ = Double.parseDouble(zLocS);
 
-						cichlidB = new TestCichlid();
+						cichlidB = new ConvictCichlid();
 						cichlidB.setName(name);
 						cichlidB.setGender(gender);
 						cichlidB.setAggroLevel(aggroW);
@@ -712,7 +708,7 @@ public class MyGame extends BaseGame {
 						double yStartY = Double.parseDouble(yLocS);
 						double zStartZ = Double.parseDouble(zLocS);
 
-						cichlidC = new TestCichlid();
+						cichlidC = new ConvictCichlid();
 						cichlidC.setName(name);
 						cichlidC.setGender(gender);
 						cichlidC.setAggroLevel(aggroW);
@@ -983,7 +979,7 @@ public class MyGame extends BaseGame {
 		super.update(time);
 		cc.update(time);
 		for (SceneNode s : getGameWorld()) {
-			if (s instanceof TestCichlid) // here will be where the objects will
+			if (s instanceof ConvictCichlid) // here will be where the objects will
 											// have be able to move, but i will
 											// implement that later.
 			{

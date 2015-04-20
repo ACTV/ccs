@@ -30,8 +30,6 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		fishPoolArr[0] = fishPoolArr[1] = fishPoolArr[2] = 0;
 		getTimer();
 		
-		cichlid = getFromDB();
-		cichlid.addPropertyChangeListener(new CCChangeListener());
 			
 		float [] verts = new float [] {0,1,0,-1,-1,1,1,-1,1,1,-1,-1,-1,-1,-1};
 		
@@ -149,8 +147,8 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		     //   	System.out.println( name + weight + width + height + gender + aggro);
 
 		        	cichlidA = new ConvictCichlid();
-		        	cichlidA.setStartX(xStartW);
-		        	cichlidA.setStartY(yStartY);
+//		        	cichlidA.setStartX(xStartW);
+//		        	cichlidA.setStartY(yStartY);
 		        	cichlidA.setName(name);
 		        	cichlidA.setWeight(weightW);
 		        	cichlidA.setLength(widthW);
@@ -160,10 +158,10 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	cichlidA.setBaseAggroLevel(5);
 		        	cichlidA.setBaseSpeed(5);
 		        	cichlidA.setBaseCautionLevel(0);
-		        	cichlidA.setX(1000); // starting variables
-		        	cichlidA.setY(500);
-		        	cichlidA.setDirection(0);
-		        	cichlidA.setColor(Color.GREEN);
+//		        	cichlidA.setX(1000); // starting variables
+//		        	cichlidA.setY(500);
+//		        	cichlidA.setDirection(0);
+//		        	cichlidA.setColor(Color.GREEN);
 		        	cList.add(cichlidA);
 		        	
 		        	System.out.println("name: " + cichlidA.getName() + "direction start"  + cichlidA.getDirection());
@@ -196,8 +194,8 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		     //   	System.out.println( name + weight + width + height + gender + aggro);
 
 		        	cichlidB = new ConvictCichlid();
-		        	cichlidB.setStartX(xStartW);
-		        	cichlidB.setStartY(yStartY);
+//		        	cichlidB.setStartX(xStartW);
+//		        	cichlidB.setStartY(yStartY);
 		        	cichlidB.setName(name);
 		        	cichlidB.setWeight(weightW);
 		        	cichlidB.setLength(widthW);
@@ -207,8 +205,8 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	cichlidB.setBaseAggroLevel(5);
 		        	cichlidB.setBaseSpeed(5);
 		        	cichlidB.setBaseCautionLevel(0);
-		        	cichlidB.setDirection(100);
-		        	cichlidB.setColor(Color.blue);
+//		        	cichlidB.setDirection(100);
+//		        	cichlidB.setColor(Color.blue);
 		        	cList.add(cichlidB);
 
 				}
@@ -239,8 +237,8 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		     //   	System.out.println( name + weight + width + height + gender + aggro);
 
 		        	cichlidC = new ConvictCichlid();
-		        	cichlidC.setStartX(xStartW);
-		        	cichlidC.setStartY(yStartY);
+//		        	cichlidC.setStartX(xStartW);
+//		        	cichlidC.setStartY(yStartY);
 		        	cichlidC.setName(name);
 		        	cichlidC.setWeight(weightW);
 		        	cichlidC.setLength(widthW);
@@ -250,13 +248,13 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		        	cichlidC.setBaseAggroLevel(5);
 		        	cichlidC.setBaseSpeed(5);
 		        	cichlidC.setBaseCautionLevel(300);
-		        	cichlidC.setX(100); // here is the starting position
-		        	cichlidC.setY(100);
-		        	cichlidC.setDirection(10);
-		        	cichlidC.setColor(Color.red);
+//		        	cichlidC.setX(100); // here is the starting position
+//		        	cichlidC.setY(100);
+//		        	cichlidC.setDirection(10);
+//		        	cichlidC.setColor(Color.red);
 		        	cList.add(cichlidC);
 
-		        	System.out.println("name: " + cichlidC.getName() + "color"  + cichlidC.getColor());
+//		        	System.out.println("name: " + cichlidC.getName() + "color"  + cichlidC.getColor());
 
 				}
 			}
@@ -304,18 +302,7 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 		System.out.println("Fish name is " + name);
 		System.out.println("Fish ID is " + id);
 	}
-	private static ConvictCichlid getFromDB()
-	{
-		ConvictCichlid c = new ConvictCichlid();
-		c.setLocation(new float[] {1,1});
-		c.setState(FishState.NONE);
-		c.setLength(10);
-		c.setHeight(5);
-		c.setWeight(10);
-		c.setName("Shark");
-		c.setCichlidID(0);
-		return c;
-	}
+
 	private static TankObject baseTank()
 	{
 		TankObject t = new TankObject(20, 20, 20, 26, 0, 0, 0);

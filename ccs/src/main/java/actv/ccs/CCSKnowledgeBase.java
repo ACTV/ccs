@@ -37,6 +37,7 @@ public class CCSKnowledgeBase{
 	
 	/**
 	 * Execute the stateful knowledge session on a separate thread. Uses call fireUntilHalt()
+	 * This method does not create a new Thread to execute on.
 	 * @param objs
 	 * @return
 	 */
@@ -76,6 +77,7 @@ public class CCSKnowledgeBase{
 		
 		new Thread(){
 			public void run(){
+				this.setName("Infinite Session 2");
 				startTheSession(sks);
 			}
 		}.start();
@@ -93,7 +95,6 @@ public class CCSKnowledgeBase{
 		addDrl(kbuilder, "actv/ccs/rules/start/Calm.drl");
 		addDrl(kbuilder, "actv/ccs/rules/idle/Idle.drl");
 		addDrl(kbuilder, "actv/ccs/rules/idle/Move.drl");
-		addDrl(kbuilder, "actv/ccs/rules/idle/TestMove.drl");
 		addDrl(kbuilder, "actv/ccs/rules/idle/Swim.drl");
 
 		addBpmn(kbuilder, "actv/ccs/flow/start.bpmn");

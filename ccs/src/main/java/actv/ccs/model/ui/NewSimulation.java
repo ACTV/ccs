@@ -832,7 +832,7 @@ public class NewSimulation extends JFrame {
 	private static ConvictCichlid getFromDB()
 	{
 		ConvictCichlid c = new ConvictCichlid();
-		c.setLocation(new float[] {1,1});
+	//	c.setLocation(new float[] {1,1});
 		c.setState(FishState.NONE);
 		c.setLength(10);
 		c.setHeight(5);

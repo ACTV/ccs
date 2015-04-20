@@ -1,5 +1,7 @@
 package actv.rules.idle;
 
+import graphicslib3D.Vector3D;
+
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -26,7 +28,7 @@ public class MoveTest extends DroolsTest {
 	public void setCC(){
 		cc = new ConvictCichlid();
 		cc.setState(FishState.IDLE);
-		cc.setDirection(100);
+		cc.setDirection(new Vector3D(0,0,1));
 		auditor = new Auditor();
 	}
 	

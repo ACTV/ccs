@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import actv.ccs.CCSKnowledgeBase;
 import actv.ccs.fact.Auditor;
 import actv.ccs.model.CCSMemoryObject;
-import actv.ccs.sageTest.TestCichlid;
+import actv.ccs.model.ConvictCichlid;
 
 /**
  * Singleton CCS Knowledge rule base runner
@@ -47,10 +47,10 @@ public class RuleEngineRunner extends Thread{
 		while(itr.hasNext()){
 			CCSMemoryObject c = itr.next();
 			
-			if(c instanceof TestCichlid){
+			if(c instanceof ConvictCichlid){
 				hasCichlid = true;
-				id = Integer.toString(((TestCichlid)c).getCichlidID());
-				map.put(id, (TestCichlid)c);	
+				id = Integer.toString(((ConvictCichlid)c).getCichlidID());
+				map.put(id, (ConvictCichlid)c);	
 			}
 		}
 

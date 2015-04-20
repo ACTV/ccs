@@ -9,12 +9,12 @@ import org.junit.Test;
 
 import actv.ccs.fact.Auditor;
 import actv.ccs.model.CCSMemoryObject;
+import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
-import actv.ccs.sageTest.TestCichlid;
 import actv.rules.DroolsTest;
 
 public class SwimTest extends DroolsTest {
-	private TestCichlid cc;
+	private ConvictCichlid cc;
 	private Auditor auditor;
 	private ArrayList<CCSMemoryObject> objs;
 	
@@ -26,7 +26,7 @@ public class SwimTest extends DroolsTest {
 	
 	@Before
 	public void setCC(){
-		cc = new TestCichlid();
+		cc = new ConvictCichlid();
 		cc.setState(FishState.IDLE);
 		cc.setDirection(new Vector3D(0,0,1));
 		auditor = new Auditor();

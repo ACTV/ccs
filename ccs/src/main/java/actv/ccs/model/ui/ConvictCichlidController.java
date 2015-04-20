@@ -27,14 +27,6 @@ public class ConvictCichlidController {
 		return cichlid.getState();
 	}
 	
-	public void setFishLocation(float[] l)
-	{
-		cichlid.setLocation(l);
-	}
-	public float[] getFishLocation()
-	{
-		return cichlid.getLocation();
-	}
 	public float getAggro()
 	{
 		return cichlid.getAggroLevel();
@@ -93,7 +85,7 @@ public class ConvictCichlidController {
 	}
 	public void updateView()
 	{
-		world.printData(cichlid.getState(), cichlid.getLocation(), cichlid.getAggroLevel(), cichlid.getLength(), cichlid.getHeight(), cichlid.getWeight(), cichlid.getName(), cichlid.getCichlidID());
+	//	world.printData(cichlid.getState(), cichlid.getLocation(), cichlid.getAggroLevel(), cichlid.getLength(), cichlid.getHeight(), cichlid.getWeight(), cichlid.getName(), cichlid.getCichlidID());
 	}
 	
 }

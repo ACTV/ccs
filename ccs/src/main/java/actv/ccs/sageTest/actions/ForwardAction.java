@@ -1,6 +1,6 @@
 package actv.ccs.sageTest.actions;
 
-import actv.ccs.sageTest.TestCichlid;
+import actv.ccs.model.ConvictCichlid;
 import sage.input.action.AbstractInputAction;
 import sage.app.AbstractGame;
 import net.java.games.input.Event;
@@ -28,7 +28,7 @@ public class ForwardAction extends AbstractInputAction {
 		 */
 		Matrix3D rot = s.getLocalRotation();
 //		Vector3D dir = new Vector3D(0, 0, 1);
-		Vector3D dir = ((TestCichlid)s).getDirection().normalize();
+		Vector3D dir = ((ConvictCichlid)s).getDirection().normalize();
 		dir = dir.mult(rot);
 		dir.scale((double) (speed * time));
 		s.translate((float) dir.getX(), (float) dir.getY(), (float) dir.getZ());

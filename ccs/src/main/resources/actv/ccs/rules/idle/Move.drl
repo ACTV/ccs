@@ -1,16 +1,17 @@
 package actv.ccs.rules.idle;
 
+import actv.ccs.sageTest.MoveActionFactory;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.ccs.fact.Auditor;
 import java.util.Random;
 
 
-rule "Move"
+rule "Move Test"
 	ruleflow-group "swim"
 	
 	// Chance to move every 4 seconds
-	timer(int: 4s)
+	timer(int: 3s)
 	
 	when
 		$auditor :  Auditor()
@@ -19,17 +20,18 @@ rule "Move"
 							  $dir : direction);
 		
 	then
-		Random r = new Random();
+		Random r = new Random(System.currentTimeMillis());
 		double p = r.nextDouble();
-		System.out.println("P: " + p);
+		System.out.println("Move: " + p);
 		
 		if(p < .30){
 			if(r.nextBoolean)
-				$cc.setDirection($dir+30);
+				MoveActionFactory.turn($cc, 30);
 			else
-				$cc.setDirection($dir-30);
+				MoveActionFactory.turn($cc, -30);
+			update($cc);
 				
-			System.out.println("Turned 30 degrees");
+			System.out.println("Turned 30 degrees!");
 			
 			modify($auditor){
 				getRulesFired().add(drools.getRule().getName());
@@ -37,7 +39,6 @@ rule "Move"
 		}else{
 			System.out.println("No Movement");
 		}
-		update($cc);
 end
 
 
