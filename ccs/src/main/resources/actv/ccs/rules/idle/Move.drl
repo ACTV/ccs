@@ -10,14 +10,14 @@ import java.util.Random;
 rule "Move"
 	ruleflow-group "swim"
 	
-	// Chance to move every 4 seconds
-	timer(int: 3s)
+	// Chance to move every 2 seconds
+	timer(int: 2s)
 	
 	when
 		$auditor :  Auditor()
 		
 		$cc : ConvictCichlid( state == FishState.IDLE,
-							  $dir : direction);
+							  $dir : direction)
 		
 	then
 		Random r = new Random(System.currentTimeMillis());

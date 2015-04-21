@@ -4,18 +4,17 @@ import actv.ccs.sageTest.MoveActionFactory;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.ccs.fact.Auditor;
-import sage.scene.TriMesh;
 import java.util.Random;
 
 rule "Swim"
 	ruleflow-group "swim"
 	
-	timer(int: 4s)
+	timer(int: 1s)
 	
 	when
 		$auditor : Auditor()
 		
-		$cc : ConvictCichlid(state == FishState.IDLE);
+		$cc : ConvictCichlid(state == FishState.IDLE)
 		
 	then
 		Random r = new Random();
@@ -24,7 +23,7 @@ rule "Swim"
 	
 		
 		if(p < .4){
-			MoveActionFactory.moveForward((TriMesh)$cc, $cc.getBaseSpeed());
+			MoveActionFactory.moveForward($cc, $cc.getBaseSpeed());
 			update($cc);
 			System.out.println("Swimming forward...");
 			

@@ -97,8 +97,8 @@ public class CCSKnowledgeBase{
 		addDrl(kbuilder, "actv/ccs/rules/idle/Move.drl");
 		addDrl(kbuilder, "actv/ccs/rules/idle/Swim.drl");
 
-		addBpmn(kbuilder, "actv/ccs/flow/start.bpmn");
-		addBpmn(kbuilder, "actv/ccs/flow/idle.bpmn");
+//		addBpmn(kbuilder, "actv/ccs/flow/start.bpmn");
+//		addBpmn(kbuilder, "actv/ccs/flow/idle.bpmn");
 		addBpmn(kbuilder, "actv/ccs/flow/swim.bpmn");
 		
 		if (kbuilder.hasErrors()){
