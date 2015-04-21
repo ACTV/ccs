@@ -24,6 +24,7 @@ import sage.renderer.IRenderer;
 import sage.scene.*;
 import sage.scene.SceneNode.*;
 import sage.scene.shape.*;
+import sage.scene.state.TextureState;
 import sage.terrain.*;
 import sage.texture.*;
 
@@ -79,7 +80,7 @@ public class MyGame extends BaseGame {
 		createPerson();
 		createScene();
 		initActions();
-		createFishTank();
+	//	createFishTank();
 		createFishTankWalls();
 		startRunner();
 		createHUD();
@@ -129,25 +130,25 @@ public class MyGame extends BaseGame {
 		Point3D zEnd = new Point3D(0, 0, 200);
 
 		// base
-		Line xAxis = new Line(origin, xEnd, Color.red, 2);
-		Line yAxis = new Line(origin, yEnd, Color.green, 2);
-		Line zAxis = new Line(origin, zEnd, Color.blue, 2); // Base
+		Line xAxis = new Line(origin, xEnd, Color.black, 2);
+		Line yAxis = new Line(origin, yEnd, Color.black, 2);
+		Line zAxis = new Line(origin, zEnd, Color.black, 2); // Base
 
 		// Line xAxis1 = new Line (xEnd1, xEnd3, Color.cyan, 2);
-		yAxis1 = new Line(xEnd2, xEnd3, Color.GRAY, 2);
+		yAxis1 = new Line(xEnd2, xEnd3, Color.black, 2);
 		zyPtoxEnd3 = new Line(new Point3D(200, 0, 0), new Point3D(200, 200, 0),
-				Color.BLUE, 2);
+				Color.black, 2);
 		pPart = new Line(new Point3D(200, 0, 0), new Point3D(200, 0, 200),
-				Color.green, 2);
+				Color.black, 2);
 		finishPart = new Line(new Point3D(0, 200, 0), new Point3D(200, 200, 0),
-				Color.PINK, 2);
-		yEndtoZPart = new Line(yEnd, new Point3D(0, 200, 200), Color.orange, 2);
+				Color.black, 2);
+		yEndtoZPart = new Line(yEnd, new Point3D(0, 200, 200), Color.black, 2);
 		xEndtoZPart = new Line(new Point3D(0, 200, 200), new Point3D(200, 200,
-				200), Color.orange, 2);
+				200), Color.black, 2);
 		xxPart = new Line(new Point3D(200, 200, 0), new Point3D(200, 200, 200),
-				Color.magenta, 2);
-		zPart = new Line(zEnd, xEnd2, Color.orange, 2);
-		zYPAxis = new Line(zEnd, zyP, Color.gray, 2);
+				Color.black, 2);
+		zPart = new Line(zEnd, xEnd2, Color.black, 2);
+		zYPAxis = new Line(zEnd, zyP, Color.black, 2);
 		// Line zAxis1 = new Line (xEnd3, xEnd1, Color.MAGENTA, 2);
 
 		addGameWorldObject(yAxis1);
@@ -172,7 +173,7 @@ public class MyGame extends BaseGame {
 		addGameWorldObject(xAxis);
 		addGameWorldObject(yAxis);
 		addGameWorldObject(zAxis);
-		
+
 		largePlantC = false;
 		mediumPlantC = false;
 		smallPlantC = false;
@@ -994,14 +995,10 @@ public class MyGame extends BaseGame {
 
 	}
 
-	// private TerrainBlock floor, leftWindowPane, BackWindowPane,
-	// RightWindowPane, ceilingWater;
 	public void createFishTank() // issue with this.
 	{
-		Texture walls = TextureManager.loadTexture2D("lotTest.bmp");
-		skyThing = TextureManager.loadTexture2D("lot_floor.jpg");
 		AbstractHeightMap heightMap = null;
-		heightMap = new ImageBasedHeightMap("floorMountain.jpg");
+		heightMap = new ImageBasedHeightMap("mountains512.jpg");
 		heightMap.load();
 
 		Vector3D scaleFactor = new Vector3D(new Point3D(1, 1, 1));
@@ -1019,7 +1016,7 @@ public class MyGame extends BaseGame {
 			p1Rot.rotateX(-90);
 			floor.setLocalRotation(p1Rot);
 			Texture grassTexture = TextureManager
-					.loadTexture2D("lot_floor.jpg");
+					.loadTexture2D("sky.jpg");
 			grassTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
 
 			floor.setTexture(grassTexture);
@@ -1522,7 +1519,6 @@ public class MyGame extends BaseGame {
 		}
 
 	}
-	/*
-	 * protected void render() { renderer.setCamera(camera1); super.render(); }
-	 */
+
+
 }
