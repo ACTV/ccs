@@ -27,6 +27,20 @@ import sage.scene.shape.*;
 import sage.terrain.*;
 import sage.texture.*;
 
+/*
+ *  Albert to do list 4-21-15
+ *  do 165 lool
+ *  figure out to close the window for test game
+ *  then how to save file ...
+ *  which could be done by adding another table for fish scenario and then when closed, saved all data to there. then you can start a new table 
+ *  do documentation
+ *  user manual
+ *  models if victor doesn't do it ... zz
+ *  
+ *  rules need to be done - with collisions ... make them faster. will look at after i'm done with documentation
+ *  
+ *  for collisions - large plant is getting hit a lot.
+ */
 public class MyGame extends BaseGame {
 
 	IDisplaySystem display;
@@ -65,7 +79,7 @@ public class MyGame extends BaseGame {
 		createPerson();
 		// createScene();
 		initActions();
-		// createFishTank();
+		createFishTank();
 		createFishTankWalls();
 		startRunner();
 		createHUD();
@@ -1043,7 +1057,6 @@ public class MyGame extends BaseGame {
 					// bound collision
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
 		
-					
 					// here is where i will test my newfound collision for spheres
 					
 					Matrix3D cichlidAlocalT = s.getLocalTranslation();
@@ -1074,6 +1087,20 @@ public class MyGame extends BaseGame {
 						}
 					}
 					*/
+					if (largePotC == true)
+					{
+						if (cichlidA.getWorldBound().intersects(largePot.getWorldBound()))
+						{
+							System.out.println("a hit largePot");
+						}
+					}
+					if (largePlantC == true) // ERROR
+					{
+						if (cichlidA.getWorldBound().intersects(largePlant.getWorldBound()))
+						{
+							System.out.println("a hit largePl");
+						}
+					}
 					/*
 					if (largePlantC == true)
 					{
@@ -1085,13 +1112,6 @@ public class MyGame extends BaseGame {
 						}
 					}
 					*/
-					if (largePlantC == true)
-					{
-						if (cichlidA.getWorldBound().intersects(largePlant.getWorldBound()))
-						{
-							System.out.println("a hit large pl");
-						}
-					}
 					if (mediumPotC == true)
 					{
 						if (cichlidA.getWorldBound().intersects(mediumPot.getWorldBound()))
@@ -1177,15 +1197,15 @@ public class MyGame extends BaseGame {
 							System.out.println("b hit largePo");
 						}
 					}
-					/*
-					if (largePlantC == true) // ERROR
+				
+					if (largePlantC == true) 
 					{
 						if (cichlidB.getWorldBound().intersects(largePlant.getWorldBound()))
 						{
 							System.out.println("b hit largePl");
 						}
 					}
-					*/
+					/*
 					if (largePlantC == true)
 					{
 						Point3D largePlantloc = new Point3D(largePlant.getWorldTranslation().getCol(3));
@@ -1195,6 +1215,7 @@ public class MyGame extends BaseGame {
 							System.out.println("b hit large plant");
 						}
 					}
+					*/
 					if (mediumPotC == true)
 					{
 						if (cichlidB.getWorldBound().intersects(mediumPot.getWorldBound()))
@@ -1276,6 +1297,7 @@ public class MyGame extends BaseGame {
 							System.out.println("c hit large pot");
 						}
 					}
+					
 					if (largePlantC == true)
 					{
 						if (cichlidC.getWorldBound().intersects(largePlant.getWorldBound()))
@@ -1283,6 +1305,17 @@ public class MyGame extends BaseGame {
 							System.out.println("c hit large plant");
 						}
 					}
+					/*
+					if (largePlantC == true)
+					{
+						Point3D largePlantloc = new Point3D(largePlant.getWorldTranslation().getCol(3));
+						if ((loc.getX() == largePlantloc.getX()) && (loc.getY() == largePlantloc.getY()) 
+								&& (loc.getZ() == largePlantloc.getZ()) )
+						{
+							System.out.println("C hit large plant");
+						}
+					}
+						*/
 					if (mediumPotC == true)
 					{
 						if (cichlidC.getWorldBound().intersects(mediumPot.getWorldBound()))
