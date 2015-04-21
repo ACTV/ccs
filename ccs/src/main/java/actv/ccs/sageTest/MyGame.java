@@ -917,6 +917,7 @@ public class MyGame extends BaseGame {
 		ground.setTexture(texture);
 
 		   		*/
+		ground.setTexture(texture);
 		fishWalls.addChild(ground);
 		ground.updateWorldBound();
 

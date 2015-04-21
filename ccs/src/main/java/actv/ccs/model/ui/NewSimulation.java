@@ -22,10 +22,8 @@ import actv.ccs.sageTest.MyGame;
 
 public class NewSimulation extends JFrame {
 	
-	private ConvictCichlid cichlid;
 	private TankObject tank;
 	private String cichlidNameZ, objectNameA;
-	private SimulationWorld world;
 	private ConvictCichlidController controller;
 	private MyGame myGame;
 	
@@ -41,7 +39,6 @@ public class NewSimulation extends JFrame {
 	private int tankPlantCount;
 	private int tankTime = 100; // base 100
 	private int fishID = 0;
-	private int fishIDList [];
 	private int i = 0; // figure out where to add the item
 	private String [] poolOfFish;
 	private String cichlidNameA;
@@ -72,25 +69,15 @@ public class NewSimulation extends JFrame {
 	public NewSimulation() throws SecurityException, IOException
 	{
 		
-		cichlid = new ConvictCichlid();
 		tank = new TankObject(20, 20, 20, 26, 0, 0, 0); // array value default tank
-		world = new SimulationWorld();
-		cichlid = getFromDB();
-		
-		// adding new int
-		
-		fishIDList = tank.getFishArr();
 		
 		tankFishCount = tank.getCichlidCount();
 		tankPlantCount = tank.getCichlidCount();
 		
-		controller = new ConvictCichlidController(cichlid, world);
-		
+
 		setTitle("Convict Cichlid Fish Simulator New Simulation Test");
 		setSize(1000,600);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		poolOfFish = new String [] {"addyourownfish", "Stringer Bell", "Marlo Stanfield", "James McNulty", "The Bunk"};
-		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);	
 		// create menu bar
 		JMenuBar b = createJMenu();
 		this.setJMenuBar(b);
@@ -205,31 +192,28 @@ public class NewSimulation extends JFrame {
 
 		        	NameTextField.setText(name);
 					String cichlidNameT = NameTextField.getText().toString();
-					controller.setName(cichlidNameT);
+
 					
 				    WeightTextField.setText(weight);
 					String weightS = WeightTextField.getText().toString();
 					float weightC = Float.parseFloat(weightS);
-					controller.setWeight(weightC);
+
 					
 					WidthTextField.setText(width);
 					String widthS = WidthTextField.getText().toString();
 					float widthC = Float.parseFloat(widthS);
-					controller.setLength(widthC);
-					
+
 					HeightTextField.setText(height);
 					String heightS = HeightTextField.getText().toString();
 					float heightC = Float.parseFloat(heightS);
-					controller.setHeight(heightC);
+
 					
 					genderTextField.setText(gender);
 					String genderS = genderTextField.getText().toString();
-					controller.setGender(genderS);
 					
 					aggroLevelTextField.setText(aggro);
 					String aggroS = aggroLevelTextField.getText().toString();
 					float aggroC = Float.parseFloat(aggroS);
-					controller.setAggroLevel(aggroC);
 					
 					NameTextField.setEditable(false);
 					WeightTextField.setEditable(false);
@@ -237,8 +221,7 @@ public class NewSimulation extends JFrame {
 					HeightTextField.setEditable(false);
 					genderTextField.setEditable(false);
 					
-					
-			//		controller.updateView();		
+						
 				}
 				conn.close();
 				} catch (SQLException e1) {
@@ -814,29 +797,6 @@ public class NewSimulation extends JFrame {
 	}
 	
 
-	public void printData(FishState state, float[] location, float aggroLevel, float length, float height, float weight, String name){
-		System.out.println("FishState is " + state);
-		System.out.println("Fish location is " + location);
-		System.out.println("Fish aggro is " + aggroLevel);
-		System.out.println("Fish length is " + length);
-		System.out.println("Fish height is " + height);
-		System.out.println("Fish weight is " + weight);
-		System.out.println("Fish name is " + name);
-		
-	}
-	private static ConvictCichlid getFromDB()
-	{
-		ConvictCichlid c = new ConvictCichlid();
-	//	c.setLocation(new float[] {1,1});
-		c.setState(FishState.NONE);
-		c.setLength(10);
-		c.setHeight(5);
-		c.setWeight(10);
-		c.setName("Shark");
-		c.setCichlidID(0);
-		return c;
-	}
-	
 	private JMenuBar createJMenu() { 
 		// creating menubar
 		JMenuBar bar = new JMenuBar();

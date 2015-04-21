@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.*;
 
 import actv.ccs.sageTest.MyGame;
+import actv.ccs.sageTest.TestGame;
 
 
 public class Main {
@@ -25,7 +26,8 @@ public class Main {
 	//	SaveWindow newSW = new SaveWindow();
 	//	NewSimulation newS = new NewSimulation();
 		SimulationPrompter prompterTest = new SimulationPrompter();
-	//	new MyGame().start();
+		
+		new TestGame().start();
 	//	RunSimulation testRun = new RunSimulation();
 		
 		// going to try ucanaccess fun 
