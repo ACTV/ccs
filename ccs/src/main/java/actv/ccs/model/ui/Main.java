@@ -25,9 +25,12 @@ public class Main {
 	//	LoadWindow loadWindow = new LoadWindow();
 	//	SaveWindow newSW = new SaveWindow();
 	//	NewSimulation newS = new NewSimulation();
+		TestGame tg = new TestGame();
 		SimulationPrompter prompterTest = new SimulationPrompter();
 		
-		new TestGame().start();
+
+		
+		tg.start();
 	//	RunSimulation testRun = new RunSimulation();
 		
 		// going to try ucanaccess fun 

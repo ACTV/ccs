@@ -20,12 +20,14 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import actv.ccs.sageTest.MyGame;
+import actv.ccs.sageTest.TestGame;
 
 public class SimulationPrompter extends JFrame {
 	
 	private ResultSet rs; 
 	public SimulationPrompter()
 	{
+
 		setTitle("Convict Cichlid Fish Simulator Simulation Prompter");
 		setSize(1000,600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

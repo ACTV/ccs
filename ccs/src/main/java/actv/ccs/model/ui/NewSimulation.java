@@ -8,7 +8,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.logging.Logger;
 
 import javax.swing.*;
@@ -19,13 +18,14 @@ import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
 import actv.ccs.model.TankObject;
 import actv.ccs.sageTest.MyGame;
+import actv.ccs.sageTest.TestGame;
 
 public class NewSimulation extends JFrame {
 	
 	private TankObject tank;
 	private String cichlidNameZ, objectNameA;
-	private ConvictCichlidController controller;
 	private MyGame myGame;
+	private TestGame tg;
 	
 	private JTextField NameTextField;
 	private JTextField WeightTextField;

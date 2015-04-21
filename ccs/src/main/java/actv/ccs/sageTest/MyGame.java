@@ -39,7 +39,7 @@ import sage.texture.*;
  *  
  *  rules need to be done - with collisions ... make them faster. will look at after i'm done with documentation
  *  
- *  for collisions - large plant is getting hit a lot.
+ *  for collisions - large plant is getting hit a lot. - maybe fixed.
  */
 public class MyGame extends BaseGame {
 
@@ -77,13 +77,14 @@ public class MyGame extends BaseGame {
 		spawnCichlids();
 		spawnObjects();
 		createPerson();
-		// createScene();
+		createScene();
 		initActions();
 		createFishTank();
 		createFishTankWalls();
 		startRunner();
 		createHUD();
 		setUpTank();
+		
 	}
 
 	

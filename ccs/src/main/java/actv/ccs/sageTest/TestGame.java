@@ -23,10 +23,14 @@ public class TestGame extends BaseGame {
 			addGameWorldObject(testString);
 			
 			
+			
+			display.close();
 		}
 		public void update(float t)
 		{
 			super.update(t);
 		}
 		
+		
+
 }
