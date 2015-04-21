@@ -806,7 +806,7 @@ public class MyGame extends BaseGame {
 	private void createScene() // the scene is the background of the fish tank
 								// ... non issue for now.
 	{
-		skybox = new SkyBox("SkyBox", 10.0f, 10.0f, 10.0f);
+		skybox = new SkyBox("SkyBox", 100.0f, 100.0f, 100.0f);
 
 		// Texture testMountain =
 		// TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/Images/floorMountain.bmp");
@@ -1044,6 +1044,13 @@ public class MyGame extends BaseGame {
 	// this works	
 		// here would be where you want to pause the simulation
 	}
+	
+	
+		// update skybox loc
+		Point3D camLoc = camera.getLocation();
+		Matrix3D camT = new Matrix3D();
+		camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
+		skybox.setLocalTranslation(camT);
 	
 		super.update(time);
 		cc.update(time);
