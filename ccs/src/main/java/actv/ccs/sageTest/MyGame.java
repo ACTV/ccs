@@ -1,4 +1,4 @@
-package actv.ccs.sageTest.texTest;
+package actv.ccs.sageTest;
 
 import java.awt.Color;
 import java.sql.Connection;
@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
-import actv.ccs.sageTest.CameraGuy;
-import actv.ccs.sageTest.CameraOrbit;
-import actv.ccs.sageTest.MyDisplaySystem;
 import actv.ccs.sageTest.actions.*;
 import graphicslib3D.*;
 import sage.app.BaseGame;
@@ -54,25 +51,26 @@ public class MyGame extends BaseGame {
 	private RuleEngineRunner runner;
 	private ArrayList<CCSMemoryObject> objs = new ArrayList<CCSMemoryObject>();
 	private boolean largePotC, mediumPotC, smallPotC, largePlantC, mediumPlantC, smallPlantC;
+	private boolean cichlidAbool, cichlidBbool, cichlidCbool;
 	private float simulationTime = 100;
 	private float time = 0;
 	private HUDString timeString;
 	private Sphere aggroRangeA, aggroRangeB, aggroRangeC;
 	private Group fishWalls;
-	private IRenderer renderer;
 	
 	public void initGame() {
+		
+		
 		initObjects();
 		spawnCichlids();
 		spawnObjects();
 		createPerson();
-		// createScene();
 		initActions();
-		// createFishTank();
 		createFishTankWalls();
 		startRunner();
 		createHUD();
 		setUpTank();
+		
 	}
 
 	
@@ -105,7 +103,7 @@ public class MyGame extends BaseGame {
 		camera.setPerspectiveFrustum(45, 1, 0.01, 1000);
 		camera.setLocation(new Point3D(1, 1, 20));
 	
-
+		
 		// creating x, y, z lines for a basis
 		Point3D origin = new Point3D(0, 0, 0);
 		Point3D xEnd1 = new Point3D(200, 200, 0);
@@ -161,59 +159,20 @@ public class MyGame extends BaseGame {
 		addGameWorldObject(yAxis);
 		addGameWorldObject(zAxis);
 		
+		
 		largePlantC = false;
 		mediumPlantC = false;
 		smallPlantC = false;
 		largePotC = false;
 		mediumPotC = false;
-		smallPotC = false;				
-
-	}
-
-	public void createPerson() {
-		cameraGuy = new CameraGuy();
-		cameraGuy.translate(100, 100, 500);
-		cameraGuy.scale(-1, -1, -1);
-		cameraGuy.rotate(180, new Vector3D(0, 1, 0));
-		addGameWorldObject(cameraGuy);
-		cameraGuy.updateWorldBound();
-
-	}
-	public void createHUD()
-	{
-		timeString = new HUDString("Time = " + time);
-		timeString.setLocation(0, 0.05);
-		addGameWorldObject(timeString);
-		
-	}
-	public void setUpTank()
-	{
-
-		try 
-		{
-			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
-
-			Statement s = conn.createStatement();
-			rs = s.executeQuery("SELECT * FROM [TankData] WHERE ID = 1");
-			while (rs.next()) 
-			{
-				String timeGrab = rs.getString("Time"); // Field from database ex.
-													// FishA, FishB
-				float timeParse = Float.parseFloat(timeGrab);
-
-				simulationTime = timeParse;
-				System.out.println("Here is the simulationTime! " + simulationTime);
-			}
-				
-		}	catch (Exception epp)
-				
-		{
-					epp.printStackTrace();
-		}
-				
+		smallPotC = false;			
+		cichlidAbool = false;
+		cichlidBbool = false;
+		cichlidCbool = false;
 
 	}
 	public void spawnObjects() {
+		System.out.println("the tank is being filled with objects");
 		try {
 			conn = DriverManager
 					.getConnection("jdbc:ucanaccess://FishPool.accdb");
@@ -544,6 +503,7 @@ public class MyGame extends BaseGame {
 	}
 
 	public void spawnCichlids() {
+		System.out.println("cichlids are being put in the tank");
 		try {
 			conn = DriverManager
 					.getConnection("jdbc:ucanaccess://FishPool.accdb");
@@ -790,47 +750,50 @@ public class MyGame extends BaseGame {
 			e.printStackTrace();
 		}
 	}
-
-	private void createScene() // the scene is the background of the fish tank
-								// ... non issue for now.
-	{
-		skybox = new SkyBox("SkyBox", 10.0f, 10.0f, 10.0f);
-
-		// Texture testMountain =
-		// TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/Images/floorMountain.bmp");
-		Texture thingSky = TextureManager.loadTexture2D("sky.jpg");
-		skybox.setTexture(SkyBox.Face.North, thingSky);
-		skybox.setTexture(SkyBox.Face.South, thingSky);
-		skybox.setTexture(SkyBox.Face.East, thingSky);
-		skybox.setTexture(SkyBox.Face.West, thingSky);
-		skybox.setTexture(SkyBox.Face.Up, thingSky);
-
-		addGameWorldObject(skybox);
-
-		/*
-		 * try { AbstractHeightMap heightmap = null;
-		 * 
-		 * 
-		 * heightmap = new ImageBasedHeightMap(testMountain.getImage());
-		 * heightmap.load();
-		 * 
-		 * 
-		 * Vector3D scaleFactor = new Vector3D(new Point3D(1, 1, 1));
-		 * 
-		 * floor = new TerrainBlock("tblock", 512, scaleFactor,
-		 * heightmap.getHeightData(), new Point3D( 0, 0, 0)); //
-		 * floor.setTexture(skyThing); Matrix3D p1LotT =
-		 * floor.getLocalTranslation(); p1LotT.translate(0.0f, -0.5f, 0.0f);
-		 * floor.setLocalTranslation(p1LotT); Matrix3D p1Scale =
-		 * floor.getLocalScale(); p1Scale.scale(10f, 10f, 0);
-		 * floor.setLocalScale(p1Scale); Matrix3D p1Rot = new Matrix3D();
-		 * p1Rot.rotateX(-90); floor.setLocalRotation(p1Rot);
-		 * 
-		 * addGameWorldObject(floor); } catch (Exception e) {
-		 * e.printStackTrace(); }
-		 */
+	public void createPerson() {
+		cameraGuy = new CameraGuy();
+		cameraGuy.translate(100, 100, 500);
+		cameraGuy.scale(-1, -1, -1);
+		cameraGuy.rotate(180, new Vector3D(0, 1, 0));
+		addGameWorldObject(cameraGuy);
+		cameraGuy.updateWorldBound();
 
 	}
+	public void createHUD()
+	{
+		timeString = new HUDString("Time = " + time);
+		timeString.setLocation(0, 0.05);
+		addGameWorldObject(timeString);
+		
+	}
+	public void setUpTank()
+	{
+
+		try 
+		{
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+
+			Statement s = conn.createStatement();
+			rs = s.executeQuery("SELECT * FROM [TankData] WHERE ID = 1");
+			while (rs.next()) 
+			{
+				String timeGrab = rs.getString("Time"); // Field from database ex.
+													// FishA, FishB
+				float timeParse = Float.parseFloat(timeGrab);
+
+				simulationTime = timeParse;
+				System.out.println("Here is the simulationTime! " + simulationTime);
+			}
+				
+		}	catch (Exception epp)
+				
+		{
+					epp.printStackTrace();
+		}
+				
+
+	}
+
 
 	private void initActions() {
 		im = getInputManager();
@@ -844,37 +807,37 @@ public class MyGame extends BaseGame {
 		System.out.println("controller: " + mName);
 
 		// for this area, need to do a checker if A and B and C are called...
-		IAction moveForwardA = new ForwardAction(cichlidA);
+	//	IAction moveForwardA = new ForwardAction(cichlidA);
 		// IAction moveForwardB = new ForwardAction(cichlidB);
 		// IAction moveForwardC = new ForwardAction(cichlidC);
 		// IAction moveForwardO = new ForwardAction(cameraGuy);
 
-		IAction moveBackA = new BackwardAction(cichlidA);
+	//	IAction moveBackA = new BackwardAction(cichlidA);
 		// IAction moveBackB = new BackwardAction(cichlidB);
 		// IAction moveBackC = new BackwardAction(cichlidC);
 		// IAction moveBackO = new BackwardAction(cameraGuy);
 
-		IAction moveLeftA = new LeftAction(cichlidA);
+//		IAction moveLeftA = new LeftAction(cichlidA);
 		// IAction moveLeftB = new LeftAction(cichlidB);
 		// IAction moveLeftC = new LeftAction(cichlidC);
 		// IAction moveLeftO = new LeftAction(cameraGuy);
 
-		IAction moveRightA = new RightAction(cichlidA);
+	//	IAction moveRightA = new RightAction(cichlidA);
 		// IAction moveRightB = new RightAction(cichlidB);
 		// IAction moveRightC = new RightAction(cichlidC);
 		// IAction moveRightO = new RightAction(cameraGuy);
-		
+	/*	
 		IAction upForwardA = new UpForwardAction(cichlidA);
 		IAction upBackA = new UpBackAction(cichlidA);
 		IAction downForwardA = new DownForwardAction(cichlidA);
 		IAction downBackA = new DownBackAction(cichlidA);
-		IAction quitGame = new QuitAction(this);
+	*/	IAction quitGame = new QuitAction(this);
 
 		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.ESCAPE, quitGame,
 				IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
 		// here is the movement options of the character ..
-		im.associateAction(kbName,
+/*		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.W, moveForwardA,
 				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 		im.associateAction(kbName,
@@ -900,12 +863,13 @@ public class MyGame extends BaseGame {
 		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.NUMPAD1, downBackA,
 				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+				*/
 	}
 
 	public void createFishTankWalls() {
 		fishWalls = new Group();
 		
-		Texture texture = TextureManager.loadTexture2D("./clouds.jpg");
+		Texture texture = TextureManager.loadTexture2D("./stones.jpg");
 		// add a rectangle, and turn it into a plane
 		ground = new Rectangle(200, 200);
 		ground.rotate(90, new Vector3D(1, 0, 0));
@@ -917,9 +881,9 @@ public class MyGame extends BaseGame {
 		texState.setTexture(texture);
 		texState.setEnabled(true);
 		ground.setRenderState(texState);
-		ground.setTexture(texture);
-
+		
 		   		*/
+		ground.setTexture(texture);
 		fishWalls.addChild(ground);
 		ground.updateWorldBound();
 
@@ -981,40 +945,6 @@ public class MyGame extends BaseGame {
 
 	}
 
-	// private TerrainBlock floor, leftWindowPane, BackWindowPane,
-	// RightWindowPane, ceilingWater;
-	public void createFishTank() // issue with this.
-	{
-		Texture walls = TextureManager.loadTexture2D("lotTest.bmp");
-		skyThing = TextureManager.loadTexture2D("lot_floor.jpg");
-		AbstractHeightMap heightMap = null;
-		heightMap = new ImageBasedHeightMap("floorMountain.jpg");
-		heightMap.load();
-
-		Vector3D scaleFactor = new Vector3D(new Point3D(1, 1, 1));
-
-		try {
-			floor = new TerrainBlock("floor", 512, scaleFactor,
-					heightMap.getHeightData(), new Point3D(0, 0, 0));
-			Matrix3D floorT = floor.getLocalTranslation();
-			floorT.translate(0.0f, 0.0f, 0.0f);
-			floor.setLocalTranslation(floorT);
-			Matrix3D floorScale = floor.getLocalScale();
-			floorScale.scale(0.42f, 0.5f, 0);
-			floor.setLocalScale(floorScale);
-			Matrix3D p1Rot = new Matrix3D();
-			p1Rot.rotateX(-90);
-			floor.setLocalRotation(p1Rot);
-			Texture grassTexture = TextureManager
-					.loadTexture2D("lot_floor.jpg");
-			grassTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
-
-			floor.setTexture(grassTexture);
-		} catch (Exception pe) {
-			pe.printStackTrace();
-		}
-		addGameWorldObject(floor);
-	}
 
 	public void update(float elapsedTimeMS) // this will be where the objects will move
 	{
@@ -1123,7 +1053,7 @@ public class MyGame extends BaseGame {
 						}
 					}
 					// cichlid collision
-					if (cichlidB != null)
+					if (cichlidB != null && cichlidBbool == true)
 					{
 						if (cichlidA.getWorldBound().intersects(cichlidB.getWorldBound()))
 						{
@@ -1135,7 +1065,7 @@ public class MyGame extends BaseGame {
 							System.out.println("aggro from a to B");
 						}
 					}
-					if (cichlidC != null)
+					if (cichlidC != null && cichlidCbool == true)
 					{
 						if (cichlidA.getWorldBound().intersects(cichlidC.getWorldBound()))
 						{
@@ -1226,7 +1156,7 @@ public class MyGame extends BaseGame {
 						}
 					}
 					// cichlid collision
-					if (cichlidA != null)
+					if (cichlidA != null && cichlidAbool == true)
 					{
 						if (cichlidB.getWorldBound().intersects(cichlidA.getWorldBound()))
 						{
@@ -1238,7 +1168,7 @@ public class MyGame extends BaseGame {
 							System.out.println("aggro from B to A");
 						}
 					}
-					if (cichlidC != null)
+					if (cichlidC != null && cichlidBbool == true) 
 					{
 						if (cichlidB.getWorldBound().intersects(cichlidC.getWorldBound()))
 						{
@@ -1314,7 +1244,7 @@ public class MyGame extends BaseGame {
 						}
 					}
 					// cichlid collision
-					if (cichlidA != null)
+					if (cichlidA != null && cichlidAbool == true)
 					{
 						if (cichlidC.getWorldBound().intersects(cichlidA.getWorldBound()))
 						{
@@ -1326,7 +1256,7 @@ public class MyGame extends BaseGame {
 							System.out.println("aggro from C to A");
 						}
 					}
-					if (cichlidB != null)
+					if (cichlidB != null && cichlidBbool == true)
 					{
 						if (cichlidC.getWorldBound().intersects(cichlidA.getWorldBound()))
 						{
@@ -1343,63 +1273,8 @@ public class MyGame extends BaseGame {
 			}
 
 		}
-
-		/*
-		 * COMMENTING OUT. WILL FIX LATER - ALBERT collision example if
-		 * (tpt.getWorldBound().intersects(p1.getWorldBound()) &&
-		 * collidedWTeapot == false){ collidedWTeapot = true; numCrashes++;
-		 * score1 += 100; CrashEvent newCrash = new CrashEvent(numCrashes);
-		 * removeGameWorldObject(tpt); eventMgr.triggerEvent(newCrash); }
-		 */
-		
-		
-		
-
-		try {
-			conn = DriverManager
-					.getConnection("jdbc:ucanaccess://FishPool.accdb");
-
-			Statement s = conn.createStatement();
-			rs = s.executeQuery("SELECT fishID FROM [SimulationFish]");
-			while (rs.next()) {
-				String id = rs.getString("fishID"); // Field from database ex.
-													// FishA, FishB
-				int idS = Integer.parseInt(id);
-
-				/*
-				 * public Point3D returnTargetPos() { return new
-				 * Point3D(target.getWorldTranslation().getCol(3)); }
-				 */
-
-				if (id.equals("1")) {
-
-					// object collision example
-//					if (((TriMesh)largePlant).getWorldBound().intersects(
-//							cichlidA.getWorldBound())) {
-//						System.out.println("MAKE THIS THING GO SLOWER!!!");
-//						cichlidA.translate(0, 0, -1f); // make the cichlid go in
-//														// reverse
-//						cichlidA.updateWorldBound();
-//					}
-
-				} else if (id.equals("2")) {
-
-
-				} else if (id.equals("3")) {
-
-
-				}
-
-			}
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
-
 	}
-
+	
 	private IDisplaySystem createDisplaySystem() {
 		IDisplaySystem display = new MyDisplaySystem(1000, 500, 24, 20, false,
 				"sage.renderer.jogl.JOGLRenderer");
@@ -1425,7 +1300,8 @@ public class MyGame extends BaseGame {
 		System.out.println();
 		return display;
 	}
-
+	
+	
 	protected void initSystem() {
 		IDisplaySystem display = createDisplaySystem();
 		setDisplaySystem(display);
@@ -1437,6 +1313,7 @@ public class MyGame extends BaseGame {
 		setGameWorld(gameWorld);
 
 	}
+	
 
 	protected void shutdown() {
 		display.close();

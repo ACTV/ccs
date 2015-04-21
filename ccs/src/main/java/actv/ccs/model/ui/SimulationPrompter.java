@@ -19,7 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-import actv.ccs.sageTest.MyGame;
+import actv.ccs.sageTest.*;
 
 public class SimulationPrompter extends JFrame {
 	
