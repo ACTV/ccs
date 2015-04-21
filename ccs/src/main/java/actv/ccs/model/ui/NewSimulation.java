@@ -69,13 +69,14 @@ public class NewSimulation extends JFrame {
  * need to do a button listener later on etc fish stuff.
  */
 	
-	public NewSimulation() throws SecurityException, IOException
+	public NewSimulation(MyGame mg) throws SecurityException, IOException
 	{
 		
 		cichlid = new ConvictCichlid();
 		tank = new TankObject(20, 20, 20, 26, 0, 0, 0); // array value default tank
 		world = new SimulationWorld();
 		cichlid = getFromDB();
+		myGame = mg;
 		
 		// adding new int
 		
@@ -883,7 +884,7 @@ public class NewSimulation extends JFrame {
 			e.printStackTrace();
 		}
 		super.dispose();
-		new MyGame().start();
+		myGame.start();
 
 	}
 }

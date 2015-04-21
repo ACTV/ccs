@@ -1,4 +1,4 @@
-package actv.ccs.sageTest;
+package actv.ccs.sageTest.texTest;
 
 import java.awt.Color;
 import java.sql.Connection;
@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
+import actv.ccs.sageTest.CameraGuy;
+import actv.ccs.sageTest.CameraOrbit;
+import actv.ccs.sageTest.MyDisplaySystem;
 import actv.ccs.sageTest.actions.*;
 import graphicslib3D.*;
 import sage.app.BaseGame;
