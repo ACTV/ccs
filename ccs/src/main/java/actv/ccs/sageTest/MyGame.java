@@ -9,24 +9,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import actv.ccs.listener.RuleEngineRunner;
-import actv.ccs.model.CCSMemoryObject;
-import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
-import actv.ccs.sageTest.actions.BackwardAction;
-import actv.ccs.sageTest.actions.DownBackAction;
-import actv.ccs.sageTest.actions.DownForwardAction;
-import actv.ccs.sageTest.actions.ForwardAction;
-import actv.ccs.sageTest.actions.LeftAction;
-import actv.ccs.sageTest.actions.QuitAction;
-import actv.ccs.sageTest.actions.RightAction;
-import actv.ccs.sageTest.actions.UpBackAction;
-import actv.ccs.sageTest.actions.UpForwardAction;
-import graphicslib3D.Matrix3D;
-import graphicslib3D.Point3D;
-import graphicslib3D.Vector3D;
+import actv.ccs.sageTest.actions.*;
+import graphicslib3D.*;
 import sage.app.BaseGame;
 import sage.camera.ICamera;
-import sage.camera.JOGLCamera;
 import sage.display.IDisplaySystem;
 import sage.input.IInputManager;
 import sage.input.InputManager;
@@ -34,20 +22,9 @@ import sage.input.action.IAction;
 import sage.model.loader.OBJLoader;
 import sage.renderer.IRenderer;
 import sage.scene.*;
-import sage.scene.SceneNode.CULL_MODE;
-import sage.scene.bounding.BoundingSphere;
-import sage.scene.shape.Cube;
-import sage.scene.shape.Cylinder;
-import sage.scene.shape.Line;
-import sage.scene.shape.Pyramid;
-import sage.scene.shape.Rectangle;
-import sage.scene.state.RenderState;
-import sage.scene.state.RenderState.RenderStateType;
-import sage.scene.state.TextureState;
-import sage.terrain.AbstractHeightMap;
-import sage.terrain.HillHeightMap;
-import sage.terrain.ImageBasedHeightMap;
-import sage.terrain.TerrainBlock;
+import sage.scene.SceneNode.*;
+import sage.scene.shape.*;
+import sage.terrain.*;
 import sage.texture.*;
 
 public class MyGame extends BaseGame {
@@ -63,8 +40,7 @@ public class MyGame extends BaseGame {
 	private SkyBox skybox;
 	private Connection conn;
 	private ResultSet rs, rsI;
-	private TerrainBlock floor, leftWindowPane, BackWindowPane,
-			RightWindowPane, ceilingWater;
+	private TerrainBlock floor;
 	private Texture skyThing;
 	private Rectangle ground, leftWall, rightWall, ceiling, backWall,
 			frontWall;
@@ -75,8 +51,12 @@ public class MyGame extends BaseGame {
 	private RuleEngineRunner runner;
 	private ArrayList<CCSMemoryObject> objs = new ArrayList<CCSMemoryObject>();
 	private boolean largePotC, mediumPotC, smallPotC, largePlantC, mediumPlantC, smallPlantC;
-	private float simulationTime, time = 0;
+	private float simulationTime = 100;
+	private float time = 0;
 	private HUDString timeString;
+	private Sphere aggroRangeA, aggroRangeB, aggroRangeC;
+	private Group fishWalls;
+	private IRenderer renderer;
 	
 	public void initGame() {
 		initObjects();
@@ -92,6 +72,7 @@ public class MyGame extends BaseGame {
 		setUpTank();
 	}
 
+	
 	private void startRunner() {
 		if (runner == null) {
 			runner = RuleEngineRunner.getInstance();
@@ -120,23 +101,7 @@ public class MyGame extends BaseGame {
 		camera = display.getRenderer().getCamera();
 		camera.setPerspectiveFrustum(45, 1, 0.01, 1000);
 		camera.setLocation(new Point3D(1, 1, 20));
-		/*
-		 * as much as i hate it, it's going to look like the previous team's
-		 * project where our view is pretty much the closest face out of the 4
-		 * sided aquarium.
-		 */
-
-		// so instead of an array, it will be a group class that will hold the
-		// objects so instead of iterating ... it will go like that. so maybe i
-		// will have to change
-		// the convict cichlid iterator to become a scenenode iterator.
-
-		// this part will soon be the equivalent of spawnCichlids
-
-		// equivalent of spawn plants
-
-		// grab tank values here, which should be the same since it's not
-		// representational data
+	
 
 		// creating x, y, z lines for a basis
 		Point3D origin = new Point3D(0, 0, 0);
@@ -652,6 +617,18 @@ public class MyGame extends BaseGame {
 						addGameWorldObject(cichlidA);
 						objs.add(cichlidA);
 						cichlidA.updateWorldBound();
+						
+						
+						// here is where i add my aggro circle
+						aggroRangeA = new Sphere();
+						Matrix3D aRangeT = aggroRangeA.getLocalTranslation();
+						aRangeT.translate(xStartW, yStartY, zStartZ);
+						aggroRangeA.setLocalTranslation(aRangeT);
+						Matrix3D aScale = aggroRangeA.getLocalScale();
+						aScale.scale(15f, 15f, 15f);
+						aggroRangeA.setLocalScale(aScale);
+						addGameWorldObject(aggroRangeA);
+						aggroRangeA.updateWorldBound();
 
 					}
 				} else if (id.equals("2")) {
@@ -716,9 +693,16 @@ public class MyGame extends BaseGame {
 						objs.add(cichlidB);
 						cichlidB.updateWorldBound();
 
-						// the issue with this thing is that the function is
-						// automatically called when new game starts... maybe i
-						// can call this from something..
+						// here is where i add my aggro circle
+						aggroRangeB = new Sphere();
+						Matrix3D aRangeT = aggroRangeB.getLocalTranslation();
+						aRangeT.translate(xStartW, yStartY, zStartZ);
+						aggroRangeB.setLocalTranslation(aRangeT);
+						Matrix3D aScale = aggroRangeB.getLocalScale();
+						aScale.scale(15f, 15f, 15f);
+						aggroRangeB.setLocalScale(aScale);
+						addGameWorldObject(aggroRangeB);
+						aggroRangeB.updateWorldBound();
 					}
 				} else if (id.equals("3")) {
 					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
@@ -783,6 +767,17 @@ public class MyGame extends BaseGame {
 						addGameWorldObject(cichlidC);
 						objs.add(cichlidC);
 						cichlidC.updateWorldBound();
+						
+						// here is where i add my aggro circle
+						aggroRangeC = new Sphere();
+						Matrix3D aRangeT = aggroRangeC.getLocalTranslation();
+						aRangeT.translate(xStartW, yStartY, zStartZ);
+						aggroRangeC.setLocalTranslation(aRangeT);
+						Matrix3D aScale = aggroRangeC.getLocalScale();
+						aScale.scale(20f, 20f, 20f);
+						aggroRangeC.setLocalScale(aScale);
+						addGameWorldObject(aggroRangeC);
+						aggroRangeC.updateWorldBound();
 					}
 				}
 			}
@@ -905,7 +900,9 @@ public class MyGame extends BaseGame {
 	}
 
 	public void createFishTankWalls() {
-		 Texture tex = TextureManager.loadTexture2D("sky.jpg");
+		fishWalls = new Group();
+		
+		Texture texture = TextureManager.loadTexture2D("./clouds.jpg");
 		// add a rectangle, and turn it into a plane
 		ground = new Rectangle(200, 200);
 		ground.rotate(90, new Vector3D(1, 0, 0));
@@ -913,17 +910,20 @@ public class MyGame extends BaseGame {
 		ground.setColor(Color.orange);
 		/*
 		// testing out new stuff
-		TextureState grassState;
-		tex.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
-		grassState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
-		grassState.setTexture(tex, 0);
-		grassState.setEnabled(true);
-		
-		ground.setRenderState(grassState);
-		*/
-		addGameWorldObject(ground);
+		TextureState texState = (TextureState) renderer.createRenderState(RenderStateType.Texture);
+		texState.setTexture(texture);
+		texState.setEnabled(true);
+		ground.setRenderState(texState);
+		ground.setTexture(texture);
+
+		   		*/
+		fishWalls.addChild(ground);
 		ground.updateWorldBound();
 
+		
+		
+		
+		
 		leftWall = new Rectangle(200, 200);
 		Matrix3D leftRot = new Matrix3D();
 		leftRot.rotate(0, 90, 90);
@@ -931,7 +931,7 @@ public class MyGame extends BaseGame {
 		leftWall.translate(-0.1f, 101f, 101.0f);
 		leftWall.setColor(Color.blue);
 		// leftWall.setCullMode(CULL_MODE.ALWAYS);
-		addGameWorldObject(leftWall);
+		fishWalls.addChild(leftWall);
 		leftWall.updateWorldBound();
 
 		rightWall = new Rectangle(200, 200);
@@ -941,7 +941,7 @@ public class MyGame extends BaseGame {
 		rightWall.translate(201.0f, 101f, 101.0f);
 		rightWall.setColor(Color.blue);
 		// rightWall.setCullMode(CULL_MODE.ALWAYS);
-		addGameWorldObject(rightWall);
+		fishWalls.addChild(rightWall);
 		rightWall.updateWorldBound();
 
 		backWall = new Rectangle(200, 200);
@@ -951,7 +951,7 @@ public class MyGame extends BaseGame {
 		backWall.translate(101.0f, 101.0f, -0.10f);
 		backWall.setColor(Color.blue);
 		// backWall.setCullMode(CULL_MODE.ALWAYS);
-		addGameWorldObject(backWall);
+		fishWalls.addChild(backWall);
 		backWall.updateWorldBound();
 
 		ceiling = new Rectangle(200, 200);
@@ -961,7 +961,7 @@ public class MyGame extends BaseGame {
 		ceiling.translate(101.0f, 201f, 101.0f);
 		ceiling.setColor(Color.blue);
 		// ceiling.setCullMode(CULL_MODE.ALWAYS);
-		addGameWorldObject(ceiling);
+		fishWalls.addChild(ceiling);
 		ceiling.updateWorldBound();
 
 		// find transparency for this
@@ -971,8 +971,10 @@ public class MyGame extends BaseGame {
 		frontWall.setLocalRotation(frontRot);
 		frontWall.translate(101.0f, 101.0f, 201.0f);
 		frontWall.setCullMode(CULL_MODE.ALWAYS);
-		addGameWorldObject(frontWall);
+		fishWalls.addChild(frontWall);
 		frontWall.updateWorldBound();
+		
+		addGameWorldObject(fishWalls);
 
 	}
 
@@ -1024,6 +1026,7 @@ public class MyGame extends BaseGame {
 	{
 	 //	System.out.println("RIGHT HERE IS WHERE I STOP EVERYTHING!!!");
 	// this works	
+		// here would be where you want to pause the simulation
 	}
 	
 		super.update(time);
@@ -1038,6 +1041,13 @@ public class MyGame extends BaseGame {
 					// s.updateWorldBound();
 					// bound collision
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+		
+					
+					// here is where i will test my newfound collision for spheres
+					
+					Matrix3D cichlidAlocalT = s.getLocalTranslation();
+					aggroRangeA.setLocalTranslation(cichlidAlocalT);
+					
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
@@ -1054,46 +1064,59 @@ public class MyGame extends BaseGame {
 						
 					}
 					// object collision
-					if (largePotC == true)
+					/*
+					if (largePlantC == true) // ERROR
 					{
-						if (cichlidA.getWorldBound().intersects(largePot.getWorldBound()))
+						if (cichlidA.getWorldBound().intersects(largePlant.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("a hit largePl");
 						}
 					}
+					*/
+					/*
+					if (largePlantC == true)
+					{
+						Point3D largePlantloc = new Point3D(largePlant.getWorldTranslation().getCol(3));
+						if ((loc.getX() == largePlantloc.getX()) && (loc.getY() == largePlantloc.getY()) 
+								&& (loc.getZ() == largePlantloc.getZ()) )
+						{
+							System.out.println("b hit large plant");
+						}
+					}
+					*/
 					if (largePlantC == true)
 					{
 						if (cichlidA.getWorldBound().intersects(largePlant.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("a hit large pl");
 						}
 					}
 					if (mediumPotC == true)
 					{
 						if (cichlidA.getWorldBound().intersects(mediumPot.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("a hit med pot");
 						}
 					}
 					if (mediumPlantC == true)
 					{
-						if (cichlidA.getWorldBound().intersects(mediumPlant.getWorldBound()))
+						if	 (cichlidA.getWorldBound().intersects(mediumPlant.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("a hit med pl");
 						}
 					}
 					if (smallPlantC == true)
 					{
 						if (cichlidA.getWorldBound().intersects(smallPlant.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("a hit small pla");
 						}
 					}
 					if (smallPotC == true)
 					{
 						if (cichlidA.getWorldBound().intersects(smallPot.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("a hit small pot");
 						}
 					}
 					// cichlid collision
@@ -1104,6 +1127,10 @@ public class MyGame extends BaseGame {
 							System.out.println("a hits b");
 							// this is where shit goes down
 						}
+						if (aggroRangeA.getWorldBound().intersects(aggroRangeB.getWorldBound()))
+						{
+							System.out.println("aggro from a to B");
+						}
 					}
 					if (cichlidC != null)
 					{
@@ -1112,6 +1139,10 @@ public class MyGame extends BaseGame {
 							System.out.println("a hits c");
 							// this is where shit goes down
 						}
+						if (aggroRangeA.getWorldBound().intersects(aggroRangeC.getWorldBound()))
+						{
+							System.out.println("aggro from a to C");
+						}
 					}
 					
 					
@@ -1119,6 +1150,10 @@ public class MyGame extends BaseGame {
 				if (s == cichlidB) {
 					// call move stuff here
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+
+					
+					Matrix3D cichlidBlocalT = s.getLocalTranslation();
+					aggroRangeB.setLocalTranslation(cichlidBlocalT);
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
@@ -1138,42 +1173,53 @@ public class MyGame extends BaseGame {
 					{
 						if (cichlidB.getWorldBound().intersects(largePot.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("b hit largePo");
 						}
 					}
-					if (largePlantC == true)
+					/*
+					if (largePlantC == true) // ERROR
 					{
 						if (cichlidB.getWorldBound().intersects(largePlant.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("b hit largePl");
+						}
+					}
+					*/
+					if (largePlantC == true)
+					{
+						Point3D largePlantloc = new Point3D(largePlant.getWorldTranslation().getCol(3));
+						if ((loc.getX() == largePlantloc.getX()) && (loc.getY() == largePlantloc.getY()) 
+								&& (loc.getZ() == largePlantloc.getZ()) )
+						{
+							System.out.println("b hit large plant");
 						}
 					}
 					if (mediumPotC == true)
 					{
 						if (cichlidB.getWorldBound().intersects(mediumPot.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("b hit medP");
 						}
 					}
 					if (mediumPlantC == true)
 					{
 						if (cichlidB.getWorldBound().intersects(mediumPlant.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("b hit medPL");
 						}
 					}
 					if (smallPlantC == true)
 					{
 						if (cichlidB.getWorldBound().intersects(smallPlant.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("b hit smallPl");
 						}
 					}
 					if (smallPotC == true)
 					{
 						if (cichlidB.getWorldBound().intersects(smallPot.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("b hit smallPot");
 						}
 					}
 					// cichlid collision
@@ -1184,6 +1230,10 @@ public class MyGame extends BaseGame {
 							System.out.println("b hits a");
 							// this is where shit goes down
 						}
+						if (aggroRangeB.getWorldBound().intersects(aggroRangeA.getWorldBound()))
+						{
+							System.out.println("aggro from B to A");
+						}
 					}
 					if (cichlidC != null)
 					{
@@ -1192,11 +1242,17 @@ public class MyGame extends BaseGame {
 							System.out.println("b hits c");
 							// this is where shit goes down
 						}
+						if (aggroRangeB.getWorldBound().intersects(aggroRangeC.getWorldBound()))
+						{
+							System.out.println("aggro from B to C");
+						}
 					}
 				}
 				if (s == cichlidC) {
 					// call move stuff here
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+					Matrix3D cichlidClocalT = s.getLocalTranslation();
+					aggroRangeC.setLocalTranslation(cichlidClocalT);
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
@@ -1216,42 +1272,42 @@ public class MyGame extends BaseGame {
 					{
 						if (cichlidC.getWorldBound().intersects(largePot.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("c hit large pot");
 						}
 					}
 					if (largePlantC == true)
 					{
 						if (cichlidC.getWorldBound().intersects(largePlant.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("c hit large plant");
 						}
 					}
 					if (mediumPotC == true)
 					{
 						if (cichlidC.getWorldBound().intersects(mediumPot.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("c hit medium pot");
 						}
 					}
 					if (mediumPlantC == true)
 					{
 						if (cichlidC.getWorldBound().intersects(mediumPlant.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("c hit medium plant");
 						}
 					}
 					if (smallPlantC == true)
 					{
 						if (cichlidC.getWorldBound().intersects(smallPlant.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("c hit small plant");
 						}
 					}
 					if (smallPotC == true)
 					{
 						if (cichlidC.getWorldBound().intersects(smallPot.getWorldBound()))
 						{
-							System.out.println("mothafucking collisions");
+							System.out.println("c hit small pot");
 						}
 					}
 					// cichlid collision
@@ -1262,6 +1318,10 @@ public class MyGame extends BaseGame {
 							System.out.println("c hits a");
 							// this is where shit goes down
 						}
+						if (aggroRangeC.getWorldBound().intersects(aggroRangeA.getWorldBound()))
+						{
+							System.out.println("aggro from C to A");
+						}
 					}
 					if (cichlidB != null)
 					{
@@ -1269,6 +1329,10 @@ public class MyGame extends BaseGame {
 						{
 							System.out.println("c hits b");
 							// this is where shit goes down
+						}
+						if (aggroRangeC.getWorldBound().intersects(aggroRangeB.getWorldBound()))
+						{
+							System.out.println("aggro from C to B");
 						}
 					}
 				}
@@ -1397,7 +1461,16 @@ public class MyGame extends BaseGame {
 					.executeUpdate("UPDATE SimulationObjects set objID = 0 where ID = 5");
 			int i = s
 					.executeUpdate("UPDATE SimulationObjects set objID = 0 where ID = 6");
-
+			int z = s
+					.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 0 where ID = 1");
+			int zz = s
+					.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 0 where ID = 2");
+			int aa = s
+					.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 0 where ID = 3");
+			int bb = s
+					.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 0 where ID = 4");
+			int cc = s
+					.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 0 where ID = 5");
 			conn.close();
 			// End the Rules Knowledge Session
 			stopRunner();

@@ -5,8 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
 import javax.swing.JPanel;
-import javax.media.opengl.awt.GLCanvas;
-
 import actv.ccs.model.*;
 import actv.ccs.model.IDrawable;
 

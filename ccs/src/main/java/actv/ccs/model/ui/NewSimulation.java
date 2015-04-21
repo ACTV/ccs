@@ -2,21 +2,16 @@ package actv.ccs.model.ui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.logging.Logger;
-import java.util.logging.FileHandler;
-import java.util.logging.SimpleFormatter;
 
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
 import javax.swing.event.*;
 
 import actv.ccs.CCSKnowledgeBase;
@@ -32,7 +27,6 @@ public class NewSimulation extends JFrame {
 	private String cichlidNameZ, objectNameA;
 	private SimulationWorld world;
 	private ConvictCichlidController controller;
-	private RunSimulation rS;
 	private MyGame myGame;
 	
 	private JTextField NameTextField;
@@ -45,7 +39,7 @@ public class NewSimulation extends JFrame {
 	
 	private int tankFishCount;
 	private int tankPlantCount;
-	private int tankTime;
+	private int tankTime = 100; // base 100
 	private int fishID = 0;
 	private int fishIDList [];
 	private int i = 0; // figure out where to add the item
@@ -501,8 +495,9 @@ public class NewSimulation extends JFrame {
 		getContentPane().add(lblSimulationRunTime);
 		
 		JSlider timerSlider = new JSlider();
-		springLayout.putConstraint(SpringLayout.NORTH, timerSlider, 11, SpringLayout.NORTH, lblSimulationRunTime);
-		springLayout.putConstraint(SpringLayout.WEST, timerSlider, 0, SpringLayout.WEST, waterTemperatureSlider);
+		springLayout.putConstraint(SpringLayout.SOUTH, timerSlider, 0, SpringLayout.SOUTH, lblSimulationRunTime);
+		springLayout.putConstraint(SpringLayout.EAST, timerSlider, 0, SpringLayout.EAST, waterTemperatureSlider);
+		timerSlider.setValue(100);
 		timerSlider.setMaximum(1000);
 		timerSlider.setMinimum(1);
 		getContentPane().add(timerSlider);

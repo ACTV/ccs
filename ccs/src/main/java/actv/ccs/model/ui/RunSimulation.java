@@ -18,18 +18,14 @@ import java.util.ArrayList;
 
 
 
-import javax.media.opengl.awt.GLCanvas;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
@@ -43,15 +39,12 @@ import actv.ccs.model.IDrawable;
 import actv.ccs.model.IMovable;
 import actv.ccs.model.TankObject;
 import actv.ccs.model.type.FishState;
-import actv.ccs.sageTest.MyGame;
 
 import java.awt.FlowLayout;
 
 import javax.swing.border.LineBorder;
 import javax.swing.JLayeredPane;
-import javax.swing.JInternalFrame;
 
-import java.awt.BorderLayout;
 
 public class RunSimulation extends JFrame implements ActionListener {
 	private String mainFilePath = "";
