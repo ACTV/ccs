@@ -394,7 +394,7 @@ public class SimulationPrompter extends JFrame {
 						while (rs.next())
 						{
 				        	int a = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 1");
-				        	int b = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 2");
+				        	int b = s.executeUpdate("UPDATE SimulationObjects set objID = 2 where ID = 2");
 				        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 3");
 				        	int d = s.executeUpdate("UPDATE SimulationObjects set objID = 4 where ID = 4");
 				        	int g = s.executeUpdate("UPDATE SimulationObjects set objID = 5 where ID = 5");

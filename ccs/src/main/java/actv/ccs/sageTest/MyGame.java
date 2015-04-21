@@ -75,6 +75,7 @@ public class MyGame extends BaseGame {
 
 	
 	private void startRunner() {
+
 		if (runner == null) {
 			runner = RuleEngineRunner.getInstance();
 			runner.newMap(objs);
@@ -749,6 +750,7 @@ public class MyGame extends BaseGame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		startRunner();
 	}
 	public void createPerson() {
 		cameraGuy = new CameraGuy();
