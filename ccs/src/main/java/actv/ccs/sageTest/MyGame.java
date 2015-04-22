@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import net.java.games.input.Event;
 import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
@@ -18,6 +19,7 @@ import sage.camera.ICamera;
 import sage.display.IDisplaySystem;
 import sage.input.IInputManager;
 import sage.input.InputManager;
+import sage.input.action.AbstractInputAction;
 import sage.input.action.IAction;
 import sage.model.loader.OBJLoader;
 import sage.renderer.IRenderer;
@@ -860,35 +862,29 @@ public class MyGame extends BaseGame {
 		System.out.println("controller: " + mName);
 
 		// for this area, need to do a checker if A and B and C are called...
+		// test actions
 		IAction moveForwardA = new ForwardAction(cichlidA);
-		// IAction moveForwardB = new ForwardAction(cichlidB);
-		// IAction moveForwardC = new ForwardAction(cichlidC);
-		// IAction moveForwardO = new ForwardAction(cameraGuy);
-
 		IAction moveBackA = new BackwardAction(cichlidA);
-		// IAction moveBackB = new BackwardAction(cichlidB);
-		// IAction moveBackC = new BackwardAction(cichlidC);
-		// IAction moveBackO = new BackwardAction(cameraGuy);
-
 		IAction moveLeftA = new LeftAction(cichlidA);
-		// IAction moveLeftB = new LeftAction(cichlidB);
-		// IAction moveLeftC = new LeftAction(cichlidC);
-		// IAction moveLeftO = new LeftAction(cameraGuy);
-
 		IAction moveRightA = new RightAction(cichlidA);
-		// IAction moveRightB = new RightAction(cichlidB);
-		// IAction moveRightC = new RightAction(cichlidC);
-		// IAction moveRightO = new RightAction(cameraGuy);
-		
 		IAction upForwardA = new UpForwardAction(cichlidA);
 		IAction upBackA = new UpBackAction(cichlidA);
 		IAction downForwardA = new DownForwardAction(cichlidA);
 		IAction downBackA = new DownBackAction(cichlidA);
+		
+		
+		// game actions
 		IAction quitGame = new QuitAction(this);
-
+		IAction pauseKey = new pauseAction();
+		IAction resumeKey = new resumeAction();
 		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.ESCAPE, quitGame,
 				IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
+		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.P, pauseKey, 
+				IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
+		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.R, resumeKey, 
+				IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
+		
 		// here is the movement options of the character ..
 		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.W, moveForwardA,
@@ -917,7 +913,24 @@ public class MyGame extends BaseGame {
 				net.java.games.input.Component.Identifier.Key.NUMPAD1, downBackA,
 				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 	}
-
+	
+	// pause and restart simulation
+	private class pauseAction extends AbstractInputAction
+	{
+		public void performAction(float time, Event ev)
+		{
+			pauseSimulation = true;
+			stopRunner();
+		}
+	}
+	private class resumeAction extends AbstractInputAction
+	{
+		public void performAction(float time, Event evento)
+		{
+			pauseSimulation = false;
+			startRunner();
+		}
+	}
 	public void createFishTankWalls() {
 		fishWalls = new Group();
 		
