@@ -73,6 +73,8 @@ public class MyGame extends BaseGame {
 	private Sphere aggroRangeA, aggroRangeB, aggroRangeC;
 	private Group fishWalls;
 	private IRenderer renderer;
+	// going to add a pause button here
+	private boolean pauseSimulation; 
 	
 	public void initGame() {
 		initObjects();
@@ -86,7 +88,7 @@ public class MyGame extends BaseGame {
 		startRunner();
 		createHUD();
 		setUpTank();
-		
+		pauseSimulation = false; // set to false for beginning
 	}
 
 	
@@ -1018,6 +1020,8 @@ public class MyGame extends BaseGame {
 	public void update(float elapsedTimeMS) // this will be where the objects will move
 	{
 		
+	if (pauseSimulation == false)
+	{
 		// creating timer thing
 		time += elapsedTimeMS;
 		timeString.setText("Time: " + time/1000);
@@ -1369,59 +1373,13 @@ public class MyGame extends BaseGame {
 
 		}
 
-		/*
-		 * COMMENTING OUT. WILL FIX LATER - ALBERT collision example if
-		 * (tpt.getWorldBound().intersects(p1.getWorldBound()) &&
-		 * collidedWTeapot == false){ collidedWTeapot = true; numCrashes++;
-		 * score1 += 100; CrashEvent newCrash = new CrashEvent(numCrashes);
-		 * removeGameWorldObject(tpt); eventMgr.triggerEvent(newCrash); }
-		 */
-		
-		
-		
+	}
+	else if (pauseSimulation == true)
+	{
+		System.out.println("pause stuff");
+		System.out.println("press r to run the simulation again");
+	}
 
-		try {
-			conn = DriverManager
-					.getConnection("jdbc:ucanaccess://FishPool.accdb");
-
-			Statement s = conn.createStatement();
-			rs = s.executeQuery("SELECT fishID FROM [SimulationFish]");
-			while (rs.next()) {
-				String id = rs.getString("fishID"); // Field from database ex.
-													// FishA, FishB
-				int idS = Integer.parseInt(id);
-
-				/*
-				 * public Point3D returnTargetPos() { return new
-				 * Point3D(target.getWorldTranslation().getCol(3)); }
-				 */
-
-				if (id.equals("1")) {
-
-					// object collision example
-//					if (((TriMesh)largePlant).getWorldBound().intersects(
-//							cichlidA.getWorldBound())) {
-//						System.out.println("MAKE THIS THING GO SLOWER!!!");
-//						cichlidA.translate(0, 0, -1f); // make the cichlid go in
-//														// reverse
-//						cichlidA.updateWorldBound();
-//					}
-
-				} else if (id.equals("2")) {
-
-
-				} else if (id.equals("3")) {
-
-
-				}
-
-			}
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
 
 	}
 

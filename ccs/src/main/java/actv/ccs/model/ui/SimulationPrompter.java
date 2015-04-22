@@ -420,6 +420,93 @@ public class SimulationPrompter extends JFrame {
 		springLayout.putConstraint(SpringLayout.NORTH, btnLoadSavedState, 20, SpringLayout.SOUTH, btnScenario4);
 		springLayout.putConstraint(SpringLayout.WEST, btnLoadSavedState, 0, SpringLayout.WEST, lblHelloWelcomeTo);
 		getContentPane().add(btnLoadSavedState);
+		btnLoadSavedState.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) 
+			{
+				/*
+				 * this is for loading a saved scenario... still thinking about to save a scenario first
+				 */
+				try {
+					Connection conn;
+					try {
+						conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+				
+					Statement s = conn.createStatement();
+					rs = s.executeQuery("SELECT ID FROM [ScenarioFlag]");
+					while (rs.next())
+					{
+						int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 1 where ID = 6");		
+					}
+					conn.close();
+					} catch (SQLException Ex) {
+						// TODO Auto-generated catch block
+						Ex.printStackTrace();
+					}
+				} catch (SecurityException e5) {
+					// TODO Auto-generated catch block
+					e5.printStackTrace();
+				}
+				try {
+					Connection connn;
+					try
+					{
+						connn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+						Statement s = connn.createStatement();
+						rs =s.executeQuery("SELECT ID FROM [SimulationFish]");
+						while (rs.next())
+						{
+							
+							
+
+				        	int a = s.executeUpdate("UPDATE SimulationFish set fishID = 1 where ID = 1");
+				        	int b = s.executeUpdate("UPDATE SimulationFish set fishID = 2 where ID = 2");
+				        	int c = s.executeUpdate("UPDATE SimulationFish set fishID = 3 where ID = 3");
+				        	
+						}
+						connn.close();
+					} catch (Exception p1)
+					{
+						p1.printStackTrace();
+					}
+				
+					
+				} catch(Exception pp)
+				{
+					pp.printStackTrace();
+				}
+			try {
+					Connection conne;
+					try
+					{
+						conne = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+						Statement s = conne.createStatement();
+						rs =s.executeQuery("SELECT ID FROM [SimulationObjects]");
+						while (rs.next())
+						{
+				        	int a = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 1");
+				        	int b = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 2");
+				        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 3");
+				        	int d = s.executeUpdate("UPDATE SimulationObjects set objID = 4 where ID = 4");
+				        	int g = s.executeUpdate("UPDATE SimulationObjects set objID = 5 where ID = 5");
+				        	int f = s.executeUpdate("UPDATE SimulationObjects set objID = 6 where ID = 6");
+				        	
+						}
+						conne.close();
+					} catch (Exception p1)
+					{
+						p1.printStackTrace();
+					}
+				
+					
+				} catch(Exception pp)
+				{
+					pp.printStackTrace();
+				}
+				scenarioShutDown();
+				
+			}
+		});
 		
 		this.setVisible(true);	
 	}
