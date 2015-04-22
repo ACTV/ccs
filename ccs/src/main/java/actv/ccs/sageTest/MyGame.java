@@ -24,6 +24,7 @@ import sage.renderer.IRenderer;
 import sage.scene.*;
 import sage.scene.SceneNode.*;
 import sage.scene.shape.*;
+import sage.scene.state.RenderState.RenderStateType;
 import sage.scene.state.TextureState;
 import sage.terrain.*;
 import sage.texture.*;
@@ -923,23 +924,11 @@ public class MyGame extends BaseGame {
 		ground = new Rectangle(200, 200);
 		ground.rotate(90, new Vector3D(1, 0, 0));
 		ground.translate(101.0f, -2f, 101.0f);
-		ground.setColor(Color.orange);
-		/*
-		// testing out new stuff
-		TextureState texState = (TextureState) renderer.createRenderState(RenderStateType.Texture);
-		texState.setTexture(texture);
-		texState.setEnabled(true);
-		ground.setRenderState(texState);
-		ground.setTexture(texture);
-
-		   		*/
+//		ground.setColor(Color.orange);
 		ground.setTexture(texture);
 		fishWalls.addChild(ground);
 		ground.updateWorldBound();
 
-		
-		
-		
 		
 		leftWall = new Rectangle(200, 200);
 		Matrix3D leftRot = new Matrix3D();

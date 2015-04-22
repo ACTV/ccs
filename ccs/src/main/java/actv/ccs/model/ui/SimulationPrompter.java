@@ -29,7 +29,7 @@ public class SimulationPrompter extends JFrame {
 	{
 
 		setTitle("Convict Cichlid Fish Simulator Simulation Prompter");
-		setSize(1000,600);
+		setSize(492,600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
@@ -86,27 +86,6 @@ public class SimulationPrompter extends JFrame {
 		springLayout.putConstraint(SpringLayout.NORTH, lblIfNewSimulation, 70, SpringLayout.SOUTH, btnCreateYourOwn);
 		springLayout.putConstraint(SpringLayout.WEST, lblIfNewSimulation, 0, SpringLayout.WEST, lblHelloWelcomeTo);
 		getContentPane().add(lblIfNewSimulation);
-		
-		JLabel lblScenario = new JLabel("Scenario 1");
-		springLayout.putConstraint(SpringLayout.NORTH, lblScenario, 107, SpringLayout.NORTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, lblScenario, -280, SpringLayout.EAST, getContentPane());
-		getContentPane().add(lblScenario);
-		
-		
-		JLabel lblScenario_1 = new JLabel("Scenario 2");
-		springLayout.putConstraint(SpringLayout.NORTH, lblScenario_1, 28, SpringLayout.SOUTH, lblScenario);
-		springLayout.putConstraint(SpringLayout.WEST, lblScenario_1, 0, SpringLayout.WEST, lblScenario);
-		getContentPane().add(lblScenario_1);
-		
-		JLabel lblScenario_2 = new JLabel("Scenario 3");
-		springLayout.putConstraint(SpringLayout.NORTH, lblScenario_2, 29, SpringLayout.SOUTH, lblScenario_1);
-		springLayout.putConstraint(SpringLayout.WEST, lblScenario_2, 0, SpringLayout.WEST, lblScenario);
-		getContentPane().add(lblScenario_2);
-		
-		JLabel lblScenario_3 = new JLabel("Scenario 4");
-		springLayout.putConstraint(SpringLayout.NORTH, lblScenario_3, 30, SpringLayout.SOUTH, lblScenario_2);
-		springLayout.putConstraint(SpringLayout.WEST, lblScenario_3, 0, SpringLayout.WEST, lblScenario);
-		getContentPane().add(lblScenario_3);
 		
 		JButton btnScenario1 = new JButton("Scenario 1");
 		springLayout.putConstraint(SpringLayout.NORTH, btnScenario1, 22, SpringLayout.SOUTH, lblIfNewSimulation);
@@ -437,10 +416,10 @@ public class SimulationPrompter extends JFrame {
 		springLayout.putConstraint(SpringLayout.WEST, lblCichlidsAnd, 0, SpringLayout.WEST, lblCichlidsOn);
 		getContentPane().add(lblCichlidsAnd);
 		
-		JLabel lblPicturesOfScenarios = new JLabel("Pictures of scenarios here");
-		springLayout.putConstraint(SpringLayout.NORTH, lblPicturesOfScenarios, 0, SpringLayout.NORTH, btnCreateYourOwn);
-		springLayout.putConstraint(SpringLayout.WEST, lblPicturesOfScenarios, 0, SpringLayout.WEST, lblScenario);
-		getContentPane().add(lblPicturesOfScenarios);
+		JButton btnLoadSavedState = new JButton("Load Saved State");
+		springLayout.putConstraint(SpringLayout.NORTH, btnLoadSavedState, 20, SpringLayout.SOUTH, btnScenario4);
+		springLayout.putConstraint(SpringLayout.WEST, btnLoadSavedState, 0, SpringLayout.WEST, lblHelloWelcomeTo);
+		getContentPane().add(btnLoadSavedState);
 		
 		this.setVisible(true);	
 	}
