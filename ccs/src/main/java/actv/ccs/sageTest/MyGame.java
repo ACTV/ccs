@@ -71,6 +71,8 @@ public class MyGame extends BaseGame {
 	private boolean largePotC, mediumPotC, smallPotC, largePlantC, mediumPlantC, smallPlantC;
 	private float simulationTime = 100;
 	private float time = 0;
+	private int cichlidCount;
+	private int objCount;
 	private HUDString timeString;
 	private Sphere aggroRangeA, aggroRangeB, aggroRangeC;
 	private Group fishWalls;
@@ -91,6 +93,8 @@ public class MyGame extends BaseGame {
 		createHUD();
 		setUpTank();
 		pauseSimulation = false; // set to false for beginning
+		cichlidCount = 0;
+		objCount = 0;
 	}
 
 	
@@ -299,6 +303,7 @@ public class MyGame extends BaseGame {
 						largePlant.updateGeometricState(0, true);
 						largePlant.updateWorldBound();
 						largePlantC = true;
+						objCount++;
 
 					}
 				} else if (id.equals("2")) {
@@ -350,6 +355,7 @@ public class MyGame extends BaseGame {
 						mediumPlant.updateGeometricState(0, true);
 						mediumPlant.updateWorldBound();
 						mediumPlantC = true;
+						objCount++;
 
 					}
 				} else if (id.equals("3")) {
@@ -403,6 +409,7 @@ public class MyGame extends BaseGame {
 						smallPlant.updateGeometricState(0, true);
 						smallPlant.updateWorldBound();
 						smallPlantC = true;
+						objCount++;
 
 					}
 				} else if (id.equals("4")) {
@@ -453,7 +460,7 @@ public class MyGame extends BaseGame {
 						largePot.updateGeometricState(0, true);
 						largePot.updateWorldBound();
 						largePotC = true;
-
+						objCount++;
 					}
 				} else if (id.equals("5")) {
 					rsI = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Medium Pot'");
@@ -503,7 +510,7 @@ public class MyGame extends BaseGame {
 						mediumPot.updateGeometricState(0, true);
 						mediumPot.updateWorldBound();
 						mediumPotC = true;
-
+						objCount++;
 					}
 				} else if (id.equals("6")) {
 					rsI = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Small Pot'");
@@ -553,7 +560,7 @@ public class MyGame extends BaseGame {
 						smallPot.updateGeometricState(0, true);
 						smallPot.updateWorldBound();
 						this.smallPotC = true;
-
+						objCount++;
 					}
 				}
 			}
@@ -653,7 +660,7 @@ public class MyGame extends BaseGame {
 						aggroRangeA.setLocalScale(aScale);
 						addGameWorldObject(aggroRangeA);
 						aggroRangeA.updateWorldBound();
-
+						cichlidCount++;
 					}
 				} else if (id.equals("2")) {
 					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
@@ -727,6 +734,7 @@ public class MyGame extends BaseGame {
 						aggroRangeB.setLocalScale(aScale);
 						addGameWorldObject(aggroRangeB);
 						aggroRangeB.updateWorldBound();
+						cichlidCount++;
 					}
 				} else if (id.equals("3")) {
 					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
@@ -802,6 +810,7 @@ public class MyGame extends BaseGame {
 						aggroRangeC.setLocalScale(aScale);
 						addGameWorldObject(aggroRangeC);
 						aggroRangeC.updateWorldBound();
+						cichlidCount++;
 					}
 				}
 			}
@@ -888,6 +897,13 @@ public class MyGame extends BaseGame {
 		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.R, resumeKey, 
 				IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
 		
+//		if (pauseSimulation == true) // this is for save simulation
+//		{
+			IAction saveState = new saveAction();
+			im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.Q, saveState, 
+					IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
+//		}
+		
 		// here is the movement options of the character ..
 		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.W, moveForwardA,
@@ -934,6 +950,215 @@ public class MyGame extends BaseGame {
 			resumeRunner();
 		}
 	}
+	private class saveAction extends AbstractInputAction
+	{
+		public void performAction(float time, Event sp)
+		{
+			System.out.println("saveAction");
+			/*
+			 * if this thing is ran
+			 * then check if cichlid is true 
+			 * like if (cichlidA != null)
+			 * then set the flag in simfishs
+			 * then if the objects do exist like
+			 * (largePot != null)
+			 * 
+			 * the big issue is that you need to is get the time of the thing
+			 */
+			try {
+				Connection conn;
+				try {
+					conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+			
+				Statement s = conn.createStatement();
+				rs = s.executeQuery("SELECT ID FROM [ScenarioFlag]");
+				while (rs.next())
+				{
+					int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 1 where ID = 6");		
+				}
+				conn.close();
+				} catch (SQLException Ex) {
+					// TODO Auto-generated catch block
+					Ex.printStackTrace();
+				}
+			} catch (SecurityException e5) {
+				// TODO Auto-generated catch block
+				e5.printStackTrace();
+			}
+			try {
+				Connection connn;
+				try
+				{
+					connn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+					Statement s = connn.createStatement();
+					rs =s.executeQuery("SELECT ID FROM [SimulationFishS]");
+					while (rs.next())
+					{
+						/*
+						 * i will have to figure out how to update the cichlid's x,y,z position
+						 */
+						if (cichlidA != null)
+						{
+							Point3D loc = new Point3D(cichlidA.getWorldTranslation().getCol(3));
+							System.out.println("save flag for cichlidA");
+			        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 1 where ID = 1");
+			        	int aa = s.executeUpdate("UPDATE FishPoolSaveState set StartingXPos = " + loc.getX() + " where ID = 1" );
+			        	int aaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = " + loc.getY() + " where ID = 1" );
+			        	int aaaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingZPos = " + loc.getZ() + " where ID = 1" );
+			        	
+						}
+						else if (cichlidA == null)
+						{
+				        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 0 where ID = 1");
+						}
+						if (cichlidB != null)
+						{
+							Point3D loc = new Point3D(cichlidB.getWorldTranslation().getCol(3));
+							System.out.println("save flag for cichlidB");
+			        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 2 where ID = 2");			        	
+			        	int aa = s.executeUpdate("UPDATE FishPoolSaveState set StartingXPos = " + loc.getX() + " where ID = 2" );
+			        	int aaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = " + loc.getY() + " where ID = 2" );
+			        	int aaaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingZPos = " + loc.getZ() + " where ID = 2" );
+						}
+						else if (cichlidB == null)
+						{
+				        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 0 where ID = 2");
+						}
+						if (cichlidC != null)
+						{
+							Point3D loc = new Point3D(cichlidB.getWorldTranslation().getCol(3));
+							System.out.println("save flag for cichlidC");
+			        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 3 where ID = 3");			        	
+			        	int aa = s.executeUpdate("UPDATE FishPoolSaveState set StartingXPos = " + loc.getX() + " where ID = 3" );
+			        	int aaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = " + loc.getY() + " where ID = 3" );
+			        	int aaaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingZPos = " + loc.getZ() + " where ID = 3" );
+						}
+						else if (cichlidC == null)
+						{
+				        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 0 where ID = 3");
+						}
+			        	
+					}
+					connn.close();
+				} catch (Exception p1)
+				{
+					p1.printStackTrace();
+				}
+			
+				
+			} catch(Exception pp)
+			{
+				pp.printStackTrace();
+			}
+		try {
+				Connection conne;
+				try
+				{
+					conne = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+					Statement s = conne.createStatement();
+					rs =s.executeQuery("SELECT ID FROM [SimulationObjects]");
+					while (rs.next())
+					{
+						if (largePlant != null)
+						{	
+							System.out.println("saving large plant");
+			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 1 where ID = 1");
+						}
+						else if (largePlant == null)
+						{
+			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 1");
+						}
+						if (largePot != null)
+						{
+							System.out.println("saving large pot");
+							int b = s.executeUpdate("UPDATE SimulationObjectsS set objID = 1 where ID = 2");
+						}
+						else if (largePot == null)
+						{
+			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 2");
+						}
+						if (mediumPlant != null)
+						{
+							System.out.println("saving medium plant");
+							int c = s.executeUpdate("UPDATE SimulationObjectsS set objID = 3 where ID = 3");
+						}
+						else if (mediumPlant == null)
+						{
+			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 3");
+						}
+						if (mediumPot != null)
+						{
+							System.out.println("saving medium pot");
+							int d = s.executeUpdate("UPDATE SimulationObjectsS set objID = 4 where ID = 4");
+						}
+						else if (mediumPot == null)
+						{
+			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 4");
+						}
+						if (smallPlant != null)
+						{
+							System.out.println("saving small plant");
+							int g = s.executeUpdate("UPDATE SimulationObjectsS set objID = 5 where ID = 5");
+						}
+						else if (smallPlant == null)
+						{
+			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 5");
+						}
+						if (smallPot != null)
+						{
+							System.out.println("saving small pot");
+							int f = s.executeUpdate("UPDATE SimulationObjectsS set objID = 6 where ID = 6");
+						}
+						else if (smallPot == null)
+						{
+			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 6");
+						}
+					}
+					conne.close();
+				} catch (Exception p1)
+				{
+					p1.printStackTrace();
+				}
+			
+				
+			} catch(Exception pp)
+			{
+				pp.printStackTrace();
+			}
+		/* do this for the party time of the party time of figuring out how to save the tank data stuff
+		try {
+			Connection conne;
+			try
+			{
+				conne = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+				Statement s = conne.createStatement();
+				rs =s.executeQuery("SELECT ID FROM [SimulationObjects]");
+				while (rs.next())
+				{
+		        	int a = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 1");
+		        	int b = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 2");
+		        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 3");
+		        	int d = s.executeUpdate("UPDATE SimulationObjects set objID = 4 where ID = 4");
+		        	int g = s.executeUpdate("UPDATE SimulationObjects set objID = 5 where ID = 5");
+		        	int f = s.executeUpdate("UPDATE SimulationObjects set objID = 6 where ID = 6");
+		        	
+				}
+				conne.close();
+			} catch (Exception p1)
+			{
+				p1.printStackTrace();
+			}
+		
+			
+		} catch(Exception pp)
+		{
+			pp.printStackTrace();
+		} */
+		}
+		
+		
+	}
+	
 	public void createFishTankWalls() {
 		fishWalls = new Group();
 		
@@ -1392,8 +1617,8 @@ public class MyGame extends BaseGame {
 	}
 	else if (pauseSimulation == true)
 	{
-		System.out.println("pause stuff");
-		System.out.println("press r to run the simulation again");
+	//	System.out.println("pause stuff");
+	//	System.out.println("press r to run the simulation again");
 	}
 
 
