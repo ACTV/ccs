@@ -894,10 +894,12 @@ public class MyGame extends BaseGame {
 		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.R, resumeKey, 
 				IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
 		
-		if (pauseSimulation == true) // this is for save simulation
-		{
+//		if (pauseSimulation == true) // this is for save simulation
+//		{
 			IAction saveState = new saveAction();
-		}
+			im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.Q, saveState, 
+					IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
+//		}
 		
 		// here is the movement options of the character ..
 		im.associateAction(kbName,
@@ -949,6 +951,7 @@ public class MyGame extends BaseGame {
 	{
 		public void performAction(float time, Event sp)
 		{
+			System.out.println("saveAction");
 			/*
 			 * if this thing is ran
 			 * then check if cichlid is true 
@@ -1611,8 +1614,8 @@ public class MyGame extends BaseGame {
 	}
 	else if (pauseSimulation == true)
 	{
-		System.out.println("pause stuff");
-		System.out.println("press r to run the simulation again");
+	//	System.out.println("pause stuff");
+	//	System.out.println("press r to run the simulation again");
 	}
 
 
