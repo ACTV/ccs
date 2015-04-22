@@ -1001,6 +1001,10 @@ public class MyGame extends BaseGame {
 			        	int aaaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingZPos = " + loc.getZ() + " where ID = 1" );
 			        	
 						}
+						else if (cichlidA == null)
+						{
+				        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 0 where ID = 1");
+						}
 						if (cichlidB != null)
 						{
 							Point3D loc = new Point3D(cichlidB.getWorldTranslation().getCol(3));
@@ -1010,6 +1014,10 @@ public class MyGame extends BaseGame {
 			        	int aaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = " + loc.getY() + " where ID = 2" );
 			        	int aaaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingZPos = " + loc.getZ() + " where ID = 2" );
 						}
+						else if (cichlidB == null)
+						{
+				        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 0 where ID = 2");
+						}
 						if (cichlidC != null)
 						{
 							Point3D loc = new Point3D(cichlidB.getWorldTranslation().getCol(3));
@@ -1018,6 +1026,10 @@ public class MyGame extends BaseGame {
 			        	int aa = s.executeUpdate("UPDATE FishPoolSaveState set StartingXPos = " + loc.getX() + " where ID = 3" );
 			        	int aaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = " + loc.getY() + " where ID = 3" );
 			        	int aaaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingZPos = " + loc.getZ() + " where ID = 3" );
+						}
+						else if (cichlidC == null)
+						{
+				        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 0 where ID = 3");
 						}
 			        	
 					}
@@ -1046,30 +1058,54 @@ public class MyGame extends BaseGame {
 							System.out.println("saving large plant");
 			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 1 where ID = 1");
 						}
+						else if (largePlant == null)
+						{
+			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 1");
+						}
 						if (largePot != null)
 						{
 							System.out.println("saving large pot");
 							int b = s.executeUpdate("UPDATE SimulationObjectsS set objID = 1 where ID = 2");
+						}
+						else if (largePot == null)
+						{
+			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 2");
 						}
 						if (mediumPlant != null)
 						{
 							System.out.println("saving medium plant");
 							int c = s.executeUpdate("UPDATE SimulationObjectsS set objID = 3 where ID = 3");
 						}
+						else if (mediumPlant == null)
+						{
+			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 3");
+						}
 						if (mediumPot != null)
 						{
 							System.out.println("saving medium pot");
 							int d = s.executeUpdate("UPDATE SimulationObjectsS set objID = 4 where ID = 4");
+						}
+						else if (mediumPot == null)
+						{
+			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 4");
 						}
 						if (smallPlant != null)
 						{
 							System.out.println("saving small plant");
 							int g = s.executeUpdate("UPDATE SimulationObjectsS set objID = 5 where ID = 5");
 						}
+						else if (smallPlant == null)
+						{
+			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 5");
+						}
 						if (smallPot != null)
 						{
 							System.out.println("saving small pot");
 							int f = s.executeUpdate("UPDATE SimulationObjectsS set objID = 6 where ID = 6");
+						}
+						else if (smallPot == null)
+						{
+			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 6");
 						}
 					}
 					conne.close();
