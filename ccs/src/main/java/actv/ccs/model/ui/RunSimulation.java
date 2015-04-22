@@ -30,7 +30,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 
-import actv.ccs.CCSKnowledgeBase;
+import actv.ccs.CCSKnowledgeBaseBuilder;
 import actv.ccs.fact.Auditor;
 import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.CCSMemoryObject;

@@ -95,23 +95,26 @@ public class MyGame extends BaseGame {
 
 	
 	private void startRunner() {
-		if (runner == null) {
-			runner = RuleEngineRunner.getInstance();
-			runner.newMap(objs);
-			runner.start();
-		}
+		runner = RuleEngineRunner.getInstance();
+		runner.newMap(objs);
+		runner.start();
+	}
+	
+	private void pauseRunner(){
+		runner.pauseSession();
+	}
+	
+	private void resumeRunner(){
+		runner.resumeSession();
 	}
 	
 	private void stopRunner(){
-		if(runner.isRunning()){
-			try{
-				runner.closeSession();
-				runner.join();
-			}catch(InterruptedException e){
-				throw new RuntimeException("Unable to end the rule session thread!");
-			}
+		try{
+			runner.closeSession();
+			runner.join();
+		}catch(InterruptedException e){
+			throw new RuntimeException("Unable to end the rule session thread!");
 		}
-		
 	}
 
 	protected void initObjects() {
@@ -920,7 +923,7 @@ public class MyGame extends BaseGame {
 		public void performAction(float time, Event ev)
 		{
 			pauseSimulation = true;
-			stopRunner();
+			pauseRunner();
 		}
 	}
 	private class resumeAction extends AbstractInputAction
@@ -928,7 +931,7 @@ public class MyGame extends BaseGame {
 		public void performAction(float time, Event evento)
 		{
 			pauseSimulation = false;
-			startRunner();
+			resumeRunner();
 		}
 	}
 	public void createFishTankWalls() {
@@ -1037,7 +1040,7 @@ public class MyGame extends BaseGame {
 	{
 		// creating timer thing
 		time += elapsedTimeMS;
-		timeString.setText("Time: " + time/1000);
+		timeString.setText("Time: " + Math.floor(time/1000));
 		float timeCompare = time/1000;
 
 	

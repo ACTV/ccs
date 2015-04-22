@@ -8,17 +8,18 @@ import org.drools.runtime.StatefulKnowledgeSession;
  * @author TOM
  *
  */
-public class SessionThread extends Thread {
-	private static SessionThread instance = null;
-	private static boolean isRunning;
+public class CCSKnowledgeSession extends Thread {
+	private static CCSKnowledgeSession instance = null;
 	private StatefulKnowledgeSession statefulKnowledgeSession;
+	private static boolean isRunning;
+	private static boolean isPaused;
 
-	protected SessionThread(){};
+	private CCSKnowledgeSession(){};
 	
-	public static SessionThread getInstance(){
+	public static CCSKnowledgeSession getInstance(){
 		if(instance == null){
-			instance = new SessionThread();
-			instance.setName("Session Thread");
+			instance = new CCSKnowledgeSession();
+			instance.setName("CCS Knowledge Session");
 		}
 		return instance;
 	}
@@ -32,8 +33,8 @@ public class SessionThread extends Thread {
 	}
 	
 	public void run(){
-		statefulKnowledgeSession.fireUntilHalt();
 		isRunning = true;
+		statefulKnowledgeSession.fireUntilHalt();
 	}
 	
 	public void terminate(){
@@ -45,16 +46,17 @@ public class SessionThread extends Thread {
 	}
 	
 	public void pauseSession(){
-		if(isRunning){
+		if(isRunning && !isPaused){
 			statefulKnowledgeSession.halt();
-			isRunning = false;
+			isPaused = true;
 		}
 	}
 	
 	public void resumeSession(){
-		if(!isRunning && statefulKnowledgeSession != null){
+		if(isRunning && isPaused){
+			System.out.println("CCSKnowledgeSession Resume");
 			statefulKnowledgeSession.fireUntilHalt();
-			isRunning = true;
+			isPaused = false;
 		}
 	}
 	

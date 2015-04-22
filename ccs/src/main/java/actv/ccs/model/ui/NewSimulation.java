@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.*;
 
-import actv.ccs.CCSKnowledgeBase;
+import actv.ccs.CCSKnowledgeBaseBuilder;
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
 import actv.ccs.model.TankObject;
