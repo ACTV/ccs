@@ -24,7 +24,9 @@ import actv.ccs.sageTest.TestGame;
 
 public class SimulationPrompter extends JFrame {
 	
-	private ResultSet rs; 
+	private ResultSet rs, rss; 
+	private String saveFishID, saveObjID;
+	
 	public SimulationPrompter()
 	{
 
@@ -373,7 +375,7 @@ public class SimulationPrompter extends JFrame {
 						while (rs.next())
 						{
 				        	int a = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 1");
-				        	int b = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 2");
+				        	int b = s.executeUpdate("UPDATE SimulationObjects set objID = 2 where ID = 2");
 				        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 3");
 				        	int d = s.executeUpdate("UPDATE SimulationObjects set objID = 4 where ID = 4");
 				        	int g = s.executeUpdate("UPDATE SimulationObjects set objID = 5 where ID = 5");
@@ -424,89 +426,130 @@ public class SimulationPrompter extends JFrame {
 			
 			public void actionPerformed(ActionEvent e) 
 			{
-				/*
-				 * this is for loading a saved scenario... still thinking about to save a scenario first
-				 */
-				try {
-					Connection conn;
-					try {
-						conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
-				
+
+				try { 
+						Connection conn;
+					     conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+					
 					Statement s = conn.createStatement();
-					rs = s.executeQuery("SELECT ID FROM [ScenarioFlag]");
+					rs = s.executeQuery("SELECT * FROM [SimulationFishS]");
 					while (rs.next())
 					{
-						int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 1 where ID = 6");		
-					}
-					conn.close();
-					} catch (SQLException Ex) {
-						// TODO Auto-generated catch block
-						Ex.printStackTrace();
-					}
-				} catch (SecurityException e5) {
-					// TODO Auto-generated catch block
-					e5.printStackTrace();
-				}
-				try {
-					Connection connn;
-					try
-					{
-						connn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
-						Statement s = connn.createStatement();
-						rs =s.executeQuery("SELECT ID FROM [SimulationFish]");
-						while (rs.next())
+						saveFishID = rs.getString("fishID");
+						System.out.println("Fish ID IS " + saveFishID);
+						if (saveFishID.equals("1"))
 						{
-							
-							
+							int a = s.executeUpdate("UPDATE SimulationFish set fishID = 1 where ID = 1");
+							// then call for swapping stuff.
+							rss = s.executeQuery("SELECT * FROM [FishPoolSaveState] WHERE ID = 1");
+							while (rss.next())
+							{
+								String xValue = rss.getString("StartingXPos");
+								String yValue = rss.getString("StartingYPos");
+								String zValue = rss.getString("StartingZPos");
+								
+								int xV = Integer.parseInt(xValue);
+								int yV = Integer.parseInt(yValue);
+								int zV = Integer.parseInt(zValue);
+								
+							int aa = s.executeUpdate("UPDATE FishPool set StartingXPos = " + xV + " WHERE ID = 1");
+							int b = s.executeUpdate("UPDATE FishPool set StartingYPos = " + yV + " WHERE ID = 1");
+							int c = s.executeUpdate("UPDATE FishPool set StartingZPos = " + zV + " WHERE ID = 1");
 
-				        	int a = s.executeUpdate("UPDATE SimulationFish set fishID = 1 where ID = 1");
-				        	int b = s.executeUpdate("UPDATE SimulationFish set fishID = 2 where ID = 2");
-				        	int c = s.executeUpdate("UPDATE SimulationFish set fishID = 3 where ID = 3");
-				        	
+
+							}
 						}
-						connn.close();
-					} catch (Exception p1)
-					{
-						p1.printStackTrace();
-					}
-				
-					
-				} catch(Exception pp)
-				{
-					pp.printStackTrace();
-				}
-			try {
-					Connection conne;
-					try
-					{
-						conne = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
-						Statement s = conne.createStatement();
-						rs =s.executeQuery("SELECT ID FROM [SimulationObjects]");
-						while (rs.next())
+						if (saveFishID.equals("2"))
 						{
-				        	int a = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 1");
-				        	int b = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 2");
-				        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 3");
-				        	int d = s.executeUpdate("UPDATE SimulationObjects set objID = 4 where ID = 4");
-				        	int g = s.executeUpdate("UPDATE SimulationObjects set objID = 5 where ID = 5");
-				        	int f = s.executeUpdate("UPDATE SimulationObjects set objID = 6 where ID = 6");
-				        	
+							int a = s.executeUpdate("UPDATE SimulationFish set fishID = 2 where ID = 2");
+							rss = s.executeQuery("SELECT * FROM [FishPoolSaveState] WHERE ID = 2");
+							while (rss.next())
+							{
+								String xValue = rss.getString("StartingXPos");
+								String yValue = rss.getString("StartingYPos");
+								String zValue = rss.getString("StartingZPos");
+
+								int xV = Integer.parseInt(xValue);
+								int yV = Integer.parseInt(yValue);
+								int zV = Integer.parseInt(zValue);
+								
+							int aa = s.executeUpdate("UPDATE FishPool set StartingXPos = " + xV + " WHERE ID = 2");
+							int b = s.executeUpdate("UPDATE FishPool set StartingYPos = " + yV + " WHERE ID = 2");
+							int c = s.executeUpdate("UPDATE FishPool set StartingZPos = " + zV + " WHERE ID = 2");
+
+							}
+							
 						}
-						conne.close();
-					} catch (Exception p1)
-					{
-						p1.printStackTrace();
+						if (saveFishID.equals("3"))
+						{
+							int a = s.executeUpdate("UPDATE SimulationFish set fishID = 3 where ID = 3");
+							rss = s.executeQuery("SELECT * FROM [FishPoolSaveState] WHERE ID = 3");
+							while (rss.next())
+							{
+								String xValue = rss.getString("StartingXPos");
+								String yValue = rss.getString("StartingYPos");
+								String zValue = rss.getString("StartingZPos");
+
+								int xV = Integer.parseInt(xValue);
+								int yV = Integer.parseInt(yValue);
+								int zV = Integer.parseInt(zValue);
+								
+							int aa = s.executeUpdate("UPDATE FishPool set StartingXPos = " + xV + " WHERE ID = 3");
+							int b = s.executeUpdate("UPDATE FishPool set StartingYPos = " + yV + " WHERE ID = 3");
+							int c = s.executeUpdate("UPDATE FishPool set StartingZPos = " + zV + " WHERE ID = 3");					}
+							
+						}
 					}
-				
 					
-				} catch(Exception pp)
-				{
-					pp.printStackTrace();
-				}
-				scenarioShutDown();
+					} catch (Exception savel )
+					{
+						savel.printStackTrace();
+					} 
+				try { 
+					Connection conn;
+				     conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 				
-			}
-		});
+				Statement s = conn.createStatement();
+				rs = s.executeQuery("SELECT * FROM [SimulationObjectsS]");
+				while (rs.next())
+				{
+					saveObjID = rs.getString("objID");
+					System.out.println("objID IS " + saveObjID);
+					if (saveObjID.equals("1"))
+					{
+						int a = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 1");
+					}
+					if (saveObjID.equals("2"))
+					{
+						int a = s.executeUpdate("UPDATE SimulationObjects set objID = 2 where ID = 2");
+					}
+					if (saveObjID.equals("3"))
+					{
+						int a = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 3");
+					}
+					if (saveObjID.equals("4"))
+					{
+						int a = s.executeUpdate("UPDATE SimulationObjects set objID = 4 where ID = 4");
+					}
+					if (saveObjID.equals("5"))
+					{
+						int a = s.executeUpdate("UPDATE SimulationObjects set objID = 5 where ID = 5");
+					}
+					if (saveObjID.equals("6"))
+					{
+						int a = s.executeUpdate("UPDATE SimulationObjects set objID = 6 where ID = 6");
+					}
+
+				}
+				
+				} catch (Exception savel )
+				{
+					savel.printStackTrace();
+				} 
+					scenarioShutDown();
+				
+
+			}});
 		
 		this.setVisible(true);	
 	}
