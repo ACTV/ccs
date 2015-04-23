@@ -622,6 +622,7 @@ public class MyGame extends BaseGame {
 						cichlidA.setBaseCautionLevel(4f);
 						cichlidA.setDirection(new Vector3D(1,1,0));
 						cichlidA.setlocation(xStartW,  yStartY, zStartZ);
+						cichlidA.setCullMode(CULL_MODE.ALWAYS);
 						cichlidA.setState(FishState.IDLE);
 						//
 						Matrix3D cichlidAT = cichlidA.getLocalTranslation(); // this
@@ -657,7 +658,7 @@ public class MyGame extends BaseGame {
 						aRangeT.translate(xStartW, yStartY, zStartZ);
 						aggroRangeA.setLocalTranslation(aRangeT);
 						Matrix3D aScale = aggroRangeA.getLocalScale();
-						aScale.scale(15f, 15f, 15f);
+						aScale.scale(30f, 30f, 30f);
 						aggroRangeA.setLocalScale(aScale);
 						addGameWorldObject(aggroRangeA);
 						aggroRangeA.updateWorldBound();
@@ -728,6 +729,7 @@ public class MyGame extends BaseGame {
 						cichlidB.setBaseCautionLevel(4f);
 						cichlidB.setDirection(new Vector3D(1,1,1));
 						cichlidB.setlocation(xStartW,  yStartY, zStartZ);
+						cichlidB.setCullMode(CULL_MODE.ALWAYS);
 						cichlidB.setState(FishState.IDLE);
 						//
 						Matrix3D cichlidBT = cichlidB.getLocalTranslation(); // this
@@ -762,7 +764,7 @@ public class MyGame extends BaseGame {
 						aRangeT.translate(xStartW, yStartY, zStartZ);
 						aggroRangeB.setLocalTranslation(aRangeT);
 						Matrix3D aScale = aggroRangeB.getLocalScale();
-						aScale.scale(15f, 15f, 15f);
+						aScale.scale(30f, 30f, 30f);
 						aggroRangeB.setLocalScale(aScale);
 						addGameWorldObject(aggroRangeB);
 						aggroRangeB.updateWorldBound();
@@ -834,6 +836,7 @@ public class MyGame extends BaseGame {
 						cichlidC.setDirection(new Vector3D(-.5,.8,.1));
 						cichlidC.setlocation(xStartW,  yStartY, zStartZ);
 						cichlidC.setState(FishState.IDLE);
+						cichlidC.setCullMode(CULL_MODE.ALWAYS);
 						//
 						
 						Matrix3D cichlidCT = cichlidC.getLocalTranslation(); // this
@@ -868,7 +871,7 @@ public class MyGame extends BaseGame {
 						aRangeT.translate(xStartW, yStartY, zStartZ);
 						aggroRangeC.setLocalTranslation(aRangeT);
 						Matrix3D aScale = aggroRangeC.getLocalScale();
-						aScale.scale(20f, 20f, 20f);
+						aScale.scale(30f, 30f, 30f);
 						aggroRangeC.setLocalScale(aScale);
 						addGameWorldObject(aggroRangeC);
 						aggroRangeC.updateWorldBound();
