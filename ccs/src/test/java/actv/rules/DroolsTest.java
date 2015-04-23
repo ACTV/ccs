@@ -14,7 +14,8 @@ import org.drools.runtime.StatelessKnowledgeSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import actv.ccs.CCSKnowledgeBase;
+import actv.ccs.CCSKnowledgeBaseBuilder;
+import actv.ccs.CCSKnowledgeSession;
 import actv.ccs.CCSListener;
 import actv.ccs.model.CCSMemoryObject;
 
@@ -24,6 +25,7 @@ import actv.ccs.model.CCSMemoryObject;
  *
  */
 public class DroolsTest{
+	private CCSKnowledgeSession session = CCSKnowledgeSession.getInstance();
 	private String drl, bpmn, startProc;
 	private static final Logger logger = LoggerFactory.getLogger(DroolsTest.class);
 	
@@ -39,7 +41,7 @@ public class DroolsTest{
 	 */
 	public void executeStateful(long threadSleep, ArrayList<CCSMemoryObject> objects){
 			
-		CCSKnowledgeBase.executeInfiniteSession(drl, bpmn, startProc, objects);
+		session.setStatefulKnowledgeSession(CCSKnowledgeBaseBuilder.buildStatefulSession(drl, bpmn, startProc, objects));
 		try {
 			Thread.sleep(threadSleep);
 		} catch (InterruptedException e) {
@@ -47,7 +49,7 @@ public class DroolsTest{
 			e.printStackTrace();
 		}
 		
-		CCSKnowledgeBase.disposeSession();
+		session.terminate();
 	}
 	
 	/**
@@ -56,7 +58,7 @@ public class DroolsTest{
 	 */
 	public void executeStateless(ArrayList<CCSMemoryObject> objects){
 		// Retrieve KnowledgeBuilder
-		KnowledgeBuilder kbuilder = CCSKnowledgeBase.initKBuilder(new String[]{drl, bpmn});
+		KnowledgeBuilder kbuilder = CCSKnowledgeBaseBuilder.initKBuilder(new String[]{drl, bpmn});
 		
 		if(kbuilder.hasErrors()){
 			System.out.println(kbuilder.getErrors());

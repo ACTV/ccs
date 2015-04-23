@@ -24,136 +24,88 @@ import org.springframework.core.io.ClassPathResource;
 
 import actv.ccs.model.CCSMemoryObject;
 
-/*
- * 
- * TODO Cleanup the code!!!
- * 
+/**
+ * The CCSKnowledgeBaseBuilder contains three methods to build and create a Stateful Knowledge Session for simulation.
+ *
  */
-public class CCSKnowledgeBase{
-	private static SessionThread sessionThread;
-	private static final Logger log = LoggerFactory.getLogger(CCSKnowledgeBase.class); 
-	private static final String [] packages = { "actv/ccs/rules/start",
-												"actv/ccs/flow"};
+public class CCSKnowledgeBaseBuilder{
+	private static final Logger log = LoggerFactory.getLogger(CCSKnowledgeBaseBuilder.class); 
 	
 	/**
-	 * Execute the stateful knowledge session on a separate thread. Uses call fireUntilHalt()
-	 * This method does not create a new Thread to execute on.
+	 * This method creates a Stateful Knowledge Session with all the available rules to fire with ONLY.
+	 * No objects are inserted in the return session.
+	 * 
+	 * @return
+	 */
+	public static StatefulKnowledgeSession buildStatefulSession(){
+		return setupSession("swim", new String[]{	"actv/ccs/rules/start/CoolingDown.drl",
+										 			"actv/ccs/rules/start/Start.drl",
+												 	"actv/ccs/rules/start/InitializeCichlid.drl",
+													"actv/ccs/rules/start/Calm.drl",
+													"actv/ccs/rules/idle/Idle.drl",
+													"actv/ccs/rules/idle/Move.drl",
+													"actv/ccs/rules/idle/Swim.drl",
+													"actv/ccs/flow/swim.bpmn" });
+	}
+	
+	
+	/**
+	 * This method creates a Stateful Knowledge Session with all the available rules to fire with. CCSMemoryObjects
+	 * that are passed in are inserted into the session.
+	 * 
 	 * @param objs
 	 * @return
 	 */
-	public static int executeInfiniteSession(ArrayList<CCSMemoryObject> objs){
-		final StatefulKnowledgeSession sks = setupSession();
+	public static StatefulKnowledgeSession buildStatefulSession(ArrayList<CCSMemoryObject> objs){
+		StatefulKnowledgeSession sks = setupSession("swim", new String[]{	"actv/ccs/rules/start/CoolingDown.drl",
+																	 			"actv/ccs/rules/start/Start.drl",
+																			 	"actv/ccs/rules/start/InitializeCichlid.drl",
+																				"actv/ccs/rules/start/Calm.drl",
+																				"actv/ccs/rules/idle/Idle.drl",
+																				"actv/ccs/rules/idle/Move.drl",
+																				"actv/ccs/rules/idle/Swim.drl",
+																				"actv/ccs/flow/swim.bpmn" });
 		insertObjects(sks, objs);
-		
-		sks.startProcess("swim");
-		
-		new Thread(){
-			public void run(){
-				startTheSession(sks);
-			}
-		}.start();
-		
-		return sks.getId();
-	}
-	
-	/**
-	 * Execute the stateful knowledge session on a separate thread. Uses call fireUntilHalt()
-	 * Does add all the rules to the knowledge builder
-	 * @param objs
-	 * @return
-	 */
-	public static int executeInfiniteSession(String drl, String bpmn, String flow, ArrayList<CCSMemoryObject> objs){
-		KnowledgeBuilder kbuilder = initKBuilder(new String[]{drl, bpmn});
-		
-		KnowledgeBase kb = KnowledgeBaseFactory.newKnowledgeBase(getKnowledgeBaseConfiguration());
-		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
-		
-		final StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
-		
-		insertObjects(sks, objs);
-		
-		sks.startProcess(flow);
-		addEventListeners(sks);
-		
-		new Thread(){
-			public void run(){
-				this.setName("Infinite Session 2");
-				startTheSession(sks);
-			}
-		}.start();
-		
-		return sks.getId();
-	}
-
-	private static StatefulKnowledgeSession setupSession(){
-		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(getKnowledgeBuilderConfiguration()); 
-
-		//TODO: hardcoded the rules for now.
-		addDrl(kbuilder, "actv/ccs/rules/start/CoolingDown.drl");
-		addDrl(kbuilder, "actv/ccs/rules/start/Start.drl");
-		addDrl(kbuilder, "actv/ccs/rules/start/InitializeCichlid.drl");
-		addDrl(kbuilder, "actv/ccs/rules/start/Calm.drl");
-		addDrl(kbuilder, "actv/ccs/rules/idle/Idle.drl");
-		addDrl(kbuilder, "actv/ccs/rules/idle/Move.drl");
-		addDrl(kbuilder, "actv/ccs/rules/idle/Swim.drl");
-
-//		addBpmn(kbuilder, "actv/ccs/flow/start.bpmn");
-//		addBpmn(kbuilder, "actv/ccs/flow/idle.bpmn");
-		addBpmn(kbuilder, "actv/ccs/flow/swim.bpmn");
-		
-		if (kbuilder.hasErrors()){
-            log.error(kbuilder.getErrors().toString());
-            throw new RuntimeException(kbuilder.getErrors().toString());
-        }
-		
-		KnowledgeBase kb = KnowledgeBaseFactory.newKnowledgeBase(getKnowledgeBaseConfiguration());
-		
-		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
-		
-		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
-
-		addEventListeners(sks);
 		
 		return sks;
 	}
 	
-	private static void startTheSession(StatefulKnowledgeSession sks){
-		if(sessionThread == null){
-			// Execute the rules on another thread
-			sessionThread = SessionThread.getInstance();
-			sessionThread.setStatefulKnowledgeSession(sks);
-			sessionThread.run();
-		}
-	}
-	
-	public static void disposeSession(){
-		if(sessionThread != null && sessionThread.isRunning()){
-			sessionThread.terminate();
-			try {
-				sessionThread.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public static int pauseSession(){
-		if(sessionThread != null && sessionThread.isRunning()){
-			sessionThread.pauseSession();
-			return sessionThread.getStatefulKnowledgeSession().getId();
-		}
-		return -1;
+	/**
+	 * This method takes in one specific rule for execution
+	 * 
+	 * @param drl
+	 * @param bpmn
+	 * @param flow
+	 * @param objs
+	 * @return
+	 */
+	public static StatefulKnowledgeSession buildStatefulSession(String drl, String bpmn, String flow, ArrayList<CCSMemoryObject> objs){
+		StatefulKnowledgeSession sks = setupSession(flow, new String[]{drl, bpmn});
+		
+		insertObjects(sks, objs);
+		
+		return sks;
 	}
 
-	public static int resumeSession(){
-		if(sessionThread != null && !sessionThread.isRunning()){
-			sessionThread.resumeSession();
-			return sessionThread.getStatefulKnowledgeSession().getId();
-		}
-		return -1;
+	/**
+	 * Creates and returns a prepared StatefulKnowledgeSession
+	 * 
+	 * @param flow
+	 * @param resources
+	 * @return
+	 */
+	private static StatefulKnowledgeSession setupSession(String flow, String [] resources){
+		KnowledgeBuilder kbuilder = initKBuilder(resources);
+		
+		KnowledgeBase kb = KnowledgeBaseFactory.newKnowledgeBase(getKnowledgeBaseConfiguration());
+		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
+		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
+		sks.startProcess(flow);
+		addEventListeners(sks);
+		
+		return sks;
 	}
-	
+
 	private static void addEventListeners(StatefulKnowledgeSession sks){
 		sks.addEventListener((WorkingMemoryEventListener)new CCSListener());
 		sks.addEventListener((ProcessEventListener)new CCSListener());
@@ -205,6 +157,11 @@ public class CCSKnowledgeBase{
 				addPackage(kbuilder, rsrc);
 			}
 		}
+		
+		if (kbuilder.hasErrors()){
+            log.error(kbuilder.getErrors().toString());
+            throw new RuntimeException(kbuilder.getErrors().toString());
+        }
 		
 		return kbuilder;
 	}

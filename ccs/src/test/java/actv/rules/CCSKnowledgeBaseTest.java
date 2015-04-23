@@ -11,8 +11,10 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import actv.ccs.CCSKnowledgeBase;
+import actv.ccs.CCSKnowledgeBaseBuilder;
+import actv.ccs.CCSKnowledgeSession;
 import actv.ccs.fact.Auditor;
+import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
@@ -23,6 +25,7 @@ public class CCSKnowledgeBaseTest{
 	private long start;
 	private static Logger log = LoggerFactory.getLogger(CCSKnowledgeBaseTest.class);
 	private ArrayList<CCSMemoryObject> objs;
+	private CCSKnowledgeSession session = CCSKnowledgeSession.getInstance();
 
 	@Before
 	public void setupFish(){
@@ -52,8 +55,9 @@ public class CCSKnowledgeBaseTest{
 		objs.add(cc);
 		objs.add(auditor);
 		
-		CCSKnowledgeBase.executeInfiniteSession(objs);
-
+		//session.setStatefulKnowledgeSession(CCSKnowledgeBaseBuilder.buildStatefulSession(objs));
+		RuleEngineRunner r = RuleEngineRunner.getInstance();
+		
 		try{
 			log.info("Sleeping thread...");
 			Thread.sleep(6000);
@@ -61,7 +65,7 @@ public class CCSKnowledgeBaseTest{
 			e.printStackTrace();
 		}
 		
-		CCSKnowledgeBase.disposeSession();
+		session.terminate();
 	}
 	
 	@Test
@@ -75,8 +79,7 @@ public class CCSKnowledgeBaseTest{
 		objs.add(cc);
 		objs.add(auditor);
 
-		CCSKnowledgeBase.executeInfiniteSession(objs);
-		
+		session.setStatefulKnowledgeSession(CCSKnowledgeBaseBuilder.buildStatefulSession(objs));
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
@@ -84,7 +87,7 @@ public class CCSKnowledgeBaseTest{
 			e.printStackTrace();
 		}
 		
-		CCSKnowledgeBase.disposeSession();
+		session.terminate();
 	}
 	
 }

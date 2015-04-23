@@ -57,14 +57,12 @@ public class SimulationWorld implements IObservable, ISimulationWorld {
 	}
 	
 	public void stopRunner(){
-		if(runner.isRunning()){
-			try {
-				runner.closeSession();
-				runner.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+			runner.closeSession();
+			runner.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

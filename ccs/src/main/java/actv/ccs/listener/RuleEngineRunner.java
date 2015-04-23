@@ -6,7 +6,8 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import actv.ccs.CCSKnowledgeBase;
+import actv.ccs.CCSKnowledgeBaseBuilder;
+import actv.ccs.CCSKnowledgeSession;
 import actv.ccs.fact.Auditor;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
@@ -19,9 +20,10 @@ import actv.ccs.model.ConvictCichlid;
  */
 public class RuleEngineRunner extends Thread{
 	private static RuleEngineRunner instance = null;
-	private HashMap<String, CCSMemoryObject> map;
-	private boolean isRunning = false;
+	private static CCSKnowledgeSession session = CCSKnowledgeSession.getInstance();
 	private static Logger logger = LoggerFactory.getLogger(RuleEngineRunner.class);
+	private HashMap<String, CCSMemoryObject> map;
+	
 	
 	private RuleEngineRunner(){}
 	
@@ -29,12 +31,9 @@ public class RuleEngineRunner extends Thread{
 		if(instance == null){
 			instance = new RuleEngineRunner();
 			instance.setName("Rule Engine Runner");
+			session.setStatefulKnowledgeSession(CCSKnowledgeBaseBuilder.buildStatefulSession());
 		}
 		return instance;
-	}
-	
-	public boolean isRunning(){
-		return this.isRunning;
 	}
 
 	public void newMap(ArrayList<CCSMemoryObject> objects){
@@ -51,48 +50,42 @@ public class RuleEngineRunner extends Thread{
 				hasCichlid = true;
 				id = Integer.toString(((ConvictCichlid)c).getCichlidID());
 				map.put(id, (ConvictCichlid)c);	
+				session.getStatefulKnowledgeSession().insert(c);
 			}
 		}
 
+		Auditor auditor = new Auditor();
+		
 		// Add the auditor
 		id = "Auditor";
-		map.put(id,  new Auditor());
+		map.put(id,  auditor);
+		session.getStatefulKnowledgeSession().insert(auditor);
 		
 		if(!hasCichlid){
 			logger.error("No convict cichlid in the tank!!");
 			//TODO implement exception?
 			return;
 		}
+		
 	}
 	
 	public void closeSession() throws InterruptedException{
 		logger.info("Closing the session!");
-		CCSKnowledgeBase.disposeSession();
-		isRunning = false;
+		session.terminate();
 	}
 	
-	public int pauseSession(){
-		if(isRunning){
-			int ret = CCSKnowledgeBase.pauseSession();
-			isRunning = false;
-			return ret;
-		}
-		return -1;
+	public void pauseSession(){
+		session.pauseSession();
 	}
 	
-	public int resumeSession(){
-		if(!isRunning){
-			int ret = CCSKnowledgeBase.resumeSession();
-			isRunning = true;
-			return ret;
-		}
-		return -1;
+	public void resumeSession(){
+		session.resumeSession();
 	}
 	
 	
 	public void run() {
 		logger.info("Executing KnowledgeBase!");
-		CCSKnowledgeBase.executeInfiniteSession(new ArrayList<CCSMemoryObject>(map.values()));
-		isRunning = true;
+		session.run();
 	}
+
 }
