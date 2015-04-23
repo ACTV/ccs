@@ -547,7 +547,7 @@ public class SimulationPrompter extends JFrame {
 					savel.printStackTrace();
 				} 
 					scenarioShutDown();
-				
+				 // cool
 
 			}});
 		
