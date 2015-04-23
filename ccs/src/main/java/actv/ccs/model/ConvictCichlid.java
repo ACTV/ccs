@@ -1,5 +1,6 @@
 package actv.ccs.model;
 
+import graphicslib3D.Matrix3D;
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
 
@@ -14,6 +15,7 @@ import java.nio.IntBuffer;
 import actv.ccs.model.type.FishState;
 import actv.ccs.sageTest.PropertyChangeSupportZ;
 import sage.scene.TriMesh;
+import sage.scene.shape.Sphere;
 
 public class ConvictCichlid extends TriMesh implements PropertyChangeSupportZ,
 		CCSMemoryObject {
@@ -35,7 +37,8 @@ public class ConvictCichlid extends TriMesh implements PropertyChangeSupportZ,
 	private float baseSpeed;
 	private long idleWaitTime;
 	private String gender;
-
+	private double influence;
+	
 	private static float[] vrts = new float[] { 0, 1, 0, -1, -1, 1, 1, -1, 1,
 			1, -1, -1, -1, -1, -1 };
 	private static float[] cl = new float[] { 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1,
@@ -56,6 +59,8 @@ public class ConvictCichlid extends TriMesh implements PropertyChangeSupportZ,
 		this.setVertexBuffer(vertBuf);
 		this.setColorBuffer(colorBuf);
 		this.setIndexBuffer(triangleBuf);
+		
+		setInfluence(length * 2);
 	}
 
 	public FishState getState() {
@@ -203,6 +208,14 @@ public class ConvictCichlid extends TriMesh implements PropertyChangeSupportZ,
 			Object newValue) {
 		this.pcs.firePropertyChange(propertyName, oldValue, newValue);
 
+	}
+
+	public double getInfluence() {
+		return influence;
+	}
+
+	public void setInfluence(double influence) {
+		this.influence = influence;
 	}
 
 }

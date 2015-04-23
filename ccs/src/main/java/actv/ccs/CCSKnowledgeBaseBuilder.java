@@ -45,6 +45,7 @@ public class CCSKnowledgeBaseBuilder{
 													"actv/ccs/rules/idle/Idle.drl",
 													"actv/ccs/rules/idle/Move.drl",
 													"actv/ccs/rules/idle/Swim.drl",
+													"actv/ccs/rules/idle/two/MoveTo.drl",
 													"actv/ccs/flow/swim.bpmn" });
 	}
 	
@@ -57,14 +58,7 @@ public class CCSKnowledgeBaseBuilder{
 	 * @return
 	 */
 	public static StatefulKnowledgeSession buildStatefulSession(ArrayList<CCSMemoryObject> objs){
-		StatefulKnowledgeSession sks = setupSession("swim", new String[]{	"actv/ccs/rules/start/CoolingDown.drl",
-																	 			"actv/ccs/rules/start/Start.drl",
-																			 	"actv/ccs/rules/start/InitializeCichlid.drl",
-																				"actv/ccs/rules/start/Calm.drl",
-																				"actv/ccs/rules/idle/Idle.drl",
-																				"actv/ccs/rules/idle/Move.drl",
-																				"actv/ccs/rules/idle/Swim.drl",
-																				"actv/ccs/flow/swim.bpmn" });
+		StatefulKnowledgeSession sks = buildStatefulSession();
 		insertObjects(sks, objs);
 		
 		return sks;

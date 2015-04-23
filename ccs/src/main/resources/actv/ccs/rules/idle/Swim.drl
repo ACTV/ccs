@@ -9,7 +9,7 @@ import java.util.Random;
 rule "Swim"
 	ruleflow-group "swim"
 	
-	timer(int: 1s)
+	timer(int: 2s)
 	
 	when
 		$auditor : Auditor()
