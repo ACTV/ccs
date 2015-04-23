@@ -662,13 +662,14 @@ public class MyGame extends BaseGame {
 						aggroRangeA.setLocalScale(aScale);
 						addGameWorldObject(aggroRangeA);
 						aggroRangeA.updateWorldBound();
+						aggroRangeA.setCullMode(CULL_MODE.ALWAYS); // cull mode hides the object
 						cichlidCount++;
 						
 						
 						// here is where i add the cichlidMesh
 						OBJLoader loader1 = new OBJLoader();
 						cichlidAMesh = loader1
-								.loadModel("cichliditem.obj");
+								.loadModel("cichlidIMeshItem.obj");
 						cichlidAMesh.setName(name);
 						Matrix3D cichlidAMeshT = cichlidAMesh.getLocalTranslation(); // this
 																				// is
@@ -682,12 +683,14 @@ public class MyGame extends BaseGame {
 																			// size
 																			// of
 																			// object
-						cichlidAMeshS.scale(widthW * weightW * .100, heightW
-								* weightW * .100, 0); // the scale
+		//				cichlidAMeshS.scale(widthW * weightW * .100, heightW
+		//						* weightW * .100, 0); // the scale
 																	// might be
 																	// too big
 																	// so we
 																	// largePlant.setLocalScale(largePlantS);
+						
+						cichlidAMeshS.scale(10f, 10f, 10f);
 						cichlidAMesh.setLocalScale(cichlidAMeshS);
 
 						addGameWorldObject(cichlidAMesh);
@@ -768,11 +771,12 @@ public class MyGame extends BaseGame {
 						aggroRangeB.setLocalScale(aScale);
 						addGameWorldObject(aggroRangeB);
 						aggroRangeB.updateWorldBound();
+						aggroRangeB.setCullMode(CULL_MODE.ALWAYS); // cull mode hides the object
 						
 						
 						OBJLoader loader1 = new OBJLoader();
 						cichlidBMesh = loader1
-								.loadModel("cichliditem.obj");
+								.loadModel("cichlidIMeshItem.obj");
 						cichlidBMesh.setName(name);
 						Matrix3D cichlidBMeshT = cichlidBMesh.getLocalTranslation(); // this
 																				// is
@@ -875,10 +879,11 @@ public class MyGame extends BaseGame {
 						aggroRangeC.setLocalScale(aScale);
 						addGameWorldObject(aggroRangeC);
 						aggroRangeC.updateWorldBound();
+						aggroRangeC.setCullMode(CULL_MODE.ALWAYS); // cull mode hides the object
 						
 						OBJLoader loader1 = new OBJLoader();
 						cichlidCMesh = loader1
-								.loadModel("cichliditem.obj");
+								.loadModel("cichlidIMeshItem.obj");
 						cichlidCMesh.setName(name);
 						Matrix3D cichlidCMeshT = cichlidCMesh.getLocalTranslation(); // this
 																				// is
