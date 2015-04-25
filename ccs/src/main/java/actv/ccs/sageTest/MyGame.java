@@ -79,7 +79,8 @@ public class MyGame extends BaseGame {
 	private Group fishWalls;
 	private IRenderer renderer;
 	// going to add a pause button here
-	private boolean pauseSimulation; 
+	private boolean pauseSimulation; 	
+	private FishTank fishTank;
 	
 	public void initGame() {
 		initObjects();
@@ -88,6 +89,7 @@ public class MyGame extends BaseGame {
 		createPerson();
 	//	createScene();
 		initActions();
+		fishTank = new FishTankImpl();
 	//	createFishTank();
 		createFishTankWalls();
 		startRunner();
@@ -619,10 +621,9 @@ public class MyGame extends BaseGame {
 						//TODO: temporary
 						cichlidA.setBaseSpeed(3f);
 						cichlidA.setBaseCautionLevel(4f);
-						cichlidA.setBaseCautionLevel(4f);
-						cichlidA.setDirection(new Vector3D(1,1,0));
+						cichlidA.setDirection(new Vector3D(1,1,1));
 						cichlidA.setlocation(xStartW,  yStartY, zStartZ);
-						cichlidA.setCullMode(CULL_MODE.ALWAYS);
+						//cichlidA.setCullMode(CULL_MODE.ALWAYS);
 						cichlidA.setState(FishState.IDLE);
 						//
 						Matrix3D cichlidAT = cichlidA.getLocalTranslation(); // this
@@ -666,37 +667,37 @@ public class MyGame extends BaseGame {
 						cichlidCount++;
 						
 						
-						// here is where i add the cichlidMesh
-						OBJLoader loader1 = new OBJLoader();
-						cichlidAMesh = loader1
-								.loadModel("cichlidIMeshItem.obj");
-						cichlidAMesh.setName(name);
-						Matrix3D cichlidAMeshT = cichlidAMesh.getLocalTranslation(); // this
-																				// is
-																				// for
-																				// position
-						cichlidAMeshT.translate(xStartW, yStartY, zStartZ);
-						cichlidAMesh.setLocalTranslation(cichlidAMeshT);
-						Matrix3D cichlidAMeshS = cichlidAMesh.getLocalScale(); // this
-																			// is
-																			// for
-																			// size
-																			// of
-																			// object
-		//				cichlidAMeshS.scale(widthW * weightW * .100, heightW
-		//						* weightW * .100, 0); // the scale
-																	// might be
-																	// too big
-																	// so we
-																	// largePlant.setLocalScale(largePlantS);
-						
-						cichlidAMeshS.scale(10f, 10f, 10f);
-						cichlidAMesh.setLocalScale(cichlidAMeshS);
-
-						addGameWorldObject(cichlidAMesh);
-						cichlidAMesh.updateLocalBound();
-						cichlidAMesh.updateGeometricState(0, true);
-						cichlidAMesh.updateWorldBound();
+//						// here is where i add the cichlidMesh
+//						OBJLoader loader1 = new OBJLoader();
+//						cichlidAMesh = loader1
+//								.loadModel("cichlidIMeshItem.obj");
+//						cichlidAMesh.setName(name);
+//						Matrix3D cichlidAMeshT = cichlidAMesh.getLocalTranslation(); // this
+//																				// is
+//																				// for
+//																				// position
+//						cichlidAMeshT.translate(xStartW, yStartY, zStartZ);
+//						cichlidAMesh.setLocalTranslation(cichlidAMeshT);
+//						Matrix3D cichlidAMeshS = cichlidAMesh.getLocalScale(); // this
+//																			// is
+//																			// for
+//																			// size
+//																			// of
+//																			// object
+//		//				cichlidAMeshS.scale(widthW * weightW * .100, heightW
+//		//						* weightW * .100, 0); // the scale
+//																	// might be
+//																	// too big
+//																	// so we
+//																	// largePlant.setLocalScale(largePlantS);
+//						
+//						cichlidAMeshS.scale(10f, 10f, 10f);
+//						cichlidAMesh.setLocalScale(cichlidAMeshS);
+//
+//						addGameWorldObject(cichlidAMesh);
+//						cichlidAMesh.updateLocalBound();
+//						cichlidAMesh.updateGeometricState(0, true);
+//						cichlidAMesh.updateWorldBound();
 					}
 				} else if (id.equals("2")) {
 					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
@@ -731,8 +732,9 @@ public class MyGame extends BaseGame {
 						cichlidB.setBaseSpeed(3f);
 						cichlidB.setBaseCautionLevel(4f);
 						cichlidB.setDirection(new Vector3D(1,1,1));
-						cichlidB.setlocation(xStartW,  yStartY, zStartZ);
-						cichlidB.setCullMode(CULL_MODE.ALWAYS);
+//						cichlidB.setlocation(xStartW,  yStartY, zStartZ);
+						cichlidB.setlocation(cichlidA.getLocation().getX()+4,  cichlidA.getLocation().getY()+2, cichlidA.getLocation().getZ());
+						//cichlidB.setCullMode(CULL_MODE.ALWAYS);
 						cichlidB.setState(FishState.IDLE);
 						//
 						Matrix3D cichlidBT = cichlidB.getLocalTranslation(); // this
@@ -773,35 +775,35 @@ public class MyGame extends BaseGame {
 						aggroRangeB.updateWorldBound();
 						aggroRangeB.setCullMode(CULL_MODE.ALWAYS); // cull mode hides the object
 						
-						
-						OBJLoader loader1 = new OBJLoader();
-						cichlidBMesh = loader1
-								.loadModel("cichlidIMeshItem.obj");
-						cichlidBMesh.setName(name);
-						Matrix3D cichlidBMeshT = cichlidBMesh.getLocalTranslation(); // this
-																				// is
-																				// for
-																				// position
-						cichlidBMeshT.translate(xStartW, yStartY, zStartZ);
-						cichlidBMesh.setLocalTranslation(cichlidBMeshT);
-						Matrix3D cichlidBMeshS = cichlidAMesh.getLocalScale(); // this
-																			// is
-																			// for
-																			// size
-																			// of
-																			// object
-						cichlidBMeshS.scale(widthW * weightW * .100, heightW
-								* weightW * .100, 0); // the scale
-																	// might be
-																	// too big
-																	// so we
-																	// largePlant.setLocalScale(largePlantS);
-						cichlidBMesh.setLocalScale(cichlidBMeshS);
-
-						addGameWorldObject(cichlidBMesh);
-						cichlidBMesh.updateLocalBound();
-						cichlidBMesh.updateGeometricState(0, true);
-						cichlidBMesh.updateWorldBound();
+//						
+//						OBJLoader loader1 = new OBJLoader();
+//						cichlidBMesh = loader1
+//								.loadModel("cichlidIMeshItem.obj");
+//						cichlidBMesh.setName(name);
+//						Matrix3D cichlidBMeshT = cichlidBMesh.getLocalTranslation(); // this
+//																				// is
+//																				// for
+//																				// position
+//						cichlidBMeshT.translate(xStartW, yStartY, zStartZ);
+//						cichlidBMesh.setLocalTranslation(cichlidBMeshT);
+//						Matrix3D cichlidBMeshS = cichlidAMesh.getLocalScale(); // this
+//																			// is
+//																			// for
+//																			// size
+//																			// of
+//																			// object
+//						cichlidBMeshS.scale(widthW * weightW * .100, heightW
+//								* weightW * .100, 0); // the scale
+//																	// might be
+//																	// too big
+//																	// so we
+//																	// largePlant.setLocalScale(largePlantS);
+//						cichlidBMesh.setLocalScale(cichlidBMeshS);
+//
+//						addGameWorldObject(cichlidBMesh);
+//						cichlidBMesh.updateLocalBound();
+//						cichlidBMesh.updateGeometricState(0, true);
+//						cichlidBMesh.updateWorldBound();
 						cichlidCount++;
 					}
 				} else if (id.equals("3")) {
@@ -879,36 +881,36 @@ public class MyGame extends BaseGame {
 						aggroRangeC.setLocalScale(aScale);
 						addGameWorldObject(aggroRangeC);
 						aggroRangeC.updateWorldBound();
-						aggroRangeC.setCullMode(CULL_MODE.ALWAYS); // cull mode hides the object
+						//aggroRangeC.setCullMode(CULL_MODE.ALWAYS); // cull mode hides the object
 						
-						OBJLoader loader1 = new OBJLoader();
-						cichlidCMesh = loader1
-								.loadModel("cichlidIMeshItem.obj");
-						cichlidCMesh.setName(name);
-						Matrix3D cichlidCMeshT = cichlidCMesh.getLocalTranslation(); // this
-																				// is
-																				// for
-																				// position
-						cichlidCMeshT.translate(xStartW, yStartY, zStartZ);
-						cichlidCMesh.setLocalTranslation(cichlidCMeshT);
-						Matrix3D cichlidCMeshS = cichlidCMesh.getLocalScale(); // this
-																			// is
-																			// for
-																			// size
-																			// of
-																			// object
-						cichlidCMeshS.scale(widthW * weightW * .100, heightW
-								* weightW * .100, 0); // the scale
-																	// might be
-																	// too big
-																	// so we
-																	// largePlant.setLocalScale(largePlantS);
-						cichlidCMesh.setLocalScale(cichlidCMeshS);
-
-						addGameWorldObject(cichlidCMesh);
-						cichlidCMesh.updateLocalBound();
-						cichlidCMesh.updateGeometricState(0, true);
-						cichlidCMesh.updateWorldBound();
+//						OBJLoader loader1 = new OBJLoader();
+//						cichlidCMesh = loader1
+//								.loadModel("cichlidIMeshItem.obj");
+//						cichlidCMesh.setName(name);
+//						Matrix3D cichlidCMeshT = cichlidCMesh.getLocalTranslation(); // this
+//																				// is
+//																				// for
+//																				// position
+//						cichlidCMeshT.translate(xStartW, yStartY, zStartZ);
+//						cichlidCMesh.setLocalTranslation(cichlidCMeshT);
+//						Matrix3D cichlidCMeshS = cichlidCMesh.getLocalScale(); // this
+//																			// is
+//																			// for
+//																			// size
+//																			// of
+//																			// object
+//						cichlidCMeshS.scale(widthW * weightW * .100, heightW
+//								* weightW * .100, 0); // the scale
+//																	// might be
+//																	// too big
+//																	// so we
+//																	// largePlant.setLocalScale(largePlantS);
+//						cichlidCMesh.setLocalScale(cichlidCMeshS);
+//
+//						addGameWorldObject(cichlidCMesh);
+//						cichlidCMesh.updateLocalBound();
+//						cichlidCMesh.updateGeometricState(0, true);
+//						cichlidCMesh.updateWorldBound();
 						cichlidCount++;
 					}
 				}
@@ -1259,102 +1261,11 @@ public class MyGame extends BaseGame {
 	}
 	
 	public void createFishTankWalls() {
-		fishWalls = new Group();
-		
-		Texture texture = TextureManager.loadTexture2D("./clouds.jpg");
-		// add a rectangle, and turn it into a plane
-		ground = new Rectangle(200, 200);
-		ground.rotate(90, new Vector3D(1, 0, 0));
-		ground.translate(101.0f, -2f, 101.0f);
-//		ground.setColor(Color.orange);
-		ground.setTexture(texture);
-		fishWalls.addChild(ground);
-		ground.updateWorldBound();
-
-		
-		leftWall = new Rectangle(200, 200);
-		Matrix3D leftRot = new Matrix3D();
-		leftRot.rotate(0, 90, 90);
-		leftWall.setLocalRotation(leftRot);
-		leftWall.translate(-0.1f, 101f, 101.0f);
-		leftWall.setColor(Color.blue);
-		// leftWall.setCullMode(CULL_MODE.ALWAYS);
-		fishWalls.addChild(leftWall);
-		leftWall.updateWorldBound();
-
-		rightWall = new Rectangle(200, 200);
-		Matrix3D rightRot = new Matrix3D();
-		rightRot.rotate(0, 90, 90);
-		rightWall.setLocalRotation(rightRot);
-		rightWall.translate(201.0f, 101f, 101.0f);
-		rightWall.setColor(Color.blue);
-		// rightWall.setCullMode(CULL_MODE.ALWAYS);
-		fishWalls.addChild(rightWall);
-		rightWall.updateWorldBound();
-
-		backWall = new Rectangle(200, 200);
-		Matrix3D backRot = new Matrix3D();
-		backRot.rotate(0, 0, 0);
-		backWall.setLocalRotation(backRot);
-		backWall.translate(101.0f, 101.0f, -0.10f);
-		backWall.setColor(Color.blue);
-		// backWall.setCullMode(CULL_MODE.ALWAYS);
-		fishWalls.addChild(backWall);
-		backWall.updateWorldBound();
-
-		ceiling = new Rectangle(200, 200);
-		Matrix3D ceilingRot = new Matrix3D();
-		ceilingRot.rotate(90, 0, 0);
-		ceiling.setLocalRotation(ceilingRot);
-		ceiling.translate(101.0f, 201f, 101.0f);
-		ceiling.setColor(Color.blue);
-		// ceiling.setCullMode(CULL_MODE.ALWAYS);
-		fishWalls.addChild(ceiling);
-		ceiling.updateWorldBound();
-
-		// find transparency for this
-		frontWall = new Rectangle(200, 200);
-		Matrix3D frontRot = new Matrix3D();
-		frontRot.rotate(0, 180, 0);
-		frontWall.setLocalRotation(frontRot);
-		frontWall.translate(101.0f, 101.0f, 201.0f);
-		frontWall.setCullMode(CULL_MODE.ALWAYS);
-		fishWalls.addChild(frontWall);
-		frontWall.updateWorldBound();
-		
-		addGameWorldObject(fishWalls);
-
+		addGameWorldObject(fishTank.createFishTankWalls());
 	}
 
-	public void createFishTank() // issue with this.
-	{
-		AbstractHeightMap heightMap = null;
-		heightMap = new ImageBasedHeightMap("mountains512.jpg");
-		heightMap.load();
-
-		Vector3D scaleFactor = new Vector3D(new Point3D(1, 1, 1));
-
-		try {
-			floor = new TerrainBlock("floor", 512, scaleFactor,
-					heightMap.getHeightData(), new Point3D(0, 0, 0));
-			Matrix3D floorT = floor.getLocalTranslation();
-			floorT.translate(0.0f, 0.0f, 0.0f);
-			floor.setLocalTranslation(floorT);
-			Matrix3D floorScale = floor.getLocalScale();
-			floorScale.scale(0.42f, 0.5f, 0);
-			floor.setLocalScale(floorScale);
-			Matrix3D p1Rot = new Matrix3D();
-			p1Rot.rotateX(-90);
-			floor.setLocalRotation(p1Rot);
-			Texture grassTexture = TextureManager
-					.loadTexture2D("sky.jpg");
-			grassTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
-
-			floor.setTexture(grassTexture);
-		} catch (Exception pe) {
-			pe.printStackTrace();
-		}
-		addGameWorldObject(floor);
+	public void createFishTank(){ // issue with this.
+		addGameWorldObject(fishTank.createTankTerrain());
 	}
 
 	public void update(float elapsedTimeMS) // this will be where the objects will move
@@ -1399,7 +1310,7 @@ public class MyGame extends BaseGame {
 					
 					Matrix3D cichlidAlocalT = s.getLocalTranslation();
 					aggroRangeA.setLocalTranslation(cichlidAlocalT);
-					cichlidAMesh.setLocalTranslation(s.getLocalTranslation());
+					//cichlidAMesh.setLocalTranslation(s.getLocalTranslation());
 					
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
@@ -1514,7 +1425,7 @@ public class MyGame extends BaseGame {
 					
 					Matrix3D cichlidBlocalT = s.getLocalTranslation();
 					aggroRangeB.setLocalTranslation(cichlidBlocalT);
-					cichlidBMesh.setLocalTranslation(s.getLocalTranslation());
+				//	cichlidBMesh.setLocalTranslation(s.getLocalTranslation());
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
@@ -1615,7 +1526,7 @@ public class MyGame extends BaseGame {
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
 					Matrix3D cichlidClocalT = s.getLocalTranslation();
 					aggroRangeC.setLocalTranslation(cichlidClocalT);
-					cichlidCMesh.setLocalTranslation(s.getLocalTranslation());
+				//	cichlidCMesh.setLocalTranslation(s.getLocalTranslation());
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
