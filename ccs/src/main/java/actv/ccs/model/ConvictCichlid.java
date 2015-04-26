@@ -13,12 +13,10 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import actv.ccs.model.type.FishState;
-import actv.ccs.sageTest.PropertyChangeSupportZ;
 import sage.scene.TriMesh;
 import sage.scene.shape.Sphere;
 
-public class ConvictCichlid extends TriMesh implements PropertyChangeSupportZ,
-		CCSMemoryObject {
+public class ConvictCichlid extends TriMesh implements CCSMemoryObject {
 
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private Point3D location;
