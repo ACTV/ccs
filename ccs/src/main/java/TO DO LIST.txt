@@ -9,8 +9,13 @@ what else should i do?
 WHAT ELSE SHOULD I DO?!?!?!?! working on sds.
 
 Thomas' TO DO LIST:
-Integrate with Graphics - HI
 Get rid of hardcoding in the rule file paths - low for now
+	1) Make Pot/Plan objects that are subclasses of the TankObject
+	2) Pass FishTank obj from NewSimulation.java into MyGame.java
+	3) Pass tank into working memory for collision handling (??)
+	4) Modularize code
+	5) Finish Rules.
+
 
 Christian's TO DO LIST:
 after first demo
