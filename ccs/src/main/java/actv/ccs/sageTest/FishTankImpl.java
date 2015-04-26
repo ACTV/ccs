@@ -18,6 +18,10 @@ import sage.texture.TextureManager;
 public class FishTankImpl implements FishTank{
 	private Group fishWalls;
 	private TerrainBlock floor;
+	private int cichlidCount;
+	private int objectCount;
+	private float temperature;
+	private int timer;
 	
 	public FishTankImpl(){
 		super();
@@ -28,7 +32,7 @@ public class FishTankImpl implements FishTank{
 		
 		Texture texture = TextureManager.loadTexture2D("./clouds.jpg");
 		// add a rectangle, and turn it into a plane
-		Rectangle ground = new Rectangle(200, 200);
+		Rectangle ground = new Rectangle(WIDTH, HEIGHT);
 		ground.rotate(90, new Vector3D(1, 0, 0));
 		ground.translate(101.0f, -2f, 101.0f);
 //		ground.setColor(Color.orange);
@@ -37,7 +41,7 @@ public class FishTankImpl implements FishTank{
 		ground.updateWorldBound();
 
 		
-		Rectangle leftWall = new Rectangle(200, 200);
+		Rectangle leftWall = new Rectangle(WIDTH, HEIGHT);
 		Matrix3D leftRot = new Matrix3D();
 		leftRot.rotate(0, 90, 90);
 		leftWall.setLocalRotation(leftRot);
@@ -47,7 +51,7 @@ public class FishTankImpl implements FishTank{
 		fishWalls.addChild(leftWall);
 		leftWall.updateWorldBound();
 
-		Rectangle rightWall = new Rectangle(200, 200);
+		Rectangle rightWall = new Rectangle(WIDTH, HEIGHT);
 		Matrix3D rightRot = new Matrix3D();
 		rightRot.rotate(0, 90, 90);
 		rightWall.setLocalRotation(rightRot);
@@ -57,7 +61,7 @@ public class FishTankImpl implements FishTank{
 		fishWalls.addChild(rightWall);
 		rightWall.updateWorldBound();
 
-		Rectangle backWall = new Rectangle(200, 200);
+		Rectangle backWall = new Rectangle(WIDTH, HEIGHT);
 		Matrix3D backRot = new Matrix3D();
 		backRot.rotate(0, 0, 0);
 		backWall.setLocalRotation(backRot);
@@ -67,7 +71,7 @@ public class FishTankImpl implements FishTank{
 		fishWalls.addChild(backWall);
 		backWall.updateWorldBound();
 
-		Rectangle ceiling = new Rectangle(200, 200);
+		Rectangle ceiling = new Rectangle(WIDTH, HEIGHT);
 		Matrix3D ceilingRot = new Matrix3D();
 		ceilingRot.rotate(90, 0, 0);
 		ceiling.setLocalRotation(ceilingRot);
@@ -78,7 +82,7 @@ public class FishTankImpl implements FishTank{
 		ceiling.updateWorldBound();
 
 		// find transparency for this
-		Rectangle frontWall = new Rectangle(200, 200);
+		Rectangle frontWall = new Rectangle(WIDTH, HEIGHT);
 		Matrix3D frontRot = new Matrix3D();
 		frontRot.rotate(0, 180, 0);
 		frontWall.setLocalRotation(frontRot);
@@ -120,4 +124,37 @@ public class FishTankImpl implements FishTank{
 		
 		return floor;
 	}
+
+	public int getCichlidCount() {
+		return cichlidCount;
+	}
+
+	public void setCichlidCount(int cichlidCount) {
+		this.cichlidCount = cichlidCount;
+	}
+
+	public int getObjectCount() {
+		return objectCount;
+	}
+
+	public void setObjectCount(int objectCount) {
+		this.objectCount = objectCount;
+	}
+
+	public float getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature(float temperature) {
+		this.temperature = temperature;
+	}
+
+	public int getTimer() {
+		return timer;
+	}
+
+	public void setTimer(int timer) {
+		this.timer = timer;
+	}
+
 }

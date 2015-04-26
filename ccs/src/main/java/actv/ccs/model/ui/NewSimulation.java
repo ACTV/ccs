@@ -8,21 +8,25 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Logger;
 
 import javax.swing.*;
 import javax.swing.event.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import actv.ccs.CCSKnowledgeBaseBuilder;
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
 import actv.ccs.model.TankObject;
+import actv.ccs.sageTest.FishTank;
+import actv.ccs.sageTest.FishTankImpl;
 import actv.ccs.sageTest.MyGame;
 import actv.ccs.sageTest.TestGame;
 
 public class NewSimulation extends JFrame {
-	
-	private TankObject tank;
+	private String cichlidNameA;
+	private FishTank tank;
 	private String cichlidNameZ, objectNameA;
 	private MyGame myGame;
 	private TestGame tg;
@@ -37,18 +41,13 @@ public class NewSimulation extends JFrame {
 	
 	private int tankFishCount;
 	private int tankPlantCount;
-	private int tankTime = 100; // base 100
-	private int fishID = 0;
 	private int i = 0; // figure out where to add the item
-	private String [] poolOfFish;
-	private String cichlidNameA;
-	private String cichlidNameB;
 	private JTextField tankWidthField;
 	private JTextField tankLengthField;
 	private JTextField tankHeightField;
 	
 	// need to fix logger
- 	private static Logger logger = Logger.getLogger("LoggingToFile");
+ 	private static Logger logger = LoggerFactory.getLogger(NewSimulation.class);
  	private JTextField genderTextField;
  	private JTextField aggroLevelTextField;
  	private JTextField objectNameTextField;
@@ -69,7 +68,8 @@ public class NewSimulation extends JFrame {
 	public NewSimulation() throws SecurityException, IOException
 	{
 		
-		tank = new TankObject(20, 20, 20, 26, 0, 0, 0); // array value default tank
+		//tank = new TankObject(20, 20, 20, 26, 0, 0, 0); // array value default tank
+		tank = new FishTankImpl();
 		
 		tankFishCount = tank.getCichlidCount();
 		tankPlantCount = tank.getCichlidCount();
@@ -380,9 +380,9 @@ public class NewSimulation extends JFrame {
 				if (!slider.getValueIsAdjusting())
 				{
 					
-					tank.setTankTemperature(value);
+					tank.setTemperature(value);
 					System.out.println("value: " + value);
-					System.out.println("the value is changing " + tank.getTankTemperature());
+					System.out.println("the value is changing " + tank.getTemperature());
 				}
 			}
 		});
@@ -749,10 +749,7 @@ public class NewSimulation extends JFrame {
 		
 				logger.info("Tank Information");
 				tank.setCichlidCount(tankFishCount);
-				tank.setPlantCount(0);
-				tank.setTankWidth(tankWidthC);	
-				tank.setTankLength(tankLengthC);
-				tank.setTankHeight(tankHeightC);
+				tank.setObjectCount(0);
 				System.out.println("time: " + tank.getTimer());
 				System.out.println("Running Simulation");
 				Connection conn;
@@ -763,12 +760,13 @@ public class NewSimulation extends JFrame {
 				rs = s.executeQuery("SELECT ID FROM [TankData]");
 				while (rs.next())
 				{
-					int a = s.executeUpdate("UPDATE TankData set Length = " + tank.getTankLength() + " where ID = 1");
-					int b = s.executeUpdate("UPDATE TankData set Width = " + tank.getTankWidth() + " where ID = 1");
-					int c = s.executeUpdate("UPDATE TankData set Height = " + tank.getTankHeight() + " where ID = 1");
-					int d = s.executeUpdate("UPDATE TankData set Temperature = " + tank.getTankTemperature() + " where ID = 1");
+					int a = s.executeUpdate("UPDATE TankData set Length = " + FishTank.DEPTH + " where ID = 1");
+					int b = s.executeUpdate("UPDATE TankData set Width = " + FishTank.WIDTH + " where ID = 1");
+					int c = s.executeUpdate("UPDATE TankData set Height = " + FishTank.HEIGHT + " where ID = 1");
+					int d = s.executeUpdate("UPDATE TankData set Temperature = " + tank.getTemperature() + " where ID = 1");
 					int z = s.executeUpdate("UPDATE TankData set cichlidCount = " + tank.getCichlidCount() + " where ID = 1");
-					int f = s.executeUpdate("UPDATE TankData set plantCount = " + tank.getPlantCount() + " where ID = 1");
+					//TODO: update db table
+					int f = s.executeUpdate("UPDATE TankData set plantCount = " + tank.getObjectCount() + " where ID = 1");
 					int g = s.executeUpdate("UPDATE TankData set Time = " + tank.getTimer() + " where ID = 1");
 						
 				}

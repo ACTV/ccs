@@ -1,5 +1,6 @@
 package actv.rules.idle;
 
+import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class MoveTest extends DroolsTest {
 	
 	@Before
 	public void setCC(){
-		cc = new ConvictCichlid();
+		cc = new ConvictCichlid(1, 2, 3, "test", new Point3D(1, 1, 1));
 		cc.setState(FishState.IDLE);
 		cc.setDirection(new Vector3D(0,0,1));
 	}

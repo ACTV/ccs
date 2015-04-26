@@ -1,5 +1,6 @@
 package actv.rules;
 
+import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class CCSKnowledgeBaseTest{
 
 	@Before
 	public void setupFish(){
-		cc = new ConvictCichlid();
+		cc = new ConvictCichlid(1, 2, 3, "test", new Point3D(1, 1, 1));
 		cc.setState(FishState.NONE);
 		cc.setBaseAggroLevel(5.00f);
 		cc.setBaseCautionLevel(5.00f);

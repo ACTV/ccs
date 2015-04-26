@@ -1,41 +1,27 @@
 package actv.ccs.model;
 
-import graphicslib3D.Matrix3D;
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import actv.ccs.model.type.FishState;
-import sage.scene.TriMesh;
-import sage.scene.shape.Sphere;
 
-public class ConvictCichlid extends TriMesh implements CCSMemoryObject {
-
-	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-	private Point3D location;
+public class ConvictCichlid extends TankObject {
 	private Vector3D direction;
 	private FishState state;
 	private float aggroLevel;
 	private float baseAggroLevel;
 	private float cautionLevel;
 	private float baseCautionLevel;
-	private float length;
-	private float height;
-	private float weight;
-	private String name;
 	private int cichlidID;
 	private float speed;
 	private float baseSpeed;
 	private long idleWaitTime;
 	private String gender;
-	private double influence;
+	private double influence = -1;
+	private float weight;
 	
 	private static float[] vrts = new float[] { 0, 1, 0, -1, -1, 1, 1, -1, 1,
 			1, -1, -1, -1, -1, -1 };
@@ -44,8 +30,8 @@ public class ConvictCichlid extends TriMesh implements CCSMemoryObject {
 	private static int[] triangles = new int[] { 0, 1, 2, 0, 2, 3, 0, 3, 4, 0,
 			4, 1, 1, 4, 2, 4, 3, 2 };
 
-	public ConvictCichlid() {
-		super();
+	public ConvictCichlid(float length, float width, float height, String name, Point3D location) {
+		super(length, width, height, name, location);
 		state = FishState.NONE;
 		int i;
 		FloatBuffer vertBuf = com.jogamp.common.nio.Buffers
@@ -58,7 +44,8 @@ public class ConvictCichlid extends TriMesh implements CCSMemoryObject {
 		this.setColorBuffer(colorBuf);
 		this.setIndexBuffer(triangleBuf);
 		
-		setInfluence(length * 2);
+		if(influence == -1)
+			setInfluence(length * 2);
 	}
 
 	public FishState getState() {
@@ -78,35 +65,35 @@ public class ConvictCichlid extends TriMesh implements CCSMemoryObject {
 	}
 
 	public float getLength() {
-		return length;
+		return super.getLength();
 	}
 
-	public void setLength(float f) {
-		this.length = f;
+	public void setLength(float length) {
+		super.setLength(length);
 	}
 
 	public float getHeight() {
-		return height;
+		return super.getHeight();
 	}
 
-	public void setHeight(float h) {
-		this.height = h;
+	public void setHeight(float height) {
+		super.setHeight(height);
 	}
 
 	public float getWeight() {
-		return weight;
+		return this.weight;
 	}
 
-	public void setWeight(float w) {
-		this.weight = w;
+	public void setWeight(float weight) {
+		this.weight = weight;
 	}
 
 	public String getName() {
-		return name;
+		return super.getName();
 	}
 
-	public void setName(String s) {
-		this.name = s;
+	public void setName(String name) {
+		super.setName(name);
 	}
 
 	public String getGender() {
@@ -178,34 +165,19 @@ public class ConvictCichlid extends TriMesh implements CCSMemoryObject {
 	}
 
 	public void setLocation(Point3D location){
-		this.location = location;
+		super.setLocation(location);
 	}
 	
 	public void setlocation(double x, double y, double z){
-		this.location = new Point3D(x, y, z);
+		super.setLocation(new Point3D(x, y, z));
 	}
 	
 	public Point3D getLocation(){
-		return this.location;
+		return super.getLocation();
 	}
 
-	public Vector3D getDirection(){ // accessors and mutators
+	public Vector3D getDirection(){
 		return direction;
-	}
-
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		this.pcs.addPropertyChangeListener(listener);
-
-	}
-
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
-		this.pcs.removePropertyChangeListener(listener);
-	}
-
-	public void firePropertyChange(String propertyName, Object oldValue,
-			Object newValue) {
-		this.pcs.firePropertyChange(propertyName, oldValue, newValue);
-
 	}
 
 	public double getInfluence() {

@@ -1,5 +1,7 @@
 package actv.rules.start;
 
+import graphicslib3D.Point3D;
+
 import java.util.ArrayList;
 
 import org.junit.Assert;
@@ -24,7 +26,7 @@ public class StartTest extends DroolsTest {
 	
 	@Before
 	public void setupFish(){
-		cc = new ConvictCichlid();
+		cc = new ConvictCichlid(1, 2, 3, "test", new Point3D(1, 1, 1));
 		cc.setState(FishState.NONE);
 		cc.setBaseCautionLevel(6.00f);
 		cc.setBaseSpeed(6.00f);

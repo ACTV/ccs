@@ -10,18 +10,18 @@ global org.slf4j.Logger logger
 rule "Swim"
 	ruleflow-group "swim"
 	
-	timer(int: 2s)
+	//timer(int: 2s)
 	
 	when
 		$cc : ConvictCichlid(state == FishState.IDLE)
 		
 	then
-		Random r = new Random();
+		Random r = new Random(System.currentTimeMillis());
 		double p = r.nextDouble();
 		logger.debug("Swim: " + p);
 	
 		
-		if(p < .4){
+		if(p < .3){
 			MoveActionFactory.moveForward($cc, $cc.getBaseSpeed());
 			update($cc);
 			logger.debug("Swimming forward...");

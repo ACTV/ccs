@@ -6,25 +6,31 @@ import actv.ccs.model.type.FishState;
 import graphicslib3D.Vector3D;
 import sage.scene.SceneNode;
 
+global org.slf4j.Logger logger
 
 rule "Move To"
 	ruleflow-group "swim"
 	
 	when
-		$cc1 : ConvictCichlid( 	$aggroLevel1 : aggroLevel)
+		$cc1 : ConvictCichlid( 	$aggroLevel1 : aggroLevel, $dir : direction)
 							  
-		$cc2 : ConvictCichlid(	$dir2 : direction,
-								aggroLevel >= $aggroLevel1,
-								length < (MoveActionFactory.getDirection((SceneNode)$cc1, (SceneNode)this)).magnitude())
+		$cc2 : ConvictCichlid(	aggroLevel >= $aggroLevel1,
+								MoveActionFactory.withinRange(this, $cc1))
 		
 	then
-		System.out.println(MoveActionFactory.getDirection($cc1, $cc2).magnitude());
-		System.out.println($cc2.getLocation().getX() + "," + $cc2.getLocation().getY());
 		
-		Vector3D direction = MoveActionFactory.getDirection($cc1, $cc2);
-		$cc2.setDirection(direction.normalize());
+		float distance = MoveActionFactory.distance($cc1, $cc2);
+		MoveActionFactory.chase($cc2, $cc1);
+		MoveActionFactory.moveForward($cc2, distance);
+		
+		logger.info("Distance: {}", distance);
+		
+		logger.info("CC1 Loc {}", $cc1.getLocation().toString());
+		logger.info("CC1 Dir {}", $cc1.getDirection().toString());
+		
+		logger.info("CC2 Loc {}", $cc2.getLocation().toString());
+		logger.info("CC2 Dir {}", $cc2.getDirection().toString());
 			
-		MoveActionFactory.moveForward($cc2, $cc2.getSpeed());
 		update($cc2);
 
 end

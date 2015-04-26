@@ -1,5 +1,7 @@
 package actv.rules.idle;
 
+import graphicslib3D.Point3D;
+
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -24,7 +26,7 @@ public class IdleTest extends DroolsTest {
 	
 	@Before
 	public void setCC(){
-		cc = new ConvictCichlid();
+		cc = new ConvictCichlid(1, 2, 3, "test", new Point3D(1, 1, 1));
 		cc.setState(FishState.IDLE);
 		cc.setIdleWaitTime(System.currentTimeMillis());
 		

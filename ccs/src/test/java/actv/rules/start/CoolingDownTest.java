@@ -1,5 +1,7 @@
 package actv.rules.start;
 
+import graphicslib3D.Point3D;
+
 import java.util.ArrayList;
 
 import org.junit.Assert;
@@ -24,7 +26,7 @@ public class CoolingDownTest extends DroolsTest {
 	
 	@Before
 	public void setCC(){
-		cc = new ConvictCichlid();
+		cc = new ConvictCichlid(1, 2, 3, "test", new Point3D(1, 1, 1));
 		cc.setBaseCautionLevel(5.00f);
 		cc.setCautionLevel(cc.getBaseCautionLevel() * 1.6f);
 		cc.setState(FishState.CAUTION);
@@ -48,7 +50,7 @@ public class CoolingDownTest extends DroolsTest {
 	public void testInvalid_NotCC(){
 
 		objs.add(cc);
-		objs.add(new CoolingDown(new ConvictCichlid()));
+		objs.add(new CoolingDown(new ConvictCichlid(1, 2, 3, "test", new Point3D(1, 1, 1))));
 		
 		executeStateful(2000, objs);
 		Assert.assertEquals(FishState.CAUTION, cc.getState());	
@@ -56,7 +58,7 @@ public class CoolingDownTest extends DroolsTest {
 	
 	@Test
 	public void testInvalid_FishState(){
-		cc = new ConvictCichlid();
+		cc = new ConvictCichlid(1, 2, 3, "test", new Point3D(1, 1, 1));
 		cc.setState(FishState.IDLE);
 
 		objs.add(cc);

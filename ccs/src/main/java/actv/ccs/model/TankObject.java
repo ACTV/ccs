@@ -1,93 +1,61 @@
 package actv.ccs.model;
 
-public class TankObject {
+import graphicslib3D.Point3D;
+import sage.scene.TriMesh;
+
+public abstract class TankObject extends TriMesh implements CCSMemoryObject {
 	private float length;
 	private float width;
 	private float height;
-	private int fishIDList [];
-	private float temperature;
-	private int cichlidCount;
-	private int plantCount;
-	private int timer;
-	
-	public TankObject(float l, float w, float h, float t, int cC, int pC, int time)
-	{
+	private Point3D location;
+
+	public TankObject(float l, float w, float h, String name, Point3D location) {
 		this.length = l;
 		this.width = w;
 		this.height = h;
-		this.temperature = t;
-		this.cichlidCount = cC;
-		this.plantCount = pC;	
-		this.timer = time;
+		this.location = location;
+		super.setName(name);
 	}
 
-	public float getTankLength()
-	{
+	public float getLength() {
 		return length;
 	}
-	public void setTankLength(float l)
-	{
+
+	public void setLength(float l) {
 		this.length = l;
 	}
-	public float getTankWidth()
-	{
+
+	public float getWidth() {
 		return width;
 	}
-	public void setTankWidth(float w)
-	{
+
+	public void setWidth(float w) {
 		this.width = w;
 	}
-	public float getTankHeight()
-	{
+
+	public float getHeight() {
 		return height;
 	}
-	public void setTankHeight(float h)
-	{
+
+	public void setHeight(float h) {
 		this.height = h;
 	}
-	public float getTankTemperature()
-	{
-		return temperature;
+
+	public String getName() {
+		return super.getName();
 	}
-	public void setTankTemperature(float t)
-	{
-		this.temperature = t;
+
+	public void setName(String name) {
+		super.setName(name);
+		
 	}
-	public int getCichlidCount()
-	{
-		return cichlidCount;
+
+	public Point3D getLocation() {
+		return location;
 	}
-	public void setCichlidCount(int c)
-	{
-		this.cichlidCount = c;
+
+	public void setLocation(Point3D location) {
+		this.location = location;
 	}
-	public int getPlantCount()
-	{
-		return plantCount;
-	}
-	public void setPlantCount(int p)
-	{
-		this.plantCount = p;
-	}
-	public int [] getFishArr()
-	{
-		if (fishIDList == null)
-		{
-			fishIDList = new int[3];
-			fishIDList[0] = fishIDList[1] = fishIDList[2] = 0;
-		}
-		return fishIDList;
-	}
-	public void setFishArr(int [] a)
-	{
-		fishIDList = a;
-	}
-	public int getTimer()
-	{
-		return timer;
-	}
-	public void setTimer(int t)
-	{
-		this.timer = t;
-	}
+
 }

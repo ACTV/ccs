@@ -614,18 +614,18 @@ public class MyGame extends BaseGame {
 						double zStartZ = Double.parseDouble(zLocS);
 
 						
-						cichlidA = new ConvictCichlid();
-						cichlidA.setName(name);
+						cichlidA = new ConvictCichlid(0, widthW, heightW, name, new Point3D(xStartW, yStartY, zStartZ));
 						cichlidA.setGender(gender);
 						cichlidA.setAggroLevel(aggroW);
 						//TODO: temporary
 						cichlidA.setBaseSpeed(3f);
 						cichlidA.setBaseCautionLevel(4f);
 						cichlidA.setDirection(new Vector3D(1,1,1));
-						cichlidA.setlocation(xStartW,  yStartY, zStartZ);
 						//cichlidA.setCullMode(CULL_MODE.ALWAYS);
 						cichlidA.setState(FishState.IDLE);
-						//
+						cichlidA.setInfluence(12);
+						
+						
 						Matrix3D cichlidAT = cichlidA.getLocalTranslation(); // this
 																				// is
 																				// for
@@ -724,7 +724,7 @@ public class MyGame extends BaseGame {
 						double yStartY = Double.parseDouble(yLocS);
 						double zStartZ = Double.parseDouble(zLocS);
 
-						cichlidB = new ConvictCichlid();
+						cichlidB = new ConvictCichlid(0, widthW, heightW, name, new Point3D(cichlidA.getLocation().getX()+4,  cichlidA.getLocation().getY()+2, cichlidA.getLocation().getZ()));
 						cichlidB.setName(name);
 						cichlidB.setGender(gender);
 						cichlidB.setAggroLevel(aggroW);
@@ -732,11 +732,9 @@ public class MyGame extends BaseGame {
 						cichlidB.setBaseSpeed(3f);
 						cichlidB.setBaseCautionLevel(4f);
 						cichlidB.setDirection(new Vector3D(1,1,1));
-//						cichlidB.setlocation(xStartW,  yStartY, zStartZ);
-						cichlidB.setlocation(cichlidA.getLocation().getX()+4,  cichlidA.getLocation().getY()+2, cichlidA.getLocation().getZ());
 						//cichlidB.setCullMode(CULL_MODE.ALWAYS);
 						cichlidB.setState(FishState.IDLE);
-						//
+						cichlidB.setInfluence(8);
 						Matrix3D cichlidBT = cichlidB.getLocalTranslation(); // this
 																				// is
 																				// for
@@ -831,7 +829,7 @@ public class MyGame extends BaseGame {
 						double yStartY = Double.parseDouble(yLocS);
 						double zStartZ = Double.parseDouble(zLocS);
 
-						cichlidC = new ConvictCichlid();
+						cichlidC = new ConvictCichlid(0, widthW, heightW, name, new Point3D(xStartW, yStartY, zStartZ));
 						cichlidC.setName(name);
 						cichlidC.setGender(gender);
 						cichlidC.setAggroLevel(aggroW);
@@ -840,10 +838,9 @@ public class MyGame extends BaseGame {
 						cichlidC.setBaseSpeed(3f);
 						cichlidC.setBaseCautionLevel(4f);
 						cichlidC.setDirection(new Vector3D(-.5,.8,.1));
-						cichlidC.setlocation(xStartW,  yStartY, zStartZ);
 						cichlidC.setState(FishState.IDLE);
 						cichlidC.setCullMode(CULL_MODE.ALWAYS);
-						//
+						cichlidC.setInfluence(6);
 						
 						Matrix3D cichlidCT = cichlidC.getLocalTranslation(); // this
 																				// is
@@ -1643,23 +1640,23 @@ public class MyGame extends BaseGame {
 		System.out.print("\nWaiting for display creation...");
 		int count = 0;
 		// wait until display creation completes or a timeout occurs
-		while (!display.isCreated()) {
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				throw new RuntimeException("Display creation interrupted");
-			}
-			count++;
-			System.out.print("+");
-			if (count % 80 == 0) {
-				System.out.println();
-			}
-			if (count > 2000) // 20 seconds (approx.)
-			{
-				throw new RuntimeException("Unable to create display");
-			}
-		}
-		System.out.println();
+//		while (!display.isCreated()) {
+//			try {
+//				Thread.sleep(10);
+//			} catch (InterruptedException e) {
+//				throw new RuntimeException("Display creation interrupted");
+//			}
+//			count++;
+//			System.out.print("+");
+//			if (count % 80 == 0) {
+//				System.out.println();
+//			}
+//			if (count > 2000) // 20 seconds (approx.)
+//			{
+//				throw new RuntimeException("Unable to create display");
+//			}
+//		}
+//		System.out.println();
 		return display;
 	}
 
