@@ -3,21 +3,19 @@ package actv.ccs.rules.idle;
 import actv.ccs.sageTest.MoveActionFactory;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
-import actv.ccs.fact.Auditor;
 import graphicslib3D.Vector3D;
+import sage.scene.SceneNode;
+
 
 rule "Move To"
 	ruleflow-group "swim"
 	
 	when
-		$auditor :  Auditor()
-		
 		$cc1 : ConvictCichlid( 	$aggroLevel1 : aggroLevel)
 							  
-		$cc2 : ConvictCichlid(	state == FishState.SWIM,
-								$dir2 : direction,
+		$cc2 : ConvictCichlid(	$dir2 : direction,
 								aggroLevel >= $aggroLevel1,
-								length/2 < (MoveActionFactory.getDirection($cc1, this)).magnitude())
+								length < (MoveActionFactory.getDirection((SceneNode)$cc1, (SceneNode)this)).magnitude())
 		
 	then
 		System.out.println(MoveActionFactory.getDirection($cc1, $cc2).magnitude());
@@ -29,10 +27,6 @@ rule "Move To"
 		MoveActionFactory.moveForward($cc2, $cc2.getSpeed());
 		update($cc2);
 
-		System.out.println(drools.getRule().getName());		
-		modify($auditor){
-			getRulesFired().add(drools.getRule().getName());
-		}
 end
 
 

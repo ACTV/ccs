@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import actv.ccs.fact.Auditor;
 import actv.ccs.fact.CoolingDown;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
@@ -15,7 +14,6 @@ import actv.rules.DroolsTest;
 
 public class CoolingDownTest extends DroolsTest {
 	private ConvictCichlid cc;
-	private Auditor auditor;
 	private ArrayList<CCSMemoryObject> objs;
 	
 	public CoolingDownTest(){
@@ -30,10 +28,8 @@ public class CoolingDownTest extends DroolsTest {
 		cc.setBaseCautionLevel(5.00f);
 		cc.setCautionLevel(cc.getBaseCautionLevel() * 1.6f);
 		cc.setState(FishState.CAUTION);
-		auditor = new Auditor();
 		
 		objs = new ArrayList<CCSMemoryObject>();
-		objs.add(auditor);
 	}
 	
 	@Test

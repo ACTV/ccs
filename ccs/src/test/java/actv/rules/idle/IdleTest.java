@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import actv.ccs.fact.Auditor;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
@@ -14,7 +13,6 @@ import actv.rules.DroolsTest;
 
 public class IdleTest extends DroolsTest {
 	private ConvictCichlid cc;
-	private Auditor auditor;
 	private long start;
 	private ArrayList<CCSMemoryObject> objs;
 	
@@ -29,10 +27,8 @@ public class IdleTest extends DroolsTest {
 		cc = new ConvictCichlid();
 		cc.setState(FishState.IDLE);
 		cc.setIdleWaitTime(System.currentTimeMillis());
-		auditor = new Auditor();
 		
 		objs = new ArrayList<CCSMemoryObject>();
-		objs.add(auditor);
 		start = System.currentTimeMillis();
 		
 	}

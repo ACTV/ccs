@@ -31,7 +31,6 @@ import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 
 import actv.ccs.CCSKnowledgeBaseBuilder;
-import actv.ccs.fact.Auditor;
 import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;

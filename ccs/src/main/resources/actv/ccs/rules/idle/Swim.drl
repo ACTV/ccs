@@ -3,8 +3,9 @@ package actv.ccs.rules.idle;
 import actv.ccs.sageTest.MoveActionFactory;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
-import actv.ccs.fact.Auditor;
 import java.util.Random;
+
+global org.slf4j.Logger logger
 
 rule "Swim"
 	ruleflow-group "swim"
@@ -12,24 +13,18 @@ rule "Swim"
 	timer(int: 2s)
 	
 	when
-		$auditor : Auditor()
-		
 		$cc : ConvictCichlid(state == FishState.IDLE)
 		
 	then
 		Random r = new Random();
 		double p = r.nextDouble();
-		System.out.println("Swim: " + p);
+		logger.debug("Swim: " + p);
 	
 		
 		if(p < .4){
 			MoveActionFactory.moveForward($cc, $cc.getBaseSpeed());
 			update($cc);
-			System.out.println("Swimming forward...");
-			
-			modify($auditor){
-				getRulesFired().add(drools.getRule().getName());
-			}
+			logger.debug("Swimming forward...");
 		}
 		
 end

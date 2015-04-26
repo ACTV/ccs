@@ -74,7 +74,8 @@ public class DroolsTest{
 		sks.addEventListener((WorkingMemoryEventListener)new CCSListener());
 		sks.addEventListener((ProcessEventListener)new CCSListener());
 		sks.addEventListener((AgendaEventListener)new CCSListener());
-				
+		sks.setGlobal("logger", logger);
+		
 		List<Command<?>> l = new ArrayList<Command<?>>();
 		
 		// Insert objects (and start process) into a list for batch execution

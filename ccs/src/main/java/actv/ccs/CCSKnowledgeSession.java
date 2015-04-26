@@ -1,6 +1,8 @@
 package actv.ccs;
 
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Singleton session runner
@@ -13,6 +15,7 @@ public class CCSKnowledgeSession extends Thread {
 	private StatefulKnowledgeSession statefulKnowledgeSession;
 	private static boolean isRunning;
 	private static boolean isPaused;
+	private static final Logger logger = LoggerFactory.getLogger(CCSKnowledgeSession.class);
 
 	private CCSKnowledgeSession(){};
 	
@@ -39,6 +42,7 @@ public class CCSKnowledgeSession extends Thread {
 	
 	public void terminate(){
 		if(isRunning){
+			logger.debug("CCSKnowledgeSession Terminate");
 			statefulKnowledgeSession.halt();
 			statefulKnowledgeSession.dispose();
 			isRunning = false;
@@ -47,6 +51,7 @@ public class CCSKnowledgeSession extends Thread {
 	
 	public void pauseSession(){
 		if(isRunning && !isPaused){
+			logger.debug("CCSKnowledgeSession Pause");
 			statefulKnowledgeSession.halt();
 			isPaused = true;
 		}
@@ -54,7 +59,7 @@ public class CCSKnowledgeSession extends Thread {
 	
 	public void resumeSession(){
 		if(isRunning && isPaused){
-			System.out.println("CCSKnowledgeSession Resume");
+			logger.debug("CCSKnowledgeSession Resume");
 			statefulKnowledgeSession.fireUntilHalt();
 			isPaused = false;
 		}

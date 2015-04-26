@@ -45,7 +45,7 @@ public class CCSKnowledgeBaseBuilder{
 													"actv/ccs/rules/idle/Idle.drl",
 													"actv/ccs/rules/idle/Move.drl",
 													"actv/ccs/rules/idle/Swim.drl",
-													"actv/ccs/rules/idle/two/MoveTo.drl",
+													"actv/ccs/rules/idle/MoveTo.drl",
 													"actv/ccs/flow/swim.bpmn" });
 	}
 	
@@ -95,6 +95,7 @@ public class CCSKnowledgeBaseBuilder{
 		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
 		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
 		sks.startProcess(flow);
+		sks.setGlobal("logger", log);
 		addEventListeners(sks);
 		
 		return sks;

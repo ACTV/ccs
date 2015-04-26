@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import actv.ccs.CCSKnowledgeBaseBuilder;
 import actv.ccs.CCSKnowledgeSession;
-import actv.ccs.fact.Auditor;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 
@@ -54,13 +53,6 @@ public class RuleEngineRunner extends Thread{
 			}
 		}
 
-		Auditor auditor = new Auditor();
-		
-		// Add the auditor
-		id = "Auditor";
-		map.put(id,  auditor);
-		session.getStatefulKnowledgeSession().insert(auditor);
-		
 		if(!hasCichlid){
 			logger.error("No convict cichlid in the tank!!");
 			//TODO implement exception?

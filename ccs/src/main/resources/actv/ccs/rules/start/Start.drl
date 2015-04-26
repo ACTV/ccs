@@ -3,15 +3,12 @@ package actv.ccs.rules.start;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.ccs.fact.CoolingDown;
-import actv.ccs.fact.Auditor;
 
 rule "Start"
 	ruleflow-group "swim"
 	salience 10000
 
 	when
-		$auditor : Auditor();
-		
 		$cc : ConvictCichlid(	
 					$baseCautionLevel : baseCautionLevel != null,
 					$baseSpeed : baseSpeed != null,
@@ -27,9 +24,5 @@ rule "Start"
 			setCautionLevel($baseCautionLevel * 1.6f),
 			setSpeed($baseSpeed * 1.6f),
 			setState(FishState.CAUTION);
-		}
-		 
-		modify($auditor){
-			getRulesFired().add(drools.getRule().getName());
 		}
 end

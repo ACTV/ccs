@@ -3,14 +3,12 @@ package actv.ccs.rules.start;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.ccs.fact.CoolingDown;
-import actv.ccs.fact.Auditor;
 
 
 rule "Cooldown"
 	ruleflow-group "swim"
 
 	when
-		$auditor :  Auditor()
 		not (exists CoolingDown());
 
 		$cc : ConvictCichlid( state == FishState.CAUTION,
@@ -21,8 +19,5 @@ rule "Cooldown"
 		modify($cc){
 			setSpeed($baseSpeed),
 			setState(FishState.IDLE);
-		}
-		modify($auditor){
-			getRulesFired().add(drools.getRule().getName());
 		}
 end

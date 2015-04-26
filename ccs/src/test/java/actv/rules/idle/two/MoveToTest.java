@@ -1,17 +1,12 @@
 package actv.rules.idle.two;
 
-import graphicslib3D.Matrix3D;
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
 
 import java.util.ArrayList;
 
 import org.junit.Before;
-import org.junit.Test;
 
-import sage.model.loader.OBJLoader;
-import sage.scene.TriMesh;
-import actv.ccs.fact.Auditor;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
@@ -19,11 +14,10 @@ import actv.rules.DroolsTest;
 
 public class MoveToTest extends DroolsTest {
 	private ConvictCichlid cc1, cc2;
-	private Auditor auditor;
 	private ArrayList<CCSMemoryObject> objs;
 	
 	public MoveToTest(){
-		super(	"actv/ccs/rules/idle/two/MoveTo.drl", 
+		super(	"actv/ccs/rules/idle/MoveTo.drl", 
 				"actv/ccs/flow/swim.bpmn",
 				"swim");
 	}
@@ -48,19 +42,16 @@ public class MoveToTest extends DroolsTest {
 		cc2.setSpeed(8.00f);
 		cc2.setInfluence(10);
 		
-		auditor = new Auditor();
 	}
 	
-	@Test
+	//@Test
 	public void test(){
 		objs = new ArrayList<CCSMemoryObject>();
 		objs.add(cc1);
 		objs.add(cc2);
-		objs.add(auditor);
 		
 		executeStateless(objs);
 		
-		System.out.println("Rules: " + auditor.getRulesFired().size());
 	}
 
 }

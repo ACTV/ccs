@@ -3,7 +3,6 @@ package actv.ccs.rules.start;
 
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
-import actv.ccs.fact.Auditor;
 
 
 rule "Initialize Cichlid"
@@ -11,8 +10,6 @@ rule "Initialize Cichlid"
 	salience 1000000
 
 	when
-		$auditor : Auditor();
-		
 		$cc : ConvictCichlid(	
 					(baseCautionLevel == 0 ||
 					baseSpeed == 0 ||
@@ -20,15 +17,10 @@ rule "Initialize Cichlid"
 					state == FishState.NONE );
 					
 	then
-		
 		modify($cc){
 			setBaseCautionLevel(5f),
 			setBaseSpeed(4f),
 			setBaseAggroLevel(2f),
 			setState(FishState.IDLE);
-		}
-		 
-		modify($auditor){
-			getRulesFired().add(drools.getRule().getName());
 		}
 end

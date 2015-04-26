@@ -3,8 +3,8 @@ package actv.ccs.rules.idle;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.ccs.fact.CoolingDown;
-import actv.ccs.fact.Auditor;
 
+global org.slf4j.Logger logger
 
 rule "Idle"
 	ruleflow-group "swim"
@@ -13,8 +13,6 @@ rule "Idle"
 	timer(int: 2s)
 
 	when
-		$auditor :  Auditor()
-		
 		$cc : ConvictCichlid( state == FishState.IDLE,
 							  $iwt : idleWaitTime);
 		
@@ -23,9 +21,6 @@ rule "Idle"
 			setIdleWaitTime($cc.getIdleWaitTime + 1);
 		}
 		
-		modify($auditor){
-			getRulesFired().add(drools.getRule().getName());
-		}
 end
 
 

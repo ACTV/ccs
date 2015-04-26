@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import actv.ccs.CCSKnowledgeBaseBuilder;
 import actv.ccs.CCSKnowledgeSession;
-import actv.ccs.fact.Auditor;
 import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
@@ -21,7 +20,6 @@ import actv.ccs.model.type.FishState;
 
 public class CCSKnowledgeBaseTest{
 	private ConvictCichlid cc;
-	private Auditor auditor;
 	private long start;
 	private static Logger log = LoggerFactory.getLogger(CCSKnowledgeBaseTest.class);
 	private ArrayList<CCSMemoryObject> objs;
@@ -38,7 +36,6 @@ public class CCSKnowledgeBaseTest{
 		cc.setDirection(new Vector3D(1,3,2));
 		cc.setIdleWaitTime(0);
 		
-		auditor = new Auditor();
 		start = System.currentTimeMillis();
 	}
 	
@@ -53,7 +50,6 @@ public class CCSKnowledgeBaseTest{
 		
 		objs = new ArrayList<CCSMemoryObject>();
 		objs.add(cc);
-		objs.add(auditor);
 		
 		//session.setStatefulKnowledgeSession(CCSKnowledgeBaseBuilder.buildStatefulSession(objs));
 		RuleEngineRunner r = RuleEngineRunner.getInstance();
@@ -77,7 +73,6 @@ public class CCSKnowledgeBaseTest{
 		
 		objs = new ArrayList<CCSMemoryObject>();
 		objs.add(cc);
-		objs.add(auditor);
 
 		session.setStatefulKnowledgeSession(CCSKnowledgeBaseBuilder.buildStatefulSession(objs));
 		try {

@@ -1,20 +1,16 @@
 package actv.ccs.rules.start;
 
-
-import actv.ccs.fact.Auditor;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.ccs.fact.CoolingDown;
 
-
-
+global org.slf4j.Logger logger
 
 rule "Cooling Down"
 	ruleflow-group "swim"
 	timer(int: 2s)
 	
 	when
-		$auditor : Auditor()
 		$cc : ConvictCichlid(state == FishState.CAUTION)
 		
 		$cd : CoolingDown( convictCichlid == $cc)
@@ -24,9 +20,5 @@ rule "Cooling Down"
 		modify($cc){
 			setCautionLevel($cc.getBaseCautionLevel()),
 			setState(FishState.IDLE);
-		}
-		
-		modify($auditor){
-			getRulesFired().add(drools.getRule().getName());
 		}
 end
