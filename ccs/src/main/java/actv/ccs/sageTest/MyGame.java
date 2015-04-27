@@ -242,7 +242,7 @@ public class MyGame extends BaseGame {
 		
 			addGameWorldObject(myObject);
 			myObject.translate(50, 50, 50);
-			myObject.scale(15f, 15f, 15f);
+			myObject.scale(5f, 5f, 5f);
 			
 			
 
@@ -1040,17 +1040,18 @@ public class MyGame extends BaseGame {
 
 		// for this area, need to do a checker if A and B and C are called...
 		// test actions
-		IAction moveForwardA = new ForwardAction(cichlidA);
-		IAction moveBackA = new BackwardAction(cichlidA);
-		IAction moveLeftA = new LeftAction(cichlidA);
-		IAction moveRightA = new RightAction(cichlidA);
-		IAction upForwardA = new UpForwardAction(cichlidA);
-		IAction upBackA = new UpBackAction(cichlidA);
-		IAction downForwardA = new DownForwardAction(cichlidA);
-		IAction downBackA = new DownBackAction(cichlidA);
-		
+/*		IAction moveForwardA = new ForwardAction(cichlidA, myObject);
+		IAction moveBackA = new BackwardAction(myObject);
+		IAction moveLeftA = new LeftAction(myObject);
+		IAction moveRightA = new RightAction(myObject);
+		IAction upForwardA = new UpForwardAction(myObject);
+		IAction upBackA = new UpBackAction(myObject);
+		IAction downForwardA = new DownForwardAction(myObject);
+		IAction downBackA = new DownBackAction(myObject);
+	*/	
 		
 		// game actions
+		IAction swimTest = new SwimAction(myObject);
 		IAction quitGame = new QuitAction(this);
 		IAction pauseKey = new pauseAction();
 		IAction resumeKey = new resumeAction();
@@ -1067,10 +1068,12 @@ public class MyGame extends BaseGame {
 			IAction saveState = new saveAction();
 			im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.Q, saveState, 
 					IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
+			im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.Z, swimTest, 
+					IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
 //		}
-		
+	
 		// here is the movement options of the character ..
-		im.associateAction(kbName,
+/*		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.W, moveForwardA,
 				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 		im.associateAction(kbName,
@@ -1096,6 +1099,7 @@ public class MyGame extends BaseGame {
 		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.NUMPAD1, downBackA,
 				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+	*/
 	}
 	
 	// pause and restart simulation
@@ -1334,6 +1338,8 @@ public class MyGame extends BaseGame {
 
 	public void update(float elapsedTimeMS) // this will be where the objects will move
 	{
+		
+	myObject.updateAnimation(elapsedTimeMS);	
 		
 	if (pauseSimulation == false)
 	{
@@ -1790,5 +1796,19 @@ public class MyGame extends BaseGame {
 
 	}
 
+	public class SwimAction extends AbstractInputAction
+	{
+		private Model3DTriMesh avatar;
+		
+		public SwimAction (Model3DTriMesh n)
+		{
+			avatar = n;
+		}
+		public void performAction(float time, Event e)
+		{
+			avatar.stopAnimation();
+			avatar.startAnimation("swim");
+		}
+	}
 
 }

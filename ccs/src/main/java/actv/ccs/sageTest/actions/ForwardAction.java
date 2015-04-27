@@ -8,6 +8,7 @@ import sage.camera.*;
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
 import graphicslib3D.Matrix3D;
+import sage.scene.Model3DTriMesh;
 import sage.scene.SceneNode;
 import sage.scene.shape.*;
 
@@ -15,9 +16,10 @@ public class ForwardAction extends AbstractInputAction {
 	private SceneNode s;
 	private Matrix3D sM;
 	private float speed = 0.01f;
-
-	public ForwardAction(SceneNode sn) {
+	private Model3DTriMesh avatar;
+	public ForwardAction(SceneNode sn, Model3DTriMesh n) {
 		s = sn;
+		avatar = n;
 		sM = s.getLocalTranslation();
 	}
 
@@ -33,6 +35,8 @@ public class ForwardAction extends AbstractInputAction {
 		dir.scale((double) (speed * time));
 		s.translate((float) dir.getX(), (float) dir.getY(), (float) dir.getZ());
 		s.updateWorldBound();
+		avatar.stopAnimation();
+		avatar.startAnimation("swim_action");
 	}
 
 }
