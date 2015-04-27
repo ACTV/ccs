@@ -723,8 +723,8 @@ public class MyGame extends BaseGame {
 																			// size
 																			// of
 																			// object
-						cichlidAMeshS.scale(widthW * weightW * .5, heightW
-								* weightW * .5, 0); // the scale
+						cichlidAMeshS.scale(widthW * weightW * .1, heightW
+								* weightW * .1, 0); // the scale
 																	// might be
 																	// too big
 																	// so we
@@ -733,6 +733,19 @@ public class MyGame extends BaseGame {
 					//	cichlidAMeshS.scale(10f, 10f, 10f);
 						cichlidAMesh.setLocalScale(cichlidAMeshS);
 						cichlidAMesh.setTexture(cichlidTexA);
+
+						
+						
+						// trying texture
+						
+						TextureState cichlidATexS;
+						Texture cATex = TextureManager.loadTexture2D("cichlidMesh.png");
+						cATex.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
+						cichlidATexS = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
+						cichlidATexS.setTexture(cATex, 0);
+						cichlidATexS.setEnabled(true);
+						
+						cichlidAMesh.setRenderState(cichlidATexS);
 						addGameWorldObject(cichlidAMesh);
 						cichlidAMesh.updateLocalBound();
 						cichlidAMesh.updateGeometricState(0, true);
@@ -839,6 +852,14 @@ public class MyGame extends BaseGame {
 					//	cichlidAMeshS.scale(10f, 10f, 10f);
 						cichlidBMesh.setLocalScale(cichlidAMeshS);
 						cichlidBMesh.setTexture(cichlidTexA);
+						TextureState cichlidATexS;
+						Texture cATex = TextureManager.loadTexture2D("cichlidMesh.png");
+						cATex.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
+						cichlidATexS = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
+						cichlidATexS.setTexture(cATex, 0);
+						cichlidATexS.setEnabled(true);
+						
+						cichlidBMesh.setRenderState(cichlidATexS);
 						addGameWorldObject(cichlidBMesh);
 						cichlidBMesh.updateLocalBound();
 						cichlidBMesh.updateGeometricState(0, true);
