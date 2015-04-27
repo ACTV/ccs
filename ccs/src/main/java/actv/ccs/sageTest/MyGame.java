@@ -22,11 +22,13 @@ import sage.input.InputManager;
 import sage.input.action.AbstractInputAction;
 import sage.input.action.IAction;
 import sage.model.loader.OBJLoader;
+import sage.model.loader.ogreXML.OgreXMLParser;
 import sage.renderer.IRenderer;
 import sage.scene.*;
 import sage.scene.SceneNode.*;
 import sage.scene.shape.*;
 import sage.scene.state.RenderState.RenderStateType;
+import sage.scene.state.RenderState;
 import sage.scene.state.TextureState;
 import sage.terrain.*;
 import sage.texture.*;
@@ -81,6 +83,13 @@ public class MyGame extends BaseGame {
 	// going to add a pause button here
 	private boolean pauseSimulation; 	
 	private FishTank fishTank;
+	
+	
+	
+	// testing for ogre model loader
+	TextureState testState;
+	Group model;
+	Model3DTriMesh myObject;
 	
 	public void initGame() {
 		initObjects();
@@ -205,6 +214,34 @@ public class MyGame extends BaseGame {
 		cameraGuy.rotate(180, new Vector3D(0, 1, 0));
 		addGameWorldObject(cameraGuy);
 		cameraGuy.updateWorldBound();
+		
+		// creating new ogre
+		OgreXMLParser loader = new OgreXMLParser();
+		
+		try 
+		{
+			model = loader.loadModel("pooplid.mesh.xml", "pooplid.mtl", "pooplid.mesh.xml");
+			model.updateGeometricState(0, true);
+			java.util.Iterator<SceneNode> modelIterator = model.iterator();
+			myObject = (Model3DTriMesh) modelIterator.next();
+		} catch (Exception vv)
+		{
+			vv.printStackTrace();
+			
+		}
+		
+		Texture hobTexture = TextureManager.loadTexture2D("pooplid.png");
+		hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
+		testState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
+		testState.setTexture(hobTexture, 0);
+		testState.setEnabled(true);
+		
+		
+		
+			addGameWorldObject(myObject);
+			myObject.scale(.15f, .15f, .15f);
+			
+			
 
 	}
 	public void createHUD()
@@ -576,7 +613,7 @@ public class MyGame extends BaseGame {
 
 	public void spawnCichlids() {
 		
-			Texture cichlidTexA = TextureManager.loadTexture2D("./pooplid.png");
+			Texture cichlidTexA = TextureManager.loadTexture2D("cichlidMesh.png");
 		try {
 			conn = DriverManager
 					.getConnection("jdbc:ucanaccess://FishPool.accdb");
@@ -648,7 +685,7 @@ public class MyGame extends BaseGame {
 						Matrix3D cichlidAR = new Matrix3D(); // this is for the
 																// rotation of
 																// the object
-						cichlidAR.rotateX(30);
+						cichlidAR.rotateX(180);
 						cichlidA.setLocalRotation(cichlidAR);
 						addGameWorldObject(cichlidA);
 						objs.add(cichlidA);
@@ -672,7 +709,7 @@ public class MyGame extends BaseGame {
 //						// here is where i add the cichlidMesh
 						OBJLoader loader1 = new OBJLoader();
 						cichlidAMesh = loader1
-								.loadModel("pooplid.obj");
+								.loadModel("wacklid.obj");
 						cichlidAMesh.setName(name);
 						Matrix3D cichlidAMeshT = cichlidAMesh.getLocalTranslation(); // this
 																				// is
@@ -778,7 +815,7 @@ public class MyGame extends BaseGame {
 //						// here is where i add the cichlidMesh
 						OBJLoader loader1 = new OBJLoader();
 						cichlidBMesh = loader1
-								.loadModel("pooplid.obj");
+								.loadModel("wacklid.obj");
 						cichlidBMesh.setName(name);
 						Matrix3D cichlidAMeshT = cichlidBMesh.getLocalTranslation(); // this
 																				// is
@@ -886,7 +923,7 @@ public class MyGame extends BaseGame {
 						
 						OBJLoader loader1 = new OBJLoader();
 						cichlidCMesh = loader1
-								.loadModel("pooplid.obj");
+								.loadModel("wacklid.obj");
 						cichlidCMesh.setName(name);
 						Matrix3D cichlidAMeshT = cichlidCMesh.getLocalTranslation(); // this
 																				// is
@@ -1312,9 +1349,10 @@ public class MyGame extends BaseGame {
 					// here is where i will test my newfound collision for spheres
 					
 					Matrix3D cichlidAlocalT = s.getLocalTranslation();
+					Matrix3D cichlidARot = s.getLocalRotation();
 					aggroRangeA.setLocalTranslation(cichlidAlocalT);
 					cichlidAMesh.setLocalTranslation(s.getLocalTranslation());
-					
+					cichlidAMesh.setLocalRotation(cichlidARot);
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
@@ -1427,8 +1465,10 @@ public class MyGame extends BaseGame {
 
 					
 					Matrix3D cichlidBlocalT = s.getLocalTranslation();
+					Matrix3D cichlidBRot = s.getLocalRotation();
 					aggroRangeB.setLocalTranslation(cichlidBlocalT);
 					cichlidBMesh.setLocalTranslation(s.getLocalTranslation());
+					cichlidBMesh.setLocalRotation(cichlidBRot);
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
@@ -1528,8 +1568,10 @@ public class MyGame extends BaseGame {
 					// call move stuff here
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
 					Matrix3D cichlidClocalT = s.getLocalTranslation();
+					Matrix3D cichlidCRot = s.getLocalRotation();
 					aggroRangeC.setLocalTranslation(cichlidClocalT);
 					cichlidCMesh.setLocalTranslation(s.getLocalTranslation());
+					cichlidCMesh.setLocalRotation(cichlidCRot);
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
