@@ -220,10 +220,12 @@ public class MyGame extends BaseGame {
 		
 		try 
 		{
-			model = loader.loadModel("pooplid.mesh.xml", "pooplid.mtl", "pooplid.mesh.xml");
+			model = loader.loadModel("src/main/java/actv/ccs/sageTest/TestOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/TestOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/TestOgre/pooplida.scene");
+			//src/main/java/actv/ccs/sageTest/TestOgre 
 			model.updateGeometricState(0, true);
 			java.util.Iterator<SceneNode> modelIterator = model.iterator();
 			myObject = (Model3DTriMesh) modelIterator.next();
+			System.out.println("test");
 		} catch (Exception vv)
 		{
 			vv.printStackTrace();
@@ -239,7 +241,8 @@ public class MyGame extends BaseGame {
 		
 		
 			addGameWorldObject(myObject);
-			myObject.scale(.15f, .15f, .15f);
+			myObject.translate(50, 50, 50);
+			myObject.scale(15f, 15f, 15f);
 			
 			
 
