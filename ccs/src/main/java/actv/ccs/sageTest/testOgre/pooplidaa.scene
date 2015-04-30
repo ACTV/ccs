@@ -1,0 +1,61 @@
+<scene exported_by="Albert" formatVersion="1.0.1" previous_export_time="1430109541.615015" export_time="1430109588.591002" >
+  <nodes >
+    <node name="Armature" >
+      <position y="0.395065" x="1.018419" z="0.434271" />
+      <rotation qy="0.000000" qw="1.000000" qx="0.000000" qz="-0.000000" />
+      <scale y="1.000000" x="1.000000" z="1.000000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+    </node>
+    <node name="Plane" >
+      <position y="0.395065" x="1.018419" z="0.434271" />
+      <rotation qy="0.000000" qw="1.000000" qx="0.000000" qz="-0.000000" />
+      <scale y="0.204214" x="0.204214" z="1.246258" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <entity mass_radius="1.0" velocity_max="0.0" friction_x="1.0" lock_rot_y="False" inertia_tensor="0.4000000059604645" mass="1.0" damping_rot="0.10000000149011612" ghost="False" friction_z="1.0" velocity_min="0.0" lock_trans_x="False" lock_rot_z="False" physics_type="STATIC" lock_trans_z="False" friction_y="1.0" lock_rot_x="False" meshFile="Plane.mesh" name="Plane" actor="False" anisotropic_friction="False" lock_trans_y="False" damping_trans="0.03999999910593033" />
+    </node>
+    <node name="Lamp" >
+      <position y="5.903862" x="4.076245" z="-1.005454" />
+      <rotation qy="0.755880" qw="0.570947" qx="0.169076" qz="-0.272171" />
+      <scale y="1.000000" x="1.000000" z="1.000000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <light shadow="true" name="Lamp" powerScale="1.0" type="point" >
+        <position y="5.903862" x="4.076245" z="-1.005454" />
+        <lightAttenuation range="5000" linear="0.03333335240683057" constant="1.0" quadratic="0.0" />
+        <colourDiffuse r="1.0" b="1.0" g="1.0" />
+        <colourSpecular r="1.0" b="1.0" g="1.0" />
+        <colourShadow r="1.0" b="1.0" g="1.0" />
+      </light>
+    </node>
+    <node name="Camera" >
+      <position y="5.343665" x="7.481132" z="6.507640" />
+      <rotation qy="0.334251" qw="0.781600" qx="0.481707" qz="-0.212922" />
+      <scale y="1.000000" x="1.000000" z="1.000000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <camera name="Camera" fov="0.5033799435163735" projectionType="perspective" >
+        <clipping near="0.10000000149011612" far="100.0" nearPlaneDist="0.10000000149011612" farPlaneDist="100.0" />
+      </camera>
+    </node>
+  </nodes>
+  <externals >
+    <item type="material" >
+      <file name="E:\downloads\textures\test\aaa\pooplid.material" />
+    </item>
+  </externals>
+  <environment >
+    <colourAmbient r="0.0" b="0.0" g="0.0" />
+    <colourBackground r="0.05087608844041824" b="0.05087608844041824" g="0.05087608844041824" />
+    <colourDiffuse r="0.05087608844041824" b="0.05087608844041824" g="0.05087608844041824" />
+  </environment>
+</scene>

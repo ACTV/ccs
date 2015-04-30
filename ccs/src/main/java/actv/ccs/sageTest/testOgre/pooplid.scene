@@ -1,0 +1,61 @@
+<scene formatVersion="1.0.1" previous_export_time="1430351532.936224" exported_by="albert" export_time="1430351676.994973" >
+  <nodes >
+    <node name="Armature" >
+      <position z="3.379126" y="0.632444" x="0.952542" />
+      <rotation qz="-0.125628" qx="-0.605285" qy="-0.181870" qw="0.764703" />
+      <scale z="1.000000" y="1.000000" x="1.000000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <node name="Plane" >
+        <position z="-0.832683" y="2.569547" x="-1.217324" />
+        <rotation qz="0.125628" qx="0.605285" qy="0.181870" qw="0.764703" />
+        <scale z="1.246258" y="0.204214" x="0.204214" />
+        <game >
+          <sensors />
+          <actuators />
+        </game>
+        <entity meshFile="Plane.001.mesh" mass_radius="1.0" friction_z="1.0" ghost="False" velocity_max="0.0" friction_y="1.0" mass="1.0" lock_trans_z="False" lock_trans_x="False" friction_x="1.0" lock_rot_x="False" lock_rot_y="False" anisotropic_friction="False" lock_rot_z="False" velocity_min="0.0" physics_type="STATIC" damping_rot="0.10000000149011612" lock_trans_y="False" actor="False" damping_trans="0.03999999910593033" name="Plane.001" inertia_tensor="0.4000000059604645" />
+      </node>
+    </node>
+    <node name="Lamp" >
+      <position z="-1.005454" y="5.903862" x="4.076245" />
+      <rotation qz="-0.272171" qx="0.169076" qy="0.755880" qw="0.570948" />
+      <scale z="1.000000" y="1.000000" x="1.000000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <light powerScale="1.0" name="Lamp" shadow="true" type="point" >
+        <position z="-1.005454" y="5.903862" x="4.076245" />
+        <lightAttenuation quadratic="0.0" range="5000" linear="0.03333335240683057" constant="1.0" />
+        <colourDiffuse g="1.0" b="1.0" r="1.0" />
+        <colourSpecular g="1.0" b="1.0" r="1.0" />
+        <colourShadow g="1.0" b="1.0" r="1.0" />
+      </light>
+    </node>
+    <node name="Camera" >
+      <position z="6.507640" y="5.343665" x="7.481132" />
+      <rotation qz="-0.212922" qx="0.481707" qy="0.334251" qw="0.781600" />
+      <scale z="1.000000" y="1.000000" x="1.000000" />
+      <game >
+        <sensors />
+        <actuators />
+      </game>
+      <camera name="Camera" projectionType="perspective" fov="0.5033799435163735" >
+        <clipping nearPlaneDist="0.10000000149011612" near="0.10000000149011612" farPlaneDist="100.0" far="100.0" />
+      </camera>
+    </node>
+  </nodes>
+  <externals >
+    <item type="material" >
+      <file name="C:\Users\albert\git\ccsewe\ccs\src\main\java\actv\ccs\sageTest\testOgre\test\aaa\haha\Material.material" />
+    </item>
+  </externals>
+  <environment >
+    <colourDiffuse g="0.05087608844041824" b="0.05087608844041824" r="0.05087608844041824" />
+    <colourBackground g="0.05087608844041824" b="0.05087608844041824" r="0.05087608844041824" />
+    <colourAmbient g="0.0" b="0.0" r="0.0" />
+  </environment>
+</scene>
