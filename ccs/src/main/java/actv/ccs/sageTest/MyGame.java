@@ -89,7 +89,7 @@ public class MyGame extends BaseGame {
 	// testing for ogre model loader
 	TextureState testState;
 	Group model;
-	Model3DTriMesh myObject;
+	Model3DTriMesh cichlidAObject, cichlidBObject, cichlidCObject;
 	
 	public void initGame() {
 		initObjects();
@@ -215,34 +215,7 @@ public class MyGame extends BaseGame {
 		addGameWorldObject(cameraGuy);
 		cameraGuy.updateWorldBound();
 		
-		// creating new ogre
-		OgreXMLParser loader = new OgreXMLParser();
-		
-		try 
-		{
-			model = loader.loadModel("src/main/java/actv/ccs/sageTest/TestOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/TestOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/TestOgre/pooplida.scene");
-			//src/main/java/actv/ccs/sageTest/TestOgre 
-			model.updateGeometricState(0, true);
-			java.util.Iterator<SceneNode> modelIterator = model.iterator();
-			myObject = (Model3DTriMesh) modelIterator.next();
-			System.out.println("test");
-		} catch (Exception vv)
-		{
-			vv.printStackTrace();
-			
-		}
-		
-		Texture hobTexture = TextureManager.loadTexture2D("pooplid.png");
-		hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
-		testState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
-		testState.setTexture(hobTexture, 0);
-		testState.setEnabled(true);
-		
-		
-		
-			addGameWorldObject(myObject);
-			myObject.translate(50, 50, 50);
-			myObject.scale(5f, 5f, 5f);
+
 			
 			
 
@@ -708,7 +681,7 @@ public class MyGame extends BaseGame {
 						aggroRangeA.setCullMode(CULL_MODE.ALWAYS); // cull mode hides the object
 						cichlidCount++;
 						
-						
+/*						
 //						// here is where i add the cichlidMesh
 						OBJLoader loader1 = new OBJLoader();
 						cichlidAMesh = loader1
@@ -753,6 +726,37 @@ public class MyGame extends BaseGame {
 						cichlidAMesh.updateLocalBound();
 						cichlidAMesh.updateGeometricState(0, true);
 						cichlidAMesh.updateWorldBound();
+						*/
+						// creating new ogre
+						OgreXMLParser loader = new OgreXMLParser();
+						
+						try 
+						{
+							model = loader.loadModel("src/main/java/actv/ccs/sageTest/TestOgre/Plane.001.mesh.xml", "src/main/java/actv/ccs/sageTest/TestOgre/Material.material", "src/main/java/actv/ccs/sageTest/TestOgre/Plane.001.skeleton.xml");
+							//src/main/java/actv/ccs/sageTest/TestOgre 
+							model.updateGeometricState(0, true);
+							java.util.Iterator<SceneNode> modelIterator = model.iterator();
+							cichlidAObject = (Model3DTriMesh) modelIterator.next();
+							System.out.println("test");
+						} catch (Exception vv)
+						{
+							vv.printStackTrace();
+							
+						}
+						
+						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/TestOgre/cichlidMesh.png");
+						hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
+						testState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
+						testState.setTexture(hobTexture, 0);
+						testState.setEnabled(true);
+						
+						
+						
+							addGameWorldObject(cichlidAObject);
+							cichlidAObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
+							cichlidAObject.scale((float) (widthW * weightW * .100), (float) (heightW
+									* weightW * .100), (float) heightW);
+						
 					}
 				} else if (id.equals("2")) {
 					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
@@ -829,7 +833,7 @@ public class MyGame extends BaseGame {
 						aggroRangeB.setCullMode(CULL_MODE.ALWAYS); // cull mode hides the object
 						
 //						// here is where i add the cichlidMesh
-						OBJLoader loader1 = new OBJLoader();
+/*						OBJLoader loader1 = new OBJLoader();
 						cichlidBMesh = loader1
 								.loadModel("wacklid.obj");
 						cichlidBMesh.setName(name);
@@ -867,6 +871,36 @@ public class MyGame extends BaseGame {
 						cichlidBMesh.updateLocalBound();
 						cichlidBMesh.updateGeometricState(0, true);
 						cichlidBMesh.updateWorldBound();
+						*/
+						
+						OgreXMLParser loader = new OgreXMLParser();
+						
+						try 
+						{
+							model = loader.loadModel("src/main/java/actv/ccs/sageTest/TestOgre/Plane.001.mesh.xml", "src/main/java/actv/ccs/sageTest/TestOgre/Material.material", "src/main/java/actv/ccs/sageTest/TestOgre/Plane.001.skeleton.xml");
+							//src/main/java/actv/ccs/sageTest/TestOgre 
+							model.updateGeometricState(0, true);
+							java.util.Iterator<SceneNode> modelIterator = model.iterator();
+							cichlidBObject = (Model3DTriMesh) modelIterator.next();
+							System.out.println("test");
+						} catch (Exception vv)
+						{
+							vv.printStackTrace();
+							
+						}
+						
+						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/TestOgre/cichlidMesh.png");
+						hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
+						testState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
+						testState.setTexture(hobTexture, 0);
+						testState.setEnabled(true);
+						
+						
+						
+							addGameWorldObject(cichlidBObject);
+							cichlidBObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
+							cichlidBObject.scale((float) (widthW * weightW * .100), (float) (heightW
+									* weightW * .100), (float) heightW);
 						cichlidCount++;
 					}
 				} else if (id.equals("3")) {
@@ -945,7 +979,7 @@ public class MyGame extends BaseGame {
 						aggroRangeC.updateWorldBound();
 						aggroRangeC.setCullMode(CULL_MODE.ALWAYS); // cull mode hides the object
 						
-						OBJLoader loader1 = new OBJLoader();
+/*						OBJLoader loader1 = new OBJLoader();
 						cichlidCMesh = loader1
 								.loadModel("wacklid.obj");
 						cichlidCMesh.setName(name);
@@ -975,6 +1009,36 @@ public class MyGame extends BaseGame {
 						cichlidCMesh.updateLocalBound();
 						cichlidCMesh.updateGeometricState(0, true);
 						cichlidCMesh.updateWorldBound();
+						*/
+						OgreXMLParser loader = new OgreXMLParser();
+						
+						try 
+						{
+							model = loader.loadModel("src/main/java/actv/ccs/sageTest/TestOgre/Plane.001.mesh.xml", "src/main/java/actv/ccs/sageTest/TestOgre/Material.material", "src/main/java/actv/ccs/sageTest/TestOgre/Plane.001.skeleton.xml");
+							//src/main/java/actv/ccs/sageTest/TestOgre 
+							model.updateGeometricState(0, true);
+							java.util.Iterator<SceneNode> modelIterator = model.iterator();
+							cichlidCObject = (Model3DTriMesh) modelIterator.next();
+							System.out.println("test");
+						} catch (Exception vv)
+						{
+							vv.printStackTrace();
+							
+						}
+						
+						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/TestOgre/cichlidMesh.png");
+						hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
+						testState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
+						testState.setTexture(hobTexture, 0);
+						testState.setEnabled(true);
+						
+						
+						
+							addGameWorldObject(cichlidCObject);
+							cichlidCObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
+							cichlidCObject.scale((float) (widthW * weightW * .100), (float) (heightW
+									* weightW * .100), (float) heightW);
+						
 						cichlidCount++;
 					}
 				}
@@ -1040,18 +1104,18 @@ public class MyGame extends BaseGame {
 
 		// for this area, need to do a checker if A and B and C are called...
 		// test actions
-/*		IAction moveForwardA = new ForwardAction(cichlidA, myObject);
-		IAction moveBackA = new BackwardAction(myObject);
-		IAction moveLeftA = new LeftAction(myObject);
-		IAction moveRightA = new RightAction(myObject);
-		IAction upForwardA = new UpForwardAction(myObject);
-		IAction upBackA = new UpBackAction(myObject);
-		IAction downForwardA = new DownForwardAction(myObject);
-		IAction downBackA = new DownBackAction(myObject);
+/*		IAction moveForwardA = new ForwardAction(cichlidA, cichlidAObject);
+		IAction moveBackA = new BackwardAction(cichlidAObject);
+		IAction moveLeftA = new LeftAction(cichlidAObject);
+		IAction moveRightA = new RightAction(cichlidAObject);
+		IAction upForwardA = new UpForwardAction(cichlidAObject);
+		IAction upBackA = new UpBackAction(cichlidAObject);
+		IAction downForwardA = new DownForwardAction(cichlidAObject);
+		IAction downBackA = new DownBackAction(cichlidAObject);
 	*/	
 		
 		// game actions
-		IAction swimTest = new SwimAction(myObject);
+		IAction swimTest = new SwimAction(cichlidAObject);
 		IAction quitGame = new QuitAction(this);
 		IAction pauseKey = new pauseAction();
 		IAction resumeKey = new resumeAction();
@@ -1339,10 +1403,12 @@ public class MyGame extends BaseGame {
 	public void update(float elapsedTimeMS) // this will be where the objects will move
 	{
 		
-	myObject.updateAnimation(elapsedTimeMS);	
+
 		
 	if (pauseSimulation == false)
 	{
+		
+		
 		// creating timer thing
 		time += elapsedTimeMS;
 		timeString.setText("Time: " + Math.floor(time/1000));
@@ -1371,6 +1437,7 @@ public class MyGame extends BaseGame {
 											// implement that later.
 			{
 				if (s == cichlidA) {
+					cichlidAObject.updateAnimation(elapsedTimeMS);	
 					// s.translate(0, 0, .1f);
 					// s.updateWorldBound();
 					// bound collision
@@ -1381,8 +1448,8 @@ public class MyGame extends BaseGame {
 					Matrix3D cichlidAlocalT = s.getLocalTranslation();
 					Matrix3D cichlidARot = s.getLocalRotation();
 					aggroRangeA.setLocalTranslation(cichlidAlocalT);
-					cichlidAMesh.setLocalTranslation(s.getLocalTranslation());
-					cichlidAMesh.setLocalRotation(cichlidARot);
+					cichlidAObject.setLocalTranslation(cichlidAlocalT);
+					cichlidAObject.setLocalRotation(cichlidARot);
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
@@ -1490,15 +1557,17 @@ public class MyGame extends BaseGame {
 					
 				}
 				if (s == cichlidB) {
+					cichlidBObject.updateAnimation(elapsedTimeMS);	
 					// call move stuff here
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
 
 					
 					Matrix3D cichlidBlocalT = s.getLocalTranslation();
 					Matrix3D cichlidBRot = s.getLocalRotation();
+					cichlidBObject.setLocalTranslation(cichlidBlocalT);
+					cichlidBObject.setLocalRotation(cichlidBRot);
 					aggroRangeB.setLocalTranslation(cichlidBlocalT);
-					cichlidBMesh.setLocalTranslation(s.getLocalTranslation());
-					cichlidBMesh.setLocalRotation(cichlidBRot);
+;
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
@@ -1595,13 +1664,15 @@ public class MyGame extends BaseGame {
 					}
 				}
 				if (s == cichlidC) {
+					cichlidCObject.updateAnimation(elapsedTimeMS);	
 					// call move stuff here
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
 					Matrix3D cichlidClocalT = s.getLocalTranslation();
 					Matrix3D cichlidCRot = s.getLocalRotation();
 					aggroRangeC.setLocalTranslation(cichlidClocalT);
-					cichlidCMesh.setLocalTranslation(s.getLocalTranslation());
-					cichlidCMesh.setLocalRotation(cichlidCRot);
+					cichlidCObject.setLocalTranslation(cichlidClocalT);
+					cichlidCObject.setLocalRotation(cichlidCRot);
+
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
