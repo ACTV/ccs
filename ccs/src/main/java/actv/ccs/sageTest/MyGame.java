@@ -754,8 +754,8 @@ public class MyGame extends BaseGame {
 						
 							addGameWorldObject(cichlidAObject);
 							cichlidAObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
-							cichlidAObject.scale((float) (widthW * weightW * .100), (float) (heightW
-									* weightW * .100), (float) heightW);
+							cichlidAObject.scale((float) (widthW * weightW * .09), (float) (heightW
+									* weightW * .09), (float) 0.09);
 						
 					}
 				} else if (id.equals("2")) {
@@ -899,8 +899,8 @@ public class MyGame extends BaseGame {
 						
 							addGameWorldObject(cichlidBObject);
 							cichlidBObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
-							cichlidBObject.scale((float) (widthW * weightW * .100), (float) (heightW
-									* weightW * .100), (float) heightW);
+							cichlidBObject.scale((float) (widthW * weightW * .09), (float) (heightW
+									* weightW * .09), (float) 0.09);
 						cichlidCount++;
 					}
 				} else if (id.equals("3")) {
@@ -1036,8 +1036,8 @@ public class MyGame extends BaseGame {
 						
 							addGameWorldObject(cichlidCObject);
 							cichlidCObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
-							cichlidCObject.scale((float) (widthW * weightW * .100), (float) (heightW
-									* weightW * .100), (float) heightW);
+							cichlidCObject.scale((float) (widthW * weightW * .09), (float) (heightW
+									* weightW * .09), (float) 0.09);
 						
 						cichlidCount++;
 					}
@@ -1567,7 +1567,7 @@ public class MyGame extends BaseGame {
 					cichlidBObject.setLocalTranslation(cichlidBlocalT);
 					cichlidBObject.setLocalRotation(cichlidBRot);
 					aggroRangeB.setLocalTranslation(cichlidBlocalT);
-;
+
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
