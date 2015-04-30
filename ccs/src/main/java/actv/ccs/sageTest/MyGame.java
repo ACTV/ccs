@@ -661,7 +661,7 @@ public class MyGame extends BaseGame {
 						Matrix3D cichlidAR = new Matrix3D(); // this is for the
 																// rotation of
 																// the object
-						cichlidAR.rotateX(180);
+						cichlidAR.rotateX(30);
 						cichlidA.setLocalRotation(cichlidAR);
 						addGameWorldObject(cichlidA);
 						objs.add(cichlidA);
@@ -1115,7 +1115,6 @@ public class MyGame extends BaseGame {
 	*/	
 		
 		// game actions
-		IAction swimTest = new SwimAction(cichlidAObject);
 		IAction quitGame = new QuitAction(this);
 		IAction pauseKey = new pauseAction();
 		IAction resumeKey = new resumeAction();
@@ -1132,8 +1131,7 @@ public class MyGame extends BaseGame {
 			IAction saveState = new saveAction();
 			im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.Q, saveState, 
 					IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
-			im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.Z, swimTest, 
-					IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
+
 //		}
 	
 		// here is the movement options of the character ..
@@ -1171,6 +1169,7 @@ public class MyGame extends BaseGame {
 	{
 		public void performAction(float time, Event ev)
 		{
+			System.out.println("PAUSE PRESSED");
 			pauseSimulation = true;
 			pauseRunner();
 		}
@@ -1179,6 +1178,7 @@ public class MyGame extends BaseGame {
 	{
 		public void performAction(float time, Event evento)
 		{
+			System.out.println("PAUSE IS OFF");
 			pauseSimulation = false;
 			resumeRunner();
 		}
@@ -1414,6 +1414,7 @@ public class MyGame extends BaseGame {
 		timeString.setText("Time: " + Math.floor(time/1000));
 		float timeCompare = time/1000;
 
+		super.update(elapsedTimeMS);
 	
 	if (timeCompare >= simulationTime)
 	{
@@ -1778,6 +1779,11 @@ public class MyGame extends BaseGame {
 	{
 	//	System.out.println("pause stuff");
 	//	System.out.println("press r to run the simulation again");
+		
+		HUDString pauseString = new HUDString("Game is Paused");
+		addGameWorldObject(pauseString);
+		pauseString.setLocation(10, 10);
+		System.out.println("pause thing is " + pauseSimulation);
 	}
 
 
@@ -1867,19 +1873,6 @@ public class MyGame extends BaseGame {
 
 	}
 
-	public class SwimAction extends AbstractInputAction
-	{
-		private Model3DTriMesh avatar;
-		
-		public SwimAction (Model3DTriMesh n)
-		{
-			avatar = n;
-		}
-		public void performAction(float time, Event e)
-		{
-			avatar.stopAnimation();
-			avatar.startAnimation("swim");
-		}
-	}
+
 
 }
