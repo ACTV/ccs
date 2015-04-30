@@ -16,6 +16,7 @@ import actv.ccs.sageTest.actions.*;
 import graphicslib3D.*;
 import sage.app.BaseGame;
 import sage.camera.ICamera;
+import sage.display.DisplaySystem;
 import sage.display.IDisplaySystem;
 import sage.input.IInputManager;
 import sage.input.InputManager;
@@ -81,7 +82,7 @@ public class MyGame extends BaseGame {
 	private Group fishWalls;
 	private IRenderer renderer;
 	// going to add a pause button here
-	private boolean pauseSimulation; 	
+	private volatile boolean pauseSimulation = false; 	
 	private FishTank fishTank;
 	
 	
@@ -225,6 +226,17 @@ public class MyGame extends BaseGame {
 		timeString = new HUDString("Time = " + time);
 		timeString.setLocation(0, 0.05);
 		addGameWorldObject(timeString);
+		
+	}
+	public void pauseGame()
+	{
+		pauseSimulation = true;
+		pauseRunner();
+	}
+	public void resumeGame()
+	{
+		pauseSimulation = false;
+		resumeRunner();
 		
 	}
 	public void setUpTank()
@@ -1170,8 +1182,7 @@ public class MyGame extends BaseGame {
 		public void performAction(float time, Event ev)
 		{
 			System.out.println("PAUSE PRESSED");
-			pauseSimulation = true;
-			pauseRunner();
+			pauseGame();
 		}
 	}
 	private class resumeAction extends AbstractInputAction
@@ -1179,8 +1190,7 @@ public class MyGame extends BaseGame {
 		public void performAction(float time, Event evento)
 		{
 			System.out.println("PAUSE IS OFF");
-			pauseSimulation = false;
-			resumeRunner();
+			resumeGame();
 		}
 	}
 	private class saveAction extends AbstractInputAction
@@ -1405,16 +1415,14 @@ public class MyGame extends BaseGame {
 		
 
 		
-	if (pauseSimulation == false)
-	{
-		
-		
-		// creating timer thing
+	// creating timer thing
 		time += elapsedTimeMS;
 		timeString.setText("Time: " + Math.floor(time/1000));
 		float timeCompare = time/1000;
-
-		super.update(elapsedTimeMS);
+		
+		Point3D camLoc = camera.getLocation();
+		Matrix3D camT = new Matrix3D();
+		camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
 	
 	if (timeCompare >= simulationTime)
 	{
@@ -1424,14 +1432,13 @@ public class MyGame extends BaseGame {
 	}
 	
 	
+
+
+if (pauseSimulation != true)
+	{
 		// update skybox loc
-		Point3D camLoc = camera.getLocation();
-		Matrix3D camT = new Matrix3D();
-		camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
+
 	//	skybox.setLocalTranslation(camT);
-	
-		super.update(time);
-		cc.update(time);
 		for (SceneNode s : getGameWorld()) {
 			if (s instanceof ConvictCichlid) // here will be where the objects will
 											// have be able to move, but i will
@@ -1773,18 +1780,24 @@ public class MyGame extends BaseGame {
 			}
 
 		}
-
-	}
-	else if (pauseSimulation == true)
-	{
-	//	System.out.println("pause stuff");
-	//	System.out.println("press r to run the simulation again");
+		super.update(time);
+		cc.update(time);
 		
-		HUDString pauseString = new HUDString("Game is Paused");
-		addGameWorldObject(pauseString);
-		pauseString.setLocation(10, 10);
-		System.out.println("pause thing is " + pauseSimulation);
 	}
+else
+{
+//	System.out.println("pause stuff");
+//	System.out.println("press r to run the simulation again");
+	
+	HUDString pauseString = new HUDString("Game is Paused");
+	addGameWorldObject(pauseString);
+	pauseString.setLocation(10, 10);
+	System.out.println("pause thing is " + pauseSimulation);
+	
+	super.update(0);
+	System.out.println("time is when paused = "  + time/1000);
+}
+
 
 
 	}
