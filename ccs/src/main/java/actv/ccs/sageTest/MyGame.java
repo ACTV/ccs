@@ -84,6 +84,7 @@ public class MyGame extends BaseGame {
 	// going to add a pause button here
 	private volatile boolean pauseSimulation = false; 	
 	private FishTank fishTank;
+	private boolean startAnimation;
 	
 	
 	
@@ -106,10 +107,29 @@ public class MyGame extends BaseGame {
 		createHUD();
 		setUpTank();
 		pauseSimulation = false; // set to false for beginning
+		startAnimation = true;
 		cichlidCount = 0;
 		objCount = 0;
+
 	}
 
+	public void startAnimationProcess()
+	{
+		System.out.println("i'm being called!");
+			if (cichlidAObject != null)
+			{
+			cichlidAObject.startAnimation("ArmatureAction.001");
+			}
+			if (cichlidBObject != null)
+			{
+				cichlidBObject.startAnimation("ArmatureAction.001");
+			}
+			if (cichlidCObject != null)
+			{
+				cichlidCObject.startAnimation("ArmatureAction.001");
+			}
+			
+	}
 	
 	private void startRunner() {
 		runner = RuleEngineRunner.getInstance();
@@ -239,6 +259,7 @@ public class MyGame extends BaseGame {
 		resumeRunner();
 		
 	}
+	
 	public void setUpTank()
 	{
 
@@ -1368,35 +1389,6 @@ public class MyGame extends BaseGame {
 			{
 				pp.printStackTrace();
 			}
-		/* do this for the party time of the party time of figuring out how to save the tank data stuff
-		try {
-			Connection conne;
-			try
-			{
-				conne = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
-				Statement s = conne.createStatement();
-				rs =s.executeQuery("SELECT ID FROM [SimulationObjects]");
-				while (rs.next())
-				{
-		        	int a = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 1");
-		        	int b = s.executeUpdate("UPDATE SimulationObjects set objID = 1 where ID = 2");
-		        	int c = s.executeUpdate("UPDATE SimulationObjects set objID = 3 where ID = 3");
-		        	int d = s.executeUpdate("UPDATE SimulationObjects set objID = 4 where ID = 4");
-		        	int g = s.executeUpdate("UPDATE SimulationObjects set objID = 5 where ID = 5");
-		        	int f = s.executeUpdate("UPDATE SimulationObjects set objID = 6 where ID = 6");
-		        	
-				}
-				conne.close();
-			} catch (Exception p1)
-			{
-				p1.printStackTrace();
-			}
-		
-			
-		} catch(Exception pp)
-		{
-			pp.printStackTrace();
-		} */
 		}
 		
 		
@@ -1414,7 +1406,7 @@ public class MyGame extends BaseGame {
 	{
 		
 
-		
+		System.out.println("startAnimation = " + startAnimation);
 	// creating timer thing
 		time += elapsedTimeMS;
 		timeString.setText("Time: " + Math.floor(time/1000));
@@ -1430,7 +1422,13 @@ public class MyGame extends BaseGame {
 	// this works	
 		// here would be where you want to pause the simulation
 	}
-	
+	if (startAnimation == true)
+	{
+		// this should work
+	startAnimationProcess();
+		startAnimation = false;
+	}
+
 	
 
 
