@@ -176,6 +176,7 @@ public class MyGame extends BaseGame {
 		while (itr.hasNext())
 		{
 			Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
+			System.out.println("submesh is " + submesh);
 			submesh.startAnimation("swimmingAction");
 			if (submesh.isAnimating())
 			{
@@ -186,7 +187,73 @@ public class MyGame extends BaseGame {
 				System.out.println("not animating");
 			}
 		}
+		
+	/*	
+		/*
+		if (cichlidAObject != null)
+		{
+			/*
+			Iterator<SceneNode> itr = model.getChildren();
+			while (itr.hasNext())
+			{
+				Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
+				System.out.println("submesh is " + submesh);
+				submesh.startAnimation("swimmingAction");
+				if (submesh.isAnimating())
+				{
+					System.out.println("animating!");
+				}
+				else
+				{
+					System.out.println("not animating");
+				}
+			}
+			*/
 			
+			cichlidAObject.startAnimation("swimmingAction");
+		}
+		if (cichlidBObject != null)
+		{
+		/*	Iterator<SceneNode> itr = model.getChildren();
+			while (itr.hasNext())
+			{
+				Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
+				System.out.println("submesh is " + submesh);
+				submesh.startAnimation("swimmingAction");
+				if (submesh.isAnimating())
+				{
+					System.out.println("animating!");
+				}
+				else
+				{
+					System.out.println("not animating");
+				}
+			}
+			*/
+			cichlidBObject.startAnimation("swimmingAction");
+		}
+		if (cichlidCObject != null)
+		{
+			/*
+			Iterator<SceneNode> itr = model.getChildren();
+			while (itr.hasNext())
+			{
+				Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
+				System.out.println("submesh is " + submesh);
+				submesh.startAnimation("swimmingAction");
+				if (submesh.isAnimating())
+				{
+					System.out.println("animating!");
+				}
+				else
+				{
+					System.out.println("not animating");
+				}
+			}
+			*/
+		//	cichlidCObject.startAnimation("swimmingAction");
+		}
+	*/	
 	}
 	
 	private void startRunner() {
@@ -846,6 +913,9 @@ public class MyGame extends BaseGame {
 							cichlidAObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
 							cichlidAObject.scale((float) (widthW * weightW * .05), (float) (heightW
 									* weightW * .09), (float) 0.09);
+							
+							// adding iterators
+							
 						
 					}
 				} else if (id.equals("2")) {
