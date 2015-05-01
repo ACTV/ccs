@@ -788,7 +788,7 @@ public class MyGame extends BaseGame {
 						
 							addGameWorldObject(cichlidAObject);
 							cichlidAObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
-							cichlidAObject.scale((float) (widthW * weightW * .09), (float) (heightW
+							cichlidAObject.scale((float) (widthW * weightW * .05), (float) (heightW
 									* weightW * .09), (float) 0.09);
 						
 					}
@@ -933,8 +933,8 @@ public class MyGame extends BaseGame {
 						
 							addGameWorldObject(cichlidBObject);
 							cichlidBObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
-							cichlidBObject.scale((float) (widthW * weightW * .09), (float) (heightW
-									* weightW * .09), (float) 0.09);
+							cichlidBObject.scale((float) (widthW * weightW * .05), (float) (heightW
+									* weightW * .05), (float) 0.09);
 						cichlidCount++;
 					}
 				} else if (id.equals("3")) {
@@ -1069,8 +1069,8 @@ public class MyGame extends BaseGame {
 						
 							addGameWorldObject(cichlidCObject);
 							cichlidCObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
-							cichlidCObject.scale((float) (widthW * weightW * .09), (float) (heightW
-									* weightW * .09), (float) 0.09);
+							cichlidCObject.scale((float) (widthW * weightW * .05), (float) (heightW
+									* weightW * .05), (float) 0.09);
 						
 						cichlidCount++;
 					}
