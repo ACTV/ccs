@@ -93,6 +93,7 @@ public class MyGame extends BaseGame {
 	TextureState testState;
 	Group model;
 	Model3DTriMesh cichlidAObject, cichlidBObject, cichlidCObject;
+	private java.util.Iterator<SceneNode> modelIterator;
 	
 	public void initGame() {
 		
@@ -171,7 +172,10 @@ public class MyGame extends BaseGame {
 	}
 
 	public void startAnimationProcess()
-	{
+	{ 
+		/*
+		System.out.println("model" + model.getNumberOfChildren());
+		
 		Iterator<SceneNode> itr = model.getChildren();
 		while (itr.hasNext())
 		{
@@ -187,73 +191,29 @@ public class MyGame extends BaseGame {
 				System.out.println("not animating");
 			}
 		}
-		
-	/*	
-		/*
-		if (cichlidAObject != null)
+		*/
+		for (SceneNode s : getGameWorld())
 		{
-			/*
-			Iterator<SceneNode> itr = model.getChildren();
-			while (itr.hasNext())
+			if (s instanceof Model3DTriMesh)
 			{
-				Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
-				System.out.println("submesh is " + submesh);
-				submesh.startAnimation("swimmingAction");
-				if (submesh.isAnimating())
+				if (s == cichlidAObject)
 				{
-					System.out.println("animating!");
+			//		System.out.println("i'm calling back!");
+					((Model3DTriMesh) s).startAnimation("swimmingAction");
 				}
-				else
+				if (s == cichlidBObject)
 				{
-					System.out.println("not animating");
+			//		System.out.println("i'm fapping back");
+					((Model3DTriMesh) s).startAnimation("swimmingAction");
+				}
+				if (s == cichlidCObject)
+				{
+			//		System.out.println("the world gone maaad");
+					((Model3DTriMesh) s).startAnimation("swimmingAction");
 				}
 			}
-			*/
-			
-			cichlidAObject.startAnimation("swimmingAction");
 		}
-		if (cichlidBObject != null)
-		{
-		/*	Iterator<SceneNode> itr = model.getChildren();
-			while (itr.hasNext())
-			{
-				Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
-				System.out.println("submesh is " + submesh);
-				submesh.startAnimation("swimmingAction");
-				if (submesh.isAnimating())
-				{
-					System.out.println("animating!");
-				}
-				else
-				{
-					System.out.println("not animating");
-				}
-			}
-			*/
-			cichlidBObject.startAnimation("swimmingAction");
-		}
-		if (cichlidCObject != null)
-		{
-			/*
-			Iterator<SceneNode> itr = model.getChildren();
-			while (itr.hasNext())
-			{
-				Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
-				System.out.println("submesh is " + submesh);
-				submesh.startAnimation("swimmingAction");
-				if (submesh.isAnimating())
-				{
-					System.out.println("animating!");
-				}
-				else
-				{
-					System.out.println("not animating");
-				}
-			}
-			*/
-		//	cichlidCObject.startAnimation("swimmingAction");
-		}
-	*/	
+	
 	}
 	
 	private void startRunner() {
@@ -893,7 +853,7 @@ public class MyGame extends BaseGame {
 							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingOutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingOutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
 							//src/main/java/actv/ccs/sageTest/TestOgre 
 							model.updateGeometricState(0, true);
-							java.util.Iterator<SceneNode> modelIterator = model.iterator();
+							modelIterator = model.iterator();
 							cichlidAObject = (Model3DTriMesh) modelIterator.next();
 							System.out.println("test");
 						} catch (Exception vv)
@@ -913,6 +873,7 @@ public class MyGame extends BaseGame {
 							cichlidAObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
 							cichlidAObject.scale((float) (widthW * weightW * .05), (float) (heightW
 									* weightW * .09), (float) 0.09);
+							cichlidAObject.setName("CichlidA");
 							
 							// adding iterators
 							
@@ -1040,7 +1001,7 @@ public class MyGame extends BaseGame {
 							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingOutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingOutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
 							//src/main/java/actv/ccs/sageTest/TestOgre 
 							model.updateGeometricState(0, true);
-							java.util.Iterator<SceneNode> modelIterator = model.iterator();
+							modelIterator = model.iterator();
 							cichlidBObject = (Model3DTriMesh) modelIterator.next();
 							System.out.println("test");
 						} catch (Exception vv)
@@ -1061,6 +1022,7 @@ public class MyGame extends BaseGame {
 							cichlidBObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
 							cichlidBObject.scale((float) (widthW * weightW * .05), (float) (heightW
 									* weightW * .05), (float) 0.09);
+							cichlidBObject.setName("CichlidB");
 						cichlidCount++;
 					}
 				} else if (id.equals("3")) {
@@ -1177,7 +1139,7 @@ public class MyGame extends BaseGame {
 							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingOutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingOutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
 							//src/main/java/actv/ccs/sageTest/TestOgre 
 							model.updateGeometricState(0, true);
-							java.util.Iterator<SceneNode> modelIterator = model.iterator();
+							modelIterator = model.iterator();
 							cichlidCObject = (Model3DTriMesh) modelIterator.next();
 							System.out.println("test");
 						} catch (Exception vv)
@@ -1197,6 +1159,7 @@ public class MyGame extends BaseGame {
 							cichlidCObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
 							cichlidCObject.scale((float) (widthW * weightW * .05), (float) (heightW
 									* weightW * .05), (float) 0.09);
+							cichlidCObject.setName("CichlidC");
 						
 						cichlidCount++;
 					}
@@ -1544,14 +1507,47 @@ public void update(float elapsedTimeMS) // this will be where the objects will m
 			//	skybox.setLocalTranslation(camT);
 			
 				// iterating through models
+				/*
 				Iterator<SceneNode> itr = model.getChildren();
 				while (itr.hasNext())
 				{
 					Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
 					submesh.updateAnimation(elapsedTimeMS);
+					submesh.updateGeometricState(elapsedTimeMS, true);
 
 				}
-				
+				*/
+			for (SceneNode s : getGameWorld())
+			{
+				if (s instanceof Model3DTriMesh)
+				{
+					if (cichlidAObject != null)
+					{
+						if (s == cichlidAObject)
+						{
+					//		System.out.println("i'm calling now!");
+							((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
+						}
+					}
+					if (cichlidBObject != null)
+					{
+						if (s == cichlidBObject)
+						{
+					//		System.out.println("i'm fapping forward");
+							((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
+						}
+					}
+					if (cichlidCObject != null)
+					{
+						if (s == cichlidCObject)
+						{
+							System.out.println("the world gone bad");
+							((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
+						}
+					}
+					s.updateGeometricState(elapsedTimeMS, true);
+				}
+			}
 			
 				for (SceneNode s : getGameWorld()) {
 					if (s instanceof ConvictCichlid) // here will be where the objects will
@@ -1904,7 +1900,8 @@ public void update(float elapsedTimeMS) // this will be where the objects will m
 			addGameWorldObject(pauseString);
 			pauseString.setLocation(10, 10);
 			System.out.println("pause thing is " + pauseSimulation);
-			
+			time += elapsedTimeMS;
+			timeString.setText("Time: " + Math.floor(time/1000)); // error here
 			super.update(0);
 			System.out.println("time is when paused = "  + time/1000);
 		}
