@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import net.java.games.input.Event;
 import actv.ccs.listener.RuleEngineRunner;
@@ -115,19 +116,13 @@ public class MyGame extends BaseGame {
 
 	public void startAnimationProcess()
 	{
-		System.out.println("i'm being called!");
-			if (cichlidAObject != null)
-			{
-			cichlidAObject.startAnimation("ArmatureAction.001");
-			}
-			if (cichlidBObject != null)
-			{
-				cichlidBObject.startAnimation("ArmatureAction.001");
-			}
-			if (cichlidCObject != null)
-			{
-				cichlidCObject.startAnimation("ArmatureAction.001");
-			}
+		Iterator<SceneNode> itr = model.getChildren();
+		while (itr.hasNext())
+		{
+			Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
+			submesh.startAnimation("ArmatureAction.001");
+			System.out.println("shit be true");
+		}
 			
 	}
 	
@@ -1083,47 +1078,6 @@ public class MyGame extends BaseGame {
 		}
 	}
 
-	private void createScene() // the scene is the background of the fish tank
-								// ... non issue for now.
-	{
-		skybox = new SkyBox("SkyBox", 100.0f, 100.0f, 100.0f);
-
-		// Texture testMountain =
-		// TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/Images/floorMountain.bmp");
-		Texture thingSky = TextureManager.loadTexture2D("sky.jpg");
-		skybox.setTexture(SkyBox.Face.North, thingSky);
-		skybox.setTexture(SkyBox.Face.South, thingSky);
-		skybox.setTexture(SkyBox.Face.East, thingSky);
-		skybox.setTexture(SkyBox.Face.West, thingSky);
-		skybox.setTexture(SkyBox.Face.Up, thingSky);
-
-		addGameWorldObject(skybox);
-
-		/*
-		 * try { AbstractHeightMap heightmap = null;
-		 * 
-		 * 
-		 * heightmap = new ImageBasedHeightMap(testMountain.getImage());
-		 * heightmap.load();
-		 * 
-		 * 
-		 * Vector3D scaleFactor = new Vector3D(new Point3D(1, 1, 1));
-		 * 
-		 * floor = new TerrainBlock("tblock", 512, scaleFactor,
-		 * heightmap.getHeightData(), new Point3D( 0, 0, 0)); //
-		 * floor.setTexture(skyThing); Matrix3D p1LotT =
-		 * floor.getLocalTranslation(); p1LotT.translate(0.0f, -0.5f, 0.0f);
-		 * floor.setLocalTranslation(p1LotT); Matrix3D p1Scale =
-		 * floor.getLocalScale(); p1Scale.scale(10f, 10f, 0);
-		 * floor.setLocalScale(p1Scale); Matrix3D p1Rot = new Matrix3D();
-		 * p1Rot.rotateX(-90); floor.setLocalRotation(p1Rot);
-		 * 
-		 * addGameWorldObject(floor); } catch (Exception e) {
-		 * e.printStackTrace(); }
-		 */
-
-	}
-
 	private void initActions() {
 		im = getInputManager();
 		String kbName = im.getKeyboardName(); // error here. it shouldn't be
@@ -1405,8 +1359,6 @@ public class MyGame extends BaseGame {
 	public void update(float elapsedTimeMS) // this will be where the objects will move
 	{
 		
-
-		System.out.println("startAnimation = " + startAnimation);
 	// creating timer thing
 		time += elapsedTimeMS;
 		timeString.setText("Time: " + Math.floor(time/1000));
@@ -1437,13 +1389,23 @@ if (pauseSimulation != true)
 		// update skybox loc
 
 	//	skybox.setLocalTranslation(camT);
+	
+		// iterating through models
+		Iterator<SceneNode> itr = model.getChildren();
+		while (itr.hasNext())
+		{
+			Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
+			submesh.updateAnimation(elapsedTimeMS);
+		}
+		
+	
 		for (SceneNode s : getGameWorld()) {
 			if (s instanceof ConvictCichlid) // here will be where the objects will
 											// have be able to move, but i will
 											// implement that later.
 			{
 				if (s == cichlidA) {
-					cichlidAObject.updateAnimation(elapsedTimeMS);	
+
 					// s.translate(0, 0, .1f);
 					// s.updateWorldBound();
 					// bound collision
@@ -1563,7 +1525,7 @@ if (pauseSimulation != true)
 					
 				}
 				if (s == cichlidB) {
-					cichlidBObject.updateAnimation(elapsedTimeMS);	
+	
 					// call move stuff here
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
 
@@ -1573,7 +1535,6 @@ if (pauseSimulation != true)
 					cichlidBObject.setLocalTranslation(cichlidBlocalT);
 					cichlidBObject.setLocalRotation(cichlidBRot);
 					aggroRangeB.setLocalTranslation(cichlidBlocalT);
-
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
@@ -1670,15 +1631,13 @@ if (pauseSimulation != true)
 					}
 				}
 				if (s == cichlidC) {
-					cichlidCObject.updateAnimation(elapsedTimeMS);	
 					// call move stuff here
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
 					Matrix3D cichlidClocalT = s.getLocalTranslation();
 					Matrix3D cichlidCRot = s.getLocalRotation();
 					aggroRangeC.setLocalTranslation(cichlidClocalT);
 					cichlidCObject.setLocalTranslation(cichlidClocalT);
-					cichlidCObject.setLocalRotation(cichlidCRot);
-
+					cichlidCObject.setLocalRotation(cichlidCRot);	
 					if (loc.getX() > 200 || loc.getX() < 0.0)
 					{
 						System.out.println("X BOUNDS");
