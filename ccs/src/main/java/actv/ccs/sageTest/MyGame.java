@@ -116,18 +116,26 @@ public class MyGame extends BaseGame {
 
 	public void startAnimationProcess()
 	{
-		Iterator<SceneNode> itr = model.getChildren();
-		while (itr.hasNext())
+
+		for (SceneNode s : getGameWorld())
 		{
-			Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
-			submesh.startAnimation("swimmingAction");
-			if (submesh.isAnimating())
+			if (s instanceof Model3DTriMesh)
 			{
-				System.out.println("animating!");
-			}
-			else
-			{
-				System.out.println("not animating");
+				if (s == cichlidAObject)
+				{
+			//		System.out.println("i'm calling back!");
+					((Model3DTriMesh) s).startAnimation("swimmingAction");
+				}
+				if (s == cichlidBObject)
+				{
+			//		System.out.println("i'm fapping back");
+					((Model3DTriMesh) s).startAnimation("swimmingAction");
+				}
+				if (s == cichlidCObject)
+				{
+			//		System.out.println("the world gone maaad");
+					((Model3DTriMesh) s).startAnimation("swimmingAction");
+				}
 			}
 		}
 			
@@ -1397,14 +1405,38 @@ if (pauseSimulation != true)
 	//	skybox.setLocalTranslation(camT);
 	
 		// iterating through models
-		Iterator<SceneNode> itr = model.getChildren();
-		while (itr.hasNext())
-		{
-			Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
-			submesh.updateAnimation(elapsedTimeMS);
 
+	for (SceneNode s : getGameWorld())
+{
+if (s instanceof Model3DTriMesh)
+{
+	if (cichlidAObject != null)
+	{
+		if (s == cichlidAObject)
+		{
+	//		System.out.println("i'm calling now!");
+			((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
 		}
-		
+	}
+	if (cichlidBObject != null)
+	{
+		if (s == cichlidBObject)
+		{
+	//		System.out.println("i'm fapping forward");
+			((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
+		}
+	}
+	if (cichlidCObject != null)
+	{
+		if (s == cichlidCObject)
+		{
+			System.out.println("the world gone bad");
+			((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
+		}
+	}
+	s.updateGeometricState(elapsedTimeMS, true);
+}
+}
 	
 		for (SceneNode s : getGameWorld()) {
 			if (s instanceof ConvictCichlid) // here will be where the objects will
