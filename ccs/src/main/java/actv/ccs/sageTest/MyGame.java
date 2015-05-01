@@ -145,6 +145,7 @@ public class MyGame extends BaseGame {
 					startAnimation = true;
 					cichlidCount = 0;
 					objCount = 0;
+					// so the issue is WHY ISNT THERE ANY OBJECTS BEING SHOWN ON THE SCREEN
 				}
 				else
 				{
