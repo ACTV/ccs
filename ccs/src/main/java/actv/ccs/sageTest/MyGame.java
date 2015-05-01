@@ -120,8 +120,15 @@ public class MyGame extends BaseGame {
 		while (itr.hasNext())
 		{
 			Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
-			submesh.startAnimation("ArmatureAction.001");
-			System.out.println("shit be true");
+			submesh.startAnimation("swimmingAction");
+			if (submesh.isAnimating())
+			{
+				System.out.println("animating!");
+			}
+			else
+			{
+				System.out.println("not animating");
+			}
 		}
 			
 	}
@@ -760,7 +767,7 @@ public class MyGame extends BaseGame {
 						
 						try 
 						{
-							model = loader.loadModel("src/main/java/actv/ccs/sageTest/TestOgre/Plane.001.mesh.xml", "src/main/java/actv/ccs/sageTest/TestOgre/Material.material", "src/main/java/actv/ccs/sageTest/TestOgre/Plane.001.skeleton.xml");
+							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingOutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingOutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
 							//src/main/java/actv/ccs/sageTest/TestOgre 
 							model.updateGeometricState(0, true);
 							java.util.Iterator<SceneNode> modelIterator = model.iterator();
@@ -772,8 +779,7 @@ public class MyGame extends BaseGame {
 							
 						}
 						
-						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/TestOgre/cichlidMesh.png");
-						hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
+						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/testingOutOgre/cichlidMesh.png");						hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
 						testState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
 						testState.setTexture(hobTexture, 0);
 						testState.setEnabled(true);
@@ -905,7 +911,7 @@ public class MyGame extends BaseGame {
 						
 						try 
 						{
-							model = loader.loadModel("src/main/java/actv/ccs/sageTest/TestOgre/Plane.001.mesh.xml", "src/main/java/actv/ccs/sageTest/TestOgre/Material.material", "src/main/java/actv/ccs/sageTest/TestOgre/Plane.001.skeleton.xml");
+							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingOutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingOutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
 							//src/main/java/actv/ccs/sageTest/TestOgre 
 							model.updateGeometricState(0, true);
 							java.util.Iterator<SceneNode> modelIterator = model.iterator();
@@ -917,7 +923,7 @@ public class MyGame extends BaseGame {
 							
 						}
 						
-						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/TestOgre/cichlidMesh.png");
+						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/testingOutOgre/cichlidMesh.png");
 						hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
 						testState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
 						testState.setTexture(hobTexture, 0);
@@ -1042,7 +1048,7 @@ public class MyGame extends BaseGame {
 						
 						try 
 						{
-							model = loader.loadModel("src/main/java/actv/ccs/sageTest/TestOgre/Plane.001.mesh.xml", "src/main/java/actv/ccs/sageTest/TestOgre/Material.material", "src/main/java/actv/ccs/sageTest/TestOgre/Plane.001.skeleton.xml");
+							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingOutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingOutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
 							//src/main/java/actv/ccs/sageTest/TestOgre 
 							model.updateGeometricState(0, true);
 							java.util.Iterator<SceneNode> modelIterator = model.iterator();
@@ -1054,8 +1060,7 @@ public class MyGame extends BaseGame {
 							
 						}
 						
-						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/TestOgre/cichlidMesh.png");
-						hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
+						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/testingOutOgre/cichlidMesh.png");				hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
 						testState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
 						testState.setTexture(hobTexture, 0);
 						testState.setEnabled(true);
@@ -1091,7 +1096,7 @@ public class MyGame extends BaseGame {
 
 		// for this area, need to do a checker if A and B and C are called...
 		// test actions
-/*		IAction moveForwardA = new ForwardAction(cichlidA, cichlidAObject);
+		IAction moveForwardA = new ForwardAction(cichlidA, cichlidAObject);
 		IAction moveBackA = new BackwardAction(cichlidAObject);
 		IAction moveLeftA = new LeftAction(cichlidAObject);
 		IAction moveRightA = new RightAction(cichlidAObject);
@@ -1099,7 +1104,7 @@ public class MyGame extends BaseGame {
 		IAction upBackA = new UpBackAction(cichlidAObject);
 		IAction downForwardA = new DownForwardAction(cichlidAObject);
 		IAction downBackA = new DownBackAction(cichlidAObject);
-	*/	
+		
 		
 		// game actions
 		IAction quitGame = new QuitAction(this);
@@ -1122,7 +1127,7 @@ public class MyGame extends BaseGame {
 //		}
 	
 		// here is the movement options of the character ..
-/*		im.associateAction(kbName,
+		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.W, moveForwardA,
 				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 		im.associateAction(kbName,
@@ -1148,7 +1153,7 @@ public class MyGame extends BaseGame {
 		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.NUMPAD1, downBackA,
 				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-	*/
+	
 	}
 	
 	// pause and restart simulation
@@ -1158,6 +1163,7 @@ public class MyGame extends BaseGame {
 		{
 			System.out.println("PAUSE PRESSED");
 			pauseGame();
+
 		}
 	}
 	private class resumeAction extends AbstractInputAction
@@ -1377,7 +1383,7 @@ public class MyGame extends BaseGame {
 	if (startAnimation == true)
 	{
 		// this should work
-	startAnimationProcess();
+		startAnimationProcess();
 		startAnimation = false;
 	}
 
@@ -1396,6 +1402,7 @@ if (pauseSimulation != true)
 		{
 			Model3DTriMesh submesh = (Model3DTriMesh) itr.next();
 			submesh.updateAnimation(elapsedTimeMS);
+
 		}
 		
 	

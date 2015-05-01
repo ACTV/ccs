@@ -35,8 +35,7 @@ public class ForwardAction extends AbstractInputAction {
 		dir.scale((double) (speed * time));
 		s.translate((float) dir.getX(), (float) dir.getY(), (float) dir.getZ());
 		s.updateWorldBound();
-		avatar.stopAnimation();
-		avatar.startAnimation("swim_action");
+	//	avatar.startAnimation("ArmatureAction.001");
 	}
 
 }
