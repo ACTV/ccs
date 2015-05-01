@@ -1900,7 +1900,7 @@ public void update(float elapsedTimeMS) // this will be where the objects will m
 			HUDString pauseString = new HUDString("Game is Paused");
 			addGameWorldObject(pauseString);
 			pauseString.setLocation(10, 10);
-			System.out.println("pause thing is " + pauseSimulation);
+		//	System.out.println("pause thing is " + pauseSimulation);
 		//	time += elapsedTimeMS;
 		//	timeString.setText("Time: " + Math.floor(time/1000)); // error here
 			super.update(0);
