@@ -156,7 +156,7 @@ public class MyGame extends BaseGame {
 					camera.setPerspectiveFrustum(45, 1, 0.01, 1000);
 					camera.setLocation(new Point3D(1, 1, 20));
 					System.out.println("no scenario in place?");
-					pauseSimulation = false; // set to false for beginning
+					pauseSimulation = true; // set to false for beginning
 					startAnimation = true;
 					cichlidCount = 0;
 					objCount = 0;
@@ -1288,7 +1288,7 @@ public class MyGame extends BaseGame {
 				rs = s.executeQuery("SELECT ID FROM [ScenarioFlag]");
 				while (rs.next())
 				{
-					int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 1 where ID = 6");		
+					int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 6 where ID = 6");		
 				}
 				conn.close();
 				} catch (SQLException Ex) {
@@ -1470,26 +1470,7 @@ public void update(float elapsedTimeMS) // this will be where the objects will m
 			if (scenGrab == 1 || scenGrab == 2 || scenGrab == 3 || scenGrab == 4 || scenGrab == 5 || scenGrab == 6)
 			{
 				// creating timer thing
-				try {
-				time += elapsedTimeMS;
-				timeString.setText("Time: " + Math.floor(time/1000)); // error here
-				float timeCompare = time/1000;
 
-				Point3D camLoc = camera.getLocation();
-				Matrix3D camT = new Matrix3D();
-				camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
-			
-			if (timeCompare >= simulationTime)
-			{
-			 //	System.out.println("RIGHT HERE IS WHERE I STOP EVERYTHING!!!");
-			// this works	
-				// here would be where you want to pause the simulation
-			}
-				}
-				catch (Exception ppes)
-				{
-					ppes.printStackTrace();
-				}
 			if (startAnimation == true)
 			{
 				// this should work
@@ -1517,6 +1498,26 @@ public void update(float elapsedTimeMS) // this will be where the objects will m
 
 				}
 				*/
+			try {
+			time += elapsedTimeMS;
+			timeString.setText("Time: " + Math.floor(time/1000)); // error here
+			float timeCompare = time/1000;
+
+			Point3D camLoc = camera.getLocation();
+			Matrix3D camT = new Matrix3D();
+			camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
+		
+		if (timeCompare >= simulationTime)
+		{
+		 //	System.out.println("RIGHT HERE IS WHERE I STOP EVERYTHING!!!");
+		// this works	
+			// here would be where you want to pause the simulation
+		}
+			}
+			catch (Exception ppes)
+			{
+				ppes.printStackTrace();
+			}
 			for (SceneNode s : getGameWorld())
 			{
 				if (s instanceof Model3DTriMesh)
@@ -1900,10 +1901,10 @@ public void update(float elapsedTimeMS) // this will be where the objects will m
 			addGameWorldObject(pauseString);
 			pauseString.setLocation(10, 10);
 			System.out.println("pause thing is " + pauseSimulation);
-			time += elapsedTimeMS;
-			timeString.setText("Time: " + Math.floor(time/1000)); // error here
+		//	time += elapsedTimeMS;
+		//	timeString.setText("Time: " + Math.floor(time/1000)); // error here
 			super.update(0);
-			System.out.println("time is when paused = "  + time/1000);
+		//	System.out.println("time is when paused = "  + time/1000);
 		}
 			}
 			else
