@@ -56,6 +56,7 @@ public class NewSimulation extends JFrame {
  	private JTextField objectHeightTextField;
  	private JTextField objectLengthTextField;
  	
+ 	
 /* updates are from latest to oldest (top to bottom)
  * 
  * 3-4-15
@@ -65,9 +66,10 @@ public class NewSimulation extends JFrame {
  * need to do a button listener later on etc fish stuff.
  */
 	
-	public NewSimulation() throws SecurityException, IOException
+	public NewSimulation(MyGame mg) throws SecurityException, IOException
 	{
 		
+		myGame = mg;
 		//tank = new TankObject(20, 20, 20, 26, 0, 0, 0); // array value default tank
 		tank = new FishTankImpl();
 		
@@ -831,17 +833,8 @@ public class NewSimulation extends JFrame {
 	
 	public void CloseJFrame()
 	{
-		try {
-		System.out.println("WE DOIN STUFF");
-		ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/C", "run.bat");
-		Process p = pb.start();
-
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
 		super.dispose();
-		new MyGame().start();
+		myGame.start();
 
 	}
 }

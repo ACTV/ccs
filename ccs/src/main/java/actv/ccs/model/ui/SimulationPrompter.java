@@ -26,10 +26,12 @@ public class SimulationPrompter extends JFrame {
 	
 	private ResultSet rs, rss; 
 	private String saveFishID, saveObjID;
+	private MyGame myGame;
 	
-	public SimulationPrompter()
+	public SimulationPrompter(MyGame mg)
 	{
 
+		myGame = mg;
 		setTitle("Convict Cichlid Fish Simulator Simulation Prompter");
 		setSize(492,600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -56,7 +58,7 @@ public class SimulationPrompter extends JFrame {
 			{
 		
 				try {
-					NewSimulation newSim = new NewSimulation();
+					NewSimulation newSim = new NewSimulation(myGame);
 					Connection conn;
 					try {
 						conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
@@ -576,7 +578,18 @@ public class SimulationPrompter extends JFrame {
 	public void scenarioShutDown()
 	{
 		super.dispose();
-		new MyGame().start();
+		myGame.initObjects();
+		myGame.spawnCichlids();
+		myGame.spawnObjects();
+		myGame.createPerson();
+	//	createScene();
+		myGame.initActions();
+	//	createFishTank();
+		myGame.createFishTankWalls();
+		myGame.startRunner();
+		myGame.createHUD();
+		myGame.setUpTank();
+		 
 
 	}
 }

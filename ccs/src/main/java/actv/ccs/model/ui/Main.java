@@ -13,7 +13,7 @@ public class Main {
 	
 	//	TestGame tg = new TestGame();
 		MyGame mg = new MyGame();
-		SimulationPrompter prompterTest = new SimulationPrompter();	
+		SimulationPrompter prompterTest = new SimulationPrompter(mg);	
 	//	tg.start();
 		mg.start();
 	}

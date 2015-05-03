@@ -76,8 +76,8 @@ public class MyGame extends BaseGame {
 	private boolean largePotC, mediumPotC, smallPotC, largePlantC, mediumPlantC, smallPlantC;
 	private float simulationTime = 100;
 	private float time = 0;
-	private int cichlidCount;
-	private int objCount;
+	private int cichlidCount = 0;
+	private int objCount =  0;
 	private HUDString timeString;
 	private Sphere aggroRangeA, aggroRangeB, aggroRangeC;
 	private Group fishWalls;
@@ -85,7 +85,7 @@ public class MyGame extends BaseGame {
 	// going to add a pause button here
 	private volatile boolean pauseSimulation = false; 	
 	private FishTank fishTank;
-	private boolean startAnimation;
+	private boolean startAnimation = true;
 	
 	
 	
@@ -130,6 +130,7 @@ public class MyGame extends BaseGame {
 				
 				if (scenGrab == 1 || scenGrab == 2 || scenGrab == 3 || scenGrab == 4 || scenGrab == 5 || scenGrab == 6)
 				{
+					/*
 					initObjects();
 					spawnCichlids();
 					spawnObjects();
@@ -142,16 +143,21 @@ public class MyGame extends BaseGame {
 					startRunner();
 					createHUD();
 					setUpTank();
+					
 					pauseSimulation = false; // set to false for beginning
 					startAnimation = true;
 					cichlidCount = 0;
 					objCount = 0;
 					// so the issue is WHY ISNT THERE ANY OBJECTS BEING SHOWN ON THE SCREEN
+					 * 
+					 */
+					fishTank = new FishTankImpl();
 				}
 				else
 				{
-					 IDisplaySystem display = getDisplaySystem();
-					 display.setTitle("Empty Window where the Sun don't shine apparently.");
+					/*
+					IDisplaySystem display = getDisplaySystem();
+					display.setTitle("Empty Window where the Sun don't shine apparently.");
 					camera = display.getRenderer().getCamera();
 					camera.setPerspectiveFrustum(45, 1, 0.01, 1000);
 					camera.setLocation(new Point3D(1, 1, 20));
@@ -161,6 +167,8 @@ public class MyGame extends BaseGame {
 					cichlidCount = 0;
 					objCount = 0;
 					createPerson();
+					*/
+					
 				}
 			}
 				
@@ -216,7 +224,7 @@ public class MyGame extends BaseGame {
 	
 	}
 	
-	private void startRunner() {
+	public void startRunner() {
 		runner = RuleEngineRunner.getInstance();
 		runner.newMap(objs);
 		runner.start();
@@ -239,7 +247,7 @@ public class MyGame extends BaseGame {
 		}
 	}
 
-	protected void initObjects() {
+	public void initObjects() {
 		// this is for initializing objects
 		display = getDisplaySystem();
 		display.setTitle("sage implementation of the pain");
@@ -850,7 +858,7 @@ public class MyGame extends BaseGame {
 						
 						try 
 						{
-							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingOutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingOutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
+							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingoutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
 							//src/main/java/actv/ccs/sageTest/TestOgre 
 							model.updateGeometricState(0, true);
 							modelIterator = model.iterator();
@@ -862,7 +870,8 @@ public class MyGame extends BaseGame {
 							
 						}
 						
-						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/testingOutOgre/cichlidMesh.png");						hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
+						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/testingOutOgre/cichlidMesh.png");	
+						hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
 						testState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
 						testState.setTexture(hobTexture, 0);
 						testState.setEnabled(true);
@@ -1172,7 +1181,7 @@ public class MyGame extends BaseGame {
 		}
 	}
 
-	private void initActions() {
+	public void initActions() {
 		im = getInputManager();
 		String kbName = im.getKeyboardName(); // error here. it shouldn't be
 												// null
