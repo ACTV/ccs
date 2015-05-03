@@ -36,8 +36,10 @@ public class CCSKnowledgeSession extends Thread {
 	}
 	
 	public void run(){
-		isRunning = true;
-		statefulKnowledgeSession.fireUntilHalt();
+		if(!isRunning){
+			isRunning = true;
+			statefulKnowledgeSession.fireUntilHalt();
+		}
 	}
 	
 	public void terminate(){
