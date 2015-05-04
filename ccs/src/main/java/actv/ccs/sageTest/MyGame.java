@@ -4,12 +4,16 @@ import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import net.java.games.input.Event;
+import actv.ccs.DBConnector;
 import actv.ccs.listener.RuleEngineRunner;
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
@@ -629,15 +633,42 @@ public class MyGame extends BaseGame {
 			e.printStackTrace();
 		}
 	}
+	
+	private ConvictCichlid spawnCichlidFromDB(String id) throws SQLException{
+		ConvictCichlid cichlid;
+		
+		Statement stmt = DBConnector.getConnection().createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM [FishPool] WHERE ID='" + id + "'");
+		
+		
+		float widthW = Float.parseFloat(rs.getString("Weight"));
+		float heightW = Float.parseFloat(rs.getString("Height"));
+		float xStartW = Float.parseFloat(rs.getString("StartingXPos"));
+		float yStartY = Float.parseFloat(rs.getString("StartingYPos"));
+		float zStartZ = Float.parseFloat(rs.getString("StartingZPos"));
+		String name = rs.getString("Type");
+		
+		cichlid = new ConvictCichlid(0, widthW, heightW, name, new Point3D(xStartW, yStartY, zStartZ));
+		cichlid.setGender(rs.getString("Gender"));
+		cichlid.setAggroLevel(Float.parseFloat(rs.getString("AggroLevel")));
+
+		//TODO: need to put into DB
+		cichlid.setBaseSpeed(3f);
+		cichlid.setBaseCautionLevel(4f);
+		cichlid.setDirection(new Vector3D(1,1,1));
+		cichlid.setCullMode(CULL_MODE.ALWAYS);
+		cichlid.setState(FishState.IDLE);
+		cichlid.setInfluence(12);
+		
+		return cichlid;
+	}
 
 	public void spawnCichlids() {
 		
 			Texture cichlidTexA = TextureManager.loadTexture2D("cichlidMesh.png");
 		try {
-			conn = DriverManager
-					.getConnection("jdbc:ucanaccess://FishPool.accdb");
 
-			Statement s = conn.createStatement();
+			Statement s = DBConnector.getConnection().createStatement();
 			rs = s.executeQuery("SELECT fishID FROM [SimulationFish]");
 			while (rs.next()) {
 				String id = rs.getString("fishID"); // Field from database ex.
@@ -670,7 +701,6 @@ public class MyGame extends BaseGame {
 						double xStartW = Double.parseDouble(xLocS);
 						double yStartY = Double.parseDouble(yLocS);
 						double zStartZ = Double.parseDouble(zLocS);
-
 						
 						cichlidA = new ConvictCichlid(0, widthW, heightW, name, new Point3D(xStartW, yStartY, zStartZ));
 						cichlidA.setGender(gender);
