@@ -4,37 +4,33 @@ import actv.ccs.sageTest.MoveActionFactory;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import java.util.Random;
-
+import actv.ccs.fact.MoveCounter;
 
 global org.slf4j.Logger logger
 
 rule "Move"
 	ruleflow-group "swim"
 	
-	// Chance to move every 2 seconds
-	timer(int: 2s)
-	
 	when
-		$cc : ConvictCichlid( state == FishState.IDLE,
-							  $dir : direction)
+		$cc : ConvictCichlid( )
+							  
+		$mc : MoveCounter(	convictCichlid == $cc, 
+							counter > 0, 
+							$counter : counter, 
+							direction != 0,
+							$dir : direction)
 		
 	then
-		Random r = new Random(System.currentTimeMillis());
-		double p = r.nextDouble();
-		logger.debug("Move: " + p);
+		logger.info("Moved... {}", $mc.getCounter());
+		logger.info("Direction {}", $cc.getDirection());
 		
-		if(p < .30){
-			if(r.nextBoolean)
-				MoveActionFactory.turn($cc, 30);
-			else
-				MoveActionFactory.turn($cc, -30);
-			update($cc);
+		MoveActionFactory.turn($cc, $counter * $dir);
+		update($cc);
+		
+		$mc.setCounter($counter - 1);
+		update($mc);
+		
 				
-			logger.debug("Turned 30 degrees!");
-			
-		}else{
-			logger.debug("No Movement");
-		}
 end
 
 

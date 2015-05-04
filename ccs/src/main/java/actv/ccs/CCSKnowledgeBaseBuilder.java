@@ -2,6 +2,7 @@ package actv.ccs;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseConfiguration;
@@ -95,7 +96,9 @@ public class CCSKnowledgeBaseBuilder{
 		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
 		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
 		sks.startProcess(flow);
+		
 		sks.setGlobal("logger", log);
+		
 		addEventListeners(sks);
 		
 		return sks;

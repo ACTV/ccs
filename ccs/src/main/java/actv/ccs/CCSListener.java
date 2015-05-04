@@ -29,6 +29,10 @@ import org.slf4j.LoggerFactory;
 public class CCSListener implements WorkingMemoryEventListener, ProcessEventListener, AgendaEventListener {
 	private static final Logger logger = LoggerFactory.getLogger(CCSListener.class);
 	
+	public CCSListener(){
+		super();
+	}
+	
 	public void objectInserted(ObjectInsertedEvent event) {
 		logger.info("Inserted {}", event.getObject().toString());
 	}

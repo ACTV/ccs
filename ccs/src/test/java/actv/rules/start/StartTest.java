@@ -16,7 +16,7 @@ import actv.rules.DroolsTest;
 public class StartTest extends DroolsTest {
 	private static final String RULE = "Start";
 	private ConvictCichlid cc;
-	private ArrayList<CCSMemoryObject> objs;
+	private ArrayList<Object> objs;
 	
 	public StartTest(){
 		super(	"actv/ccs/rules/start/Start.drl", 
@@ -32,7 +32,7 @@ public class StartTest extends DroolsTest {
 		cc.setBaseSpeed(6.00f);
 		
 		
-		objs = new ArrayList<CCSMemoryObject>();
+		objs = new ArrayList<Object>();
 	}
 	
 	@Test

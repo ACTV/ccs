@@ -3,18 +3,19 @@ package actv.ccs.rules.idle;
 import actv.ccs.sageTest.MoveActionFactory;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
+import actv.ccs.fact.MoveCounter;
+import actv.ccs.fact.PRNG;
 
 global org.slf4j.Logger logger
 
-rule "Swim"
+rule "End Move"
 	ruleflow-group "swim"
 	
 	when
-		$cc : ConvictCichlid($speed : speed > 0)
+		$mc : MoveCounter(counter <= 0)
+							  
 	then
-		
-		MoveActionFactory.moveForward($cc, $cc.getBaseSpeed());
-		$cc.setSpeed($speed - 1);
-		update($cc);
-		logger.debug("Moving Forward: " + $cc.getSpeed());
+		retract($mc);
 end
+
+

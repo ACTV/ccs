@@ -9,14 +9,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import actv.ccs.fact.CoolingDown;
-import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.rules.DroolsTest;
 
 public class CalmTest extends DroolsTest {
 	private ConvictCichlid cc;
-	private ArrayList<CCSMemoryObject> objs;
+	private ArrayList<Object> objs;
 	
 	public CalmTest(){
 		super(	"actv/ccs/rules/start/Calm.drl", 
@@ -31,7 +30,7 @@ public class CalmTest extends DroolsTest {
 		cc.setBaseSpeed(5.00f);
 		cc.setState(FishState.CAUTION);
 		
-		objs = new ArrayList<CCSMemoryObject>();
+		objs = new ArrayList<Object>();
 	}
 	
 	@Test

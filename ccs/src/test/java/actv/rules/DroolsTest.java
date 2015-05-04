@@ -2,6 +2,7 @@ package actv.rules;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.drools.KnowledgeBase;
 import org.drools.builder.KnowledgeBuilder;
@@ -36,12 +37,16 @@ public class DroolsTest{
 	}
 	
 	/**
-	 * Execute with a 6 second thread sleep
+	 * Executes session with the calling thread sleeping a number of seconds indicated by the parameter threadSleep
+	 * 
+	 * @param threadSleep
 	 * @param objects
 	 */
 	public void executeStateful(long threadSleep, ArrayList<CCSMemoryObject> objects){
 			
 		session.setStatefulKnowledgeSession(CCSKnowledgeBaseBuilder.buildStatefulSession(drl, bpmn, startProc, objects));
+		session.start();
+		
 		try {
 			Thread.sleep(threadSleep);
 		} catch (InterruptedException e) {
@@ -54,9 +59,10 @@ public class DroolsTest{
 	
 	/**
 	 * Execute stateless session
-	 * @param objects
+	 * 
+	 * @param objs
 	 */
-	public void executeStateless(ArrayList<CCSMemoryObject> objects){
+	public void executeStateless(ArrayList<Object> objs){
 		// Retrieve KnowledgeBuilder
 		KnowledgeBuilder kbuilder = CCSKnowledgeBaseBuilder.initKBuilder(new String[]{drl, bpmn});
 		
@@ -74,12 +80,13 @@ public class DroolsTest{
 		sks.addEventListener((WorkingMemoryEventListener)new CCSListener());
 		sks.addEventListener((ProcessEventListener)new CCSListener());
 		sks.addEventListener((AgendaEventListener)new CCSListener());
+		
 		sks.setGlobal("logger", logger);
 		
 		List<Command<?>> l = new ArrayList<Command<?>>();
 		
 		// Insert objects (and start process) into a list for batch execution
-		for(CCSMemoryObject obj : objects){
+		for(Object obj : objs){
 			l.add(CommandFactory.newInsert(obj));
 		}
 		l.add(CommandFactory.newStartProcess(startProc));

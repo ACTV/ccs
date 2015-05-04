@@ -15,7 +15,7 @@ import actv.rules.DroolsTest;
 
 public class SwimTest extends DroolsTest {
 	private ConvictCichlid cc;
-	private ArrayList<CCSMemoryObject> objs;
+	private ArrayList<Object> objs;
 	
 	public SwimTest(){
 		super(	"actv/ccs/rules/idle/Swim.drl", 
@@ -25,18 +25,29 @@ public class SwimTest extends DroolsTest {
 	
 	@Before
 	public void setCC(){
-		cc = new ConvictCichlid(1, 2, 3, "test", new Point3D(1, 1, 1));
+		cc = new ConvictCichlid(1, 2, 3, "Swim CC", new Point3D(1, 1, 1));
 		cc.setState(FishState.IDLE);
+		cc.setSpeed(4);
 		cc.setDirection(new Vector3D(0,0,1));
 	}
 	
 	@Test
 	public void test(){
-		objs = new ArrayList<CCSMemoryObject>();
+		objs = new ArrayList<Object>();
 		objs.add(cc);
 		
-		executeStateful(5000, objs);
-		
+		executeStateless(objs);
 	}
+	
+	@Test
+	public void testNo(){
+		cc.setSpeed(0);
+		objs = new ArrayList<Object>();
+		objs.add(cc);
+		
+		executeStateless(objs);
+	}
+	
+	
 
 }

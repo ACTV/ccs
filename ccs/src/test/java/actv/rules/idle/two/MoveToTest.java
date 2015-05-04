@@ -18,7 +18,7 @@ import actv.rules.DroolsTest;
 
 public class MoveToTest extends DroolsTest {
 	private ConvictCichlid cc1, cc2;
-	private ArrayList<CCSMemoryObject> objs;
+	private ArrayList<Object> objs;
 	private Logger logger = LoggerFactory.getLogger(MoveToTest.class);
 	
 	public MoveToTest(){
@@ -49,7 +49,7 @@ public class MoveToTest extends DroolsTest {
 	
 	@Test
 	public void test(){
-		objs = new ArrayList<CCSMemoryObject>();
+		objs = new ArrayList<Object>();
 		objs.add(cc1);
 		objs.add(cc2);
 		

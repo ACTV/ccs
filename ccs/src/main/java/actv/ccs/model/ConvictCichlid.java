@@ -30,6 +30,14 @@ public class ConvictCichlid extends TankObject {
 	private static int[] triangles = new int[] { 0, 1, 2, 0, 2, 3, 0, 3, 4, 0,
 			4, 1, 1, 4, 2, 4, 3, 2 };
 
+	/**
+	 * 
+	 * @param length
+	 * @param width
+	 * @param height
+	 * @param name
+	 * @param location
+	 */
 	public ConvictCichlid(float length, float width, float height, String name, Point3D location) {
 		super(length, width, height, name, location);
 		state = FishState.NONE;
