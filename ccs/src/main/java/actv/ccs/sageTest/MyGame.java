@@ -306,6 +306,7 @@ public class MyGame extends BaseGame {
 			
 			
 			Texture plantTex = TextureManager.loadTexture2D("./uplant.png");
+			Texture potTex = TextureManager.loadTexture2D("./potBa.png");
 			conn = DriverManager
 					.getConnection("jdbc:ucanaccess://FishPool.accdb");
 
@@ -503,7 +504,7 @@ public class MyGame extends BaseGame {
 
 						OBJLoader loader3 = new OBJLoader();
 						largePot =  loader3
-								.loadModel("potBlend.obj");
+								.loadModel("upot.obj");
 						largePot.setName(name);
 						Matrix3D largePotT = largePot.getLocalTranslation(); // this
 																				// is
@@ -525,6 +526,7 @@ public class MyGame extends BaseGame {
 						largePot.setLocalScale(largePotS);
 
 						addGameWorldObject(largePot);
+						largePot.setTexture(potTex);
 						largePot.updateLocalBound();
 						largePot.updateGeometricState(0, true);
 						largePot.updateWorldBound();
@@ -553,7 +555,7 @@ public class MyGame extends BaseGame {
 
 						OBJLoader loader4 = new OBJLoader();
 						mediumPot = loader4
-								.loadModel("potBlend.obj");
+								.loadModel("upot.obj");
 						mediumPot.setName(name);
 						Matrix3D mediumPotT = mediumPot.getLocalTranslation(); // this
 																				// is
@@ -575,6 +577,7 @@ public class MyGame extends BaseGame {
 						mediumPot.setLocalScale(mediumPotS);
 
 						addGameWorldObject(mediumPot);
+						mediumPot.setTexture(potTex);
 						mediumPot.updateLocalBound();
 						mediumPot.updateGeometricState(0, true);
 						mediumPot.updateWorldBound();
@@ -603,7 +606,7 @@ public class MyGame extends BaseGame {
 
 						OBJLoader loader5 = new OBJLoader();
 						smallPot = loader5
-								.loadModel("potBlend.obj");
+								.loadModel("upot.obj");
 						smallPot.setName(name);
 						Matrix3D smallPotT = smallPot.getLocalTranslation(); // this
 																				// is
@@ -625,6 +628,7 @@ public class MyGame extends BaseGame {
 						smallPot.setLocalScale(smallPotS);
 
 						addGameWorldObject(smallPot);
+						smallPot.setTexture(potTex);
 						smallPot.updateLocalBound();
 						smallPot.updateGeometricState(0, true);
 						smallPot.updateWorldBound();
