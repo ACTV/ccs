@@ -303,6 +303,9 @@ public class MyGame extends BaseGame {
 	}
 	public void spawnObjects() {
 		try {
+			
+			
+			Texture plantTex = TextureManager.loadTexture2D("./uplant.png");
 			conn = DriverManager
 					.getConnection("jdbc:ucanaccess://FishPool.accdb");
 
@@ -337,7 +340,7 @@ public class MyGame extends BaseGame {
 
 						OBJLoader loader = new OBJLoader();
 						largePlant = loader
-								.loadModel("plantBlend.obj");
+								.loadModel("uplant.obj");
 						largePlant.setName(name);
 						Matrix3D largePlantT = largePlant.getLocalTranslation(); // this
 																					// is
@@ -362,6 +365,7 @@ public class MyGame extends BaseGame {
 						largePlant.setLocalScale(largePlantS);
 
 						addGameWorldObject(largePlant);
+						largePlant.setTexture(plantTex);
 						largePlant.updateLocalBound();
 						largePlant.updateGeometricState(0, true);
 						largePlant.updateWorldBound();
@@ -414,6 +418,7 @@ public class MyGame extends BaseGame {
 						mediumPlant.setLocalScale(mediumPlantS);
 
 						addGameWorldObject(mediumPlant);
+						mediumPlant.setTexture(plantTex);
 						mediumPlant.updateLocalBound();
 						mediumPlant.updateGeometricState(0, true);
 						mediumPlant.updateWorldBound();
@@ -443,7 +448,7 @@ public class MyGame extends BaseGame {
 
 						OBJLoader loader2 = new OBJLoader();
 						smallPlant = loader2
-								.loadModel("plantBlend.obj");
+								.loadModel("uplant.obj");
 						smallPlant.setName(name);
 						Matrix3D smallPlantT = smallPlant.getLocalTranslation(); // this
 																					// is
@@ -468,6 +473,7 @@ public class MyGame extends BaseGame {
 						smallPlant.setLocalScale(smallPlantS);
 
 						addGameWorldObject(smallPlant);
+						smallPlant.setTexture(plantTex);
 						smallPlant.updateLocalBound();
 						smallPlant.updateGeometricState(0, true);
 						smallPlant.updateWorldBound();
@@ -665,8 +671,8 @@ public class MyGame extends BaseGame {
 
 	public void spawnCichlids() {
 		
-			Texture cichlidTexA = TextureManager.loadTexture2D("cichlidMesh.png");
 		try {
+			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 
 			Statement s = DBConnector.getConnection().createStatement();
 			rs = s.executeQuery("SELECT fishID FROM [SimulationFish]");
