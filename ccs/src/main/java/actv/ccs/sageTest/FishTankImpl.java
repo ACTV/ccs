@@ -30,13 +30,14 @@ public class FishTankImpl implements FishTank{
 	public Group createFishTankWalls(){
 		fishWalls = new Group();
 		
-		Texture texture = TextureManager.loadTexture2D("./clouds.jpg");
+		Texture texture = TextureManager.loadTexture2D("./aquasoil.jpg");
+		Texture textureA = TextureManager.loadTexture2D("./background.jpg");
 		// add a rectangle, and turn it into a plane
 		Rectangle ground = new Rectangle(WIDTH, HEIGHT);
 		ground.rotate(90, new Vector3D(1, 0, 0));
 		ground.translate(101.0f, -2f, 101.0f);
 //		ground.setColor(Color.orange);
-	//	ground.setTexture(texture);
+		ground.setTexture(texture);
 		fishWalls.addChild(ground);
 		ground.updateWorldBound();
 
@@ -66,8 +67,9 @@ public class FishTankImpl implements FishTank{
 		backRot.rotate(0, 0, 0);
 		backWall.setLocalRotation(backRot);
 		backWall.translate(101.0f, 101.0f, -0.10f);
-		backWall.setColor(Color.blue);
+	//	backWall.setColor(Color.blue);
 		// backWall.setCullMode(CULL_MODE.ALWAYS);
+		backWall.setTexture(textureA);
 		fishWalls.addChild(backWall);
 		backWall.updateWorldBound();
 
