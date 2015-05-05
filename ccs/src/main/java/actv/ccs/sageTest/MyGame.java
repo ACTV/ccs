@@ -836,8 +836,9 @@ public class MyGame extends BaseGame {
 						
 							addGameWorldObject(cichlidAObject);
 							cichlidAObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
-							cichlidAObject.scale((float) (widthW * weightW * .05), (float) (heightW
-									* weightW * .09), (float) 0.09);
+							cichlidAObject.rotate(90, new Vector3D(0, 1, 0));
+							cichlidAObject.scale((float) (widthW * weightW * .1), (float) (heightW
+									* weightW * .09), (float)( heightW * 0.09));
 						
 					}
 				} else if (id.equals("2")) {
@@ -981,8 +982,9 @@ public class MyGame extends BaseGame {
 						
 							addGameWorldObject(cichlidBObject);
 							cichlidBObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
+							cichlidBObject.rotate(45, new Vector3D(0, 1, 1));
 							cichlidBObject.scale((float) (widthW * weightW * .05), (float) (heightW
-									* weightW * .05), (float) 0.09);
+									* weightW * .05), (float)( heightW * 0.09));
 						cichlidCount++;
 					}
 				} else if (id.equals("3")) {
@@ -1117,8 +1119,9 @@ public class MyGame extends BaseGame {
 						
 							addGameWorldObject(cichlidCObject);
 							cichlidCObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
+							cichlidCObject.rotate(45, new Vector3D(0, 1, 1));
 							cichlidCObject.scale((float) (widthW * weightW * .05), (float) (heightW
-									* weightW * .05), (float) 0.09);
+									* weightW * .05), (float)( heightW * 0.09));
 						
 						cichlidCount++;
 					}
@@ -1152,7 +1155,7 @@ public class MyGame extends BaseGame {
 		IAction upBackA = new UpBackAction(cichlidAObject);
 		IAction downForwardA = new DownForwardAction(cichlidAObject);
 		IAction downBackA = new DownBackAction(cichlidAObject);
-		
+		IAction rotateTest = new RotateTestAction(cichlidAObject);
 		
 		// game actions
 		IAction quitGame = new QuitAction(this);
@@ -1176,7 +1179,7 @@ public class MyGame extends BaseGame {
 	
 		// here is the movement options of the character ..
 		im.associateAction(kbName,
-				net.java.games.input.Component.Identifier.Key.W, moveForwardA,
+				net.java.games.input.Component.Identifier.Key.W, rotateTest,
 				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.S, moveBackA,
