@@ -1470,7 +1470,7 @@ if (s instanceof Model3DTriMesh)
 	{
 		if (s == cichlidCObject)
 		{
-			System.out.println("the world gone bad");
+	//		System.out.println("the world gone bad");
 			((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
 		}
 	}
