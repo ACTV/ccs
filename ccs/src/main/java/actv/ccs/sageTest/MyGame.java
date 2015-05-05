@@ -1144,7 +1144,7 @@ public class MyGame extends BaseGame {
 		// sFindComponents f = new FindComponents();
 
 		cc = new CameraOrbit(camera, cameraGuy, im, mName);
-
+		System.out.println("keyboard: " + kbName);
 		System.out.println("controller: " + mName);
 
 		// for this area, need to do a checker if A and B and C are called...
