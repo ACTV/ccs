@@ -90,7 +90,7 @@ public class MyGame extends BaseGame {
 	private volatile boolean pauseSimulation = false; 	
 	private FishTank fishTank;
 	private boolean startAnimation;
-	
+	private Thread tObject;
 	
 	
 	// testing for ogre model loader
@@ -265,13 +265,15 @@ public class MyGame extends BaseGame {
 	public void pauseGame()
 	{
 		pauseSimulation = true;
+		System.out.println("paused");
 		pauseRunner();
+		
 	}
 	public void resumeGame()
 	{
 		pauseSimulation = false;
 		resumeRunner();
-		
+		System.out.println("resuming");
 	}
 	
 	public void setUpTank()
@@ -1415,7 +1417,16 @@ public class MyGame extends BaseGame {
 
 	public void update(float elapsedTimeMS) // this will be where the objects will move
 	{
-		
+		if (pauseSimulation == true)
+		{
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
 	// creating timer thing
 		time += elapsedTimeMS;
 		timeString.setText("Time: " + Math.floor(time/1000));
@@ -1424,7 +1435,6 @@ public class MyGame extends BaseGame {
 		Point3D camLoc = camera.getLocation();
 		Matrix3D camT = new Matrix3D();
 		camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
-	
 	if (timeCompare >= simulationTime)
 	{
 	 //	System.out.println("RIGHT HERE IS WHERE I STOP EVERYTHING!!!");
@@ -1441,8 +1451,7 @@ public class MyGame extends BaseGame {
 	
 
 
-if (pauseSimulation != true)
-	{
+
 		// update skybox loc
 
 	//	skybox.setLocalTranslation(camT);
@@ -1821,8 +1830,10 @@ if (s instanceof Model3DTriMesh)
 		}
 		super.update(time);
 		cc.update(time);
+		}
 		
-	}
+	
+/*	
 else
 {
 //	System.out.println("pause stuff");
@@ -1837,8 +1848,8 @@ else
 	System.out.println("time is when paused = "  + time/1000);
 }
 
-
-
+*/
+	
 	}
 
 	private IDisplaySystem createDisplaySystem() {
