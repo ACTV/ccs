@@ -834,7 +834,6 @@ public class NewSimulation extends JFrame {
 	public void CloseJFrame()
 	{
 		super.dispose();
-		myGame.start();
-
+		myGame.initGame();
 	}
 }

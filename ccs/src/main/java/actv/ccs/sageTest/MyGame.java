@@ -35,38 +35,18 @@ import sage.scene.state.TextureState;
 import sage.terrain.*;
 import sage.texture.*;
 
-/*
- *  Albert to do list 4-21-15
- *  do 165 lool
- *  figure out to close the window for test game
- *  then how to save file ...
- *  which could be done by adding another table for fish scenario and then when closed, saved all data to there. then you can start a new table 
- *  do documentation
- *  user manual
- *  models if victor doesn't do it ... zz
- *  
- *  rules need to be done - with collisions ... make them faster. will look at after i'm done with documentation
- *  
- *  for collisions - large plant is getting hit a lot. - maybe fixed.
- */
+
+
 public class MyGame extends BaseGame {
 
 	IDisplaySystem display;
 	IInputManager im;
-	// private Pot largePot, mediumPot, smallPot;
-	// private Plant largePlant, mediumPlant, smallPlant;
 	private TriMesh largePlant, mediumPlant, smallPlant, largePot,
 			mediumPot, smallPot;
-	private TriMesh cichlidAMesh, cichlidBMesh, cichlidCMesh;
 	private ICamera camera;
 	private CameraOrbit cc;
-	private SkyBox skybox;
 	private Connection conn;
 	private ResultSet rs, rsI;
-	private TerrainBlock floor;
-	private Texture skyThing;
-	private Rectangle ground, leftWall, rightWall, ceiling, backWall,
-			frontWall;
 	private ConvictCichlid cichlidA, cichlidB, cichlidC;
 	private SceneNode cameraGuy;
 	private Line yAxis1, zYPAxis, zyPtoxEnd3, pPart, zPart, yEndtoZPart,
@@ -80,8 +60,6 @@ public class MyGame extends BaseGame {
 	private int objCount =  0;
 	private HUDString timeString;
 	private Sphere aggroRangeA, aggroRangeB, aggroRangeC;
-	private Group fishWalls;
-	private IRenderer renderer;
 	// going to add a pause button here
 	private volatile boolean pauseSimulation = false; 	
 	private FishTank fishTank;
@@ -115,6 +93,7 @@ public class MyGame extends BaseGame {
 		cichlidCount = 0;
 		objCount = 0;
 		*/
+		
 		try 
 		{
 			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
@@ -130,7 +109,7 @@ public class MyGame extends BaseGame {
 				
 				if (scenGrab == 1 || scenGrab == 2 || scenGrab == 3 || scenGrab == 4 || scenGrab == 5 || scenGrab == 6)
 				{
-					/*
+					System.out.println("whaat the dawg");
 					initObjects();
 					spawnCichlids();
 					spawnObjects();
@@ -138,6 +117,8 @@ public class MyGame extends BaseGame {
 				//	createScene();
 					initActions();
 					fishTank = new FishTankImpl();
+					System.out.println("creating fish walls");
+					createFishTankWalls();
 				//	createFishTank();
 					createFishTankWalls();
 					startRunner();
@@ -149,25 +130,24 @@ public class MyGame extends BaseGame {
 					cichlidCount = 0;
 					objCount = 0;
 					// so the issue is WHY ISNT THERE ANY OBJECTS BEING SHOWN ON THE SCREEN
-					 * 
-					 */
-					fishTank = new FishTankImpl();
+					 
+				//	fishTank = new FishTankImpl();
 				}
 				else
 				{
-					/*
+					
 					IDisplaySystem display = getDisplaySystem();
 					display.setTitle("Empty Window where the Sun don't shine apparently.");
-					camera = display.getRenderer().getCamera();
-					camera.setPerspectiveFrustum(45, 1, 0.01, 1000);
-					camera.setLocation(new Point3D(1, 1, 20));
+				//	camera = display.getRenderer().getCamera();
+				//	camera.setPerspectiveFrustum(45, 1, 0.01, 1000);
+				//	camera.setLocation(new Point3D(1, 1, 20));
 					System.out.println("no scenario in place?");
 					pauseSimulation = true; // set to false for beginning
 					startAnimation = true;
 					cichlidCount = 0;
 					objCount = 0;
-					createPerson();
-					*/
+				//	removeGameWorldObject(fishTank.createFishTankWalls());
+				//	createPerson();
 					
 				}
 			}
@@ -1454,7 +1434,7 @@ public class MyGame extends BaseGame {
 	}
 	
 	public void createFishTankWalls() {
-		addGameWorldObject(fishTank.createFishTankWalls());
+		addGameWorldObject(fishTank.createFishTankWalls()); // wryy null pointer exception error
 	}
 
 	public void createFishTank(){ // issue with this.

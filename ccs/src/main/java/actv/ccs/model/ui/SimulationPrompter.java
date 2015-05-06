@@ -578,18 +578,7 @@ public class SimulationPrompter extends JFrame {
 	public void scenarioShutDown()
 	{
 		super.dispose();
-		myGame.initObjects();
-		myGame.spawnCichlids();
-		myGame.spawnObjects();
-		myGame.createPerson();
-	//	createScene();
-		myGame.initActions();
-	//	createFishTank();
-		myGame.createFishTankWalls();
-		myGame.startRunner();
-		myGame.createHUD();
-		myGame.setUpTank();
-		 
+		myGame.initGame();
 
 	}
 }
