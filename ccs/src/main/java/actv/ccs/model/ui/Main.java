@@ -11,11 +11,11 @@ public class Main {
 	
 	public static void main(String[] args) throws SecurityException, IOException {
 	
-		TestGame tg = new TestGame();
-	//	MyGame mg = new MyGame();
-		SimulationPrompter prompterTest = new SimulationPrompter();	
-		tg.start();
-	//	mg.start();
+	//	TestGame tg = new TestGame();
+		MyGame mg = new MyGame();
+		SimulationPrompter prompterTest = new SimulationPrompter(mg);	
+	//	tg.start();
+		mg.start();
 	}
 	
 
