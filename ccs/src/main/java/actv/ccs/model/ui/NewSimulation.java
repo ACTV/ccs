@@ -55,7 +55,7 @@ public class NewSimulation extends JFrame {
  	private JTextField objectWidthTextField;
  	private JTextField objectHeightTextField;
  	private JTextField objectLengthTextField;
- 	private MyGame mg;
+
  	
 /* updates are from latest to oldest (top to bottom)
  * 
@@ -68,7 +68,7 @@ public class NewSimulation extends JFrame {
 	
 	public NewSimulation(MyGame g) throws SecurityException, IOException
 	{
-		mg = g;
+		myGame = g;
 		//tank = new TankObject(20, 20, 20, 26, 0, 0, 0); // array value default tank
 		tank = new FishTankImpl();
 		
@@ -833,7 +833,19 @@ public class NewSimulation extends JFrame {
 	public void CloseJFrame()
 	{
 		super.dispose();
-		mg.start();
+		super.dispose();
+	    this.myGame.setPauseSim(false);
+	    this.myGame.initObjects();
+	    this.myGame.spawnCichlids();
+	    this.myGame.spawnObjects();
+	    this.myGame.createPerson();
+	    
+	    this.myGame.initActions();
+	    
+	    this.myGame.createFishTankWalls();
+	    this.myGame.startRunner();
+	    this.myGame.createHUD();
+	    this.myGame.setUpTank();
 
 	}
 }

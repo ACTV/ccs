@@ -57,7 +57,7 @@ public class SimulationPrompter extends JFrame {
 			{
 		
 				try {
-					NewSimulation newSim = new NewSimulation(mg);
+					NewSimulation newSim = new NewSimulation(myGame);
 					Connection conn;
 					try {
 						conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
