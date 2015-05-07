@@ -833,15 +833,12 @@ public class NewSimulation extends JFrame {
 	public void CloseJFrame()
 	{
 		super.dispose();
-		super.dispose();
 	    this.myGame.setPauseSim(false);
 	    this.myGame.initObjects();
 	    this.myGame.spawnCichlids();
 	    this.myGame.spawnObjects();
 	    this.myGame.createPerson();
-	    
 	    this.myGame.initActions();
-	    
 	    this.myGame.createFishTankWalls();
 	    this.myGame.startRunner();
 	    this.myGame.createHUD();
