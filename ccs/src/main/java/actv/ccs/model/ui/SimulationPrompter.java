@@ -573,6 +573,7 @@ public class SimulationPrompter extends JFrame {
 	    this.myGame.startRunner();
 	    this.myGame.createHUD();
 	    this.myGame.setUpTank();
+	    this.myGame.startGame();
 
 	}
 }

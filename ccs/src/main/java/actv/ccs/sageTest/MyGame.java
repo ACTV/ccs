@@ -1964,7 +1964,75 @@ else
 	{
 		return pauseSimulation;
 	}
+/*
+	public void mainLoop()
+	{
+	    long startTime = System.nanoTime();
+	    long lastUpdateTime = startTime;
+	    
+	    try
+	    {
+	      this.conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+	      
+	      Statement s = this.conn.createStatement();
+	      this.rs = s.executeQuery("SELECT scenarioNumber FROM [ScenarioFlag]");
+	      while (this.rs.next())
+	      {
+	        String scenNum = this.rs.getString("ScenarioNumber");
+	        
 
-
-
+	        int scenGrab = Integer.parseInt(scenNum);
+	        if ((scenGrab == 1) || (scenGrab == 2) || (scenGrab == 3) || (scenGrab == 4) || (scenGrab == 5) || (scenGrab == 6))
+	        {
+	    	    while (!isGameOver())
+	    	    {
+	    	    
+	    	      long frameStartTime = System.nanoTime();
+	    	      float elapsedMilliSecs = (float)(frameStartTime - lastUpdateTime) / 1000000.0F;
+	    	      lastUpdateTime = frameStartTime;
+	    	      
+	    	      handleInput(elapsedMilliSecs);
+	    	      update(elapsedMilliSecs);
+	    	      render();
+	    	      
+	    	      DisplaySystem.getCurrentDisplaySystem().getRenderer().swapBuffers();
+	    	      
+	    	      Thread.yield();
+	    	    }
+	        }
+	        else 
+	        {
+	    	    while (!isGameOver())
+	    	    {
+	    	    
+	    	      long frameStartTime = System.nanoTime();
+	    	      float elapsedMilliSecs = (float)(frameStartTime - lastUpdateTime) / 1000000.0F;
+	    	      lastUpdateTime = frameStartTime;
+	    	      
+	    	      handleInput(0);
+	    	      update(0);
+	    	      render();
+	    	      
+	    	      DisplaySystem.getCurrentDisplaySystem().getRenderer().swapBuffers();
+	    	      
+	    	      Thread.yield();
+	    	    }
+	        }
+	      }
+	    }
+	    catch (Exception epp)
+	    {
+	      epp.printStackTrace();
+	    }
+	}
+*/
+	
+	
+	  public void startGame()
+	  {
+	    
+	    mainLoop();
+	    shutdown();
+	    exit();
+	  }
 }
