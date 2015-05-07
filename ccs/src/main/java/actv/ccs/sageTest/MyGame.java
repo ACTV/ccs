@@ -1403,11 +1403,11 @@ public class MyGame extends BaseGame {
 	}
 	
 	public void createFishTankWalls() {
-		addGameWorldObject(fishTank.createFishTankWalls());
+		addGameWorldObject(fishTank.getFishWalls());
 	}
 
 	public void createFishTank(){ // issue with this.
-		addGameWorldObject(fishTank.createTankTerrain());
+		addGameWorldObject(fishTank.getTerrain());
 	}
 
 	public void update(float elapsedTimeMS) // this will be where the objects will move

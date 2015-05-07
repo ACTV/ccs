@@ -15,33 +15,34 @@ import sage.terrain.TerrainBlock;
 import sage.texture.Texture;
 import sage.texture.TextureManager;
 
-public class FishTankImpl implements FishTank{
+public class FishTankImpl implements FishTank {
 	private Group fishWalls;
-	private TerrainBlock floor;
+	private TerrainBlock terrain;
 	private int cichlidCount;
 	private int objectCount;
 	private float temperature;
 	private int timer;
-	
-	public FishTankImpl(){
+
+	public FishTankImpl() {
 		super();
+		fishWalls = createFishTankWalls();
+		terrain = createTankTerrain();
 	}
-	
-	public Group createFishTankWalls(){
+
+	private Group createFishTankWalls() {
 		fishWalls = new Group();
-		
+
 		Texture texture = TextureManager.loadTexture2D("./aquasoil.jpg");
 		Texture textureA = TextureManager.loadTexture2D("./background.jpg");
 		// add a rectangle, and turn it into a plane
 		Rectangle ground = new Rectangle(WIDTH, HEIGHT);
 		ground.rotate(90, new Vector3D(1, 0, 0));
 		ground.translate(101.0f, -2f, 101.0f);
-//		ground.setColor(Color.orange);
+		// ground.setColor(Color.orange);
 		ground.setTexture(texture);
 		fishWalls.addChild(ground);
 		ground.updateWorldBound();
 
-		
 		Rectangle leftWall = new Rectangle(WIDTH, HEIGHT);
 		Matrix3D leftRot = new Matrix3D();
 		leftRot.rotate(0, 90, 90);
@@ -67,7 +68,7 @@ public class FishTankImpl implements FishTank{
 		backRot.rotate(0, 0, 0);
 		backWall.setLocalRotation(backRot);
 		backWall.translate(101.0f, 101.0f, -0.10f);
-	//	backWall.setColor(Color.blue);
+		// backWall.setColor(Color.blue);
 		// backWall.setCullMode(CULL_MODE.ALWAYS);
 		backWall.setTexture(textureA);
 		fishWalls.addChild(backWall);
@@ -92,39 +93,37 @@ public class FishTankImpl implements FishTank{
 		frontWall.setCullMode(CULL_MODE.ALWAYS);
 		fishWalls.addChild(frontWall);
 		frontWall.updateWorldBound();
-		
+
 		return fishWalls;
 	}
-	
-	public TerrainBlock createTankTerrain(){
+
+	private TerrainBlock createTankTerrain() {
 		AbstractHeightMap heightMap = null;
 		heightMap = new ImageBasedHeightMap("mountains512.jpg");
 		heightMap.load();
 
 		Vector3D scaleFactor = new Vector3D(new Point3D(1, 1, 1));
-		floor = new TerrainBlock("floor", 512, scaleFactor,
-				heightMap.getHeightData(), new Point3D(0, 0, 0));
-		
+		terrain = new TerrainBlock("floor", 512, scaleFactor, heightMap.getHeightData(), new Point3D(0, 0, 0));
+
 		try {
-			Matrix3D floorT = floor.getLocalTranslation();
+			Matrix3D floorT = terrain.getLocalTranslation();
 			floorT.translate(0.0f, 0.0f, 0.0f);
-			floor.setLocalTranslation(floorT);
-			Matrix3D floorScale = floor.getLocalScale();
+			terrain.setLocalTranslation(floorT);
+			Matrix3D floorScale = terrain.getLocalScale();
 			floorScale.scale(0.42f, 0.5f, 0);
-			floor.setLocalScale(floorScale);
+			terrain.setLocalScale(floorScale);
 			Matrix3D p1Rot = new Matrix3D();
 			p1Rot.rotateX(-90);
-			floor.setLocalRotation(p1Rot);
-			Texture grassTexture = TextureManager
-					.loadTexture2D("sky.jpg");
+			terrain.setLocalRotation(p1Rot);
+			Texture grassTexture = TextureManager.loadTexture2D("sky.jpg");
 			grassTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
 
-			floor.setTexture(grassTexture);
+			terrain.setTexture(grassTexture);
 		} catch (Exception pe) {
 			pe.printStackTrace();
 		}
-		
-		return floor;
+
+		return terrain;
 	}
 
 	public int getCichlidCount() {
@@ -157,6 +156,22 @@ public class FishTankImpl implements FishTank{
 
 	public void setTimer(int timer) {
 		this.timer = timer;
+	}
+
+	public Group getFishWalls() {
+		return fishWalls;
+	}
+
+	public TerrainBlock getTerrain() {
+		return terrain;
+	}
+
+	public void setFishWalls(Group fishWalls) {
+		this.fishWalls = fishWalls;
+	}
+
+	public void setTerrain(TerrainBlock terrain) {
+		this.terrain = terrain;
 	}
 
 }
