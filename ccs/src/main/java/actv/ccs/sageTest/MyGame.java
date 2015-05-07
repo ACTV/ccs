@@ -418,7 +418,7 @@ public class MyGame extends BaseGame {
 
 						OBJLoader loader1 = new OBJLoader();
 						mediumPlant = loader1
-								.loadModel("plantBlend.obj");
+								.loadModel("uplant.obj");
 						mediumPlant.setName(name);
 						Matrix3D mediumPlantT = mediumPlant
 								.getLocalTranslation(); // this is for position
@@ -430,7 +430,7 @@ public class MyGame extends BaseGame {
 																				// size
 																				// of
 																				// object
-						mediumPlantS.scale(lengthW, widthW, heightW); // the
+						mediumPlantS.scale(lengthW*2, widthW*2, heightW*2); // the
 																		// scale
 																		// might
 																		// be
