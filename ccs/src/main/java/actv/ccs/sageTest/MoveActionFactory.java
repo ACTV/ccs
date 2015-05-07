@@ -18,7 +18,7 @@ public class MoveActionFactory {
 		Matrix3D rot = s.getLocalRotation();
 		Vector3D dir = ((ConvictCichlid)s).getDirection().normalize();
 		dir = dir.mult(rot);
-		dir.scale((double) (speed * 2));
+		dir.scale((double) (speed * 10));
 		s.translate((float) dir.getX(), (float) dir.getY(), (float) dir.getZ());
 		((ConvictCichlid)s).setlocation(dir.getX(), dir.getY(), dir.getZ());
 		s.updateWorldBound();
@@ -33,7 +33,34 @@ public class MoveActionFactory {
 		((ConvictCichlid)s).setDirection(dir);
 		s.updateWorldBound();
 	}
-
+	
+	public static void moveBackward(SceneNode s, float speed)
+	{
+		   Matrix3D rot = s.getLocalRotation();
+		   Vector3D dir = new Vector3D(0,0,-1);
+		   dir = dir.mult(rot);
+		   dir.scale((double)(speed * 10));
+		   s.translate((float)dir.getX(),(float)dir.getY(),(float)dir.getZ());
+		   s.updateWorldBound();
+	}
+	public static void moveLeft(SceneNode s, float speed)
+	{
+		   Matrix3D rot = s.getLocalRotation();
+		   Vector3D dir = new Vector3D(1,0,0);
+		   dir = dir.mult(rot);
+		   dir.scale((double)(speed * 10));
+		   s.translate((float)dir.getX(),(float)dir.getY(),(float)dir.getZ());
+		   s.updateWorldBound();
+	}
+	public static void moveRight(SceneNode s, float speed)
+	{
+		   Matrix3D rot = s.getLocalRotation();
+		   Vector3D dir = new Vector3D(-1,0,0);
+		   dir = dir.mult(rot);
+		   dir.scale((double)(speed * 10));
+		   s.translate((float)dir.getX(),(float)dir.getY(),(float)dir.getZ());
+		   s.updateWorldBound();
+	}
 	/**
 	 * 
 	 * This method returns true if the distance between each object's

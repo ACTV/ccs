@@ -90,7 +90,7 @@ public class MyGame extends BaseGame {
 	private volatile boolean pauseSimulation = false; 	
 	private FishTank fishTank;
 	private boolean startAnimation;
-	
+	private Thread tObject;
 	
 	
 	// testing for ogre model loader
@@ -265,13 +265,15 @@ public class MyGame extends BaseGame {
 	public void pauseGame()
 	{
 		pauseSimulation = true;
+		System.out.println("paused");
 		pauseRunner();
+		
 	}
 	public void resumeGame()
 	{
 		pauseSimulation = false;
 		resumeRunner();
-		
+		System.out.println("resuming");
 	}
 	
 	public void setUpTank()
@@ -836,8 +838,9 @@ public class MyGame extends BaseGame {
 						
 							addGameWorldObject(cichlidAObject);
 							cichlidAObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
-							cichlidAObject.scale((float) (widthW * weightW * .05), (float) (heightW
-									* weightW * .09), (float) 0.09);
+							cichlidAObject.rotate(90, new Vector3D(0, 1, 0));
+							cichlidAObject.scale((float) (widthW * weightW * .1), (float) (heightW
+									* weightW * .09), (float)( heightW * 0.09));
 						
 					}
 				} else if (id.equals("2")) {
@@ -981,8 +984,9 @@ public class MyGame extends BaseGame {
 						
 							addGameWorldObject(cichlidBObject);
 							cichlidBObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
+							cichlidBObject.rotate(45, new Vector3D(0, 1, 1));
 							cichlidBObject.scale((float) (widthW * weightW * .05), (float) (heightW
-									* weightW * .05), (float) 0.09);
+									* weightW * .05), (float)( heightW * 0.09));
 						cichlidCount++;
 					}
 				} else if (id.equals("3")) {
@@ -1117,8 +1121,9 @@ public class MyGame extends BaseGame {
 						
 							addGameWorldObject(cichlidCObject);
 							cichlidCObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
+							cichlidCObject.rotate(45, new Vector3D(0, 1, 1));
 							cichlidCObject.scale((float) (widthW * weightW * .05), (float) (heightW
-									* weightW * .05), (float) 0.09);
+									* weightW * .05), (float)( heightW * 0.09));
 						
 						cichlidCount++;
 					}
@@ -1152,7 +1157,7 @@ public class MyGame extends BaseGame {
 		IAction upBackA = new UpBackAction(cichlidAObject);
 		IAction downForwardA = new DownForwardAction(cichlidAObject);
 		IAction downBackA = new DownBackAction(cichlidAObject);
-		
+		IAction rotateTest = new RotateTestAction(cichlidAObject);
 		
 		// game actions
 		IAction quitGame = new QuitAction(this);
@@ -1176,7 +1181,7 @@ public class MyGame extends BaseGame {
 	
 		// here is the movement options of the character ..
 		im.associateAction(kbName,
-				net.java.games.input.Component.Identifier.Key.W, moveForwardA,
+				net.java.games.input.Component.Identifier.Key.W, rotateTest,
 				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.S, moveBackA,
@@ -1412,7 +1417,16 @@ public class MyGame extends BaseGame {
 
 	public void update(float elapsedTimeMS) // this will be where the objects will move
 	{
-		
+		if (pauseSimulation == true)
+		{
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
 	// creating timer thing
 		time += elapsedTimeMS;
 		timeString.setText("Time: " + Math.floor(time/1000));
@@ -1421,7 +1435,6 @@ public class MyGame extends BaseGame {
 		Point3D camLoc = camera.getLocation();
 		Matrix3D camT = new Matrix3D();
 		camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
-	
 	if (timeCompare >= simulationTime)
 	{
 	 //	System.out.println("RIGHT HERE IS WHERE I STOP EVERYTHING!!!");
@@ -1438,8 +1451,7 @@ public class MyGame extends BaseGame {
 	
 
 
-if (pauseSimulation != true)
-	{
+
 		// update skybox loc
 
 	//	skybox.setLocalTranslation(camT);
@@ -1470,7 +1482,7 @@ if (s instanceof Model3DTriMesh)
 	{
 		if (s == cichlidCObject)
 		{
-			System.out.println("the world gone bad");
+	//		System.out.println("the world gone bad");
 			((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
 		}
 	}
@@ -1818,8 +1830,10 @@ if (s instanceof Model3DTriMesh)
 		}
 		super.update(time);
 		cc.update(time);
+		}
 		
-	}
+	
+/*	
 else
 {
 //	System.out.println("pause stuff");
@@ -1834,8 +1848,8 @@ else
 	System.out.println("time is when paused = "  + time/1000);
 }
 
-
-
+*/
+	
 	}
 
 	private IDisplaySystem createDisplaySystem() {
