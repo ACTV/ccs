@@ -2027,12 +2027,4 @@ else
 	}
 */
 	
-	
-	  public void startGame()
-	  {
-	    
-	    mainLoop();
-	    shutdown();
-	    exit();
-	  }
 }
