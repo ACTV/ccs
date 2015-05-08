@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import actv.ccs.fact.PRNG;
 import actv.ccs.model.ConvictCichlid;
 import actv.rules.DroolsTest;
 
@@ -32,7 +31,6 @@ public class MakeMoveTest extends DroolsTest {
 	public void test(){
 		objs = new ArrayList<Object>();
 		objs.add(cc);
-		objs.add(new PRNG());
 		
 		executeStateless(objs);
 		

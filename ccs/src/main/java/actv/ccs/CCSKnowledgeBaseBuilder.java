@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
+import actv.ccs.fact.PRNG;
 import actv.ccs.model.CCSMemoryObject;
 
 /**
@@ -39,13 +40,16 @@ public class CCSKnowledgeBaseBuilder{
 	 * @return
 	 */
 	public static StatefulKnowledgeSession buildStatefulSession(){
+		// TODO: Paths to drls are hardcoded in!!
 		return setupSession("swim", new String[]{	"actv/ccs/rules/start/CoolingDown.drl",
 										 			"actv/ccs/rules/start/Start.drl",
 												 	"actv/ccs/rules/start/InitializeCichlid.drl",
 													"actv/ccs/rules/start/Calm.drl",
 													"actv/ccs/rules/idle/Idle.drl",
 													"actv/ccs/rules/idle/Move.drl",
+													"actv/ccs/rules/idle/MakeMove.drl",
 													"actv/ccs/rules/idle/Swim.drl",
+													"actv/ccs/rules/idle/MakeSwim.drl",
 													"actv/ccs/rules/idle/MoveTo.drl",
 													"actv/ccs/flow/swim.bpmn" });
 	}
@@ -95,9 +99,11 @@ public class CCSKnowledgeBaseBuilder{
 		KnowledgeBase kb = KnowledgeBaseFactory.newKnowledgeBase(getKnowledgeBaseConfiguration());
 		kb.addKnowledgePackages(kbuilder.getKnowledgePackages());
 		StatefulKnowledgeSession sks = kb.newStatefulKnowledgeSession(getKnowledgeSessionConfiguration(), null);
+		
 		sks.startProcess(flow);
 		
 		sks.setGlobal("logger", log);
+		sks.setGlobal("prng", new PRNG());
 		
 		addEventListeners(sks);
 		
@@ -134,6 +140,9 @@ public class CCSKnowledgeBaseBuilder{
 		for(Object obj : objs){
 			sks.insert(obj);
 		}
+		
+		// Insert the random number generator
+		sks.insert(new PRNG());
 	}
 	
 	/**

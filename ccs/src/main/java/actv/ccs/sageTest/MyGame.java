@@ -719,6 +719,7 @@ public class MyGame extends BaseGame {
 						cichlidA.setAggroLevel(aggroW);
 						//TODO: temporary
 						cichlidA.setBaseSpeed(3f);
+						cichlidA.setSpeed(0);
 						cichlidA.setBaseCautionLevel(4f);
 						cichlidA.setDirection(new Vector3D(1,1,1));
 						cichlidA.setCullMode(CULL_MODE.ALWAYS);
@@ -817,7 +818,7 @@ public class MyGame extends BaseGame {
 						
 						try 
 						{
-							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingOutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingOutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
+							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingoutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
 							//src/main/java/actv/ccs/sageTest/TestOgre 
 							model.updateGeometricState(0, true);
 							java.util.Iterator<SceneNode> modelIterator = model.iterator();
@@ -874,6 +875,7 @@ public class MyGame extends BaseGame {
 						cichlidB.setAggroLevel(aggroW);
 						//TODO: temporary
 						cichlidB.setBaseSpeed(3f);
+						cichlidB.setSpeed(0f);
 						cichlidB.setBaseCautionLevel(4f);
 						cichlidB.setDirection(new Vector3D(1,1,1));
 						cichlidB.setCullMode(CULL_MODE.ALWAYS);
@@ -962,7 +964,7 @@ public class MyGame extends BaseGame {
 						
 						try 
 						{
-							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingOutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingOutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
+							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingoutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
 							//src/main/java/actv/ccs/sageTest/TestOgre 
 							model.updateGeometricState(0, true);
 							java.util.Iterator<SceneNode> modelIterator = model.iterator();
@@ -1021,6 +1023,7 @@ public class MyGame extends BaseGame {
 						
 						//TODO: temporary
 						cichlidC.setBaseSpeed(3f);
+						cichlidC.setSpeed(0);
 						cichlidC.setBaseCautionLevel(4f);
 						cichlidC.setDirection(new Vector3D(-.5,.8,.1));
 						cichlidC.setState(FishState.IDLE);
@@ -1100,7 +1103,7 @@ public class MyGame extends BaseGame {
 						
 						try 
 						{
-							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingOutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingOutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
+							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingoutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
 							//src/main/java/actv/ccs/sageTest/TestOgre 
 							model.updateGeometricState(0, true);
 							java.util.Iterator<SceneNode> modelIterator = model.iterator();

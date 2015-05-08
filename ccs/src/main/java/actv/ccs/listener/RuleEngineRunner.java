@@ -8,14 +8,13 @@ import org.slf4j.LoggerFactory;
 
 import actv.ccs.CCSKnowledgeBaseBuilder;
 import actv.ccs.CCSKnowledgeSession;
+import actv.ccs.fact.PRNG;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 
 /**
  * Singleton CCS Knowledge rule base runner
  * 
- * @author TOM
- *
  */
 public class RuleEngineRunner extends Thread{
 	private static RuleEngineRunner instance = null;
@@ -30,6 +29,7 @@ public class RuleEngineRunner extends Thread{
 		if(instance == null){
 			instance = new RuleEngineRunner();
 			instance.setName("Rule Engine Runner");
+			// Create the knowledge session
 			session.setStatefulKnowledgeSession(CCSKnowledgeBaseBuilder.buildStatefulSession());
 		}
 		return instance;
@@ -58,7 +58,6 @@ public class RuleEngineRunner extends Thread{
 			//TODO implement exception?
 			return;
 		}
-		
 	}
 	
 	public void closeSession() throws InterruptedException{

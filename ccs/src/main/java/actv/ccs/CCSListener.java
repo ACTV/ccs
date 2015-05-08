@@ -105,11 +105,10 @@ public class CCSListener implements WorkingMemoryEventListener, ProcessEventList
 
 	public void beforeActivationFired(BeforeActivationFiredEvent event) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void afterActivationFired(AfterActivationFiredEvent event) {
-		logger.info("Fired {}", event.getActivation().getRule());		
+		logger.info("Fired {}", event.getActivation().getRule());
 	}
 
 	public void agendaGroupPopped(AgendaGroupPoppedEvent event) {

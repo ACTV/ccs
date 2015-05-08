@@ -196,4 +196,8 @@ public class ConvictCichlid extends TankObject {
 		this.influence = influence;
 	}
 
+	@Override
+	public String toString(){
+		return "[ " + this.getName() + " @ " + this.getLocation().toString() + ", Speed: " + this.getSpeed() + " ]";
+	}
 }

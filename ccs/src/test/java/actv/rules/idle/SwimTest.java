@@ -5,10 +5,13 @@ import graphicslib3D.Vector3D;
 
 import java.util.ArrayList;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import actv.ccs.model.CCSMemoryObject;
+import actv.ccs.CCSTestListener;
+import actv.ccs.fact.SwimCounter;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.rules.DroolsTest;
@@ -35,8 +38,11 @@ public class SwimTest extends DroolsTest {
 	public void test(){
 		objs = new ArrayList<Object>();
 		objs.add(cc);
+		objs.add(new SwimCounter(cc, 10));
 		
 		executeStateless(objs);
+		
+		Assert.assertTrue(CCSTestListener.isFired("Swim"));
 	}
 	
 	@Test
@@ -44,8 +50,11 @@ public class SwimTest extends DroolsTest {
 		cc.setSpeed(0);
 		objs = new ArrayList<Object>();
 		objs.add(cc);
+		objs.add(new SwimCounter(cc, 10));
 		
 		executeStateless(objs);
+		
+		Assert.assertTrue(CCSTestListener.isFired("Swim"));
 	}
 	
 	

@@ -2,7 +2,6 @@ package actv.rules;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.drools.KnowledgeBase;
 import org.drools.builder.KnowledgeBuilder;
@@ -17,7 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import actv.ccs.CCSKnowledgeBaseBuilder;
 import actv.ccs.CCSKnowledgeSession;
-import actv.ccs.CCSListener;
+import actv.ccs.CCSTestListener;
+import actv.ccs.fact.PRNG;
 import actv.ccs.model.CCSMemoryObject;
 
 /**
@@ -77,11 +77,12 @@ public class DroolsTest{
 		// Initialize a stateless knowledge session
 		StatelessKnowledgeSession sks = kb.newStatelessKnowledgeSession();
 		
-		sks.addEventListener((WorkingMemoryEventListener)new CCSListener());
-		sks.addEventListener((ProcessEventListener)new CCSListener());
-		sks.addEventListener((AgendaEventListener)new CCSListener());
+		sks.addEventListener((WorkingMemoryEventListener)new CCSTestListener());
+		sks.addEventListener((ProcessEventListener)new CCSTestListener());
+		sks.addEventListener((AgendaEventListener)new CCSTestListener());
 		
 		sks.setGlobal("logger", logger);
+		sks.setGlobal("prng", new PRNG());
 		
 		List<Command<?>> l = new ArrayList<Command<?>>();
 		

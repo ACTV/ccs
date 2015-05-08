@@ -3,19 +3,19 @@ package actv.ccs.rules.idle;
 import actv.ccs.sageTest.MoveActionFactory;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
-import actv.ccs.fact.PRNG;
+import actv.ccs.fact.SwimCounter;
 
 global org.slf4j.Logger logger
+global actv.ccs.fact.PRNG prng
 
 rule "Make Swim"
 	ruleflow-group "swim"
 	
 	when
-		PRNG($prng : prng)
-		$cc : ConvictCichlid(state == FishState.IDLE, 
-							 speed == 0,
-							 $prng.nextDouble() < .3 )
+		$cc : ConvictCichlid( speed == 0, prng.randomDouble() < .9 )
+		not(exists SwimCounter(convictCichlid == $cc))
 	then
+		insert(new SwimCounter($cc, prng.randomInt(20)));
 		$cc.setSpeed($cc.getBaseSpeed());		
 		update($cc);
 		logger.debug("Preparing to swim: " + $cc.getSpeed());

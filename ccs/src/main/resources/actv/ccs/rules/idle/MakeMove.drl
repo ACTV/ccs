@@ -4,25 +4,23 @@ import actv.ccs.sageTest.MoveActionFactory;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.ccs.fact.MoveCounter;
-import actv.ccs.fact.PRNG;
 
 global org.slf4j.Logger logger
+global actv.ccs.fact.PRNG prng
 
 rule "Make Move"
 	ruleflow-group "swim"
 	
 	when
-		PRNG($prng : prng)
-		
-		$cc : ConvictCichlid( $prng.nextDouble() < .3)
+		$cc : ConvictCichlid(prng.randomDouble() < .9)
 		
 		not(exists MoveCounter(convictCichlid == $cc))
 							  
 	then
 		int dir = -1;
-		if($prng.nextBoolean()) dir = 1;
+		if(prng.randomBoolean()) dir = 1;
 	
-		insert(new MoveCounter($cc, $prng.nextInt(60), dir)); 
+		insert(new MoveCounter($cc, prng.randomInt(60), dir)); 
 end
 
 
