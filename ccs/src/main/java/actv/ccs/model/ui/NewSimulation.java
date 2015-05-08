@@ -65,9 +65,9 @@ public class NewSimulation extends JFrame {
  * need to do a button listener later on etc fish stuff.
  */
 	
-	public NewSimulation() throws SecurityException, IOException
+	public NewSimulation(MyGame gg) throws SecurityException, IOException
 	{
-		
+		myGame = gg;
 		//tank = new TankObject(20, 20, 20, 26, 0, 0, 0); // array value default tank
 		tank = new FishTankImpl();
 		
@@ -831,17 +831,20 @@ public class NewSimulation extends JFrame {
 	
 	public void CloseJFrame()
 	{
-		try {
-		System.out.println("WE DOIN STUFF");
-		ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/C", "run.bat");
-		Process p = pb.start();
-
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
 		super.dispose();
-		new MyGame().start();
+	    this.myGame.setPauseSim(false);
+	    this.myGame.initObjects();
+	    this.myGame.spawnCichlids();
+	    this.myGame.spawnObjects();
+	    this.myGame.createPerson();
+	    
+	    this.myGame.initActions();
+	    
+	    this.myGame.createFishTankWalls();
+	    this.myGame.startRunner();
+	    this.myGame.createHUD();
+	    this.myGame.setUpTank();
+		
 
 	}
 }

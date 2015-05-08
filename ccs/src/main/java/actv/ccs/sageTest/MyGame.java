@@ -97,7 +97,7 @@ public class MyGame extends BaseGame {
 	TextureState testState;
 	Group model;
 	Model3DTriMesh cichlidAObject, cichlidBObject, cichlidCObject;
-	
+/*	
 	public void initGame() {
 		initObjects();
 		spawnCichlids();
@@ -117,6 +117,46 @@ public class MyGame extends BaseGame {
 		objCount = 0;
 
 	}
+*/
+	  public void initGame()
+	  {
+	    try
+	    {
+	      this.conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+	      
+	      Statement s = this.conn.createStatement();
+	      this.rs = s.executeQuery("SELECT scenarioNumber FROM [ScenarioFlag]");
+	      while (this.rs.next())
+	      {
+	        String scenNum = this.rs.getString("ScenarioNumber");
+	        
+
+	        int scenGrab = Integer.parseInt(scenNum);
+	        if ((scenGrab == 1) || (scenGrab == 2) || (scenGrab == 3) || (scenGrab == 4) || (scenGrab == 5) || (scenGrab == 6))
+	        {
+	          this.fishTank = new FishTankImpl();
+	        }
+	        else
+	        {
+	          IDisplaySystem display = getDisplaySystem();
+	          display.setTitle("Empty Window where the Sun don't shine apparently.");
+	          this.camera = display.getRenderer().getCamera();
+	          this.camera.setPerspectiveFrustum(45.0D, 1.0D, 0.01D, 1000.0D);
+	          this.camera.setLocation(new Point3D(1.0D, 1.0D, 20.0D));
+	          System.out.println("no scenario in place?");
+	          this.pauseSimulation = true;
+	          this.startAnimation = true;
+	          this.cichlidCount = 0;
+	          this.objCount = 0;
+	          createPerson();
+	        }
+	      }
+	    }
+	    catch (Exception epp)
+	    {
+	      epp.printStackTrace();
+	    }
+	  }
 
 	public void startAnimationProcess()
 	{
@@ -145,7 +185,7 @@ public class MyGame extends BaseGame {
 			
 	}
 	
-	private void startRunner() {
+	public void startRunner() {
 		runner = RuleEngineRunner.getInstance();
 		runner.newMap(objs);
 		runner.start();
@@ -168,7 +208,7 @@ public class MyGame extends BaseGame {
 		}
 	}
 
-	protected void initObjects() {
+	public void initObjects() {
 		// this is for initializing objects
 		display = getDisplaySystem();
 		display.setTitle("sage implementation of the pain");
@@ -1139,7 +1179,7 @@ public class MyGame extends BaseGame {
 		}
 	}
 
-	private void initActions() {
+	public void initActions() {
 		im = getInputManager();
 		String kbName = im.getKeyboardName(); // error here. it shouldn't be
 												// null
@@ -1937,6 +1977,15 @@ else
 			e1.printStackTrace();
 		}
 
+	}
+
+	public void setPauseSim(boolean b) {
+		pauseSimulation = b;
+		
+	}
+	public boolean getPauseSim()
+	{
+		return pauseSimulation;
 	}
 
 
