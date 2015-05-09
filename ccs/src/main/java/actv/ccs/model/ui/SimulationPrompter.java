@@ -107,7 +107,7 @@ public class SimulationPrompter extends JFrame {
 					rs = s.executeQuery("SELECT ID FROM [ScenarioFlag]");
 					while (rs.next())
 					{
-						int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 1 where ID = 2");		
+						int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 2 where ID = 2");		
 					}
 					conn.close();
 					} catch (SQLException Ex) {
@@ -166,7 +166,7 @@ public class SimulationPrompter extends JFrame {
 					rs = s.executeQuery("SELECT ID FROM [ScenarioFlag]");
 					while (rs.next())
 					{
-						int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 1 where ID = 3");		
+						int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 3 where ID = 3");		
 					}
 					conn.close();
 					} catch (SQLException Ex) {
@@ -247,7 +247,7 @@ public class SimulationPrompter extends JFrame {
 					rs = s.executeQuery("SELECT ID FROM [ScenarioFlag]");
 					while (rs.next())
 					{
-						int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 1 where ID = 4");		
+						int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 4 where ID = 4");		
 					}
 					conn.close();
 					} catch (SQLException Ex) {
@@ -329,7 +329,7 @@ public class SimulationPrompter extends JFrame {
 					rs = s.executeQuery("SELECT ID FROM [ScenarioFlag]");
 					while (rs.next())
 					{
-						int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 1 where ID = 5");		
+						int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 5 where ID = 5");		
 					}
 					conn.close();
 					} catch (SQLException Ex) {
