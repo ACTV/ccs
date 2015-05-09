@@ -1982,6 +1982,7 @@ else
 	    System.out.println("BaseGame.shutdown() invoked...");
 	    if (DisplaySystem.getCurrentDisplaySystem() != null) {
 	      DisplaySystem.getCurrentDisplaySystem().close();
+	      System.exit(0);
 	    }
 
 	}
