@@ -838,11 +838,11 @@ public class NewSimulation extends JFrame {
 	    this.myGame.spawnCichlids();
 	    this.myGame.spawnObjects();
 	    this.myGame.createPerson();
-	    this.myGame.initActions();
+//	    this.myGame.initActions();
 	    this.myGame.createFishTankWalls();
 	    this.myGame.startRunner();
 	    this.myGame.createHUD();
 	    this.myGame.setUpTank();
-
+	    this.myGame.mainLoop();
 	}
 }

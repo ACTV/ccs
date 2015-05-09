@@ -567,7 +567,7 @@ public class SimulationPrompter extends JFrame {
 	    this.myGame.spawnObjects();
 	    this.myGame.createPerson();
 	    
-	    this.myGame.initActions();
+	//    this.myGame.initActions();
 	    
 	    this.myGame.createFishTankWalls();
 	    this.myGame.startRunner();

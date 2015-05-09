@@ -24,6 +24,7 @@ import net.java.games.input.Component.Identifier.Key;
 import net.java.games.input.Event;
 import sage.app.BaseGame;
 import sage.camera.ICamera;
+import sage.display.DisplaySystem;
 import sage.display.IDisplaySystem;
 import sage.input.IInputManager;
 import sage.input.IInputManager.INPUT_ACTION_TYPE;
@@ -152,6 +153,7 @@ public class MyGame
           this.cichlidCount = 0;
           this.objCount = 0;
           createPerson();
+          initActions();
         }
       }
     }
@@ -1414,7 +1416,7 @@ public class MyGame
   
 	public void update(float elapsedTimeMS) // this will be where the objects will move
 	{
-		if (pauseSimulation == true)
+	/*	if (pauseSimulation == true)
 		{
 			try {
 				Thread.sleep(1000);
@@ -1424,9 +1426,15 @@ public class MyGame
 			}
 		}
 		else {
+			*/
 	// creating timer thing
 		time += elapsedTimeMS;
+		
+		if (timeString != null)
+		{
 		timeString.setText("Time: " + Math.floor(time/1000));
+		
+		}
 		float timeCompare = time/1000;
 		
 		Point3D camLoc = camera.getLocation();
@@ -1847,7 +1855,7 @@ else
 
 */
 	
-	}
+//	}
   /*
   public void update(float elapsedTimeMS)
   {
@@ -2216,5 +2224,27 @@ else
     {
       e1.printStackTrace();
     }
+  }
+  
+  public void mainLoop()
+  {
+
+	    long startTime = System.nanoTime();
+	    long lastUpdateTime = startTime;
+	    while (!isGameOver())
+	    {
+	      long frameStartTime = System.nanoTime();
+	      float elapsedMilliSecs = (float)(frameStartTime - lastUpdateTime) / 1000000.0F;
+	      lastUpdateTime = frameStartTime;
+	      
+	      handleInput(elapsedMilliSecs);
+	      update(elapsedMilliSecs);
+	      render();
+	      
+	      DisplaySystem.getCurrentDisplaySystem().getRenderer().swapBuffers();
+	      
+	      Thread.yield();
+	    }
+	  
   }
 }
