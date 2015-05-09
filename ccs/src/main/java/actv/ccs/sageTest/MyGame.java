@@ -438,7 +438,7 @@ public class MyGame extends BaseGame {
 
 						OBJLoader loader1 = new OBJLoader();
 						mediumPlant = loader1
-								.loadModel("plantBlend.obj");
+								.loadModel("uplant.obj");
 						mediumPlant.setName(name);
 						Matrix3D mediumPlantT = mediumPlant
 								.getLocalTranslation(); // this is for position
@@ -1472,7 +1472,10 @@ public class MyGame extends BaseGame {
 		else {
 	// creating timer thing
 		time += elapsedTimeMS;
+		if (timeString != null)
+		{
 		timeString.setText("Time: " + Math.floor(time/1000));
+		}
 		float timeCompare = time/1000;
 		
 		Point3D camLoc = camera.getLocation();
