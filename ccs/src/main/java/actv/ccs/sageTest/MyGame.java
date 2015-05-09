@@ -1412,6 +1412,443 @@ public class MyGame
     addGameWorldObject(this.fishTank.createTankTerrain());
   }
   
+	public void update(float elapsedTimeMS) // this will be where the objects will move
+	{
+		if (pauseSimulation == true)
+		{
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+	// creating timer thing
+		time += elapsedTimeMS;
+		timeString.setText("Time: " + Math.floor(time/1000));
+		float timeCompare = time/1000;
+		
+		Point3D camLoc = camera.getLocation();
+		Matrix3D camT = new Matrix3D();
+		camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
+	if (timeCompare >= simulationTime)
+	{
+	 //	System.out.println("RIGHT HERE IS WHERE I STOP EVERYTHING!!!");
+	// this works	
+		// here would be where you want to pause the simulation
+	}
+	if (startAnimation == true)
+	{
+		// this should work
+		startAnimationProcess();
+		startAnimation = false;
+	}
+
+	
+
+
+
+		// update skybox loc
+
+	//	skybox.setLocalTranslation(camT);
+	
+		// iterating through models
+
+	for (SceneNode s : getGameWorld())
+{
+if (s instanceof Model3DTriMesh)
+{
+	if (cichlidAObject != null)
+	{
+		if (s == cichlidAObject)
+		{
+	//		System.out.println("i'm calling now!");
+			((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
+		}
+	}
+	if (cichlidBObject != null)
+	{
+		if (s == cichlidBObject)
+		{
+	//		System.out.println("i'm fapping forward");
+			((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
+		}
+	}
+	if (cichlidCObject != null)
+	{
+		if (s == cichlidCObject)
+		{
+	//		System.out.println("the world gone bad");
+			((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
+		}
+	}
+	s.updateGeometricState(elapsedTimeMS, true);
+}
+}
+	
+		for (SceneNode s : getGameWorld()) {
+			if (s instanceof ConvictCichlid) // here will be where the objects will
+											// have be able to move, but i will
+											// implement that later.
+			{
+				if (s == cichlidA) {
+
+					// s.translate(0, 0, .1f);
+					// s.updateWorldBound();
+					// bound collision
+					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+		
+					// here is where i will test my newfound collision for spheres
+					
+					Matrix3D cichlidAlocalT = s.getLocalTranslation();
+					Matrix3D cichlidARot = s.getLocalRotation();
+					aggroRangeA.setLocalTranslation(cichlidAlocalT);
+					cichlidAObject.setLocalTranslation(cichlidAlocalT);
+					cichlidAObject.setLocalRotation(cichlidARot);
+					if (loc.getX() > 200 || loc.getX() < 0.0)
+					{
+						System.out.println("X BOUNDS");
+						
+					}
+					if (loc.getY() > 200 || loc.getY() < 0.0)
+					{
+						System.out.println("Y BOUNDS");
+						
+					}
+					if (loc.getZ() > 200 || loc.getZ() < 0.0)
+					{
+						System.out.println("Z BOUNDS");
+						
+					}
+					// object collision
+					/*
+					if (largePlantC == true) // ERROR
+					{
+						if (cichlidA.getWorldBound().intersects(largePlant.getWorldBound()))
+						{
+							System.out.println("a hit largePl");
+						}
+					}
+					*/
+					if (largePotC == true)
+					{
+						if (cichlidA.getWorldBound().intersects(largePot.getWorldBound()))
+						{
+							System.out.println("a hit largePot");
+						}
+					}
+					if (largePlantC == true) // ERROR
+					{
+						if (cichlidA.getWorldBound().intersects(largePlant.getWorldBound()))
+						{
+							System.out.println("a hit largePl");
+						}
+					}
+					/*
+					if (largePlantC == true)
+					{
+						Point3D largePlantloc = new Point3D(largePlant.getWorldTranslation().getCol(3));
+						if ((loc.getX() == largePlantloc.getX()) && (loc.getY() == largePlantloc.getY()) 
+								&& (loc.getZ() == largePlantloc.getZ()) )
+						{
+							System.out.println("b hit large plant");
+						}
+					}
+					*/
+					if (mediumPotC == true)
+					{
+						if (cichlidA.getWorldBound().intersects(mediumPot.getWorldBound()))
+						{
+							System.out.println("a hit med pot");
+						}
+					}
+					if (mediumPlantC == true)
+					{
+						if	 (cichlidA.getWorldBound().intersects(mediumPlant.getWorldBound()))
+						{
+							System.out.println("a hit med pl");
+						}
+					}
+					if (smallPlantC == true)
+					{
+						if (cichlidA.getWorldBound().intersects(smallPlant.getWorldBound()))
+						{
+							System.out.println("a hit small pla");
+						}
+					}
+					if (smallPotC == true)
+					{
+						if (cichlidA.getWorldBound().intersects(smallPot.getWorldBound()))
+						{
+							System.out.println("a hit small pot");
+						}
+					}
+					// cichlid collision
+					if (cichlidB != null)
+					{
+						if (cichlidA.getWorldBound().intersects(cichlidB.getWorldBound()))
+						{
+							System.out.println("a hits b");
+							// this is where shit goes down
+						}
+						if (aggroRangeA.getWorldBound().intersects(aggroRangeB.getWorldBound()))
+						{
+							System.out.println("aggro from a to B");
+						}
+					}
+					if (cichlidC != null)
+					{
+						if (cichlidA.getWorldBound().intersects(cichlidC.getWorldBound()))
+						{
+							System.out.println("a hits c");
+							// this is where shit goes down
+						}
+						if (aggroRangeA.getWorldBound().intersects(aggroRangeC.getWorldBound()))
+						{
+							System.out.println("aggro from a to C");
+						}
+					}
+					
+					
+				}
+				if (s == cichlidB) {
+	
+					// call move stuff here
+					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+
+					
+					Matrix3D cichlidBlocalT = s.getLocalTranslation();
+					Matrix3D cichlidBRot = s.getLocalRotation();
+					cichlidBObject.setLocalTranslation(cichlidBlocalT);
+					cichlidBObject.setLocalRotation(cichlidBRot);
+					aggroRangeB.setLocalTranslation(cichlidBlocalT);
+					if (loc.getX() > 200 || loc.getX() < 0.0)
+					{
+						System.out.println("X BOUNDS");
+						
+					}
+					if (loc.getY() > 200 || loc.getY() < 0.0)
+					{
+						System.out.println("Y BOUNDS");
+						
+					}
+					if (loc.getZ() > 200 || loc.getZ() < 0.0)
+					{
+						System.out.println("Z BOUNDS");
+						
+					}
+					if (largePotC == true)
+					{
+						if (cichlidB.getWorldBound().intersects(largePot.getWorldBound()))
+						{
+							System.out.println("b hit largePo");
+						}
+					}
+				
+					if (largePlantC == true) 
+					{
+						if (cichlidB.getWorldBound().intersects(largePlant.getWorldBound()))
+						{
+							System.out.println("b hit largePl");
+						}
+					}
+					/*
+					if (largePlantC == true)
+					{
+						Point3D largePlantloc = new Point3D(largePlant.getWorldTranslation().getCol(3));
+						if ((loc.getX() == largePlantloc.getX()) && (loc.getY() == largePlantloc.getY()) 
+								&& (loc.getZ() == largePlantloc.getZ()) )
+						{
+							System.out.println("b hit large plant");
+						}
+					}
+					*/
+					if (mediumPotC == true)
+					{
+						if (cichlidB.getWorldBound().intersects(mediumPot.getWorldBound()))
+						{
+							System.out.println("b hit medP");
+						}
+					}
+					if (mediumPlantC == true)
+					{
+						if (cichlidB.getWorldBound().intersects(mediumPlant.getWorldBound()))
+						{
+							System.out.println("b hit medPL");
+						}
+					}
+					if (smallPlantC == true)
+					{
+						if (cichlidB.getWorldBound().intersects(smallPlant.getWorldBound()))
+						{
+							System.out.println("b hit smallPl");
+						}
+					}
+					if (smallPotC == true)
+					{
+						if (cichlidB.getWorldBound().intersects(smallPot.getWorldBound()))
+						{
+							System.out.println("b hit smallPot");
+						}
+					}
+					// cichlid collision
+					if (cichlidA != null)
+					{
+						if (cichlidB.getWorldBound().intersects(cichlidA.getWorldBound()))
+						{
+							System.out.println("b hits a");
+							// this is where shit goes down
+						}
+						if (aggroRangeB.getWorldBound().intersects(aggroRangeA.getWorldBound()))
+						{
+							System.out.println("aggro from B to A");
+						}
+					}
+					if (cichlidC != null)
+					{
+						if (cichlidB.getWorldBound().intersects(cichlidC.getWorldBound()))
+						{
+							System.out.println("b hits c");
+							// this is where shit goes down
+						}
+						if (aggroRangeB.getWorldBound().intersects(aggroRangeC.getWorldBound()))
+						{
+							System.out.println("aggro from B to C");
+						}
+					}
+				}
+				if (s == cichlidC) {
+					// call move stuff here
+					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+					Matrix3D cichlidClocalT = s.getLocalTranslation();
+					Matrix3D cichlidCRot = s.getLocalRotation();
+					aggroRangeC.setLocalTranslation(cichlidClocalT);
+					cichlidCObject.setLocalTranslation(cichlidClocalT);
+					cichlidCObject.setLocalRotation(cichlidCRot);	
+					if (loc.getX() > 200 || loc.getX() < 0.0)
+					{
+						System.out.println("X BOUNDS");
+						
+					}
+					if (loc.getY() > 200 || loc.getY() < 0.0)
+					{
+						System.out.println("Y BOUNDS");
+						
+					}
+					if (loc.getZ() > 200 || loc.getZ() < 0.0)
+					{
+						System.out.println("Z BOUNDS");
+						
+					}
+					if (largePotC == true)
+					{
+						if (cichlidC.getWorldBound().intersects(largePot.getWorldBound()))
+						{
+							System.out.println("c hit large pot");
+						}
+					}
+					
+					if (largePlantC == true)
+					{
+						if (cichlidC.getWorldBound().intersects(largePlant.getWorldBound()))
+						{
+							System.out.println("c hit large plant");
+						}
+					}
+					/*
+					if (largePlantC == true)
+					{
+						Point3D largePlantloc = new Point3D(largePlant.getWorldTranslation().getCol(3));
+						if ((loc.getX() == largePlantloc.getX()) && (loc.getY() == largePlantloc.getY()) 
+								&& (loc.getZ() == largePlantloc.getZ()) )
+						{
+							System.out.println("C hit large plant");
+						}
+					}
+						*/
+					if (mediumPotC == true)
+					{
+						if (cichlidC.getWorldBound().intersects(mediumPot.getWorldBound()))
+						{
+							System.out.println("c hit medium pot");
+						}
+					}
+					if (mediumPlantC == true)
+					{
+						if (cichlidC.getWorldBound().intersects(mediumPlant.getWorldBound()))
+						{
+							System.out.println("c hit medium plant");
+						}
+					}
+					if (smallPlantC == true)
+					{
+						if (cichlidC.getWorldBound().intersects(smallPlant.getWorldBound()))
+						{
+							System.out.println("c hit small plant");
+						}
+					}
+					if (smallPotC == true)
+					{
+						if (cichlidC.getWorldBound().intersects(smallPot.getWorldBound()))
+						{
+							System.out.println("c hit small pot");
+						}
+					}
+					// cichlid collision
+					if (cichlidA != null)
+					{
+						if (cichlidC.getWorldBound().intersects(cichlidA.getWorldBound()))
+						{
+							System.out.println("c hits a");
+							// this is where shit goes down
+						}
+						if (aggroRangeC.getWorldBound().intersects(aggroRangeA.getWorldBound()))
+						{
+							System.out.println("aggro from C to A");
+						}
+					}
+					if (cichlidB != null)
+					{
+						if (cichlidC.getWorldBound().intersects(cichlidA.getWorldBound()))
+						{
+							System.out.println("c hits b");
+							// this is where shit goes down
+						}
+						if (aggroRangeC.getWorldBound().intersects(aggroRangeB.getWorldBound()))
+						{
+							System.out.println("aggro from C to B");
+						}
+					}
+				}
+
+			}
+
+		}
+		super.update(time);
+		cc.update(time);
+		}
+		
+	
+/*	
+else
+{
+//	System.out.println("pause stuff");
+//	System.out.println("press r to run the simulation again");
+	
+	HUDString pauseString = new HUDString("Game is Paused");
+	addGameWorldObject(pauseString);
+	pauseString.setLocation(10, 10);
+	System.out.println("pause thing is " + pauseSimulation);
+	
+	super.update(0);
+	System.out.println("time is when paused = "  + time/1000);
+}
+
+*/
+	
+	}
+  /*
   public void update(float elapsedTimeMS)
   {
     try
@@ -1694,6 +2131,7 @@ public class MyGame
       epp.printStackTrace();
     }
   }
+  */
   
   private IDisplaySystem createDisplaySystem()
   {
