@@ -1979,6 +1979,10 @@ else
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+	    System.out.println("BaseGame.shutdown() invoked...");
+	    if (DisplaySystem.getCurrentDisplaySystem() != null) {
+	      DisplaySystem.getCurrentDisplaySystem().close();
+	    }
 
 	}
 
