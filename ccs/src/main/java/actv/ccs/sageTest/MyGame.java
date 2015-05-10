@@ -153,7 +153,7 @@ public class MyGame extends BaseGame {
 	          this.cichlidCount = 0;
 	          this.objCount = 0;
 	          createPerson();
-	          
+	          initActions();
 	          logger.info("Finished initial startup!");
 	          
 	        }
@@ -1202,7 +1202,7 @@ public class MyGame extends BaseGame {
 
 		// for this area, need to do a checker if A and B and C are called...
 		// test actions
-		IAction moveForwardA = new ForwardAction(cichlidA, cichlidAObject);
+/*		IAction moveForwardA = new ForwardAction(cichlidA, cichlidAObject);
 		IAction moveBackA = new BackwardAction(cichlidAObject);
 		IAction moveLeftA = new LeftAction(cichlidAObject);
 		IAction moveRightA = new RightAction(cichlidAObject);
@@ -1211,7 +1211,7 @@ public class MyGame extends BaseGame {
 		IAction downForwardA = new DownForwardAction(cichlidAObject);
 		IAction downBackA = new DownBackAction(cichlidAObject);
 		IAction rotateTest = new RotateTestAction(cichlidAObject);
-		
+	*/	
 		// game actions
 		IAction quitGame = new QuitAction(this);
 		IAction pauseKey = new pauseAction();
@@ -1233,7 +1233,7 @@ public class MyGame extends BaseGame {
 //		}
 	
 		// here is the movement options of the character ..
-		im.associateAction(kbName,
+/*		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.W, rotateTest,
 				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 		im.associateAction(kbName,
@@ -1259,7 +1259,7 @@ public class MyGame extends BaseGame {
 		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.NUMPAD1, downBackA,
 				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-	
+*/	
 	}
 	
 	// pause and restart simulation
@@ -1467,7 +1467,49 @@ public class MyGame extends BaseGame {
 	public void createFishTank(){ // issue with this.
 		addGameWorldObject(fishTank.getTerrain());
 	}
+	public void pauseUpdate(float elapsedTimeMS)
+	{
+		// creating timer thing
+		time = elapsedTimeMS;
+		if (timeString != null) {
+			timeString.setText("Time: " + (int)Math.floor(time / 1000));
+		}
+		float timeCompare = time / 1000;
 
+		Point3D camLoc = camera.getLocation();
+		Matrix3D camT = new Matrix3D();
+		camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
+/*		
+		if (startAnimation == true) {
+			// this should work
+			startAnimationProcess();
+			startAnimation = false;
+		}
+*/
+		// update skybox loc
+
+		// skybox.setLocalTranslation(camT);
+
+		// iterating through models
+
+		for (SceneNode s : getGameWorld()) {
+			if (s instanceof Model3DTriMesh) {
+				((Model3DTriMesh) s).stopAnimation();
+				s.updateGeometricState(elapsedTimeMS, true);
+			}
+		}
+		
+		for( SceneNode s : objs){
+			Matrix3D cichlidAlocalT = s.getLocalTranslation();
+			Matrix3D cichlidARot = s.getLocalRotation();
+			
+			s.setLocalTranslation(cichlidAlocalT);
+			s.setLocalRotation(cichlidARot);
+		}
+		
+		super.update(time);
+		cc.update(time);
+	}
 	public void update(float elapsedTimeMS) // this will be where the objects
 											// will move
 	{
@@ -1637,6 +1679,33 @@ public class MyGame extends BaseGame {
 	{
 		return pauseSimulation;
 	}
+
+	  protected void mainLoop()
+{
+  long startTime = System.nanoTime();
+  long lastUpdateTime = startTime;
+  while (!isGameOver())
+  {
+    long frameStartTime = System.nanoTime();
+    float elapsedMilliSecs = (float)(frameStartTime - lastUpdateTime) / 1000000.0F;
+    lastUpdateTime = frameStartTime;
+    
+    handleInput(elapsedMilliSecs);
+    if (pauseSimulation == true)
+    {
+  	  pauseUpdate(elapsedMilliSecs);
+    
+    } else if (pauseSimulation == false)
+    {
+  	  update(elapsedMilliSecs);
+    }
+    render();
+    
+    DisplaySystem.getCurrentDisplaySystem().getRenderer().swapBuffers();
+    
+    Thread.yield();
+  }
+}
 
 
 
