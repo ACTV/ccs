@@ -32,12 +32,8 @@ public class DBConnection {
 		}
 	}
 	
-	public void close(){
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			throw new RuntimeException("Unable to close the database connection");
-		}
+	public void close() throws SQLException{
+		connection.close();
 	}
 	
 	public synchronized void executeUpdate(String query) throws SQLException{
