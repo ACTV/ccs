@@ -1508,6 +1508,8 @@ public class MyGame extends BaseGame {
 		
 		super.update(time);
 		cc.update(time);
+		
+		startAnimation = true;
 	}
 	public void update(float elapsedTimeMS) // this will be where the objects
 											// will move
