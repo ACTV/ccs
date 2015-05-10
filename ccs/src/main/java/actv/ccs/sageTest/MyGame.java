@@ -16,8 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.java.games.input.Event;
-import actv.ccs.DBConnector;
-import actv.ccs.listener.RuleEngineRunner;
+import actv.ccs.DBConnection;
+import actv.ccs.RuleEngineRunner;
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
 import actv.ccs.sageTest.actions.*;
@@ -317,7 +317,6 @@ public class MyGame extends BaseGame {
 	public void pauseGame()
 	{
 		pauseSimulation = true;
-		logger.debug("paused");
 		pauseRunner();
 		
 	}
@@ -325,7 +324,6 @@ public class MyGame extends BaseGame {
 	{
 		pauseSimulation = false;
 		resumeRunner();
-		logger.debug("resuming");
 	}
 	
 	public void setUpTank()
@@ -701,7 +699,7 @@ public class MyGame extends BaseGame {
 	private ConvictCichlid spawnCichlidFromDB(String id) throws SQLException{
 		ConvictCichlid cichlid;
 		
-		Statement stmt = DBConnector.getConnection().createStatement();
+		Statement stmt = DBConnection.getConnection().createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM [FishPool] WHERE ID='" + id + "'");
 		
 		
@@ -732,7 +730,7 @@ public class MyGame extends BaseGame {
 		try {
 			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
 
-			Statement s = DBConnector.getConnection().createStatement();
+			Statement s = DBConnection.getConnection().createStatement();
 			rs = s.executeQuery("SELECT fishID FROM [SimulationFish]");
 			while (rs.next()) {
 				String id = rs.getString("fishID"); // Field from database ex.
@@ -1545,7 +1543,7 @@ public class MyGame extends BaseGame {
 	private IDisplaySystem createDisplaySystem() {
 		IDisplaySystem display = new MyDisplaySystem(1000, 500, 24, 20, false,
 				"sage.renderer.jogl.JOGLRenderer");
-		logger.debug("\nWaiting for display creation...");
+		logger.debug("Waiting for display creation...");
 		int count = 0;
 		// wait until display creation completes or a timeout occurs
 //		while (!display.isCreated()) {
