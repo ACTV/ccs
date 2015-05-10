@@ -1268,6 +1268,8 @@ public class MyGame extends BaseGame {
 		{
 			logger.debug("PAUSE " + pauseSimulation);
 			pauseSimulation = true;
+		//	pauseRunner();
+		// error 
 
 		}
 	}
@@ -1276,6 +1278,8 @@ public class MyGame extends BaseGame {
 		public void performAction(float time, Event evento)
 		{
 			logger.debug("pause is " + pauseSimulation);
+		//	resumeRunner();
+			// error here
 			pauseSimulation = false;
 		}
 	}
@@ -1532,7 +1536,7 @@ public class MyGame extends BaseGame {
 	
 				// update skybox loc
 	
-				// skybox.setLocalTranslation(camT);
+				// skybox.setLocalTranslation(camT);	
 	
 				// iterating through models
 	
