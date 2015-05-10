@@ -20,8 +20,6 @@ public class RuleEngineRunner extends Thread{
 	private static RuleEngineRunner instance = null;
 	private static CCSKnowledgeSession session = CCSKnowledgeSession.getInstance();
 	private static Logger logger = LoggerFactory.getLogger(RuleEngineRunner.class);
-	private HashMap<String, CCSMemoryObject> map;
-	
 	
 	private RuleEngineRunner(){}
 	
@@ -36,9 +34,7 @@ public class RuleEngineRunner extends Thread{
 	}
 
 	public void newMap(ArrayList<SceneNode> objects){
-		String id;
 		boolean hasCichlid = false;
-		map = new HashMap<String, CCSMemoryObject>();
 		
 		// Add the fish
 		java.util.Iterator<SceneNode> itr = objects.iterator();
@@ -47,8 +43,6 @@ public class RuleEngineRunner extends Thread{
 			
 			if(c instanceof ConvictCichlid){
 				hasCichlid = true;
-				id = Integer.toString(((ConvictCichlid)c).getCichlidID());
-				map.put(id, (ConvictCichlid)c);	
 				session.getStatefulKnowledgeSession().insert((ConvictCichlid)c);
 			}
 		}
@@ -73,10 +67,9 @@ public class RuleEngineRunner extends Thread{
 		session.resumeSession();
 	}
 	
-	
 	public void run() {
 		logger.info("Executing KnowledgeBase!");
-		session.run();
+		session.start();
 	}
 
 }

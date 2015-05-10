@@ -2,7 +2,6 @@ package actv.ccs;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseConfiguration;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import actv.ccs.fact.PRNG;
-import actv.ccs.model.CCSMemoryObject;
 
 /**
  * The CCSKnowledgeBaseBuilder contains three methods to build and create a Stateful Knowledge Session for simulation.
@@ -180,11 +178,13 @@ public class CCSKnowledgeBaseBuilder{
 	
 	private static void addDrl(KnowledgeBuilder kbuilder, String drl){
 		kbuilder.add(ResourceFactory.newClassPathResource(drl), ResourceType.DRL);
+		log.debug("Added drl: {}", drl);
 	}
 
 	private static void addPackage(KnowledgeBuilder kbuilder, String pkg){
 		// Add the package(s)
 		kbuilder.add(ResourceFactory.newClassPathResource(pkg), ResourceType.PKG);
+		log.debug("Adding package: {}", pkg);
 	}
 	
 	private static void addBpmn(KnowledgeBuilder kbuilder, String flowFile){
@@ -194,6 +194,7 @@ public class CCSKnowledgeBaseBuilder{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		log.debug("Added bpmn: {}", flowFile);
 	}
 
 }

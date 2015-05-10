@@ -147,7 +147,7 @@ public class MyGame extends BaseGame {
 	          this.camera = display.getRenderer().getCamera();
 	          this.camera.setPerspectiveFrustum(45.0D, 1.0D, 0.01D, 1000.0D);
 	          this.camera.setLocation(new Point3D(1.0D, 1.0D, 20.0D));
-	          System.out.println("no scenario in place?");
+	          logger.debug("no scenario in place?");
 	          this.pauseSimulation = true;
 	          this.startAnimation = true;
 	          this.cichlidCount = 0;
@@ -317,7 +317,7 @@ public class MyGame extends BaseGame {
 	public void pauseGame()
 	{
 		pauseSimulation = true;
-		System.out.println("paused");
+		logger.debug("paused");
 		pauseRunner();
 		
 	}
@@ -325,7 +325,7 @@ public class MyGame extends BaseGame {
 	{
 		pauseSimulation = false;
 		resumeRunner();
-		System.out.println("resuming");
+		logger.debug("resuming");
 	}
 	
 	public void setUpTank()
@@ -344,7 +344,7 @@ public class MyGame extends BaseGame {
 				float timeParse = Float.parseFloat(timeGrab);
 
 				simulationTime = timeParse;
-				System.out.println("Here is the simulationTime! " + simulationTime);
+				logger.info("Here is the simulationTime! " + simulationTime);
 			}
 				
 		}	catch (Exception epp)
@@ -371,7 +371,7 @@ public class MyGame extends BaseGame {
 													// largepot etc.
 				int idS = Integer.parseInt(id);
 
-				System.out.println(idS);
+				logger.info("ID: {}", idS);
 
 				if (id.equals("1")) {
 					rsI = s.executeQuery("SELECT * FROM [Objects] WHERE Name='Large Plant'");
@@ -739,7 +739,7 @@ public class MyGame extends BaseGame {
 													// FishA, FishB
 				int idS = Integer.parseInt(id);
 
-				System.out.println(idS);
+				logger.debug("ID: {}", idS);
 
 				if (id.equals("1")) {
 					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
@@ -875,7 +875,7 @@ public class MyGame extends BaseGame {
 							model.updateGeometricState(0, true);
 							java.util.Iterator<SceneNode> modelIterator = model.iterator();
 							cichlidAObject = (Model3DTriMesh) modelIterator.next();
-							System.out.println("test");
+							logger.debug("test");
 						} catch (Exception vv)
 						{
 							vv.printStackTrace();
@@ -1021,7 +1021,7 @@ public class MyGame extends BaseGame {
 							model.updateGeometricState(0, true);
 							java.util.Iterator<SceneNode> modelIterator = model.iterator();
 							cichlidBObject = (Model3DTriMesh) modelIterator.next();
-							System.out.println("test");
+							logger.debug("test");
 						} catch (Exception vv)
 						{
 							vv.printStackTrace();
@@ -1160,7 +1160,7 @@ public class MyGame extends BaseGame {
 							model.updateGeometricState(0, true);
 							java.util.Iterator<SceneNode> modelIterator = model.iterator();
 							cichlidCObject = (Model3DTriMesh) modelIterator.next();
-							System.out.println("test");
+							logger.debug("test");
 						} catch (Exception vv)
 						{
 							vv.printStackTrace();
@@ -1200,7 +1200,7 @@ public class MyGame extends BaseGame {
 
 		cc = new CameraOrbit(camera, cameraGuy, im, mName);
 
-		System.out.println("controller: " + mName);
+		logger.debug("controller: " + mName);
 
 		// for this area, need to do a checker if A and B and C are called...
 		// test actions
@@ -1269,7 +1269,7 @@ public class MyGame extends BaseGame {
 	{
 		public void performAction(float time, Event ev)
 		{
-			System.out.println("PAUSE PRESSED");
+			logger.debug("PAUSE PRESSED");
 			pauseGame();
 
 		}
@@ -1278,7 +1278,7 @@ public class MyGame extends BaseGame {
 	{
 		public void performAction(float time, Event evento)
 		{
-			System.out.println("PAUSE IS OFF");
+			logger.debug("PAUSE IS OFF");
 			resumeGame();
 		}
 	}
@@ -1286,7 +1286,7 @@ public class MyGame extends BaseGame {
 	{
 		public void performAction(float time, Event sp)
 		{
-			System.out.println("saveAction");
+			logger.debug("saveAction");
 			/*
 			 * if this thing is ran
 			 * then check if cichlid is true 
@@ -1332,7 +1332,7 @@ public class MyGame extends BaseGame {
 						if (cichlidA != null)
 						{
 							Point3D loc = new Point3D(cichlidA.getWorldTranslation().getCol(3));
-							System.out.println("save flag for cichlidA");
+							logger.debug("save flag for cichlidA");
 			        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 1 where ID = 1");
 			        	int aa = s.executeUpdate("UPDATE FishPoolSaveState set StartingXPos = " + loc.getX() + " where ID = 1" );
 			        	int aaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = " + loc.getY() + " where ID = 1" );
@@ -1346,7 +1346,7 @@ public class MyGame extends BaseGame {
 						if (cichlidB != null)
 						{
 							Point3D loc = new Point3D(cichlidB.getWorldTranslation().getCol(3));
-							System.out.println("save flag for cichlidB");
+							logger.debug("save flag for cichlidB");
 			        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 2 where ID = 2");			        	
 			        	int aa = s.executeUpdate("UPDATE FishPoolSaveState set StartingXPos = " + loc.getX() + " where ID = 2" );
 			        	int aaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = " + loc.getY() + " where ID = 2" );
@@ -1359,7 +1359,7 @@ public class MyGame extends BaseGame {
 						if (cichlidC != null)
 						{
 							Point3D loc = new Point3D(cichlidC.getWorldTranslation().getCol(3));
-							System.out.println("save flag for cichlidC");
+							logger.debug("save flag for cichlidC");
 			        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 3 where ID = 3");			        	
 			        	int aa = s.executeUpdate("UPDATE FishPoolSaveState set StartingXPos = " + loc.getX() + " where ID = 3" );
 			        	int aaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = " + loc.getY() + " where ID = 3" );
@@ -1393,7 +1393,7 @@ public class MyGame extends BaseGame {
 					{
 						if (largePlant != null)
 						{	
-							System.out.println("saving large plant");
+							logger.debug("saving large plant");
 			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 1 where ID = 1");
 						}
 						else if (largePlant == null)
@@ -1402,7 +1402,7 @@ public class MyGame extends BaseGame {
 						}
 						if (largePot != null)
 						{
-							System.out.println("saving large pot");
+							logger.debug("saving large pot");
 							int b = s.executeUpdate("UPDATE SimulationObjectsS set objID = 4 where ID = 4");
 						}
 						else if (largePot == null)
@@ -1411,7 +1411,7 @@ public class MyGame extends BaseGame {
 						}
 						if (mediumPlant != null)
 						{
-							System.out.println("saving medium plant");
+							logger.debug("saving medium plant");
 							int c = s.executeUpdate("UPDATE SimulationObjectsS set objID = 2 where ID = 2");
 						}
 						else if (mediumPlant == null)
@@ -1420,7 +1420,7 @@ public class MyGame extends BaseGame {
 						}
 						if (mediumPot != null)
 						{
-							System.out.println("saving medium pot");
+							logger.debug("saving medium pot");
 							int d = s.executeUpdate("UPDATE SimulationObjectsS set objID = 5 where ID = 5");
 						}
 						else if (mediumPot == null)
@@ -1429,7 +1429,7 @@ public class MyGame extends BaseGame {
 						}
 						if (smallPlant != null)
 						{
-							System.out.println("saving small plant");
+							logger.debug("saving small plant");
 							int g = s.executeUpdate("UPDATE SimulationObjectsS set objID = 3 where ID = 3");
 						}
 						else if (smallPlant == null)
@@ -1438,7 +1438,7 @@ public class MyGame extends BaseGame {
 						}
 						if (smallPot != null)
 						{
-							System.out.println("saving small pot");
+							logger.debug("saving small pot");
 							int f = s.executeUpdate("UPDATE SimulationObjectsS set objID = 6 where ID = 6");
 						}
 						else if (smallPot == null)
@@ -1545,7 +1545,7 @@ public class MyGame extends BaseGame {
 	private IDisplaySystem createDisplaySystem() {
 		IDisplaySystem display = new MyDisplaySystem(1000, 500, 24, 20, false,
 				"sage.renderer.jogl.JOGLRenderer");
-		System.out.print("\nWaiting for display creation...");
+		logger.debug("\nWaiting for display creation...");
 		int count = 0;
 		// wait until display creation completes or a timeout occurs
 //		while (!display.isCreated()) {
@@ -1623,7 +1623,7 @@ public class MyGame extends BaseGame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	    System.out.println("BaseGame.shutdown() invoked...");
+	    logger.info("BaseGame.shutdown() invoked...");
 	    if (DisplaySystem.getCurrentDisplaySystem() != null) {
 	      DisplaySystem.getCurrentDisplaySystem().close();
 	      System.exit(0);
