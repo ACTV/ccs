@@ -7,25 +7,28 @@ import java.sql.SQLException;
 /**
  * 
  * Singleton interface for a connection to the Access database.
+ * The user of this class is unable to explicitly retrieve the connection.
  *
  */
-public class DBConnector {
+public class DBConnection {
+	private static DBConnection instance;
 	private static Connection connection;
 	// May need to use java.util.Properties
 	private static final String dbFile = "jdbc:ucanaccess://FishPool.accdb";
 	
-	private DBConnector(){}
+	private DBConnection(){}
 	
-	public static Connection getConnection(){
-		try {
-			if(connection == null || connection.isClosed()){
-				connection = DriverManager.getConnection(dbFile);
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException("Unable to connect to the database!");
+	public static DBConnection getInstance(){
+		if(instance == null){
+			instance = new DBConnection();
 		}
-		
-		return connection;
+		return instance;
+	}
+	
+	public synchronized void createConnection() throws SQLException{
+		if(connection == null || connection.isClosed()){
+			connection = DriverManager.getConnection(dbFile);
+		}
 	}
 	
 	public static void close(){
@@ -34,6 +37,14 @@ public class DBConnector {
 		} catch (SQLException e) {
 			throw new RuntimeException("Unable to close the database connection");
 		}
+	}
+	
+	public synchronized void executeUpdate(String query) throws SQLException{
+		connection.createStatement().executeUpdate(query);
+	}
+	
+	public static void executeQuery(String query) throws SQLException{
+		connection.createStatement().executeQuery(query);
 	}
 	
 }

@@ -1,4 +1,4 @@
-package actv.ccs;
+package actv.ccs.listener;
 
 import org.drools.event.process.ProcessCompletedEvent;
 import org.drools.event.process.ProcessEventListener;
@@ -34,15 +34,15 @@ public class CCSListener implements WorkingMemoryEventListener, ProcessEventList
 	}
 	
 	public void objectInserted(ObjectInsertedEvent event) {
-		logger.info("Inserted {}", event.getObject().toString());
+		logger.debug("Inserted {}", event.getObject().toString());
 	}
 
 	public void objectUpdated(ObjectUpdatedEvent event) {
-		logger.info("Updated {}", event.getObject().toString());
+		logger.debug("Updated {}", event.getObject().toString());
 	}
 
 	public void objectRetracted(ObjectRetractedEvent event) {
-		logger.info("Retracted {}", event.getOldObject().toString());
+		logger.debug("Retracted {}", event.getOldObject().toString());
 	}
 
 	public void beforeProcessStarted(ProcessStartedEvent event) {
@@ -51,7 +51,7 @@ public class CCSListener implements WorkingMemoryEventListener, ProcessEventList
 	}
 
 	public void afterProcessStarted(ProcessStartedEvent event) {
-		logger.info("Process Started {}", event.toString());
+		logger.debug("Process Started {}", event.toString());
 		
 	}
 
@@ -96,11 +96,11 @@ public class CCSListener implements WorkingMemoryEventListener, ProcessEventList
 	}
 
 	public void activationCreated(ActivationCreatedEvent event) {
-		logger.info("Activated {}", event.getActivation().getRule());
+		logger.debug("Activated {}", event.getActivation().getRule());
 	}
 
 	public void activationCancelled(ActivationCancelledEvent event) {
-		logger.info("Activication cancelled {}", event.getActivation().getRule());			
+		logger.debug("Activication cancelled {}", event.getActivation().getRule());			
 	}
 
 	public void beforeActivationFired(BeforeActivationFiredEvent event) {
@@ -108,7 +108,7 @@ public class CCSListener implements WorkingMemoryEventListener, ProcessEventList
 	}
 
 	public void afterActivationFired(AfterActivationFiredEvent event) {
-		logger.info("Fired {}", event.getActivation().getRule());
+		logger.debug("Fired {}", event.getActivation().getRule());
 	}
 
 	public void agendaGroupPopped(AgendaGroupPoppedEvent event) {
@@ -122,7 +122,7 @@ public class CCSListener implements WorkingMemoryEventListener, ProcessEventList
 	}
 
 	public void beforeRuleFlowGroupActivated(RuleFlowGroupActivatedEvent event) {
-		logger.info("Activated {}", event.toString());
+		logger.debug("Activated {}", event.toString());
 	}
 
 	public void afterRuleFlowGroupActivated(RuleFlowGroupActivatedEvent event) {
@@ -136,6 +136,6 @@ public class CCSListener implements WorkingMemoryEventListener, ProcessEventList
 	}
 
 	public void afterRuleFlowGroupDeactivated(RuleFlowGroupDeactivatedEvent event) {
-		logger.info("Deactivated group {}", event.getRuleFlowGroup());
+		logger.debug("Deactivated group {}", event.getRuleFlowGroup());
 	}
 }

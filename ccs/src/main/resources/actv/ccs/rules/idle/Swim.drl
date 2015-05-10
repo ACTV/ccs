@@ -12,14 +12,14 @@ rule "Swim"
 	ruleflow-group "swim"
 	
 	when
-		$cc : ConvictCichlid($speed : speed > 0)
-		$sc : SwimCounter(convictCichlid == $cc, $counter : counter-- > 0)
+		$cc : ConvictCichlid()
+		$sc : SwimCounter($counter : counter > 0)
 	then
 		
-		MoveActionFactory.moveForward((SceneNode)$cc, $cc.getBaseSpeed());
-		update($cc);
+		//MoveActionFactory.moveForward((SceneNode)$cc, $cc.getSpeed());
+		//update($cc);
 		
-		$sc.setCounter($counter -1);
+		$sc.setCounter($counter-1);
 		update($sc);
 			
 		logger.debug("Moving Forward: " + $cc.getSpeed());

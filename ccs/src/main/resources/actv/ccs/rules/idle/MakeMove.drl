@@ -10,7 +10,7 @@ global actv.ccs.fact.PRNG prng
 
 rule "Make Move"
 	ruleflow-group "swim"
-	
+	timer(int: 3s)
 	when
 		$cc : ConvictCichlid(prng.randomDouble() < .4)
 		

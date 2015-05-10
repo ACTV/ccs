@@ -25,4 +25,9 @@ public class SwimCounter {
 	public int getCounter(){
 		return this.counter;
 	}
+	
+	@Override
+	public String toString(){
+		return "[ SwimCounter: " + convictCichlid.getName() +"; " + counter + " ]" ;
+	}
 }

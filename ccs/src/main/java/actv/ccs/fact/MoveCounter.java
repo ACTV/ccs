@@ -35,4 +35,10 @@ public class MoveCounter {
 	public int getDirection(){
 		return this.direction;
 	}
+	
+	@Override
+	public String toString(){
+		String dir = direction > 0 ? "right" : "left";
+		return "[ MoveCounter: " + convictCichlid.getName() +"; " + counter + ", " + dir + " ]" ;
+	}
 }

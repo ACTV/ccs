@@ -37,7 +37,7 @@ public class CCSKnowledgeSession extends Thread {
 	
 	public void run(){
 		if(!isRunning){
-			logger.info("Running session....");
+			logger.debug("Running session!");
 			isRunning = true;
 			statefulKnowledgeSession.fireUntilHalt();
 		}

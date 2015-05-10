@@ -10,7 +10,7 @@ global actv.ccs.fact.PRNG prng
 
 rule "Make Swim"
 	ruleflow-group "swim"
-	
+	timer(int: 4s)
 	when
 		$cc : ConvictCichlid( speed == 0, prng.randomDouble() < .4 )
 		not(exists SwimCounter(convictCichlid == $cc))

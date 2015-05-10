@@ -1,4 +1,4 @@
-package actv.ccs.listener;
+package actv.ccs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,8 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import sage.scene.SceneNode;
-import actv.ccs.CCSKnowledgeBaseBuilder;
-import actv.ccs.CCSKnowledgeSession;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 
@@ -55,7 +53,6 @@ public class RuleEngineRunner extends Thread{
 	}
 	
 	public void closeSession() throws InterruptedException{
-		logger.info("Closing the session!");
 		session.terminate();
 	}
 	
@@ -68,7 +65,6 @@ public class RuleEngineRunner extends Thread{
 	}
 	
 	public void run() {
-		logger.info("Executing KnowledgeBase!");
 		session.start();
 	}
 
