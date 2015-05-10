@@ -149,7 +149,7 @@ public class MyGame extends BaseGame {
 	          this.camera.setLocation(new Point3D(1.0D, 1.0D, 20.0D));
 	          logger.debug("no scenario in place?");
 	          this.pauseSimulation = false;
-	          this.startAnimation = true;
+	        //  this.startAnimation = false;
 	          this.cichlidCount = 0;
 	          this.objCount = 0;
 	          createPerson();
