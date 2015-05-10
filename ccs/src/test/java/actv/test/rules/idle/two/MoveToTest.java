@@ -1,4 +1,4 @@
-package actv.rules.idle.two;
+package actv.test.rules.idle.two;
 
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
@@ -14,7 +14,7 @@ import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.ccs.sageTest.MoveActionFactory;
-import actv.rules.DroolsTest;
+import actv.test.rules.DroolsTest;
 
 public class MoveToTest extends DroolsTest {
 	private ConvictCichlid cc1, cc2;

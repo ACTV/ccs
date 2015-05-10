@@ -1,4 +1,4 @@
-package actv.rules;
+package actv.test.rules;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import actv.ccs.CCSKnowledgeBaseBuilder;
 import actv.ccs.CCSKnowledgeSession;
-import actv.ccs.CCSTestListener;
 import actv.ccs.fact.PRNG;
 import actv.ccs.model.CCSMemoryObject;
 

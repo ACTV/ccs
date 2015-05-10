@@ -1,8 +1,10 @@
-package actv.ccs;
+package actv.test.rules;
 
 import java.util.ArrayList;
 
 import org.drools.event.rule.AfterActivationFiredEvent;
+
+import actv.ccs.listener.CCSListener;
 
 /**
  * 

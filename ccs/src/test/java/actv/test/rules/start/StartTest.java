@@ -1,4 +1,4 @@
-package actv.rules.start;
+package actv.test.rules.start;
 
 import graphicslib3D.Point3D;
 
@@ -11,7 +11,7 @@ import org.junit.Test;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
-import actv.rules.DroolsTest;
+import actv.test.rules.DroolsTest;
 
 public class StartTest extends DroolsTest {
 	private static final String RULE = "Start";

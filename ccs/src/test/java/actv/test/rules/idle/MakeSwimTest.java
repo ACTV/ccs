@@ -1,4 +1,4 @@
-package actv.rules.idle;
+package actv.test.rules.idle;
 
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
-import actv.rules.DroolsTest;
+import actv.test.rules.DroolsTest;
 
 public class MakeSwimTest extends DroolsTest {
 	private ConvictCichlid cc;

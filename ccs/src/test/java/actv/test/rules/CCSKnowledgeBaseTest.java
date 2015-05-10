@@ -1,4 +1,4 @@
-package actv.rules;
+package actv.test.rules;
 
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import actv.ccs.CCSKnowledgeBaseBuilder;
 import actv.ccs.CCSKnowledgeSession;
-import actv.ccs.listener.RuleEngineRunner;
+import actv.ccs.RuleEngineRunner;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
