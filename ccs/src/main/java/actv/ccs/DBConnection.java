@@ -2,6 +2,7 @@ package actv.ccs;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -31,7 +32,7 @@ public class DBConnection {
 		}
 	}
 	
-	public static void close(){
+	public void close(){
 		try {
 			connection.close();
 		} catch (SQLException e) {
@@ -43,8 +44,8 @@ public class DBConnection {
 		connection.createStatement().executeUpdate(query);
 	}
 	
-	public static void executeQuery(String query) throws SQLException{
-		connection.createStatement().executeQuery(query);
+	public ResultSet executeQuery(String query) throws SQLException{
+		return connection.createStatement().executeQuery(query);
 	}
 	
 }

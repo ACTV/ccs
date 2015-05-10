@@ -698,9 +698,9 @@ public class MyGame extends BaseGame {
 	
 	private ConvictCichlid spawnCichlidFromDB(String id) throws SQLException{
 		ConvictCichlid cichlid;
-		
-		Statement stmt = DBConnection.getConnection().createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM [FishPool] WHERE ID='" + id + "'");
+		DBConnection conn = DBConnection.getInstance();
+		conn.createConnection();
+		conn.executeQuery("SELECT * FROM [FishPool] WHERE ID='" + id + "'");
 		
 		
 		float widthW = Float.parseFloat(rs.getString("Weight"));
@@ -728,10 +728,9 @@ public class MyGame extends BaseGame {
 	public void spawnCichlids() {
 		
 		try {
-			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
-
-			Statement s = DBConnection.getConnection().createStatement();
-			rs = s.executeQuery("SELECT fishID FROM [SimulationFish]");
+			DBConnection conn = DBConnection.getInstance();
+			conn.createConnection();
+			ResultSet rs = conn.executeQuery("SELECT fishID FROM [SimulationFish]");
 			while (rs.next()) {
 				String id = rs.getString("fishID"); // Field from database ex.
 													// FishA, FishB
@@ -740,7 +739,7 @@ public class MyGame extends BaseGame {
 				logger.debug("ID: {}", idS);
 
 				if (id.equals("1")) {
-					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
+					rsI = conn.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
 					while (rsI.next()) {
 						String name = rsI.getString("Type"); // Field from
 																// database ex.
@@ -895,7 +894,7 @@ public class MyGame extends BaseGame {
 						
 					}
 				} else if (id.equals("2")) {
-					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
+					rsI = conn.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
 
 					while (rsI.next()) {
 						String name = rsI.getString("Type"); // Field from
@@ -1042,7 +1041,7 @@ public class MyGame extends BaseGame {
 						cichlidCount++;
 					}
 				} else if (id.equals("3")) {
-					rsI = s.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
+					rsI = conn.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
 
 					while (rsI.next()) {
 						String name = rsI.getString("Type"); // Field from
