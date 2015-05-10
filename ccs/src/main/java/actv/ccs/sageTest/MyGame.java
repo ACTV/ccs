@@ -148,7 +148,7 @@ public class MyGame extends BaseGame {
 	          this.camera.setPerspectiveFrustum(45.0D, 1.0D, 0.01D, 1000.0D);
 	          this.camera.setLocation(new Point3D(1.0D, 1.0D, 20.0D));
 	          logger.debug("no scenario in place?");
-	          this.pauseSimulation = true;
+	          this.pauseSimulation = false;
 	          this.startAnimation = true;
 	          this.cichlidCount = 0;
 	          this.objCount = 0;
@@ -1266,8 +1266,8 @@ public class MyGame extends BaseGame {
 	{
 		public void performAction(float time, Event ev)
 		{
-			logger.debug("PAUSE PRESSED");
-			pauseGame();
+			logger.debug("PAUSE " + pauseSimulation);
+			pauseSimulation = true;
 
 		}
 	}
@@ -1275,8 +1275,8 @@ public class MyGame extends BaseGame {
 	{
 		public void performAction(float time, Event evento)
 		{
-			logger.debug("PAUSE IS OFF");
-			resumeGame();
+			logger.debug("pause is " + pauseSimulation);
+			pauseSimulation = false;
 		}
 	}
 	private class saveAction extends AbstractInputAction
@@ -1469,9 +1469,9 @@ public class MyGame extends BaseGame {
 	public void pauseUpdate(float elapsedTimeMS)
 	{
 		// creating timer thing
-		time = elapsedTimeMS;
+		time += elapsedTimeMS;
 		if (timeString != null) {
-			timeString.setText("Time: " + (int)Math.floor(time / 1000));
+			timeString.setText("Simulation is paused. Press R to resume.");
 		}
 		float timeCompare = time / 1000;
 
@@ -1512,75 +1512,65 @@ public class MyGame extends BaseGame {
 		startAnimation = true;
 	}
 	public void update(float elapsedTimeMS) // this will be where the objects
-											// will move
-	{
-		if (pauseSimulation == true) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else {
-			// creating timer thing
-			time += elapsedTimeMS;
-			if (timeString != null) {
-				timeString.setText("Time: " + (int)Math.floor(time / 1000));
-			}
-			float timeCompare = time / 1000;
-
-			Point3D camLoc = camera.getLocation();
-			Matrix3D camT = new Matrix3D();
-			camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
-			
-			if (startAnimation == true) {
-				// this should work
-				startAnimationProcess();
-				startAnimation = false;
-			}
-
-			// update skybox loc
-
-			// skybox.setLocalTranslation(camT);
-
-			// iterating through models
-
-			for (SceneNode s : getGameWorld()) {
-				if (s instanceof Model3DTriMesh) {
-					if (cichlidAObject != null) {
-						if (s == cichlidAObject) {
-							// System.out.println("i'm calling now!");
-							((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
-						}
-					}
-					if (cichlidBObject != null) {
-						if (s == cichlidBObject) {
-							// System.out.println("i'm fapping forward");
-							((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
-						}
-					}
-					if (cichlidCObject != null) {
-						if (s == cichlidCObject) {
-							// System.out.println("the world gone bad");
-							((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
-						}
-					}
-					s.updateGeometricState(elapsedTimeMS, true);
+	{	
+				// creating timer thing
+				time += elapsedTimeMS;
+				if (timeString != null) {
+					timeString.setText("Time: " + (int)Math.floor(time / 1000));
 				}
-			}
-			
-			for( SceneNode s : objs){
-				Matrix3D cichlidAlocalT = s.getLocalTranslation();
-				Matrix3D cichlidARot = s.getLocalRotation();
+				float timeCompare = time / 1000;
+	
+				Point3D camLoc = camera.getLocation();
+				Matrix3D camT = new Matrix3D();
+				camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
 				
-				s.setLocalTranslation(cichlidAlocalT);
-				s.setLocalRotation(cichlidARot);
-			}
+				if (startAnimation == true) {
+					// this should work
+					startAnimationProcess();
+					startAnimation = false;
+				}
+	
+				// update skybox loc
+	
+				// skybox.setLocalTranslation(camT);
+	
+				// iterating through models
+	
+				for (SceneNode s : getGameWorld()) {
+					if (s instanceof Model3DTriMesh) {
+						if (cichlidAObject != null) {
+							if (s == cichlidAObject) {
+							//	 System.out.println("i'm calling now!");
+								((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
+							}
+						}
+						if (cichlidBObject != null) {
+							if (s == cichlidBObject) {
+							//	 System.out.println("i'm fapping forward");
+								((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
+							}
+						}
+						if (cichlidCObject != null) {
+							if (s == cichlidCObject) {
+								// System.out.println("the world gone bad");
+								((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
+							}
+						}
+						s.updateGeometricState(elapsedTimeMS, true);
+					}
+				}
+				
+				for( SceneNode s : objs){
+					Matrix3D cichlidAlocalT = s.getLocalTranslation();
+					Matrix3D cichlidARot = s.getLocalRotation();
+					
+					s.setLocalTranslation(cichlidAlocalT);
+					s.setLocalRotation(cichlidARot);
+				}
+				
+				super.update(time);
+				cc.update(time);
 			
-			super.update(time);
-			cc.update(time);
-		}
-
 	}
 
 	private IDisplaySystem createDisplaySystem() {
