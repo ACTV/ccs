@@ -16,7 +16,7 @@ import actv.rules.DroolsTest;
 
 public class CoolingDownTest extends DroolsTest {
 	private ConvictCichlid cc;
-	private ArrayList<CCSMemoryObject> objs;
+	private ArrayList<Object> objs;
 	
 	public CoolingDownTest(){
 		super(	"actv/ccs/rules/start/CoolingDown.drl", 
@@ -31,7 +31,7 @@ public class CoolingDownTest extends DroolsTest {
 		cc.setCautionLevel(cc.getBaseCautionLevel() * 1.6f);
 		cc.setState(FishState.CAUTION);
 		
-		objs = new ArrayList<CCSMemoryObject>();
+		objs = new ArrayList<Object>();
 	}
 	
 	@Test

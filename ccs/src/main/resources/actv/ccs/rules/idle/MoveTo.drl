@@ -12,26 +12,26 @@ rule "Move To"
 	ruleflow-group "swim"
 	
 	when
-		$cc1 : ConvictCichlid( 	$aggroLevel1 : aggroLevel, $dir : direction)
+	//	$cc1 : ConvictCichlid( 	$aggroLevel1 : aggroLevel, $dir : direction)
 							  
-		$cc2 : ConvictCichlid(	aggroLevel >= $aggroLevel1,
-								MoveActionFactory.withinRange(this, $cc1))
+	//	$cc2 : ConvictCichlid(	aggroLevel >= $aggroLevel1,
+	//							MoveActionFactory.withinRange(this, $cc1))
 		
 	then
 		
-		float distance = MoveActionFactory.distance($cc1, $cc2);
-		MoveActionFactory.chase($cc2, $cc1);
-		MoveActionFactory.moveForward($cc2, distance);
+	//	float distance = MoveActionFactory.distance($cc1, $cc2);
+	//	MoveActionFactory.chase($cc2, $cc1);
+	//	MoveActionFactory.moveForward($cc2, distance);
 		
-		logger.info("Distance: {}", distance);
+	//	logger.info("Distance: {}", distance);
 		
-		logger.info("CC1 Loc {}", $cc1.getLocation().toString());
-		logger.info("CC1 Dir {}", $cc1.getDirection().toString());
+	//	logger.info("CC1 Loc {}", $cc1.getLocation().toString());
+	//	logger.info("CC1 Dir {}", $cc1.getDirection().toString());
 		
-		logger.info("CC2 Loc {}", $cc2.getLocation().toString());
-		logger.info("CC2 Dir {}", $cc2.getDirection().toString());
+	//	logger.info("CC2 Loc {}", $cc2.getLocation().toString());
+	//	logger.info("CC2 Dir {}", $cc2.getDirection().toString());
 			
-		update($cc2);
+	//	update($cc2);
 
 end
 

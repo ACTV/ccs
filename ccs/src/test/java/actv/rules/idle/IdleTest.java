@@ -16,7 +16,7 @@ import actv.rules.DroolsTest;
 public class IdleTest extends DroolsTest {
 	private ConvictCichlid cc;
 	private long start;
-	private ArrayList<CCSMemoryObject> objs;
+	private ArrayList<Object> objs;
 	
 	public IdleTest(){
 		super(	"actv/ccs/rules/idle/Idle.drl", 
@@ -30,7 +30,7 @@ public class IdleTest extends DroolsTest {
 		cc.setState(FishState.IDLE);
 		cc.setIdleWaitTime(System.currentTimeMillis());
 		
-		objs = new ArrayList<CCSMemoryObject>();
+		objs = new ArrayList<Object>();
 		start = System.currentTimeMillis();
 		
 	}

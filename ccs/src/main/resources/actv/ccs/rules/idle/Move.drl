@@ -5,12 +5,13 @@ import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import java.util.Random;
 import actv.ccs.fact.MoveCounter;
+import sage.scene.SceneNode;
 
 global org.slf4j.Logger logger
 
 rule "Move"
 	ruleflow-group "swim"
-	
+	//timer(int: .5s)
 	when
 		$cc : ConvictCichlid( )
 							  
@@ -24,7 +25,7 @@ rule "Move"
 		logger.info("Moved... {}", $mc.getCounter());
 		logger.info("Direction {}", $cc.getDirection());
 		
-		MoveActionFactory.turn($cc, $counter * $dir);
+		MoveActionFactory.turn((SceneNode)$cc, $counter * $dir);
 		update($cc);
 		
 		$mc.setCounter($counter - 1);

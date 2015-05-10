@@ -1,0 +1,20 @@
+package actv.ccs.rules.idle;
+
+import actv.ccs.sageTest.MoveActionFactory;
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.sageTest.FishTank;
+
+global org.slf4j.Logger logger
+
+rule "Bounds Y"
+	ruleflow-group "swim"
+	
+	when
+		$cc : ConvictCichlid(getLocation().getZ() > FishTank.WIDTH ||
+								getLocation().getZ() < 0)
+							  
+	then
+		logger.info("Bounds out of Z for {}", $cc.toString());
+end
+
+

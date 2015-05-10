@@ -45,12 +45,17 @@ public class CCSKnowledgeBaseBuilder{
 										 			"actv/ccs/rules/start/Start.drl",
 												 	"actv/ccs/rules/start/InitializeCichlid.drl",
 													"actv/ccs/rules/start/Calm.drl",
-													"actv/ccs/rules/idle/Idle.drl",
+													//"actv/ccs/rules/idle/Idle.drl",
 													"actv/ccs/rules/idle/Move.drl",
 													"actv/ccs/rules/idle/MakeMove.drl",
+													"actv/ccs/rules/idle/EndMove.drl",
+													"actv/ccs/rules/idle/EndSwim.drl",
 													"actv/ccs/rules/idle/Swim.drl",
 													"actv/ccs/rules/idle/MakeSwim.drl",
-													"actv/ccs/rules/idle/MoveTo.drl",
+													"actv/ccs/rules/bounds/BoundsX.drl",
+													"actv/ccs/rules/bounds/BoundsY.drl",
+													"actv/ccs/rules/bounds/BoundsZ.drl",
+													//"actv/ccs/rules/idle/MoveTo.drl",
 													"actv/ccs/flow/swim.bpmn" });
 	}
 	
@@ -62,7 +67,7 @@ public class CCSKnowledgeBaseBuilder{
 	 * @param objs
 	 * @return
 	 */
-	public static StatefulKnowledgeSession buildStatefulSession(ArrayList<CCSMemoryObject> objs){
+	public static StatefulKnowledgeSession buildStatefulSession(ArrayList<Object> objs){
 		StatefulKnowledgeSession sks = buildStatefulSession();
 		insertObjects(sks, objs);
 		
@@ -78,7 +83,7 @@ public class CCSKnowledgeBaseBuilder{
 	 * @param objs
 	 * @return
 	 */
-	public static StatefulKnowledgeSession buildStatefulSession(String drl, String bpmn, String flow, ArrayList<CCSMemoryObject> objs){
+	public static StatefulKnowledgeSession buildStatefulSession(String drl, String bpmn, String flow, ArrayList<Object> objs){
 		StatefulKnowledgeSession sks = setupSession(flow, new String[]{drl, bpmn});
 		
 		insertObjects(sks, objs);
@@ -136,7 +141,7 @@ public class CCSKnowledgeBaseBuilder{
 		return config;
 	}
 	
-	private static void insertObjects(StatefulKnowledgeSession sks, ArrayList<CCSMemoryObject> objs){
+	private static void insertObjects(StatefulKnowledgeSession sks, ArrayList<Object> objs){
 		for(Object obj : objs){
 			sks.insert(obj);
 		}

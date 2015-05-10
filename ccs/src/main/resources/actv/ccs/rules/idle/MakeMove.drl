@@ -12,7 +12,7 @@ rule "Make Move"
 	ruleflow-group "swim"
 	
 	when
-		$cc : ConvictCichlid(prng.randomDouble() < .9)
+		$cc : ConvictCichlid(prng.randomDouble() < .4)
 		
 		not(exists MoveCounter(convictCichlid == $cc))
 							  

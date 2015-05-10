@@ -6,9 +6,9 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import sage.scene.SceneNode;
 import actv.ccs.CCSKnowledgeBaseBuilder;
 import actv.ccs.CCSKnowledgeSession;
-import actv.ccs.fact.PRNG;
 import actv.ccs.model.CCSMemoryObject;
 import actv.ccs.model.ConvictCichlid;
 
@@ -35,21 +35,21 @@ public class RuleEngineRunner extends Thread{
 		return instance;
 	}
 
-	public void newMap(ArrayList<CCSMemoryObject> objects){
+	public void newMap(ArrayList<SceneNode> objects){
 		String id;
 		boolean hasCichlid = false;
 		map = new HashMap<String, CCSMemoryObject>();
 		
 		// Add the fish
-		java.util.Iterator<CCSMemoryObject> itr = objects.iterator();
+		java.util.Iterator<SceneNode> itr = objects.iterator();
 		while(itr.hasNext()){
-			CCSMemoryObject c = itr.next();
+			SceneNode c = itr.next();
 			
 			if(c instanceof ConvictCichlid){
 				hasCichlid = true;
 				id = Integer.toString(((ConvictCichlid)c).getCichlidID());
 				map.put(id, (ConvictCichlid)c);	
-				session.getStatefulKnowledgeSession().insert(c);
+				session.getStatefulKnowledgeSession().insert((ConvictCichlid)c);
 			}
 		}
 

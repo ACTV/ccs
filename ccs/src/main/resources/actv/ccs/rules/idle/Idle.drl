@@ -21,7 +21,6 @@ rule "Idle"
 		modify($cc){
 			setIdleWaitTime($cc.getIdleWaitTime + 1);
 		}
-		logger.info("PRNG: {}", prng.randomDouble());
 		
 end
 

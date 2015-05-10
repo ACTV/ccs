@@ -42,10 +42,17 @@ public class DroolsTest{
 	 * @param threadSleep
 	 * @param objects
 	 */
-	public void executeStateful(long threadSleep, ArrayList<CCSMemoryObject> objects){
+	public void executeStateful(long threadSleep, ArrayList<Object> objects){
 			
 		session.setStatefulKnowledgeSession(CCSKnowledgeBaseBuilder.buildStatefulSession(drl, bpmn, startProc, objects));
-		session.start();
+		
+		// Need to start a new thread because the session does not create one.
+		new Thread(){
+			public void run(){
+				session.run();
+			}
+		}.start();
+		
 		
 		try {
 			Thread.sleep(threadSleep);

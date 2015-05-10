@@ -1,9 +1,9 @@
 package actv.ccs.model;
 
 import graphicslib3D.Point3D;
-import sage.scene.TriMesh;
+import sage.scene.Model3DTriMesh;
 
-public abstract class TankObject extends TriMesh implements CCSMemoryObject {
+public abstract class TankObject extends Model3DTriMesh implements CCSMemoryObject {
 	private float length;
 	private float width;
 	private float height;

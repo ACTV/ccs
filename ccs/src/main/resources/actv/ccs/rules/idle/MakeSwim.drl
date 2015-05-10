@@ -12,7 +12,7 @@ rule "Make Swim"
 	ruleflow-group "swim"
 	
 	when
-		$cc : ConvictCichlid( speed == 0, prng.randomDouble() < .9 )
+		$cc : ConvictCichlid( speed == 0, prng.randomDouble() < .4 )
 		not(exists SwimCounter(convictCichlid == $cc))
 	then
 		insert(new SwimCounter($cc, prng.randomInt(20)));

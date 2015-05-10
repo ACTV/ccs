@@ -4,6 +4,7 @@ import actv.ccs.sageTest.MoveActionFactory;
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.model.type.FishState;
 import actv.ccs.fact.SwimCounter;
+import sage.scene.SceneNode;
 
 global org.slf4j.Logger logger
 
@@ -15,7 +16,7 @@ rule "Swim"
 		$sc : SwimCounter(convictCichlid == $cc, $counter : counter-- > 0)
 	then
 		
-		MoveActionFactory.moveForward($cc, $cc.getBaseSpeed());
+		MoveActionFactory.moveForward((SceneNode)$cc, $cc.getBaseSpeed());
 		update($cc);
 		
 		$sc.setCounter($counter -1);

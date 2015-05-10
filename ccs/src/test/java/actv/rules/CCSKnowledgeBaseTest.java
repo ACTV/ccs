@@ -23,7 +23,7 @@ public class CCSKnowledgeBaseTest{
 	private ConvictCichlid cc;
 	private long start;
 	private static Logger log = LoggerFactory.getLogger(CCSKnowledgeBaseTest.class);
-	private ArrayList<CCSMemoryObject> objs;
+	private ArrayList<Object> objs;
 	private CCSKnowledgeSession session = CCSKnowledgeSession.getInstance();
 
 	@Before
@@ -49,7 +49,7 @@ public class CCSKnowledgeBaseTest{
 	public void testInfinite(){
 		log.info(">>Testing infinite execution with initial NONE fish state");
 		
-		objs = new ArrayList<CCSMemoryObject>();
+		objs = new ArrayList<Object>();
 		objs.add(cc);
 		
 		//session.setStatefulKnowledgeSession(CCSKnowledgeBaseBuilder.buildStatefulSession(objs));
@@ -72,7 +72,7 @@ public class CCSKnowledgeBaseTest{
 		
 		log.info(">>Testing Infinte with IDLE as starting fish state");
 		
-		objs = new ArrayList<CCSMemoryObject>();
+		objs = new ArrayList<Object>();
 		objs.add(cc);
 
 		session.setStatefulKnowledgeSession(CCSKnowledgeBaseBuilder.buildStatefulSession(objs));
