@@ -124,6 +124,8 @@ public class MyGame extends BaseGame {
 */
 	  public void initGame()
 	  {
+		 createHUD();
+		startAnimation = false;
 	    try
 	    {
 	      this.conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
@@ -139,6 +141,8 @@ public class MyGame extends BaseGame {
 	        if (scenGrab >=1 && scenGrab <= 6)
 	        {
 	          this.fishTank = new FishTankImpl();
+	          startAnimation = true;
+	          startAnimationProcess();
 	        }
 	        else
 	        {
@@ -154,6 +158,7 @@ public class MyGame extends BaseGame {
 	          this.objCount = 0;
 	          createPerson();
 	          initActions();
+	  //        createHUD();
 	          logger.info("Finished initial startup!");
 	          
 	        }
@@ -167,6 +172,7 @@ public class MyGame extends BaseGame {
 
 	public void startAnimationProcess()
 	{
+		System.out.println("call me maybe");
 
 		for (SceneNode s : getGameWorld())
 		{
@@ -1281,6 +1287,7 @@ public class MyGame extends BaseGame {
 		//	resumeRunner();
 			// error here
 			pauseSimulation = false;
+		
 		}
 	}
 	private class saveAction extends AbstractInputAction
@@ -1674,6 +1681,15 @@ public class MyGame extends BaseGame {
 	{
 		return pauseSimulation;
 	}
+	public void setAnimation(boolean b)
+	{
+		startAnimation = b;
+	}
+	public boolean getAnimationBool()
+	{
+		return startAnimation;
+	}
+	
 
 	  protected void mainLoop()
 {
