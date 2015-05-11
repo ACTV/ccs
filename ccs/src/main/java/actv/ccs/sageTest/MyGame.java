@@ -924,7 +924,7 @@ public class MyGame extends BaseGame {
 						double yStartY = Double.parseDouble(yLocS);
 						double zStartZ = Double.parseDouble(zLocS);
 
-						cichlidB = new ConvictCichlid(0, widthW, heightW, name, new Point3D(cichlidA.getLocation().getX()+4,  cichlidA.getLocation().getY()+2, cichlidA.getLocation().getZ()));
+						cichlidB = new ConvictCichlid(0, widthW, heightW, name,  new Point3D(xStartW, yStartY, zStartZ));
 						cichlidB.setName(name);
 						cichlidB.setGender(gender);
 						cichlidB.setAggroLevel(aggroW);

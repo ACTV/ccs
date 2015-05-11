@@ -845,7 +845,7 @@ public class NewSimulation extends JFrame {
 //	    this.myGame.createHUD();
 		this.myGame.setAnimation(true);
 	    this.myGame.setUpTank();
-	//	this.myGame.startAnimationProcess();
+		this.myGame.startAnimationProcess();
 
 	}
 }
