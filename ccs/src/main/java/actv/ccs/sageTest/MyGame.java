@@ -1670,9 +1670,10 @@ public class MyGame extends BaseGame {
 	    logger.info("BaseGame.shutdown() invoked...");
 	    if (DisplaySystem.getCurrentDisplaySystem() != null) {
 	      DisplaySystem.getCurrentDisplaySystem().close();
-	      System.exit(0);
+		    logger.info("BaseGame.shutdown() invoked...");
+	   
 	    }
-
+	    System.exit(0);
 	}
 
 	public void setPauseSim(boolean b) {
