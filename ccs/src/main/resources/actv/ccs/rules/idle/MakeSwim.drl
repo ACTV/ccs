@@ -1,0 +1,22 @@
+package actv.ccs.rules.idle;
+
+import actv.ccs.sageTest.MoveActionFactory;
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.type.FishState;
+import actv.ccs.fact.SwimCounter;
+
+global org.slf4j.Logger logger
+global actv.ccs.fact.PRNG prng
+
+rule "Make Swim"
+	ruleflow-group "swim"
+	timer(int: 4s)
+	when
+		$cc : ConvictCichlid( speed == 0, prng.randomDouble() < .4 )
+		not(exists SwimCounter(convictCichlid == $cc))
+	then
+		insert(new SwimCounter($cc, prng.randomInt(20)));
+		$cc.setSpeed($cc.getBaseSpeed());		
+		update($cc);
+		logger.debug("Preparing to swim: " + $cc.getSpeed());
+end

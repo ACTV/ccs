@@ -1,0 +1,26 @@
+package actv.ccs.rules.idle;
+
+import actv.ccs.sageTest.MoveActionFactory;
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.type.FishState;
+import actv.ccs.fact.MoveCounter;
+
+global org.slf4j.Logger logger
+global actv.ccs.fact.PRNG prng
+
+rule "Make Move"
+	ruleflow-group "swim"
+	timer(int: 3s)
+	when
+		$cc : ConvictCichlid(prng.randomDouble() < .4)
+		
+		not(exists MoveCounter(convictCichlid == $cc))
+							  
+	then
+		int dir = -1;
+		if(prng.randomBoolean()) dir = 1;
+	
+		insert(new MoveCounter($cc, prng.randomInt(60), dir)); 
+end
+
+

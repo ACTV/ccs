@@ -1,0 +1,25 @@
+package actv.ccs.rules.start;
+
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.type.FishState;
+import actv.ccs.fact.CoolingDown;
+
+global org.slf4j.Logger logger
+global actv.ccs.fact.PRNG prng
+
+rule "Cooling Down"
+	ruleflow-group "swim"
+	timer(int: 2s)
+	
+	when
+		$cc : ConvictCichlid(state == FishState.CAUTION)
+		
+		$cd : CoolingDown( convictCichlid == $cc)
+	then
+		retract($cd);
+		
+		modify($cc){
+			setCautionLevel($cc.getBaseCautionLevel()),
+			setState(FishState.IDLE);
+		}
+end

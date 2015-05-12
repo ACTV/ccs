@@ -1,0 +1,18 @@
+package actv.ccs.rules.idle;
+
+import actv.ccs.fact.SwimCounter;
+
+global org.slf4j.Logger logger
+global actv.ccs.fact.PRNG prng
+
+rule "End Swim"
+	ruleflow-group "swim"
+	
+	when
+		$mc : SwimCounter(counter <= 0)
+							  
+	then
+		retract($mc);
+end
+
+

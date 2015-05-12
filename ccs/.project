@@ -3,7 +3,6 @@
 	<name>ccs</name>
 	<comment></comment>
 	<projects>
-		<project>ccs-rules</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

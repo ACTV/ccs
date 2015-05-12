@@ -1,0 +1,38 @@
+package actv.ccs.rules.idle;
+
+import actv.ccs.sageTest.MoveActionFactory;
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.type.FishState;
+import graphicslib3D.Vector3D;
+import sage.scene.SceneNode;
+
+global org.slf4j.Logger logger
+
+rule "Move To"
+	ruleflow-group "swim"
+	
+	when
+	//	$cc1 : ConvictCichlid( 	$aggroLevel1 : aggroLevel, $dir : direction)
+							  
+	//	$cc2 : ConvictCichlid(	aggroLevel >= $aggroLevel1,
+	//							MoveActionFactory.withinRange(this, $cc1))
+		
+	then
+		
+	//	float distance = MoveActionFactory.distance($cc1, $cc2);
+	//	MoveActionFactory.chase($cc2, $cc1);
+	//	MoveActionFactory.moveForward($cc2, distance);
+		
+	//	logger.info("Distance: {}", distance);
+		
+	//	logger.info("CC1 Loc {}", $cc1.getLocation().toString());
+	//	logger.info("CC1 Dir {}", $cc1.getDirection().toString());
+		
+	//	logger.info("CC2 Loc {}", $cc2.getLocation().toString());
+	//	logger.info("CC2 Dir {}", $cc2.getDirection().toString());
+			
+	//	update($cc2);
+
+end
+
+

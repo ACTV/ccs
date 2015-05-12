@@ -1,0 +1,28 @@
+Albert's TO DO LIST:
+need to find a way to get the tank array from new simulation to simulation world - done
+need to fix file menu - low
+need to merge graphics code - high. highest priority
+need to put objects on screen - done
+
+what else should i do?
+
+WHAT ELSE SHOULD I DO?!?!?!?! working on sds.
+
+Thomas' TO DO LIST:
+Get rid of hardcoding in the rule file paths - low for now
+	1) Make Pot/Plan objects that are subclasses of the TankObject
+	2) Pass FishTank obj from NewSimulation.java into MyGame.java
+	3) Pass tank into working memory for collision handling (??)
+	4) Modularize code
+	5) Finish Rules.
+
+
+Christian's TO DO LIST:
+after first demo
+add tables for the pot and plant sizes (small, medium, large)
+double check sql queries for best possible situation for pulling larger amount of fish records
+
+Victor's TO DO LIST:
+
+
+holy shit godddamn reply!!!! 
