@@ -77,10 +77,7 @@ public class NewSimulation extends JFrame {
 
 		setTitle("Convict Cichlid Fish Simulator New Simulation Test");
 		setSize(1000,600);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);	
-		// create menu bar
-		JMenuBar b = createJMenu();
-		this.setJMenuBar(b);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
 		
@@ -355,17 +352,11 @@ public class NewSimulation extends JFrame {
 		
 		
 		outputData = new JTextArea();
-		springLayout.putConstraint(SpringLayout.SOUTH, outputData, -32, SpringLayout.SOUTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, outputData, -10, SpringLayout.EAST, getContentPane());
 		outputData.setWrapStyleWord(true);
 		outputData.setLineWrap(true);
 		getContentPane().add(outputData);
 		outputData.setEditable(false);
-		
-		JLabel lblTestingoutputData = new JLabel("testingOutput Data");
-		springLayout.putConstraint(SpringLayout.WEST, lblTestingoutputData, 0, SpringLayout.WEST, outputData);
-		springLayout.putConstraint(SpringLayout.SOUTH, lblTestingoutputData, -19, SpringLayout.NORTH, outputData);
-		getContentPane().add(lblTestingoutputData);
 		
 		JSlider waterTemperatureSlider = new JSlider();
 		getContentPane().add(waterTemperatureSlider);
@@ -447,7 +438,7 @@ public class NewSimulation extends JFrame {
 		final float tankHeightC = Float.parseFloat(tankHeightS);
 		
 		JButton btnRunSimulation = new JButton("Run Simulation");
-		springLayout.putConstraint(SpringLayout.NORTH, outputData, -1, SpringLayout.NORTH, btnRunSimulation);
+		springLayout.putConstraint(SpringLayout.NORTH, outputData, 3, SpringLayout.NORTH, btnRunSimulation);
 		springLayout.putConstraint(SpringLayout.WEST, outputData, 538, SpringLayout.EAST, btnRunSimulation);
 		springLayout.putConstraint(SpringLayout.WEST, btnRunSimulation, 0, SpringLayout.WEST, lblPleasePickA);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnRunSimulation, -59, SpringLayout.SOUTH, getContentPane());
@@ -484,11 +475,6 @@ public class NewSimulation extends JFrame {
 		timerSlider.setMaximum(1000);
 		timerSlider.setMinimum(1);
 		getContentPane().add(timerSlider);
-		
-		JLabel lblScenarioStuffGoes = new JLabel("Scenario Stuff goes here ...");
-		springLayout.putConstraint(SpringLayout.SOUTH, lblScenarioStuffGoes, 0, SpringLayout.SOUTH, waterTemperatureSlider);
-		springLayout.putConstraint(SpringLayout.EAST, lblScenarioStuffGoes, -201, SpringLayout.EAST, getContentPane());
-		getContentPane().add(lblScenarioStuffGoes);
 		
 		JLabel lblPleasePickA_1 = new JLabel("Please pick a plant or object to put into the tank: ");
 		springLayout.putConstraint(SpringLayout.NORTH, lblPleasePickA_1, 0, SpringLayout.NORTH, label);
@@ -795,38 +781,7 @@ public class NewSimulation extends JFrame {
 	}
 	
 
-	private JMenuBar createJMenu() { 
-		// creating menubar
-		JMenuBar bar = new JMenuBar();
-		// initializing commands
-		// File
-		JMenu file = new JMenu("File");
-		// sub testing
-		JMenuItem mItem1 = new JMenuItem("exit");
-		file.add(mItem1);
-		bar.add(file);
-		// Edit
-		// Save
-		// Load
-		JMenu load = new JMenu("Load");
-		JMenuItem mItem4 = new JMenuItem("Load a previous simulation");
-		/*
-		 * will have to ask later on how you guys want to load the data, is there a special format on how to read the file data?
-		 */
-		load.add(mItem4);
-		bar.add(load);
-		// Help
-		JMenu help = new JMenu("Help");
-		JMenuItem mItem5 = new JMenuItem("Manual");
-		help.add(mItem5);
-		bar.add(help);
-		// About
-		JMenu about = new JMenu("About");
-		JMenuItem mItem6 = new JMenuItem("Read This!");
-		about.add(mItem6);		
-		bar.add(about);
-		
-		return bar;
+	private JMenuBar createJMenu() {
 	}
 	
 	public void CloseJFrame()

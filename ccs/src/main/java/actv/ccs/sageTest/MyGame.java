@@ -147,7 +147,7 @@ public class MyGame extends BaseGame {
 	        else
 	        {
 	          IDisplaySystem display = getDisplaySystem();
-	          display.setTitle("Empty Window where the Sun don't shine apparently.");
+	          display.setTitle("Please wait... loading objects.");
 	          this.camera = display.getRenderer().getCamera();
 	          this.camera.setPerspectiveFrustum(45.0D, 1.0D, 0.01D, 1000.0D);
 	          this.camera.setLocation(new Point3D(1.0D, 1.0D, 20.0D));
@@ -224,7 +224,7 @@ public class MyGame extends BaseGame {
 	public void initObjects() {
 		// this is for initializing objects
 		display = getDisplaySystem();
-		display.setTitle("sage implementation of the pain");
+		display.setTitle("Convict Cichlid Simulation");
 
 		camera = display.getRenderer().getCamera();
 		camera.setPerspectiveFrustum(45, 1, 0.01, 1000);

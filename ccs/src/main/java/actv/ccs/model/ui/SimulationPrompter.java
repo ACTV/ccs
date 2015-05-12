@@ -29,32 +29,22 @@ public class SimulationPrompter extends JFrame {
 	public SimulationPrompter(MyGame gg) {
 		myGame = gg;
 		setTitle("Convict Cichlid Fish Simulator Simulation Prompter");
-		setSize(492, 600);
+		setSize(605, 602);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
 
 		JLabel lblHelloWelcomeTo = new JLabel(
-				"Hello! Welcome to this humble version of a Convict Cichlid Simulator! Please choose your poison!");
+				"Hello. Welcome to ACTV's Convict Cichlid Fish Simulator. Please select one of the options below.");
 		springLayout.putConstraint(SpringLayout.NORTH, lblHelloWelcomeTo, 10,
 				SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, lblHelloWelcomeTo, 10,
 				SpringLayout.WEST, getContentPane());
 		getContentPane().add(lblHelloWelcomeTo);
 
-		JLabel lblPickAndStart = new JLabel("PICK AND START THY SIMULATION!");
-		springLayout.putConstraint(SpringLayout.NORTH, lblPickAndStart, 19,
-				SpringLayout.SOUTH, lblHelloWelcomeTo);
-		springLayout.putConstraint(SpringLayout.WEST, lblPickAndStart, 0,
-				SpringLayout.WEST, lblHelloWelcomeTo);
-		getContentPane().add(lblPickAndStart);
-
 		JButton btnCreateYourOwn = new JButton(
-				"Create your Own Simulation (hah)");
-		springLayout.putConstraint(SpringLayout.NORTH, btnCreateYourOwn, 18,
-				SpringLayout.SOUTH, lblPickAndStart);
-		springLayout.putConstraint(SpringLayout.WEST, btnCreateYourOwn, 10,
-				SpringLayout.WEST, getContentPane());
+				"Create Your Own Simulation");
+		springLayout.putConstraint(SpringLayout.WEST, btnCreateYourOwn, 10, SpringLayout.WEST, getContentPane());
 		getContentPane().add(btnCreateYourOwn);
 		btnCreateYourOwn.addActionListener(new ActionListener() {
 
@@ -91,16 +81,14 @@ public class SimulationPrompter extends JFrame {
 		});
 
 		JLabel lblIfNewSimulation = new JLabel(
-				"If new simulation ... then autoclose this and go to new simulation");
-		springLayout.putConstraint(SpringLayout.NORTH, lblIfNewSimulation, 70,
-				SpringLayout.SOUTH, btnCreateYourOwn);
-		springLayout.putConstraint(SpringLayout.WEST, lblIfNewSimulation, 0,
-				SpringLayout.WEST, lblHelloWelcomeTo);
+				"Pick from one of the four scenarios or load a saved scenario.");
+		springLayout.putConstraint(SpringLayout.SOUTH, btnCreateYourOwn, -92, SpringLayout.NORTH, lblIfNewSimulation);
+		springLayout.putConstraint(SpringLayout.WEST, lblIfNewSimulation, 0, SpringLayout.WEST, lblHelloWelcomeTo);
 		getContentPane().add(lblIfNewSimulation);
 
 		JButton btnScenario1 = new JButton("Scenario 1");
-		springLayout.putConstraint(SpringLayout.NORTH, btnScenario1, 22,
-				SpringLayout.SOUTH, lblIfNewSimulation);
+		springLayout.putConstraint(SpringLayout.NORTH, btnScenario1, 212, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, lblIfNewSimulation, -21, SpringLayout.NORTH, btnScenario1);
 		springLayout.putConstraint(SpringLayout.WEST, btnScenario1, 0,
 				SpringLayout.WEST, lblHelloWelcomeTo);
 		getContentPane().add(btnScenario1);
