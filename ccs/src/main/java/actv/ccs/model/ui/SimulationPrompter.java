@@ -12,6 +12,7 @@ import java.sql.Statement;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SpringLayout;
 
 import org.slf4j.Logger;
@@ -572,6 +573,22 @@ public class SimulationPrompter extends JFrame {
 
 			}
 		});
+		
+		JButton exitBtn = new JButton("Quit");
+		springLayout.putConstraint(SpringLayout.NORTH, exitBtn, 19,
+				SpringLayout.SOUTH, btnLoadSavedState);
+		springLayout.putConstraint(SpringLayout.WEST, exitBtn, 0,
+				SpringLayout.WEST, lblHelloWelcomeTo);
+		getContentPane().add(exitBtn);
+		exitBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int ret = JOptionPane.showConfirmDialog(getRootPane(), "Do you wish to exit?", "", JOptionPane.YES_NO_OPTION);
+				if(ret == JOptionPane.YES_OPTION){
+					System.exit(0);
+				}
+			}
+		});
+
 
 		this.setVisible(true);
 	}
