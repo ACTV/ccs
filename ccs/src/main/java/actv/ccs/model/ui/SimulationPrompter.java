@@ -595,6 +595,6 @@ public class SimulationPrompter extends JFrame {
 	//	this.myGame.createHUD();
 		this.myGame.setUpTank();
 		this.myGame.setAnimation(true);
-		this.myGame.startAnimationProcess();
+	//	this.myGame.startAnimationProcess();
 	}
 }

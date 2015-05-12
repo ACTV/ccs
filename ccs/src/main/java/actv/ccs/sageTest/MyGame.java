@@ -1192,6 +1192,8 @@ public class MyGame extends BaseGame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		startAnimation = true;
+		startAnimationProcess();
 	}
 
 	public void initActions() {
