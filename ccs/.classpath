@@ -48,5 +48,9 @@
 	<classpathentry kind="lib" path="lib/sagetest.jar"/>
 	<classpathentry kind="lib" path="lib/vecmath.jar"/>
 	<classpathentry kind="lib" path="lib/ucanaccess-2.0.9.4.jar"/>
+	<classpathentry kind="lib" path="lib/gluegen-rt-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="lib/joal-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="lib/jocl-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="lib/jogl-all-natives-macosx-universal.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
