@@ -1510,7 +1510,42 @@ public class MyGame extends BaseGame {
 				s.updateGeometricState(elapsedTimeMS, true);
 			}
 		}
-		
+		for (SceneNode s : getGameWorld() )
+		{
+			if (s == cichlidA) {
+				
+				// call move stuff here
+				Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+
+				
+				Matrix3D cichlidAlocalT = s.getLocalTranslation();
+				Matrix3D cichlidARot = s.getLocalRotation();
+				cichlidBObject.setLocalTranslation(cichlidAlocalT);
+				cichlidBObject.setLocalRotation(cichlidARot);
+			}
+			if (s == cichlidB) {
+				
+				// call move stuff here
+				Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+
+				
+				Matrix3D cichlidBlocalT = s.getLocalTranslation();
+				Matrix3D cichlidBRot = s.getLocalRotation();
+				cichlidBObject.setLocalTranslation(cichlidBlocalT);
+				cichlidBObject.setLocalRotation(cichlidBRot);
+			}
+			if (s == cichlidC) {
+				
+				// call move stuff here
+				Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+
+				
+				Matrix3D cichlidClocalT = s.getLocalTranslation();
+				Matrix3D cichlidCRot = s.getLocalRotation();
+				cichlidBObject.setLocalTranslation(cichlidClocalT);
+				cichlidBObject.setLocalRotation(cichlidCRot);
+			}
+		}
 		for( SceneNode s : objs){
 			Matrix3D cichlidAlocalT = s.getLocalTranslation();
 			Matrix3D cichlidARot = s.getLocalRotation();
