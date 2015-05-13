@@ -26,6 +26,10 @@ public class SwimCounter {
 		return this.counter;
 	}
 	
+	public void decrement(){
+		counter--;
+	}
+	
 	@Override
 	public String toString(){
 		return "[ SwimCounter: " + convictCichlid.getName() +"; " + counter + " ]" ;

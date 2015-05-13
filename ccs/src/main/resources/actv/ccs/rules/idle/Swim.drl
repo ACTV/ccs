@@ -7,19 +7,20 @@ import actv.ccs.fact.SwimCounter;
 import sage.scene.SceneNode;
 
 global org.slf4j.Logger logger
+global actv.ccs.fact.PRNG prng
 
 rule "Swim"
 	ruleflow-group "swim"
-	
+	timer(int: 0s 750ms)
 	when
 		$cc : ConvictCichlid()
-		$sc : SwimCounter($counter : counter > 0)
+		$sc : SwimCounter(counter > 0)
 	then
 		
-		//MoveActionFactory.moveForward((SceneNode)$cc, $cc.getSpeed());
-		//update($cc);
+		MoveActionFactory.moveForward((SceneNode)$cc, $cc.getSpeed());
+		update($cc);
 		
-		$sc.setCounter($counter-1);
+		$sc.decrement();
 		update($sc);
 			
 		logger.debug("Moving Forward: " + $cc.getSpeed());

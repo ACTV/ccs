@@ -44,7 +44,7 @@ public class CCSKnowledgeBaseBuilder{
 										 			"actv/ccs/rules/start/Start.drl",
 												 	"actv/ccs/rules/start/InitializeCichlid.drl",
 													"actv/ccs/rules/start/Calm.drl",
-													//"actv/ccs/rules/idle/Idle.drl",
+													"actv/ccs/rules/idle/Idle.drl",
 													"actv/ccs/rules/idle/Move.drl",
 													"actv/ccs/rules/idle/MakeMove.drl",
 													"actv/ccs/rules/idle/EndMove.drl",

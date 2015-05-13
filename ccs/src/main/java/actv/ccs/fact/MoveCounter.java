@@ -36,6 +36,10 @@ public class MoveCounter {
 		return this.direction;
 	}
 	
+	public void decrement(){
+		counter--;
+	}
+	
 	@Override
 	public String toString(){
 		String dir = direction > 0 ? "right" : "left";
