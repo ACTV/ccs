@@ -20,7 +20,9 @@ rule "Make Move"
 		int dir = -1;
 		if(prng.randomBoolean()) dir = 1;
 	
-		insert(new MoveCounter($cc, prng.randomInt(60), dir)); 
+		insert(new MoveCounter($cc, prng.randomInt(40), dir)); 
+		
+		logger.debug("Fired rule: [ {} ]", drools.getRule().getName());
 end
 
 

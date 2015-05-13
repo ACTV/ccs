@@ -7,12 +7,13 @@ global actv.ccs.fact.PRNG prng
 
 rule "End Move"
 	ruleflow-group "swim"
-	
+	timer(int: 8s)
 	when
 		$mc : MoveCounter(counter <= 0)
 							  
 	then
 		retract($mc);
+		logger.debug("Fired rule: [ {} ]", drools.getRule().getName());
 end
 
 

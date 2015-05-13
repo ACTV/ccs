@@ -13,10 +13,10 @@ rule "Make Swim"
 	timer(int: 4s)
 	when
 		$cc : ConvictCichlid( speed == 0, prng.randomDouble() < .4 )
-		not(exists SwimCounter(convictCichlid == $cc))
+		not(exists SwimCounter(convictCichlid.equals($cc)))
 	then
 		insert(new SwimCounter($cc, prng.randomInt(20)));
 		$cc.setSpeed($cc.getBaseSpeed());		
 		update($cc);
-		logger.debug("Preparing to swim: " + $cc.getSpeed());
+		logger.debug("Fired rule: [ {} ]", drools.getRule().getName());
 end

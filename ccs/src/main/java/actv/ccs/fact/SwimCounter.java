@@ -7,11 +7,13 @@ import actv.ccs.model.ConvictCichlid;
  */
 public class SwimCounter {
 	private int counter;
+	private int initialCount;
 	private ConvictCichlid convictCichlid;
 	
 	public SwimCounter(ConvictCichlid convictCichlid, int counter){
 		this.convictCichlid = convictCichlid;
 		this.counter = counter;
+		this.initialCount = counter;
 	}
 	
 	public ConvictCichlid getConvictCichlid() {
@@ -24,6 +26,10 @@ public class SwimCounter {
 
 	public int getCounter(){
 		return this.counter;
+	}
+	
+	public int getInitialCount(){
+		return this.initialCount;
 	}
 	
 	public void decrement(){

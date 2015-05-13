@@ -21,6 +21,7 @@ rule "Idle"
 		modify($cc){
 			setIdleWaitTime($cc.getIdleWaitTime + 1);
 		}
+		logger.debug("Fired rule: [ {} ]", drools.getRule().getName());
 		
 end
 

@@ -9,23 +9,25 @@ global org.slf4j.Logger logger
 
 rule "Move"
 	ruleflow-group "swim"
-	timer(int: 0s 750ms)
+	timer(int: 100ms)
 	when
 		$cc : ConvictCichlid( )
 							  
 		$mc : MoveCounter(	convictCichlid == $cc, 
-							counter >= 1, 
+							$counter : counter, 
 							direction != 0,
 							$dir : direction)
 		
 	then
-		MoveActionFactory.turn((SceneNode)$cc, $mc.getCounter() * $dir);
-		update($cc);
+		if($counter > 0){
+			MoveActionFactory.turn((SceneNode)$cc, $mc.getCounter() * $dir);
+			update($cc);
+			
+			$mc.decrement();
+			update($mc);
+			logger.debug("Fired rule: [ {} ]", drools.getRule().getName());
+		}
 		
-		$mc.decrement();
-		update($mc);
-		
-				
 end
 
 

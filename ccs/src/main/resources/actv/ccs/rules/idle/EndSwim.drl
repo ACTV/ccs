@@ -13,6 +13,7 @@ rule "End Swim"
 							  
 	then
 		retract($mc);
+		logger.debug("Fired rule: [ {} ]", drools.getRule().getName());
 end
 
 

@@ -38,7 +38,7 @@ public class CCSListener implements WorkingMemoryEventListener, ProcessEventList
 	}
 
 	public void objectUpdated(ObjectUpdatedEvent event) {
-		logger.debug("Updated {}", event.getObject().toString());
+		//logger.debug("Updated {}", event.getObject().toString());
 	}
 
 	public void objectRetracted(ObjectRetractedEvent event) {
@@ -107,7 +107,7 @@ public class CCSListener implements WorkingMemoryEventListener, ProcessEventList
 	}
 
 	public void afterActivationFired(AfterActivationFiredEvent event) {
-		logger.debug("Fired {}", event.getActivation().getRule());
+		//logger.debug("Fired {}", event.getActivation().getRule());
 	}
 
 	public void agendaGroupPopped(AgendaGroupPoppedEvent event) {

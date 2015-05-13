@@ -11,17 +11,18 @@ global actv.ccs.fact.PRNG prng
 
 rule "Swim"
 	ruleflow-group "swim"
-	timer(int: 0s 750ms)
+	timer(int: 30ms)
 	when
 		$cc : ConvictCichlid()
-		$sc : SwimCounter(counter > 0)
+		$sc : SwimCounter($counter : counter)
 	then
-		
-		MoveActionFactory.moveForward((SceneNode)$cc, $cc.getSpeed());
-		update($cc);
-		
-		$sc.decrement();
-		update($sc);
+		if($counter > 0){
+			MoveActionFactory.moveForward((SceneNode)$cc, 1);
+			update($cc);
 			
-		logger.debug("Moving Forward: " + $cc.getSpeed());
+			$sc.decrement();
+			update($sc);
+				
+			logger.debug("Fired rule: [ {} ]", drools.getRule().getName());
+		}
 end
