@@ -610,7 +610,7 @@ public class SimulationPrompter extends JFrame {
 		this.myGame.initActions();
 
 		this.myGame.createFishTankWalls();
-		this.myGame.startRunner();
+	//	this.myGame.startRunner();
 	//	this.myGame.createHUD();
 		this.myGame.setUpTank();
 		this.myGame.setAnimation(true);

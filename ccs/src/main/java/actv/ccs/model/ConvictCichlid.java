@@ -1,12 +1,15 @@
 package actv.ccs.model;
 
+import graphicslib3D.Matrix3D;
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.Random;
 
 import actv.ccs.model.type.FishState;
+import actv.ccs.sageTest.MoveActionFactory;
 
 public class ConvictCichlid extends TankObject {
 	private Vector3D direction;
@@ -195,9 +198,46 @@ public class ConvictCichlid extends TankObject {
 	public void setInfluence(double influence) {
 		this.influence = influence;
 	}
+	
+	public void move(float time){
+		
+		if (getLocation().getX() > 200-getWidth() || getLocation().getX() < getWidth())
+		{
+			MoveActionFactory.turn(this, 180, new Vector3D(0, 1, 0));
+			System.out.println("X BOUNDS");
+		}
+		if (getLocation().getY() > 200-getHeight() || getLocation().getY() < getHeight())
+		{
+			System.out.println("Y BOUNDS");
+			MoveActionFactory.turn(this, 180, new Vector3D(1, 0, 0));
+		}
+		if (getLocation().getZ() > 200-getWidth() || getLocation().getZ() < getWidth())
+		{
+			MoveActionFactory.turn(this, 180, new Vector3D(0, 1, 0));
+			System.out.println("Z BOUNDS");
+		}
+		
+		Matrix3D rot = this.getLocalRotation();
+		Vector3D dir = this.getDirection().normalize();
+
+		// Get the location, convert it, then back
+		Vector3D dd = new Vector3D(getLocation()).add(dir);
+
+		dir = dir.mult(rot);
+		dir.scale(.5);
+
+		this.setlocation(dd.getX(), dd.getY(), dd.getZ());
+
+		this.translate((float) dir.getX(), (float) dir.getY(),
+				(float) dir.getZ());
+		this.updateWorldBound();
+
+		// avatar.startAnimation("ArmatureAction.001");
+	}
 
 	@Override
-	public String toString(){
-		return "[ " + this.getName() + " @ " + this.getLocation().toString() + ", Speed: " + this.getSpeed() + " ]";
+	public String toString() {
+		return "[ " + this.getName() + " @ " + this.getLocation().toString()
+				+ ", Speed: " + this.getSpeed() + " ]";
 	}
 }

@@ -15,21 +15,23 @@ import sage.scene.SceneNode;
 public class MoveActionFactory {
 
 	public static void moveForward(SceneNode s, float speed){
-		Matrix3D rot = s.getLocalRotation();
-		Vector3D dir = ((ConvictCichlid)s).getDirection().normalize();
-		dir = dir.mult(rot);
-		dir.scale((double) (speed * 10));
-		s.translate((float) dir.getX(), (float) dir.getY(), (float) dir.getZ());
-		((ConvictCichlid)s).setlocation(dir.getX(), dir.getY(), dir.getZ());
-		s.updateWorldBound();
+		for(int i=0; i<speed; i++){
+			Matrix3D rot = s.getLocalRotation();
+			Vector3D dir = ((ConvictCichlid)s).getDirection().normalize();
+			dir = dir.mult(rot);
+			dir.scale((double) (speed * 1));
+			s.translate((float) dir.getX(), (float) dir.getY(), (float) dir.getZ());
+			((ConvictCichlid)s).setlocation(dir.getX(), dir.getY(), dir.getZ());
+			s.updateWorldBound();
+		}
 	}
 	
-	public static void turn(SceneNode s, float degrees){
+	public static void turn(SceneNode s, float degrees, Vector3D axis){
 		Matrix3D rot = s.getLocalRotation();
 		Vector3D dir = ((ConvictCichlid)s).getDirection().normalize();
 		
 		dir = dir.mult(rot);
-		s.rotate(degrees, new Vector3D(0,1,0));
+		s.rotate(degrees, axis);
 		((ConvictCichlid)s).setDirection(dir);
 		s.updateWorldBound();
 	}
@@ -110,7 +112,7 @@ public class MoveActionFactory {
 		
 		Vector3D chase = cc1.getDirection().normalize().mult(Math.cos(theta)).add(v.mult(Math.sin(theta)));
 		
-		turn(cc1,theta);
+		turn(cc1,theta, new Vector3D(0, 1, 0));
 		
 		return chase;
 	}

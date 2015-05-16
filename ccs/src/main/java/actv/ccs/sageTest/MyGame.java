@@ -62,9 +62,8 @@ public class MyGame extends BaseGame {
 	IInputManager im;
 	// private Pot largePot, mediumPot, smallPot;
 	// private Plant largePlant, mediumPlant, smallPlant;
-	private TriMesh largePlant, mediumPlant, smallPlant, largePot,
-			mediumPot, smallPot;
-	private TriMesh cichlidAMesh, cichlidBMesh, cichlidCMesh;
+	private TriMesh largePlant, mediumPlant, smallPlant, largePot, mediumPot,
+			smallPot;
 	private ICamera camera;
 	private CameraOrbit cc;
 	private SkyBox skybox;
@@ -72,15 +71,14 @@ public class MyGame extends BaseGame {
 	private ResultSet rs, rsI;
 	private TerrainBlock floor;
 	private Texture skyThing;
-	private Rectangle ground, leftWall, rightWall, ceiling, backWall,
-			frontWall;
 	private ConvictCichlid cichlidA, cichlidB, cichlidC;
 	private SceneNode cameraGuy;
 	private Line yAxis1, zYPAxis, zyPtoxEnd3, pPart, zPart, yEndtoZPart,
 			xEndtoZPart, xxPart, finishPart;
 	private RuleEngineRunner runner;
 	private ArrayList<SceneNode> objs = new ArrayList<SceneNode>();
-	private boolean largePotC, mediumPotC, smallPotC, largePlantC, mediumPlantC, smallPlantC;
+	private boolean largePotC, mediumPotC, smallPotC, largePlantC,
+			mediumPlantC, smallPlantC;
 	private float simulationTime = 100;
 	private float time = 0;
 	private int cichlidCount;
@@ -90,133 +88,112 @@ public class MyGame extends BaseGame {
 	private Group fishWalls;
 	private IRenderer renderer;
 	// going to add a pause button here
-	private volatile boolean pauseSimulation = false; 	
+	private volatile boolean pauseSimulation = false;
 	private FishTank fishTank;
 	private boolean startAnimation;
 	private Thread tObject;
 	private boolean initialized = false;
+	private Group walls;
 	private static final Logger logger = LoggerFactory.getLogger(MyGame.class);
-	
+
 	// testing for ogre model loader
 	TextureState testState;
 	Group model;
 	Model3DTriMesh cichlidAObject, cichlidBObject, cichlidCObject;
-/*	
+
+	/*
+	 * public void initGame() { initObjects(); spawnCichlids(); spawnObjects();
+	 * createPerson(); // createScene(); initActions(); fishTank = new
+	 * FishTankImpl(); // createFishTank(); createFishTankWalls();
+	 * startRunner(); createHUD(); setUpTank(); pauseSimulation = false; // set
+	 * to false for beginning startAnimation = true; cichlidCount = 0; objCount
+	 * = 0;
+	 * 
+	 * }
+	 */
 	public void initGame() {
-		initObjects();
-		spawnCichlids();
-		spawnObjects();
-		createPerson();
-	//	createScene();
-		initActions();
-		fishTank = new FishTankImpl();
-	//	createFishTank();
-		createFishTankWalls();
-		startRunner();
 		createHUD();
-		setUpTank();
-		pauseSimulation = false; // set to false for beginning
-		startAnimation = true;
-		cichlidCount = 0;
-		objCount = 0;
-
-	}
-*/
-	  public void initGame()
-	  {
-		 createHUD();
 		startAnimation = false;
-	    try
-	    {
-	      this.conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
-	      
-	      Statement s = this.conn.createStatement();
-	      this.rs = s.executeQuery("SELECT scenarioNumber FROM [ScenarioFlag]");
-	      while (this.rs.next())
-	      {
-	        String scenNum = this.rs.getString("ScenarioNumber");
-	        
+		try {
+			this.conn = DriverManager
+					.getConnection("jdbc:ucanaccess://FishPool.accdb");
 
-	        int scenGrab = Integer.parseInt(scenNum);
-	        if (scenGrab >=1 && scenGrab <= 6)
-	        {
-	          this.fishTank = new FishTankImpl();
-	          startAnimation = true;
-	          startAnimationProcess();
-	        }
-	        else
-	        {
-	          IDisplaySystem display = getDisplaySystem();
-	          display.setTitle("Please wait... loading objects.");
-	          this.camera = display.getRenderer().getCamera();
-	          this.camera.setPerspectiveFrustum(45.0D, 1.0D, 0.01D, 1000.0D);
-	          this.camera.setLocation(new Point3D(1.0D, 1.0D, 20.0D));
-	          logger.debug("no scenario in place?");
-	          this.pauseSimulation = false;
-	        //  this.startAnimation = false;
-	          this.cichlidCount = 0;
-	          this.objCount = 0;
-	          createPerson();
-	          initActions();
-	  //        createHUD();
-	          logger.info("Finished initial startup!");
-	          
-	        }
-	      }
-	    }
-	    catch (Exception epp)
-	    {
-	      epp.printStackTrace();
-	    }
-	  }
+			Statement s = this.conn.createStatement();
+			this.rs = s
+					.executeQuery("SELECT scenarioNumber FROM [ScenarioFlag]");
+			while (this.rs.next()) {
+				String scenNum = this.rs.getString("ScenarioNumber");
 
-	public void startAnimationProcess()
-	{
+				int scenGrab = Integer.parseInt(scenNum);
+				if (scenGrab >= 1 && scenGrab <= 6) {
+					this.fishTank = new FishTankImpl();
+					startAnimation = true;
+					startAnimationProcess();
+				} else {
+					IDisplaySystem display = getDisplaySystem();
+					display.setTitle("Please wait... loading objects.");
+					this.camera = display.getRenderer().getCamera();
+					this.camera.setPerspectiveFrustum(45.0D, 1.0D, 0.01D,
+							1000.0D);
+					this.camera.setLocation(new Point3D(1.0D, 1.0D, 20.0D));
+					logger.debug("no scenario in place?");
+					this.pauseSimulation = false;
+					// this.startAnimation = false;
+					this.cichlidCount = 0;
+					this.objCount = 0;
+					createPerson();
+					initActions();
+					// createHUD();
+					logger.info("Finished initial startup!");
+
+				}
+			}
+		} catch (Exception epp) {
+			epp.printStackTrace();
+		}
+	}
+
+	public void startAnimationProcess() {
 		System.out.println("call me maybe");
 
-		for (SceneNode s : getGameWorld())
-		{
-			if (s instanceof Model3DTriMesh)
-			{
-				if (s == cichlidAObject)
-				{
-			//		System.out.println("i'm calling back!");
+		for (SceneNode s : getGameWorld()) {
+			if (s instanceof Model3DTriMesh) {
+				if (s == cichlidAObject) {
+					// System.out.println("i'm calling back!");
 					((Model3DTriMesh) s).startAnimation("swimmingAction");
 				}
-				if (s == cichlidBObject)
-				{
-			//		System.out.println("i'm fapping back");
+				if (s == cichlidBObject) {
+					// System.out.println("i'm fapping back");
 					((Model3DTriMesh) s).startAnimation("swimmingAction");
 				}
-				if (s == cichlidCObject)
-				{
-			//		System.out.println("the world gone maaad");
+				if (s == cichlidCObject) {
+					// System.out.println("the world gone maaad");
 					((Model3DTriMesh) s).startAnimation("swimmingAction");
 				}
 			}
 		}
-			
+
 	}
-	
+
 	public void startRunner() {
 		runner = RuleEngineRunner.getInstance();
 		runner.newMap(objs);
 		runner.start();
 	}
-	
-	private void pauseRunner(){
+
+	private void pauseRunner() {
 		runner.pauseSession();
 	}
-	
-	private void resumeRunner(){
+
+	private void resumeRunner() {
 		runner.resumeSession();
 	}
-	
-	private void stopRunner(){
-		try{
+
+	private void stopRunner() {
+		try {
 			runner.closeSession();
 			runner.join();
-		}catch(InterruptedException e){
+		} catch (InterruptedException e) {
 			throw new RuntimeException("Unable to end the rule session thread!");
 		}
 	}
@@ -229,7 +206,6 @@ public class MyGame extends BaseGame {
 		camera = display.getRenderer().getCamera();
 		camera.setPerspectiveFrustum(45, 1, 0.01, 1000);
 		camera.setLocation(new Point3D(1, 1, 20));
-	
 
 		// creating x, y, z lines for a basis
 		Point3D origin = new Point3D(0, 0, 0);
@@ -291,15 +267,15 @@ public class MyGame extends BaseGame {
 		smallPlantC = false;
 		largePotC = false;
 		mediumPotC = false;
-		smallPotC = false;		
-		
+		smallPotC = false;
+
 		initialized = true;
 	}
 
-	public boolean isInitialized(){
+	public boolean isInitialized() {
 		return initialized;
 	}
-	
+
 	public void createPerson() {
 		cameraGuy = new CameraGuy();
 		cameraGuy.translate(100, 100, 500);
@@ -307,62 +283,56 @@ public class MyGame extends BaseGame {
 		cameraGuy.rotate(180, new Vector3D(0, 1, 0));
 		addGameWorldObject(cameraGuy);
 		cameraGuy.updateWorldBound();
-		
-
-			
-			
 
 	}
-	public void createHUD()
-	{
+
+	public void createHUD() {
 		timeString = new HUDString("Time = " + time);
 		timeString.setLocation(0, 0.05);
 		addGameWorldObject(timeString);
-		
+
 	}
-	public void pauseGame()
-	{
+
+	public void pauseGame() {
 		pauseSimulation = true;
 		pauseRunner();
-		
+
 	}
-	public void resumeGame()
-	{
+
+	public void resumeGame() {
 		pauseSimulation = false;
 		resumeRunner();
 	}
-	
-	public void setUpTank()
-	{
 
-		try 
-		{
-			conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+	public void setUpTank() {
+
+		try {
+			conn = DriverManager
+					.getConnection("jdbc:ucanaccess://FishPool.accdb");
 
 			Statement s = conn.createStatement();
 			rs = s.executeQuery("SELECT * FROM [TankData] WHERE ID = 1");
-			while (rs.next()) 
-			{
-				String timeGrab = rs.getString("Time"); // Field from database ex.
-													// FishA, FishB
+			while (rs.next()) {
+				String timeGrab = rs.getString("Time"); // Field from database
+														// ex.
+				// FishA, FishB
 				float timeParse = Float.parseFloat(timeGrab);
 
 				simulationTime = timeParse;
 				logger.info("Here is the simulationTime! " + simulationTime);
 			}
-				
-		}	catch (Exception epp)
-				
+
+		} catch (Exception epp)
+
 		{
-					epp.printStackTrace();
+			epp.printStackTrace();
 		}
-				
 
 	}
+
 	public void spawnObjects() {
 		try {
-			
-			
+
 			Texture plantTex = TextureManager.loadTexture2D("./uplant.png");
 			Texture potTex = TextureManager.loadTexture2D("./potBa.png");
 			conn = DriverManager
@@ -398,8 +368,7 @@ public class MyGame extends BaseGame {
 						double zStartZ = Double.parseDouble(zLocS);
 
 						OBJLoader loader = new OBJLoader();
-						largePlant = loader
-								.loadModel("uplant.obj");
+						largePlant = loader.loadModel("uplant.obj");
 						largePlant.setName(name);
 						Matrix3D largePlantT = largePlant.getLocalTranslation(); // this
 																					// is
@@ -453,8 +422,7 @@ public class MyGame extends BaseGame {
 						double zStartZ = Double.parseDouble(zLocS);
 
 						OBJLoader loader1 = new OBJLoader();
-						mediumPlant = loader1
-								.loadModel("uplant.obj");
+						mediumPlant = loader1.loadModel("uplant.obj");
 						mediumPlant.setName(name);
 						Matrix3D mediumPlantT = mediumPlant
 								.getLocalTranslation(); // this is for position
@@ -506,8 +474,7 @@ public class MyGame extends BaseGame {
 						double zStartZ = Double.parseDouble(zLocS);
 
 						OBJLoader loader2 = new OBJLoader();
-						smallPlant = loader2
-								.loadModel("uplant.obj");
+						smallPlant = loader2.loadModel("uplant.obj");
 						smallPlant.setName(name);
 						Matrix3D smallPlantT = smallPlant.getLocalTranslation(); // this
 																					// is
@@ -561,8 +528,7 @@ public class MyGame extends BaseGame {
 						double zStartZ = Double.parseDouble(zLocS);
 
 						OBJLoader loader3 = new OBJLoader();
-						largePot =  loader3
-								.loadModel("upot.obj");
+						largePot = loader3.loadModel("upot.obj");
 						largePot.setName(name);
 						Matrix3D largePotT = largePot.getLocalTranslation(); // this
 																				// is
@@ -571,11 +537,11 @@ public class MyGame extends BaseGame {
 						largePotT.translate(xStartW, yStartY, zStartZ);
 						largePot.setLocalTranslation(largePotT);
 						Matrix3D largePotS = largePot.getLocalScale(); // this
-																			// is
-																			// for
-																			// size
-																			// of
-																			// object
+																		// is
+																		// for
+																		// size
+																		// of
+																		// object
 						largePotS.scale(lengthW, widthW, heightW); // the scale
 																	// might be
 																	// too big
@@ -612,8 +578,7 @@ public class MyGame extends BaseGame {
 						double zStartZ = Double.parseDouble(zLocS);
 
 						OBJLoader loader4 = new OBJLoader();
-						mediumPot = loader4
-								.loadModel("upot.obj");
+						mediumPot = loader4.loadModel("upot.obj");
 						mediumPot.setName(name);
 						Matrix3D mediumPotT = mediumPot.getLocalTranslation(); // this
 																				// is
@@ -663,8 +628,7 @@ public class MyGame extends BaseGame {
 						double zStartZ = Double.parseDouble(zLocS);
 
 						OBJLoader loader5 = new OBJLoader();
-						smallPot = loader5
-								.loadModel("upot.obj");
+						smallPot = loader5.loadModel("upot.obj");
 						smallPot.setName(name);
 						Matrix3D smallPotT = smallPot.getLocalTranslation(); // this
 																				// is
@@ -701,42 +665,43 @@ public class MyGame extends BaseGame {
 			e.printStackTrace();
 		}
 	}
-	
-	private ConvictCichlid spawnCichlidFromDB(String id) throws SQLException{
+
+	private ConvictCichlid spawnCichlidFromDB(String id) throws SQLException {
 		ConvictCichlid cichlid;
 		DBConnection conn = DBConnection.getInstance();
 		conn.createConnection();
 		conn.executeQuery("SELECT * FROM [FishPool] WHERE ID='" + id + "'");
-		
-		
+
 		float widthW = Float.parseFloat(rs.getString("Weight"));
 		float heightW = Float.parseFloat(rs.getString("Height"));
 		float xStartW = Float.parseFloat(rs.getString("StartingXPos"));
 		float yStartY = Float.parseFloat(rs.getString("StartingYPos"));
 		float zStartZ = Float.parseFloat(rs.getString("StartingZPos"));
 		String name = rs.getString("Type");
-		
-		cichlid = new ConvictCichlid(0, widthW, heightW, name, new Point3D(xStartW, yStartY, zStartZ));
+
+		cichlid = new ConvictCichlid(0, widthW, heightW, name, new Point3D(
+				xStartW, yStartY, zStartZ));
 		cichlid.setGender(rs.getString("Gender"));
 		cichlid.setAggroLevel(Float.parseFloat(rs.getString("AggroLevel")));
 
-		//TODO: need to put into DB
+		// TODO: need to put into DB
 		cichlid.setBaseSpeed(3f);
 		cichlid.setBaseCautionLevel(4f);
-		cichlid.setDirection(new Vector3D(1,1,1));
+		cichlid.setDirection(new Vector3D(1, 1, 1));
 		cichlid.setCullMode(CULL_MODE.ALWAYS);
 		cichlid.setState(FishState.IDLE);
 		cichlid.setInfluence(12);
-		
+
 		return cichlid;
 	}
 
 	public void spawnCichlids() {
-		
+
 		try {
 			DBConnection conn = DBConnection.getInstance();
 			conn.createConnection();
-			ResultSet rs = conn.executeQuery("SELECT fishID FROM [SimulationFish]");
+			ResultSet rs = conn
+					.executeQuery("SELECT fishID FROM [SimulationFish]");
 			while (rs.next()) {
 				String id = rs.getString("fishID"); // Field from database ex.
 													// FishA, FishB
@@ -745,7 +710,8 @@ public class MyGame extends BaseGame {
 				logger.debug("ID: {}", idS);
 
 				if (id.equals("1")) {
-					rsI = conn.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
+					rsI = conn
+							.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish A'");
 					while (rsI.next()) {
 						String name = rsI.getString("Type"); // Field from
 																// database ex.
@@ -759,7 +725,6 @@ public class MyGame extends BaseGame {
 						String xLocS = rsI.getString("StartingXPos");
 						String yLocS = rsI.getString("StartingYPos");
 						String zLocS = rsI.getString("StartingZPos");
-						
 
 						float weightW = Float.parseFloat(weight);
 						float widthW = Float.parseFloat(width);
@@ -768,20 +733,20 @@ public class MyGame extends BaseGame {
 						double xStartW = Double.parseDouble(xLocS);
 						double yStartY = Double.parseDouble(yLocS);
 						double zStartZ = Double.parseDouble(zLocS);
-						
-						cichlidA = new ConvictCichlid(0, widthW, heightW, name, new Point3D(xStartW, yStartY, zStartZ));
+
+						cichlidA = new ConvictCichlid(0, widthW, heightW, name,
+								new Point3D(xStartW, yStartY, zStartZ));
 						cichlidA.setGender(gender);
 						cichlidA.setAggroLevel(aggroW);
-						//TODO: temporary
+						// TODO: temporary
 						cichlidA.setBaseSpeed(3f);
 						cichlidA.setSpeed(0);
 						cichlidA.setBaseCautionLevel(4f);
-						cichlidA.setDirection(new Vector3D(1,1,1));
+						cichlidA.setDirection(new Vector3D(1, 1, 1));
 						cichlidA.setCullMode(CULL_MODE.ALWAYS);
 						cichlidA.setState(FishState.IDLE);
 						cichlidA.setInfluence(12);
-						
-						
+
 						Matrix3D cichlidAT = cichlidA.getLocalTranslation(); // this
 																				// is
 																				// for
@@ -807,8 +772,7 @@ public class MyGame extends BaseGame {
 						addGameWorldObject(cichlidA);
 						objs.add(cichlidA);
 						cichlidA.updateWorldBound();
-						
-						
+
 						// here is where i add my aggro circle
 						aggroRangeA = new Sphere();
 						Matrix3D aRangeT = aggroRangeA.getLocalTranslation();
@@ -819,88 +783,94 @@ public class MyGame extends BaseGame {
 						aggroRangeA.setLocalScale(aScale);
 						addGameWorldObject(aggroRangeA);
 						aggroRangeA.updateWorldBound();
-						aggroRangeA.setCullMode(CULL_MODE.ALWAYS); // cull mode hides the object
+						aggroRangeA.setCullMode(CULL_MODE.ALWAYS); // cull mode
+																	// hides the
+																	// object
 						cichlidCount++;
-						
-/*						
-//						// here is where i add the cichlidMesh
-						OBJLoader loader1 = new OBJLoader();
-						cichlidAMesh = loader1
-								.loadModel("wacklid.obj");
-						cichlidAMesh.setName(name);
-						Matrix3D cichlidAMeshT = cichlidAMesh.getLocalTranslation(); // this
-																				// is
-																				// for
-																				// position
-						cichlidAMeshT.translate(xStartW, yStartY, zStartZ);
-						cichlidAMesh.setLocalTranslation(cichlidAMeshT);
-						Matrix3D cichlidAMeshS = cichlidAMesh.getLocalScale(); // this
-																			// is
-																			// for
-																			// size
-																			// of
-																			// object
-						cichlidAMeshS.scale(widthW * weightW * .1, heightW
-								* weightW * .1, 0); // the scale
-																	// might be
-																	// too big
-																	// so we
-																	// largePlant.setLocalScale(largePlantS);
-						
-					//	cichlidAMeshS.scale(10f, 10f, 10f);
-						cichlidAMesh.setLocalScale(cichlidAMeshS);
-						cichlidAMesh.setTexture(cichlidTexA);
 
-						
-						
-						// trying texture
-						
-						TextureState cichlidATexS;
-						Texture cATex = TextureManager.loadTexture2D("cichlidMesh.png");
-						cATex.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
-						cichlidATexS = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
-						cichlidATexS.setTexture(cATex, 0);
-						cichlidATexS.setEnabled(true);
-						
-						cichlidAMesh.setRenderState(cichlidATexS);
-						addGameWorldObject(cichlidAMesh);
-						cichlidAMesh.updateLocalBound();
-						cichlidAMesh.updateGeometricState(0, true);
-						cichlidAMesh.updateWorldBound();
-						*/
+						/*
+						 * // // here is where i add the cichlidMesh OBJLoader
+						 * loader1 = new OBJLoader(); cichlidAMesh = loader1
+						 * .loadModel("wacklid.obj");
+						 * cichlidAMesh.setName(name); Matrix3D cichlidAMeshT =
+						 * cichlidAMesh.getLocalTranslation(); // this // is //
+						 * for // position cichlidAMeshT.translate(xStartW,
+						 * yStartY, zStartZ);
+						 * cichlidAMesh.setLocalTranslation(cichlidAMeshT);
+						 * Matrix3D cichlidAMeshS =
+						 * cichlidAMesh.getLocalScale(); // this // is // for //
+						 * size // of // object cichlidAMeshS.scale(widthW *
+						 * weightW * .1, heightW weightW * .1, 0); // the scale
+						 * // might be // too big // so we //
+						 * largePlant.setLocalScale(largePlantS);
+						 * 
+						 * // cichlidAMeshS.scale(10f, 10f, 10f);
+						 * cichlidAMesh.setLocalScale(cichlidAMeshS);
+						 * cichlidAMesh.setTexture(cichlidTexA);
+						 * 
+						 * 
+						 * 
+						 * // trying texture
+						 * 
+						 * TextureState cichlidATexS; Texture cATex =
+						 * TextureManager.loadTexture2D("cichlidMesh.png");
+						 * cATex
+						 * .setApplyMode(sage.texture.Texture.ApplyMode.Replace
+						 * ); cichlidATexS = (TextureState)
+						 * display.getRenderer()
+						 * .createRenderState(RenderState.RenderStateType
+						 * .Texture); cichlidATexS.setTexture(cATex, 0);
+						 * cichlidATexS.setEnabled(true);
+						 * 
+						 * cichlidAMesh.setRenderState(cichlidATexS);
+						 * addGameWorldObject(cichlidAMesh);
+						 * cichlidAMesh.updateLocalBound();
+						 * cichlidAMesh.updateGeometricState(0, true);
+						 * cichlidAMesh.updateWorldBound();
+						 */
 						// creating new ogre
 						OgreXMLParser loader = new OgreXMLParser();
-						
-						try 
-						{
-							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingoutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
-							//src/main/java/actv/ccs/sageTest/TestOgre 
+
+						try {
+							model = loader
+									.loadModel(
+											"src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.mesh.xml",
+											"src/main/java/actv/ccs/sageTest/testingoutOgre/pooplid.material",
+											"src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
+							// src/main/java/actv/ccs/sageTest/TestOgre
 							model.updateGeometricState(0, true);
-							java.util.Iterator<SceneNode> modelIterator = model.iterator();
-							cichlidAObject = (Model3DTriMesh) modelIterator.next();
+							java.util.Iterator<SceneNode> modelIterator = model
+									.iterator();
+							cichlidAObject = (Model3DTriMesh) modelIterator
+									.next();
 							logger.debug("test");
-						} catch (Exception vv)
-						{
+						} catch (Exception vv) {
 							vv.printStackTrace();
-							
+
 						}
-						
-						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/testingOutOgre/cichlidMesh.png");						hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
-						testState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
+
+						Texture hobTexture = TextureManager
+								.loadTexture2D("src/main/java/actv/ccs/sageTest/testingOutOgre/cichlidMesh.png");
+						hobTexture
+								.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
+						testState = (TextureState) display.getRenderer()
+								.createRenderState(
+										RenderState.RenderStateType.Texture);
 						testState.setTexture(hobTexture, 0);
 						testState.setEnabled(true);
-						
-						
-						
-							addGameWorldObject(cichlidAObject);
-							cichlidAObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
-							cichlidAObject.rotate(90, new Vector3D(0, 1, 0));
-							cichlidAObject.scale((float) (widthW * weightW * .1), (float) (heightW
-									* weightW * .09), (float)( heightW * 0.09));
-						
+
+						addGameWorldObject(cichlidAObject);
+						cichlidAObject.translate((float) xStartW,
+								(float) yStartY, (float) zStartZ);
+						cichlidAObject.rotate(90, new Vector3D(0, 1, 0));
+						cichlidAObject.scale((float) (widthW * weightW * .1),
+								(float) (heightW * weightW * .09),
+								(float) (heightW * 0.09));
+
 					}
 				} else if (id.equals("2")) {
-					rsI = conn.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
+					rsI = conn
+							.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish B'");
 
 					while (rsI.next()) {
 						String name = rsI.getString("Type"); // Field from
@@ -924,15 +894,16 @@ public class MyGame extends BaseGame {
 						double yStartY = Double.parseDouble(yLocS);
 						double zStartZ = Double.parseDouble(zLocS);
 
-						cichlidB = new ConvictCichlid(0, widthW, heightW, name,  new Point3D(xStartW, yStartY, zStartZ));
+						cichlidB = new ConvictCichlid(0, widthW, heightW, name,
+								new Point3D(xStartW, yStartY, zStartZ));
 						cichlidB.setName(name);
 						cichlidB.setGender(gender);
 						cichlidB.setAggroLevel(aggroW);
-						//TODO: temporary
+						// TODO: temporary
 						cichlidB.setBaseSpeed(3f);
 						cichlidB.setSpeed(0f);
 						cichlidB.setBaseCautionLevel(4f);
-						cichlidB.setDirection(new Vector3D(1,1,1));
+						cichlidB.setDirection(new Vector3D(1, 1, 1));
 						cichlidB.setCullMode(CULL_MODE.ALWAYS);
 						cichlidB.setState(FishState.IDLE);
 						cichlidB.setInfluence(8);
@@ -972,82 +943,88 @@ public class MyGame extends BaseGame {
 						aggroRangeB.setLocalScale(aScale);
 						addGameWorldObject(aggroRangeB);
 						aggroRangeB.updateWorldBound();
-						aggroRangeB.setCullMode(CULL_MODE.ALWAYS); // cull mode hides the object
-						
-//						// here is where i add the cichlidMesh
-/*						OBJLoader loader1 = new OBJLoader();
-						cichlidBMesh = loader1
-								.loadModel("wacklid.obj");
-						cichlidBMesh.setName(name);
-						Matrix3D cichlidAMeshT = cichlidBMesh.getLocalTranslation(); // this
-																				// is
-																				// for
-																				// position
-						cichlidAMeshT.translate(xStartW, yStartY, zStartZ);
-						cichlidBMesh.setLocalTranslation(cichlidAMeshT);
-						Matrix3D cichlidAMeshS = cichlidBMesh.getLocalScale(); // this
-																			// is
-																			// for
-																			// size
-																			// of
-																			// object
-						cichlidAMeshS.scale(widthW * weightW * .1, heightW
-								* weightW * .1, 0); // the scale
-																	// might be
-																	// too big
-																	// so we
-																	// largePlant.setLocalScale(largePlantS);
-						
-					//	cichlidAMeshS.scale(10f, 10f, 10f);
-						cichlidBMesh.setLocalScale(cichlidAMeshS);
-						cichlidBMesh.setTexture(cichlidTexA);
-						TextureState cichlidATexS;
-						Texture cATex = TextureManager.loadTexture2D("cichlidMesh.png");
-						cATex.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
-						cichlidATexS = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
-						cichlidATexS.setTexture(cATex, 0);
-						cichlidATexS.setEnabled(true);
-						
-						cichlidBMesh.setRenderState(cichlidATexS);
-						addGameWorldObject(cichlidBMesh);
-						cichlidBMesh.updateLocalBound();
-						cichlidBMesh.updateGeometricState(0, true);
-						cichlidBMesh.updateWorldBound();
-						*/
-						
+						aggroRangeB.setCullMode(CULL_MODE.ALWAYS); // cull mode
+																	// hides the
+																	// object
+
+						// // here is where i add the cichlidMesh
+						/*
+						 * OBJLoader loader1 = new OBJLoader(); cichlidBMesh =
+						 * loader1 .loadModel("wacklid.obj");
+						 * cichlidBMesh.setName(name); Matrix3D cichlidAMeshT =
+						 * cichlidBMesh.getLocalTranslation(); // this // is //
+						 * for // position cichlidAMeshT.translate(xStartW,
+						 * yStartY, zStartZ);
+						 * cichlidBMesh.setLocalTranslation(cichlidAMeshT);
+						 * Matrix3D cichlidAMeshS =
+						 * cichlidBMesh.getLocalScale(); // this // is // for //
+						 * size // of // object cichlidAMeshS.scale(widthW *
+						 * weightW * .1, heightW weightW * .1, 0); // the scale
+						 * // might be // too big // so we //
+						 * largePlant.setLocalScale(largePlantS);
+						 * 
+						 * // cichlidAMeshS.scale(10f, 10f, 10f);
+						 * cichlidBMesh.setLocalScale(cichlidAMeshS);
+						 * cichlidBMesh.setTexture(cichlidTexA); TextureState
+						 * cichlidATexS; Texture cATex =
+						 * TextureManager.loadTexture2D("cichlidMesh.png");
+						 * cATex
+						 * .setApplyMode(sage.texture.Texture.ApplyMode.Replace
+						 * ); cichlidATexS = (TextureState)
+						 * display.getRenderer()
+						 * .createRenderState(RenderState.RenderStateType
+						 * .Texture); cichlidATexS.setTexture(cATex, 0);
+						 * cichlidATexS.setEnabled(true);
+						 * 
+						 * cichlidBMesh.setRenderState(cichlidATexS);
+						 * addGameWorldObject(cichlidBMesh);
+						 * cichlidBMesh.updateLocalBound();
+						 * cichlidBMesh.updateGeometricState(0, true);
+						 * cichlidBMesh.updateWorldBound();
+						 */
+
 						OgreXMLParser loader = new OgreXMLParser();
-						
-						try 
-						{
-							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingoutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
-							//src/main/java/actv/ccs/sageTest/TestOgre 
+
+						try {
+							model = loader
+									.loadModel(
+											"src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.mesh.xml",
+											"src/main/java/actv/ccs/sageTest/testingoutOgre/pooplid.material",
+											"src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
+							// src/main/java/actv/ccs/sageTest/TestOgre
 							model.updateGeometricState(0, true);
-							java.util.Iterator<SceneNode> modelIterator = model.iterator();
-							cichlidBObject = (Model3DTriMesh) modelIterator.next();
+							java.util.Iterator<SceneNode> modelIterator = model
+									.iterator();
+							cichlidBObject = (Model3DTriMesh) modelIterator
+									.next();
 							logger.debug("test");
-						} catch (Exception vv)
-						{
+						} catch (Exception vv) {
 							vv.printStackTrace();
-							
+
 						}
-						
-						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/testingOutOgre/cichlidMesh.png");
-						hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
-						testState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
+
+						Texture hobTexture = TextureManager
+								.loadTexture2D("src/main/java/actv/ccs/sageTest/testingOutOgre/cichlidMesh.png");
+						hobTexture
+								.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
+						testState = (TextureState) display.getRenderer()
+								.createRenderState(
+										RenderState.RenderStateType.Texture);
 						testState.setTexture(hobTexture, 0);
 						testState.setEnabled(true);
-						
-						
-						
-							addGameWorldObject(cichlidBObject);
-							cichlidBObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
-							cichlidBObject.rotate(45, new Vector3D(0, 1, 1));
-							cichlidBObject.scale((float) (widthW * weightW * .05), (float) (heightW
-									* weightW * .05), (float)( heightW * 0.09));
+
+						addGameWorldObject(cichlidBObject);
+						cichlidBObject.translate((float) xStartW,
+								(float) yStartY, (float) zStartZ);
+						cichlidBObject.rotate(45, new Vector3D(0, 1, 1));
+						cichlidBObject.scale((float) (widthW * weightW * .05),
+								(float) (heightW * weightW * .05),
+								(float) (heightW * 0.09));
 						cichlidCount++;
 					}
 				} else if (id.equals("3")) {
-					rsI = conn.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
+					rsI = conn
+							.executeQuery("SELECT * FROM [FishPool] WHERE Type='Fish C'");
 
 					while (rsI.next()) {
 						String name = rsI.getString("Type"); // Field from
@@ -1071,20 +1048,21 @@ public class MyGame extends BaseGame {
 						double yStartY = Double.parseDouble(yLocS);
 						double zStartZ = Double.parseDouble(zLocS);
 
-						cichlidC = new ConvictCichlid(0, widthW, heightW, name, new Point3D(xStartW, yStartY, zStartZ));
+						cichlidC = new ConvictCichlid(0, widthW, heightW, name,
+								new Point3D(xStartW, yStartY, zStartZ));
 						cichlidC.setName(name);
 						cichlidC.setGender(gender);
 						cichlidC.setAggroLevel(aggroW);
-						
-						//TODO: temporary
+
+						// TODO: temporary
 						cichlidC.setBaseSpeed(3f);
 						cichlidC.setSpeed(0);
 						cichlidC.setBaseCautionLevel(4f);
-						cichlidC.setDirection(new Vector3D(-.5,.8,.1));
+						cichlidC.setDirection(new Vector3D(-.5, .8, .1));
 						cichlidC.setState(FishState.IDLE);
 						cichlidC.setCullMode(CULL_MODE.ALWAYS);
 						cichlidC.setInfluence(6);
-						
+
 						Matrix3D cichlidCT = cichlidC.getLocalTranslation(); // this
 																				// is
 																				// for
@@ -1099,8 +1077,8 @@ public class MyGame extends BaseGame {
 																		// object
 						cichlidCS.scale(widthW * weightW * .1, heightW
 								* weightW * .1, 0); // the scale might be too
-														// big so we will have
-														// to do the weight*.10
+													// big so we will have
+													// to do the weight*.10
 						cichlidC.setLocalScale(cichlidCS);
 						Matrix3D cichlidCR = new Matrix3D(); // this is for the
 																// rotation of
@@ -1110,7 +1088,7 @@ public class MyGame extends BaseGame {
 						addGameWorldObject(cichlidC);
 						objs.add(cichlidC);
 						cichlidC.updateWorldBound();
-						
+
 						// here is where i add my aggro circle
 						aggroRangeC = new Sphere();
 						Matrix3D aRangeT = aggroRangeC.getLocalTranslation();
@@ -1121,68 +1099,71 @@ public class MyGame extends BaseGame {
 						aggroRangeC.setLocalScale(aScale);
 						addGameWorldObject(aggroRangeC);
 						aggroRangeC.updateWorldBound();
-						aggroRangeC.setCullMode(CULL_MODE.ALWAYS); // cull mode hides the object
-						
-/*						OBJLoader loader1 = new OBJLoader();
-						cichlidCMesh = loader1
-								.loadModel("wacklid.obj");
-						cichlidCMesh.setName(name);
-						Matrix3D cichlidAMeshT = cichlidCMesh.getLocalTranslation(); // this
-																				// is
-																				// for
-																				// position
-						cichlidAMeshT.translate(xStartW, yStartY, zStartZ);
-						cichlidCMesh.setLocalTranslation(cichlidAMeshT);
-						Matrix3D cichlidAMeshS = cichlidCMesh.getLocalScale(); // this
-																			// is
-																			// for
-																			// size
-																			// of
-																			// object
-						cichlidAMeshS.scale(widthW * weightW * .1, heightW
-								* weightW * .1, 0); // the scale
-																	// might be
-																	// too big
-																	// so we
-																	// largePlant.setLocalScale(largePlantS);
-						
-					//	cichlidAMeshS.scale(10f, 10f, 10f);
-						cichlidCMesh.setLocalScale(cichlidAMeshS);
-						cichlidCMesh.setTexture(cichlidTexA);
-						addGameWorldObject(cichlidCMesh);
-						cichlidCMesh.updateLocalBound();
-						cichlidCMesh.updateGeometricState(0, true);
-						cichlidCMesh.updateWorldBound();
-						*/
+						aggroRangeC.setCullMode(CULL_MODE.ALWAYS); // cull mode
+																	// hides the
+																	// object
+
+						/*
+						 * OBJLoader loader1 = new OBJLoader(); cichlidCMesh =
+						 * loader1 .loadModel("wacklid.obj");
+						 * cichlidCMesh.setName(name); Matrix3D cichlidAMeshT =
+						 * cichlidCMesh.getLocalTranslation(); // this // is //
+						 * for // position cichlidAMeshT.translate(xStartW,
+						 * yStartY, zStartZ);
+						 * cichlidCMesh.setLocalTranslation(cichlidAMeshT);
+						 * Matrix3D cichlidAMeshS =
+						 * cichlidCMesh.getLocalScale(); // this // is // for //
+						 * size // of // object cichlidAMeshS.scale(widthW *
+						 * weightW * .1, heightW weightW * .1, 0); // the scale
+						 * // might be // too big // so we //
+						 * largePlant.setLocalScale(largePlantS);
+						 * 
+						 * // cichlidAMeshS.scale(10f, 10f, 10f);
+						 * cichlidCMesh.setLocalScale(cichlidAMeshS);
+						 * cichlidCMesh.setTexture(cichlidTexA);
+						 * addGameWorldObject(cichlidCMesh);
+						 * cichlidCMesh.updateLocalBound();
+						 * cichlidCMesh.updateGeometricState(0, true);
+						 * cichlidCMesh.updateWorldBound();
+						 */
 						OgreXMLParser loader = new OgreXMLParser();
-						
-						try 
-						{
-							model = loader.loadModel("src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.mesh.xml", "src/main/java/actv/ccs/sageTest/testingoutOgre/pooplid.material", "src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
-							//src/main/java/actv/ccs/sageTest/TestOgre 
+
+						try {
+							model = loader
+									.loadModel(
+											"src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.mesh.xml",
+											"src/main/java/actv/ccs/sageTest/testingoutOgre/pooplid.material",
+											"src/main/java/actv/ccs/sageTest/testingoutOgre/Plane.skeleton.xml");
+							// src/main/java/actv/ccs/sageTest/TestOgre
 							model.updateGeometricState(0, true);
-							java.util.Iterator<SceneNode> modelIterator = model.iterator();
-							cichlidCObject = (Model3DTriMesh) modelIterator.next();
+							java.util.Iterator<SceneNode> modelIterator = model
+									.iterator();
+							cichlidCObject = (Model3DTriMesh) modelIterator
+									.next();
 							logger.debug("test");
-						} catch (Exception vv)
-						{
+						} catch (Exception vv) {
 							vv.printStackTrace();
-							
+
 						}
-						
-						Texture hobTexture = TextureManager.loadTexture2D("src/main/java/actv/ccs/sageTest/testingOutOgre/cichlidMesh.png");				hobTexture.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
-						testState = (TextureState) display.getRenderer().createRenderState(RenderState.RenderStateType.Texture);
+
+						Texture hobTexture = TextureManager
+								.loadTexture2D("src/main/java/actv/ccs/sageTest/testingOutOgre/cichlidMesh.png");
+						hobTexture
+								.setApplyMode(sage.texture.Texture.ApplyMode.Replace);
+						testState = (TextureState) display.getRenderer()
+								.createRenderState(
+										RenderState.RenderStateType.Texture);
 						testState.setTexture(hobTexture, 0);
 						testState.setEnabled(true);
-						
-						
-						
-							addGameWorldObject(cichlidCObject);
-							cichlidCObject.translate((float) xStartW,  (float) yStartY, (float) zStartZ);
-							cichlidCObject.rotate(45, new Vector3D(0, 1, 1));
-							cichlidCObject.scale((float) (widthW * weightW * .05), (float) (heightW
-									* weightW * .05), (float)( heightW * 0.09));
-						
+
+						addGameWorldObject(cichlidCObject);
+						cichlidCObject.translate((float) xStartW,
+								(float) yStartY, (float) zStartZ);
+						cichlidCObject.rotate(45, new Vector3D(0, 1, 1));
+						cichlidCObject.scale((float) (widthW * weightW * .05),
+								(float) (heightW * weightW * .05),
+								(float) (heightW * 0.09));
+
 						cichlidCount++;
 					}
 				}
@@ -1196,6 +1177,15 @@ public class MyGame extends BaseGame {
 		startAnimationProcess();
 	}
 
+	/**
+	 * 
+	 */
+	/**
+	 * 
+	 */
+	/**
+	 * 
+	 */
 	public void initActions() {
 		im = getInputManager();
 		String kbName = im.getKeyboardName(); // error here. it shouldn't be
@@ -1208,17 +1198,18 @@ public class MyGame extends BaseGame {
 		logger.debug("controller: " + mName);
 
 		// for this area, need to do a checker if A and B and C are called...
-		// test actions
-/*		IAction moveForwardA = new ForwardAction(cichlidA, cichlidAObject);
-		IAction moveBackA = new BackwardAction(cichlidAObject);
-		IAction moveLeftA = new LeftAction(cichlidAObject);
-		IAction moveRightA = new RightAction(cichlidAObject);
-		IAction upForwardA = new UpForwardAction(cichlidAObject);
-		IAction upBackA = new UpBackAction(cichlidAObject);
-		IAction downForwardA = new DownForwardAction(cichlidAObject);
-		IAction downBackA = new DownBackAction(cichlidAObject);
-		IAction rotateTest = new RotateTestAction(cichlidAObject);
-	*/	
+		/*
+		 * // test actions IAction moveForwardA = new ForwardAction(cichlidA,
+		 * cichlidAObject); IAction moveBackA = new
+		 * BackwardAction(cichlidAObject); IAction moveLeftA = new
+		 * LeftAction(cichlidAObject); IAction moveRightA = new
+		 * RightAction(cichlidAObject); IAction upForwardA = new
+		 * UpForwardAction(cichlidAObject); IAction upBackA = new
+		 * UpBackAction(cichlidAObject); IAction downForwardA = new
+		 * DownForwardAction(cichlidAObject); IAction downBackA = new
+		 * DownBackAction(cichlidAObject); IAction rotateTest = new
+		 * RotateTestAction(cichlidAObject);
+		 */
 		// game actions
 		IAction quitGame = new QuitAction(this);
 		IAction pauseKey = new pauseAction();
@@ -1226,99 +1217,97 @@ public class MyGame extends BaseGame {
 		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.ESCAPE, quitGame,
 				IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
-		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.P, pauseKey, 
+		im.associateAction(kbName,
+				net.java.games.input.Component.Identifier.Key.P, pauseKey,
 				IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
-		im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.R, resumeKey, 
+		im.associateAction(kbName,
+				net.java.games.input.Component.Identifier.Key.R, resumeKey,
 				IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
-		
-//		if (pauseSimulation == true) // this is for save simulation
-//		{
-			IAction saveState = new saveAction();
-			im.associateAction(kbName, net.java.games.input.Component.Identifier.Key.Q, saveState, 
-					IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
 
-//		}
-	
+		// if (pauseSimulation == true) // this is for save simulation
+		// {
+		IAction saveState = new saveAction();
+		im.associateAction(kbName,
+				net.java.games.input.Component.Identifier.Key.Q, saveState,
+				IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
+
+		// }
+
 		// here is the movement options of the character ..
-/*		im.associateAction(kbName,
-				net.java.games.input.Component.Identifier.Key.W, rotateTest,
-				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-		im.associateAction(kbName,
-				net.java.games.input.Component.Identifier.Key.S, moveBackA,
-				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-		im.associateAction(kbName,
-				net.java.games.input.Component.Identifier.Key.A, moveLeftA,
-				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-		im.associateAction(kbName,
-				net.java.games.input.Component.Identifier.Key.D, moveRightA,
-				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-
-		
-		im.associateAction(kbName,
-				net.java.games.input.Component.Identifier.Key.NUMPAD9, upForwardA,
-				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-		im.associateAction(kbName,
-				net.java.games.input.Component.Identifier.Key.NUMPAD7, upBackA,
-				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-		im.associateAction(kbName,
-				net.java.games.input.Component.Identifier.Key.NUMPAD3, downForwardA,
-				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-		im.associateAction(kbName,
-				net.java.games.input.Component.Identifier.Key.NUMPAD1, downBackA,
-				IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-*/	
+		/*
+		 * im.associateAction(kbName,
+		 * net.java.games.input.Component.Identifier.Key.W, rotateTest,
+		 * IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		 * im.associateAction(kbName,
+		 * net.java.games.input.Component.Identifier.Key.S, moveBackA,
+		 * IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		 * im.associateAction(kbName,
+		 * net.java.games.input.Component.Identifier.Key.A, moveLeftA,
+		 * IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		 * im.associateAction(kbName,
+		 * net.java.games.input.Component.Identifier.Key.D, moveRightA,
+		 * IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		 * 
+		 * 
+		 * im.associateAction(kbName,
+		 * net.java.games.input.Component.Identifier.Key.NUMPAD9, upForwardA,
+		 * IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		 * im.associateAction(kbName,
+		 * net.java.games.input.Component.Identifier.Key.NUMPAD7, upBackA,
+		 * IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		 * im.associateAction(kbName,
+		 * net.java.games.input.Component.Identifier.Key.NUMPAD3, downForwardA,
+		 * IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		 * im.associateAction(kbName,
+		 * net.java.games.input.Component.Identifier.Key.NUMPAD1, downBackA,
+		 * IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		 */
 	}
-	
+
 	// pause and restart simulation
-	private class pauseAction extends AbstractInputAction
-	{
-		public void performAction(float time, Event ev)
-		{
+	private class pauseAction extends AbstractInputAction {
+		public void performAction(float time, Event ev) {
 			logger.debug("PAUSE " + pauseSimulation);
 			pauseSimulation = true;
-		//	pauseRunner();
-		// error 
+			// pauseRunner();
+			// error
 
 		}
 	}
-	private class resumeAction extends AbstractInputAction
-	{
-		public void performAction(float time, Event evento)
-		{
+
+	private class resumeAction extends AbstractInputAction {
+		public void performAction(float time, Event evento) {
 			logger.debug("pause is " + pauseSimulation);
-		//	resumeRunner();
+			// resumeRunner();
 			// error here
 			pauseSimulation = false;
-		
+
 		}
 	}
-	private class saveAction extends AbstractInputAction
-	{
-		public void performAction(float time, Event sp)
-		{
+
+	private class saveAction extends AbstractInputAction {
+		public void performAction(float time, Event sp) {
 			logger.debug("saveAction");
 			/*
-			 * if this thing is ran
-			 * then check if cichlid is true 
-			 * like if (cichlidA != null)
-			 * then set the flag in simfishs
-			 * then if the objects do exist like
-			 * (largePot != null)
+			 * if this thing is ran then check if cichlid is true like if
+			 * (cichlidA != null) then set the flag in simfishs then if the
+			 * objects do exist like (largePot != null)
 			 * 
 			 * the big issue is that you need to is get the time of the thing
 			 */
 			try {
 				Connection conn;
 				try {
-					conn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
-			
-				Statement s = conn.createStatement();
-				rs = s.executeQuery("SELECT ID FROM [ScenarioFlag]");
-				while (rs.next())
-				{
-					int a = s.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 1 where ID = 6");		
-				}
-				conn.close();
+					conn = DriverManager
+							.getConnection("jdbc:ucanaccess://FishPool.accdb");
+
+					Statement s = conn.createStatement();
+					rs = s.executeQuery("SELECT ID FROM [ScenarioFlag]");
+					while (rs.next()) {
+						int a = s
+								.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 1 where ID = 6");
+					}
+					conn.close();
 				} catch (SQLException Ex) {
 					// TODO Auto-generated catch block
 					Ex.printStackTrace();
@@ -1329,158 +1318,163 @@ public class MyGame extends BaseGame {
 			}
 			try {
 				Connection connn;
-				try
-				{
-					connn = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+				try {
+					connn = DriverManager
+							.getConnection("jdbc:ucanaccess://FishPool.accdb");
 					Statement s = connn.createStatement();
-					rs =s.executeQuery("SELECT ID FROM [SimulationFishS]");
-					while (rs.next())
-					{
+					rs = s.executeQuery("SELECT ID FROM [SimulationFishS]");
+					while (rs.next()) {
 						/*
-						 * i will have to figure out how to update the cichlid's x,y,z position
+						 * i will have to figure out how to update the cichlid's
+						 * x,y,z position
 						 */
-						if (cichlidA != null)
-						{
-							Point3D loc = new Point3D(cichlidA.getWorldTranslation().getCol(3));
+						if (cichlidA != null) {
+							Point3D loc = new Point3D(cichlidA
+									.getWorldTranslation().getCol(3));
 							logger.debug("save flag for cichlidA");
-			        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 1 where ID = 1");
-			        	int aa = s.executeUpdate("UPDATE FishPoolSaveState set StartingXPos = " + loc.getX() + " where ID = 1" );
-			        	int aaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = " + loc.getY() + " where ID = 1" );
-			        	int aaaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingZPos = " + loc.getZ() + " where ID = 1" );
-			        	
+							int a = s
+									.executeUpdate("UPDATE SimulationFishS set fishID = 1 where ID = 1");
+							int aa = s
+									.executeUpdate("UPDATE FishPoolSaveState set StartingXPos = "
+											+ loc.getX() + " where ID = 1");
+							int aaa = s
+									.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = "
+											+ loc.getY() + " where ID = 1");
+							int aaaa = s
+									.executeUpdate("UPDATE FishPoolSaveState set StartingZPos = "
+											+ loc.getZ() + " where ID = 1");
+
+						} else if (cichlidA == null) {
+							int a = s
+									.executeUpdate("UPDATE SimulationFishS set fishID = 0 where ID = 1");
 						}
-						else if (cichlidA == null)
-						{
-				        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 0 where ID = 1");
-						}
-						if (cichlidB != null)
-						{
-							Point3D loc = new Point3D(cichlidB.getWorldTranslation().getCol(3));
+						if (cichlidB != null) {
+							Point3D loc = new Point3D(cichlidB
+									.getWorldTranslation().getCol(3));
 							logger.debug("save flag for cichlidB");
-			        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 2 where ID = 2");			        	
-			        	int aa = s.executeUpdate("UPDATE FishPoolSaveState set StartingXPos = " + loc.getX() + " where ID = 2" );
-			        	int aaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = " + loc.getY() + " where ID = 2" );
-			        	int aaaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingZPos = " + loc.getZ() + " where ID = 2" );
+							int a = s
+									.executeUpdate("UPDATE SimulationFishS set fishID = 2 where ID = 2");
+							int aa = s
+									.executeUpdate("UPDATE FishPoolSaveState set StartingXPos = "
+											+ loc.getX() + " where ID = 2");
+							int aaa = s
+									.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = "
+											+ loc.getY() + " where ID = 2");
+							int aaaa = s
+									.executeUpdate("UPDATE FishPoolSaveState set StartingZPos = "
+											+ loc.getZ() + " where ID = 2");
+						} else if (cichlidB == null) {
+							int a = s
+									.executeUpdate("UPDATE SimulationFishS set fishID = 0 where ID = 2");
 						}
-						else if (cichlidB == null)
-						{
-				        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 0 where ID = 2");
-						}
-						if (cichlidC != null)
-						{
-							Point3D loc = new Point3D(cichlidC.getWorldTranslation().getCol(3));
+						if (cichlidC != null) {
+							Point3D loc = new Point3D(cichlidC
+									.getWorldTranslation().getCol(3));
 							logger.debug("save flag for cichlidC");
-			        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 3 where ID = 3");			        	
-			        	int aa = s.executeUpdate("UPDATE FishPoolSaveState set StartingXPos = " + loc.getX() + " where ID = 3" );
-			        	int aaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = " + loc.getY() + " where ID = 3" );
-			        	int aaaa = s.executeUpdate("UPDATE FishPoolSaveState set StartingZPos = " + loc.getZ() + " where ID = 3" );
+							int a = s
+									.executeUpdate("UPDATE SimulationFishS set fishID = 3 where ID = 3");
+							int aa = s
+									.executeUpdate("UPDATE FishPoolSaveState set StartingXPos = "
+											+ loc.getX() + " where ID = 3");
+							int aaa = s
+									.executeUpdate("UPDATE FishPoolSaveState set StartingYPos = "
+											+ loc.getY() + " where ID = 3");
+							int aaaa = s
+									.executeUpdate("UPDATE FishPoolSaveState set StartingZPos = "
+											+ loc.getZ() + " where ID = 3");
+						} else if (cichlidC == null) {
+							int a = s
+									.executeUpdate("UPDATE SimulationFishS set fishID = 0 where ID = 3");
 						}
-						else if (cichlidC == null)
-						{
-				        	int a = s.executeUpdate("UPDATE SimulationFishS set fishID = 0 where ID = 3");
-						}
-			        	
+
 					}
 					connn.close();
-				} catch (Exception p1)
-				{
+				} catch (Exception p1) {
 					p1.printStackTrace();
 				}
-			
-				
-			} catch(Exception pp)
-			{
+
+			} catch (Exception pp) {
 				pp.printStackTrace();
 			}
-		try {
+			try {
 				Connection conne;
-				try
-				{
-					conne = DriverManager.getConnection("jdbc:ucanaccess://FishPool.accdb");
+				try {
+					conne = DriverManager
+							.getConnection("jdbc:ucanaccess://FishPool.accdb");
 					Statement s = conne.createStatement();
-					rs =s.executeQuery("SELECT ID FROM [SimulationObjects]");
-					while (rs.next())
-					{
-						if (largePlant != null)
-						{	
+					rs = s.executeQuery("SELECT ID FROM [SimulationObjects]");
+					while (rs.next()) {
+						if (largePlant != null) {
 							logger.debug("saving large plant");
-			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 1 where ID = 1");
+							int a = s
+									.executeUpdate("UPDATE SimulationObjectsS set objID = 1 where ID = 1");
+						} else if (largePlant == null) {
+							int a = s
+									.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 1");
 						}
-						else if (largePlant == null)
-						{
-			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 1");
-						}
-						if (largePot != null)
-						{
+						if (largePot != null) {
 							logger.debug("saving large pot");
-							int b = s.executeUpdate("UPDATE SimulationObjectsS set objID = 4 where ID = 4");
+							int b = s
+									.executeUpdate("UPDATE SimulationObjectsS set objID = 4 where ID = 4");
+						} else if (largePot == null) {
+							int a = s
+									.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 4");
 						}
-						else if (largePot == null)
-						{
-			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 4");
-						}
-						if (mediumPlant != null)
-						{
+						if (mediumPlant != null) {
 							logger.debug("saving medium plant");
-							int c = s.executeUpdate("UPDATE SimulationObjectsS set objID = 2 where ID = 2");
+							int c = s
+									.executeUpdate("UPDATE SimulationObjectsS set objID = 2 where ID = 2");
+						} else if (mediumPlant == null) {
+							int a = s
+									.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 2");
 						}
-						else if (mediumPlant == null)
-						{
-			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 2");
-						}
-						if (mediumPot != null)
-						{
+						if (mediumPot != null) {
 							logger.debug("saving medium pot");
-							int d = s.executeUpdate("UPDATE SimulationObjectsS set objID = 5 where ID = 5");
+							int d = s
+									.executeUpdate("UPDATE SimulationObjectsS set objID = 5 where ID = 5");
+						} else if (mediumPot == null) {
+							int a = s
+									.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 5");
 						}
-						else if (mediumPot == null)
-						{
-			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 5");
-						}
-						if (smallPlant != null)
-						{
+						if (smallPlant != null) {
 							logger.debug("saving small plant");
-							int g = s.executeUpdate("UPDATE SimulationObjectsS set objID = 3 where ID = 3");
+							int g = s
+									.executeUpdate("UPDATE SimulationObjectsS set objID = 3 where ID = 3");
+						} else if (smallPlant == null) {
+							int a = s
+									.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 3");
 						}
-						else if (smallPlant == null)
-						{
-			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 3");
-						}
-						if (smallPot != null)
-						{
+						if (smallPot != null) {
 							logger.debug("saving small pot");
-							int f = s.executeUpdate("UPDATE SimulationObjectsS set objID = 6 where ID = 6");
-						}
-						else if (smallPot == null)
-						{
-			        		int a = s.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 6");
+							int f = s
+									.executeUpdate("UPDATE SimulationObjectsS set objID = 6 where ID = 6");
+						} else if (smallPot == null) {
+							int a = s
+									.executeUpdate("UPDATE SimulationObjectsS set objID = 0 where ID = 6");
 						}
 					}
 					conne.close();
-				} catch (Exception p1)
-				{
+				} catch (Exception p1) {
 					p1.printStackTrace();
 				}
-			
-				
-			} catch(Exception pp)
-			{
+
+			} catch (Exception pp) {
 				pp.printStackTrace();
 			}
 		}
-		
-		
-	}
-	
-	public void createFishTankWalls() {
-		addGameWorldObject(fishTank.getFishWalls());
+
 	}
 
-	public void createFishTank(){ // issue with this.
+	public void createFishTankWalls() {
+		walls = fishTank.getFishWalls();
+		addGameWorldObject(walls);
+	}
+
+	public void createFishTank() { // issue with this.
 		addGameWorldObject(fishTank.getTerrain());
 	}
-	public void pauseUpdate(float elapsedTimeMS)
-	{
+
+	public void pauseUpdate(float elapsedTimeMS) {
 		// creating timer thing
 		time += elapsedTimeMS;
 		if (timeString != null) {
@@ -1491,13 +1485,10 @@ public class MyGame extends BaseGame {
 		Point3D camLoc = camera.getLocation();
 		Matrix3D camT = new Matrix3D();
 		camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
-/*		
-		if (startAnimation == true) {
-			// this should work
-			startAnimationProcess();
-			startAnimation = false;
-		}
-*/
+		/*
+		 * if (startAnimation == true) { // this should work
+		 * startAnimationProcess(); startAnimation = false; }
+		 */
 		// update skybox loc
 
 		// skybox.setLocalTranslation(camT);
@@ -1510,455 +1501,349 @@ public class MyGame extends BaseGame {
 				s.updateGeometricState(elapsedTimeMS, true);
 			}
 		}
-		
-		for( SceneNode s : objs){
+
+		for (SceneNode s : objs) {
 			Matrix3D cichlidAlocalT = s.getLocalTranslation();
 			Matrix3D cichlidARot = s.getLocalRotation();
-			
+
 			s.setLocalTranslation(cichlidAlocalT);
 			s.setLocalRotation(cichlidARot);
 		}
-		
+
 		super.update(time);
 		cc.update(time);
-		
+
 		startAnimation = true;
 	}
+
 	public void update(float elapsedTimeMS) // this will be where the objects
-	{	
-				// creating timer thing
-				time += elapsedTimeMS;
-				if (timeString != null) {
-					timeString.setText("Time: " + (int)Math.floor(time / 1000));
-				}
-				float timeCompare = time / 1000;
-	
-				Point3D camLoc = camera.getLocation();
-				Matrix3D camT = new Matrix3D();
-				camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
-				
-				if (startAnimation == true) {
-					// this should work
-					startAnimationProcess();
-					startAnimation = false;
-				}
-	
-				// update skybox loc
-	
-				// skybox.setLocalTranslation(camT);	
-	
-				// iterating through models
-	
-				for (SceneNode s : getGameWorld()) {
-					if (s instanceof Model3DTriMesh) {
-						if (cichlidAObject != null) {
-							if (s == cichlidAObject) {
-							//	 System.out.println("i'm calling now!");
-								((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
-							}
-						}
-						if (cichlidBObject != null) {
-							if (s == cichlidBObject) {
-							//	 System.out.println("i'm fapping forward");
-								((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
-							}
-						}
-						if (cichlidCObject != null) {
-							if (s == cichlidCObject) {
-								// System.out.println("the world gone bad");
-								((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
-							}
-						}
-						s.updateGeometricState(elapsedTimeMS, true);
-					}
-				}
-				
-				for (SceneNode s : getGameWorld() )
-				{
-					if (s == cichlidA) {
-						
-						// call move stuff here
-						Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+	{
+		// creating timer thing
+		time += elapsedTimeMS;
+		if (timeString != null) {
+			timeString.setText("Time: " + (int) Math.floor(time / 1000));
+		}
+		float timeCompare = time / 1000;
 
-						
-						Matrix3D cichlidAlocalT = s.getLocalTranslation();
-						Matrix3D cichlidARot = s.getLocalRotation();
-						cichlidBObject.setLocalTranslation(cichlidAlocalT);
-						cichlidBObject.setLocalRotation(cichlidARot);
-					}
-					if (s == cichlidB) {
-						
-						// call move stuff here
-						Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+		Point3D camLoc = camera.getLocation();
+		Matrix3D camT = new Matrix3D();
+		camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
 
-						
-						Matrix3D cichlidBlocalT = s.getLocalTranslation();
-						Matrix3D cichlidBRot = s.getLocalRotation();
-						cichlidBObject.setLocalTranslation(cichlidBlocalT);
-						cichlidBObject.setLocalRotation(cichlidBRot);
-					}
-					if (s == cichlidC) {
-						
-						// call move stuff here
-						Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+		if (startAnimation == true) {
+			// this should work
+			startAnimationProcess();
+			startAnimation = false;
+		}
 
-						
-						Matrix3D cichlidClocalT = s.getLocalTranslation();
-						Matrix3D cichlidCRot = s.getLocalRotation();
-						cichlidBObject.setLocalTranslation(cichlidClocalT);
-						cichlidBObject.setLocalRotation(cichlidCRot);
+		// update skybox loc
+
+		// skybox.setLocalTranslation(camT);
+
+		// iterating through models
+
+		for (SceneNode s : getGameWorld()) {
+			if (s instanceof Model3DTriMesh) {
+				if (cichlidAObject != null) {
+					if (s == cichlidAObject) {
+						// System.out.println("i'm calling now!");
+						((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
 					}
 				}
-				
-				for( SceneNode s : objs){
+				if (cichlidBObject != null) {
+					if (s == cichlidBObject) {
+						// System.out.println("i'm fapping forward");
+						((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
+					}
+				}
+				if (cichlidCObject != null) {
+					if (s == cichlidCObject) {
+						// System.out.println("the world gone bad");
+						((Model3DTriMesh) s).updateAnimation(elapsedTimeMS);
+					}
+				}
+				s.updateGeometricState(elapsedTimeMS, true);
+			}
+		}
+
+		super.update(time);
+		cc.update(time);
+		for (SceneNode s : getGameWorld()) {
+			if (s instanceof ConvictCichlid) // here will be where the objects
+												// will
+												// have be able to move, but i
+												// will
+												// implement that later.
+			{
+				if (s == cichlidA) {
+					// s.translate(0, 0, .1f);
+					// s.updateWorldBound();
+					// bound collision
+					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+
+					((ConvictCichlid) s).move(elapsedTimeMS);
+
+					// here is where i will test my newfound collision for
+					// spheres
+
 					Matrix3D cichlidAlocalT = s.getLocalTranslation();
 					Matrix3D cichlidARot = s.getLocalRotation();
-					
-					s.setLocalTranslation(cichlidAlocalT);
-					s.setLocalRotation(cichlidARot);
-				}
-				
-				super.update(time);
-				cc.update(time);
-				for (SceneNode s : getGameWorld()) {
-					if (s instanceof ConvictCichlid) // here will be where the objects will
-													// have be able to move, but i will
-													// implement that later.
+					aggroRangeA.setLocalTranslation(cichlidAlocalT);
+					cichlidAObject.setLocalTranslation(cichlidAlocalT);
+					cichlidAObject.setLocalRotation(cichlidARot);
+
+					// object collision
+					/*
+					 * if (largePlantC == true) // ERROR { if
+					 * (cichlidA.getWorldBound
+					 * ().intersects(largePlant.getWorldBound())) {
+					 * System.out.println("a hit largePl"); } }
+					 */
+					if (largePotC == true) {
+						if (cichlidA.getWorldBound().intersects(
+								largePot.getWorldBound())) {
+							System.out.println("a hit largePot");
+						}
+					}
+					if (largePlantC == true) // ERROR
 					{
-						if (s == cichlidA) {
-
-							// s.translate(0, 0, .1f);
-							// s.updateWorldBound();
-							// bound collision
-							Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
-				
-							// here is where i will test my newfound collision for spheres
-							
-							Matrix3D cichlidAlocalT = s.getLocalTranslation();
-							Matrix3D cichlidARot = s.getLocalRotation();
-							aggroRangeA.setLocalTranslation(cichlidAlocalT);
-							cichlidAObject.setLocalTranslation(cichlidAlocalT);
-							cichlidAObject.setLocalRotation(cichlidARot);
-							if (loc.getX() > 200 || loc.getX() < 0.0)
-							{
-							//	System.out.println("X BOUNDS");
-								
-							}
-							if (loc.getY() > 200 || loc.getY() < 0.0)
-							{
-							//	System.out.println("Y BOUNDS");
-								
-							}
-							if (loc.getZ() > 200 || loc.getZ() < 0.0)
-							{
-							//	System.out.println("Z BOUNDS");
-								
-							}
-							// object collision
-							/*
-							if (largePlantC == true) // ERROR
-							{
-								if (cichlidA.getWorldBound().intersects(largePlant.getWorldBound()))
-								{
-									System.out.println("a hit largePl");
-								}
-							}
-							*/
-							if (largePotC == true)
-							{
-								if (cichlidA.getWorldBound().intersects(largePot.getWorldBound()))
-								{
-									System.out.println("a hit largePot");
-								}
-							}
-							if (largePlantC == true) // ERROR
-							{
-								if (cichlidA.getWorldBound().intersects(largePlant.getWorldBound()))
-								{
-									System.out.println("a hit largePl");
-								}
-							}
-							/*
-							if (largePlantC == true)
-							{
-								Point3D largePlantloc = new Point3D(largePlant.getWorldTranslation().getCol(3));
-								if ((loc.getX() == largePlantloc.getX()) && (loc.getY() == largePlantloc.getY()) 
-										&& (loc.getZ() == largePlantloc.getZ()) )
-								{
-									System.out.println("b hit large plant");
-								}
-							}
-							*/
-							if (mediumPotC == true)
-							{
-								if (cichlidA.getWorldBound().intersects(mediumPot.getWorldBound()))
-								{
-									System.out.println("a hit med pot");
-								}
-							}
-							if (mediumPlantC == true)
-							{
-								if	 (cichlidA.getWorldBound().intersects(mediumPlant.getWorldBound()))
-								{
-									System.out.println("a hit med pl");
-								}
-							}
-							if (smallPlantC == true)
-							{
-								if (cichlidA.getWorldBound().intersects(smallPlant.getWorldBound()))
-								{
-									System.out.println("a hit small pla");
-								}
-							}
-							if (smallPotC == true)
-							{
-								if (cichlidA.getWorldBound().intersects(smallPot.getWorldBound()))
-								{
-									System.out.println("a hit small pot");
-								}
-							}
-							// cichlid collision
-							if (cichlidB != null)
-							{
-								if (cichlidA.getWorldBound().intersects(cichlidB.getWorldBound()))
-								{
-									System.out.println("a hits b");
-									// this is where shit goes down
-								}
-								if (aggroRangeA.getWorldBound().intersects(aggroRangeB.getWorldBound()))
-								{
-									System.out.println("aggro from a to B");
-								}
-							}
-							if (cichlidC != null)
-							{
-								if (cichlidA.getWorldBound().intersects(cichlidC.getWorldBound()))
-								{
-									System.out.println("a hits c");
-									// this is where shit goes down
-								}
-								if (aggroRangeA.getWorldBound().intersects(aggroRangeC.getWorldBound()))
-								{
-									System.out.println("aggro from a to C");
-								}
-							}
-							
-							
+						if (cichlidA.getWorldBound().intersects(
+								largePlant.getWorldBound())) {
+							System.out.println("a hit largePl");
 						}
-						if (s == cichlidB) {
-			
-							// call move stuff here
-							Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
-
-							
-							Matrix3D cichlidBlocalT = s.getLocalTranslation();
-							Matrix3D cichlidBRot = s.getLocalRotation();
-							cichlidBObject.setLocalTranslation(cichlidBlocalT);
-							cichlidBObject.setLocalRotation(cichlidBRot);
-							aggroRangeB.setLocalTranslation(cichlidBlocalT);
-							if (loc.getX() > 200 || loc.getX() < 0.0)
-							{
-							//	System.out.println("X BOUNDS");
-								
-							}
-							if (loc.getY() > 200 || loc.getY() < 0.0)
-							{
-							//	System.out.println("Y BOUNDS");
-								
-							}
-							if (loc.getZ() > 200 || loc.getZ() < 0.0)
-							{
-							//	System.out.println("Z BOUNDS");
-								
-							}
-							if (largePotC == true)
-							{
-								if (cichlidB.getWorldBound().intersects(largePot.getWorldBound()))
-								{
-							//		System.out.println("b hit largePo");
-								}
-							}
-						
-							if (largePlantC == true) 
-							{
-								if (cichlidB.getWorldBound().intersects(largePlant.getWorldBound()))
-								{
-							//		System.out.println("b hit largePl");
-								}
-							}
-							/*
-							if (largePlantC == true)
-							{
-								Point3D largePlantloc = new Point3D(largePlant.getWorldTranslation().getCol(3));
-								if ((loc.getX() == largePlantloc.getX()) && (loc.getY() == largePlantloc.getY()) 
-										&& (loc.getZ() == largePlantloc.getZ()) )
-								{
-									System.out.println("b hit large plant");
-								}
-							}
-							*/
-							if (mediumPotC == true)
-							{
-								if (cichlidB.getWorldBound().intersects(mediumPot.getWorldBound()))
-								{
-							//		System.out.println("b hit medP");
-								}
-							}
-							if (mediumPlantC == true)
-							{
-								if (cichlidB.getWorldBound().intersects(mediumPlant.getWorldBound()))
-								{
-							//		System.out.println("b hit medPL");
-								}
-							}
-							if (smallPlantC == true)
-							{
-								if (cichlidB.getWorldBound().intersects(smallPlant.getWorldBound()))
-								{
-							//		System.out.println("b hit smallPl");
-								}
-							}
-							if (smallPotC == true)
-							{
-								if (cichlidB.getWorldBound().intersects(smallPot.getWorldBound()))
-								{
-							//		System.out.println("b hit smallPot");
-								}
-							}
-							// cichlid collision
-							if (cichlidA != null)
-							{
-								if (cichlidB.getWorldBound().intersects(cichlidA.getWorldBound()))
-								{
-							//		System.out.println("b hits a");
-									// this is where shit goes down
-								}
-								if (aggroRangeB.getWorldBound().intersects(aggroRangeA.getWorldBound()))
-								{
-							//		System.out.println("aggro from B to A");
-								}
-							}
-							if (cichlidC != null)
-							{
-								if (cichlidB.getWorldBound().intersects(cichlidC.getWorldBound()))
-								{
-								//	System.out.println("b hits c");
-									// this is where shit goes down
-								}
-								if (aggroRangeB.getWorldBound().intersects(aggroRangeC.getWorldBound()))
-								{
-							//		System.out.println("aggro from B to C");
-								}
-							}
+					}
+					/*
+					 * if (largePlantC == true) { Point3D largePlantloc = new
+					 * Point3D(largePlant.getWorldTranslation().getCol(3)); if
+					 * ((loc.getX() == largePlantloc.getX()) && (loc.getY() ==
+					 * largePlantloc.getY()) && (loc.getZ() ==
+					 * largePlantloc.getZ()) ) {
+					 * System.out.println("b hit large plant"); } }
+					 */
+					if (mediumPotC == true) {
+						if (cichlidA.getWorldBound().intersects(
+								mediumPot.getWorldBound())) {
+							System.out.println("a hit med pot");
 						}
-						if (s == cichlidC) {
-							// call move stuff here
-							Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
-							Matrix3D cichlidClocalT = s.getLocalTranslation();
-							Matrix3D cichlidCRot = s.getLocalRotation();
-							aggroRangeC.setLocalTranslation(cichlidClocalT);
-							cichlidCObject.setLocalTranslation(cichlidClocalT);
-							cichlidCObject.setLocalRotation(cichlidCRot);	
-							if (loc.getX() > 200 || loc.getX() < 0.0)
-							{
-							//	System.out.println("X BOUNDS");
-								
-							}
-							if (loc.getY() > 200 || loc.getY() < 0.0)
-							{
-							//	System.out.println("Y BOUNDS");
-								
-							}
-							if (loc.getZ() > 200 || loc.getZ() < 0.0)
-							{
-							//	System.out.println("Z BOUNDS");
-								
-							}
-							if (largePotC == true)
-							{
-								if (cichlidC.getWorldBound().intersects(largePot.getWorldBound()))
-								{
-								//	System.out.println("c hit large pot");
-								}
-							}
-							
-							if (largePlantC == true)
-							{
-								if (cichlidC.getWorldBound().intersects(largePlant.getWorldBound()))
-								{
-								//	System.out.println("c hit large plant");
-								}
-							}
-							/*
-							if (largePlantC == true)
-							{
-								Point3D largePlantloc = new Point3D(largePlant.getWorldTranslation().getCol(3));
-								if ((loc.getX() == largePlantloc.getX()) && (loc.getY() == largePlantloc.getY()) 
-										&& (loc.getZ() == largePlantloc.getZ()) )
-								{
-									System.out.println("C hit large plant");
-								}
-							}
-								*/
-							if (mediumPotC == true)
-							{
-								if (cichlidC.getWorldBound().intersects(mediumPot.getWorldBound()))
-								{
-								//	System.out.println("c hit medium pot");
-								}
-							}
-							if (mediumPlantC == true)
-							{
-								if (cichlidC.getWorldBound().intersects(mediumPlant.getWorldBound()))
-								{
-								//	System.out.println("c hit medium plant");
-								}
-							}
-							if (smallPlantC == true)
-							{
-								if (cichlidC.getWorldBound().intersects(smallPlant.getWorldBound()))
-								{
-								//	System.out.println("c hit small plant");
-								}
-							}
-							if (smallPotC == true)
-							{
-								if (cichlidC.getWorldBound().intersects(smallPot.getWorldBound()))
-								{
-								//	System.out.println("c hit small pot");
-								}
-							}
-							// cichlid collision
-							if (cichlidA != null)
-							{
-								if (cichlidC.getWorldBound().intersects(cichlidA.getWorldBound()))
-								{
-								//	System.out.println("c hits a");
-									// this is where shit goes down
-								}
-								if (aggroRangeC.getWorldBound().intersects(aggroRangeA.getWorldBound()))
-								{
-								//	System.out.println("aggro from C to A");
-								}
-							}
-							if (cichlidB != null)
-							{
-								if (cichlidC.getWorldBound().intersects(cichlidA.getWorldBound()))
-								{
-								//	System.out.println("c hits b");
-									// this is where shit goes down
-								}
-								if (aggroRangeC.getWorldBound().intersects(aggroRangeB.getWorldBound()))
-								{
-								//	System.out.println("aggro from C to B");
-								}
-							}
+					}
+					if (mediumPlantC == true) {
+						if (cichlidA.getWorldBound().intersects(
+								mediumPlant.getWorldBound())) {
+							System.out.println("a hit med pl");
 						}
-
+					}
+					if (smallPlantC == true) {
+						if (cichlidA.getWorldBound().intersects(
+								smallPlant.getWorldBound())) {
+							System.out.println("a hit small pla");
+						}
+					}
+					if (smallPotC == true) {
+						if (cichlidA.getWorldBound().intersects(
+								smallPot.getWorldBound())) {
+							System.out.println("a hit small pot");
+						}
+					}
+					// cichlid collision
+					if (cichlidB != null) {
+						if (cichlidA.getWorldBound().intersects(
+								cichlidB.getWorldBound())) {
+							System.out.println("a hits b");
+							// this is where shit goes down
+						}
+						if (aggroRangeA.getWorldBound().intersects(
+								aggroRangeB.getWorldBound())) {
+							System.out.println("aggro from a to B");
+						}
+					}
+					if (cichlidC != null) {
+						if (cichlidA.getWorldBound().intersects(
+								cichlidC.getWorldBound())) {
+							System.out.println("a hits c");
+							// this is where shit goes down
+						}
+						if (aggroRangeA.getWorldBound().intersects(
+								aggroRangeC.getWorldBound())) {
+							System.out.println("aggro from a to C");
+						}
 					}
 
 				}
-			
+				if (s == cichlidB) {
+
+					// call move stuff here
+					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+
+					((ConvictCichlid) s).move(elapsedTimeMS);
+
+					Matrix3D cichlidBlocalT = s.getLocalTranslation();
+					Matrix3D cichlidBRot = s.getLocalRotation();
+					cichlidBObject.setLocalTranslation(cichlidBlocalT);
+					cichlidBObject.setLocalRotation(cichlidBRot);
+					aggroRangeB.setLocalTranslation(cichlidBlocalT);
+
+					if (largePotC == true) {
+						if (cichlidB.getWorldBound().intersects(
+								largePot.getWorldBound())) {
+							// System.out.println("b hit largePo");
+						}
+					}
+
+					if (largePlantC == true) {
+						if (cichlidB.getWorldBound().intersects(
+								largePlant.getWorldBound())) {
+							// System.out.println("b hit largePl");
+						}
+					}
+					/*
+					 * if (largePlantC == true) { Point3D largePlantloc = new
+					 * Point3D(largePlant.getWorldTranslation().getCol(3)); if
+					 * ((loc.getX() == largePlantloc.getX()) && (loc.getY() ==
+					 * largePlantloc.getY()) && (loc.getZ() ==
+					 * largePlantloc.getZ()) ) {
+					 * System.out.println("b hit large plant"); } }
+					 */
+					if (mediumPotC == true) {
+						if (cichlidB.getWorldBound().intersects(
+								mediumPot.getWorldBound())) {
+							// System.out.println("b hit medP");
+						}
+					}
+					if (mediumPlantC == true) {
+						if (cichlidB.getWorldBound().intersects(
+								mediumPlant.getWorldBound())) {
+							// System.out.println("b hit medPL");
+						}
+					}
+					if (smallPlantC == true) {
+						if (cichlidB.getWorldBound().intersects(
+								smallPlant.getWorldBound())) {
+							// System.out.println("b hit smallPl");
+						}
+					}
+					if (smallPotC == true) {
+						if (cichlidB.getWorldBound().intersects(
+								smallPot.getWorldBound())) {
+							// System.out.println("b hit smallPot");
+						}
+					}
+					// cichlid collision
+					if (cichlidA != null) {
+						if (cichlidB.getWorldBound().intersects(
+								cichlidA.getWorldBound())) {
+							// System.out.println("b hits a");
+							// this is where shit goes down
+						}
+						if (aggroRangeB.getWorldBound().intersects(
+								aggroRangeA.getWorldBound())) {
+							// System.out.println("aggro from B to A");
+						}
+					}
+					if (cichlidC != null) {
+						if (cichlidB.getWorldBound().intersects(
+								cichlidC.getWorldBound())) {
+							// System.out.println("b hits c");
+							// this is where shit goes down
+						}
+						if (aggroRangeB.getWorldBound().intersects(
+								aggroRangeC.getWorldBound())) {
+							// System.out.println("aggro from B to C");
+						}
+					}
+				}
+				if (s == cichlidC) {
+					// call move stuff here
+					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+					Matrix3D cichlidClocalT = s.getLocalTranslation();
+					Matrix3D cichlidCRot = s.getLocalRotation();
+					aggroRangeC.setLocalTranslation(cichlidClocalT);
+					cichlidCObject.setLocalTranslation(cichlidClocalT);
+					cichlidCObject.setLocalRotation(cichlidCRot);
+					if (loc.getX() > 200 || loc.getX() < 0.0) {
+						// System.out.println("X BOUNDS");
+
+					}
+					if (loc.getY() > 200 || loc.getY() < 0.0) {
+						// System.out.println("Y BOUNDS");
+
+					}
+					if (loc.getZ() > 200 || loc.getZ() < 0.0) {
+						// System.out.println("Z BOUNDS");
+
+					}
+					if (largePotC == true) {
+						if (cichlidC.getWorldBound().intersects(
+								largePot.getWorldBound())) {
+							// System.out.println("c hit large pot");
+						}
+					}
+
+					if (largePlantC == true) {
+						if (cichlidC.getWorldBound().intersects(
+								largePlant.getWorldBound())) {
+							// System.out.println("c hit large plant");
+						}
+					}
+					/*
+					 * if (largePlantC == true) { Point3D largePlantloc = new
+					 * Point3D(largePlant.getWorldTranslation().getCol(3)); if
+					 * ((loc.getX() == largePlantloc.getX()) && (loc.getY() ==
+					 * largePlantloc.getY()) && (loc.getZ() ==
+					 * largePlantloc.getZ()) ) {
+					 * System.out.println("C hit large plant"); } }
+					 */
+					if (mediumPotC == true) {
+						if (cichlidC.getWorldBound().intersects(
+								mediumPot.getWorldBound())) {
+							// System.out.println("c hit medium pot");
+						}
+					}
+					if (mediumPlantC == true) {
+						if (cichlidC.getWorldBound().intersects(
+								mediumPlant.getWorldBound())) {
+							// System.out.println("c hit medium plant");
+						}
+					}
+					if (smallPlantC == true) {
+						if (cichlidC.getWorldBound().intersects(
+								smallPlant.getWorldBound())) {
+							// System.out.println("c hit small plant");
+						}
+					}
+					if (smallPotC == true) {
+						if (cichlidC.getWorldBound().intersects(
+								smallPot.getWorldBound())) {
+							// System.out.println("c hit small pot");
+						}
+					}
+					// cichlid collision
+					if (cichlidA != null) {
+						if (cichlidC.getWorldBound().intersects(
+								cichlidA.getWorldBound())) {
+							// System.out.println("c hits a");
+							// this is where shit goes down
+						}
+						if (aggroRangeC.getWorldBound().intersects(
+								aggroRangeA.getWorldBound())) {
+							// System.out.println("aggro from C to A");
+						}
+					}
+					if (cichlidB != null) {
+						if (cichlidC.getWorldBound().intersects(
+								cichlidA.getWorldBound())) {
+							// System.out.println("c hits b");
+							// this is where shit goes down
+						}
+						if (aggroRangeC.getWorldBound().intersects(
+								aggroRangeB.getWorldBound())) {
+							// System.out.println("aggro from C to B");
+						}
+					}
+				}
+
+			}
+
+		}
+
 	}
 
 	private IDisplaySystem createDisplaySystem() {
@@ -1967,23 +1852,23 @@ public class MyGame extends BaseGame {
 		logger.debug("Waiting for display creation...");
 		int count = 0;
 		// wait until display creation completes or a timeout occurs
-//		while (!display.isCreated()) {
-//			try {
-//				Thread.sleep(10);
-//			} catch (InterruptedException e) {
-//				throw new RuntimeException("Display creation interrupted");
-//			}
-//			count++;
-//			System.out.print("+");
-//			if (count % 80 == 0) {
-//				System.out.println();
-//			}
-//			if (count > 2000) // 20 seconds (approx.)
-//			{
-//				throw new RuntimeException("Unable to create display");
-//			}
-//		}
-//		System.out.println();
+		// while (!display.isCreated()) {
+		// try {
+		// Thread.sleep(10);
+		// } catch (InterruptedException e) {
+		// throw new RuntimeException("Display creation interrupted");
+		// }
+		// count++;
+		// System.out.print("+");
+		// if (count % 80 == 0) {
+		// System.out.println();
+		// }
+		// if (count > 2000) // 20 seconds (approx.)
+		// {
+		// throw new RuntimeException("Unable to create display");
+		// }
+		// }
+		// System.out.println();
 		return display;
 	}
 
@@ -2037,65 +1922,58 @@ public class MyGame extends BaseGame {
 					.executeUpdate("UPDATE ScenarioFlag set ScenarioNumber = 0 where ID = 5");
 			conn.close();
 			// End the Rules Knowledge Session
-			stopRunner();
+			// stopRunner();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	    logger.info("BaseGame.shutdown() invoked...");
-	    if (DisplaySystem.getCurrentDisplaySystem() != null) {
-	      DisplaySystem.getCurrentDisplaySystem().close();
-		    logger.info("BaseGame.shutdown() invoked...");
-	   
-	    }
-	    System.exit(0);
+		logger.info("BaseGame.shutdown() invoked...");
+		if (DisplaySystem.getCurrentDisplaySystem() != null) {
+			DisplaySystem.getCurrentDisplaySystem().close();
+			logger.info("BaseGame.shutdown() invoked...");
+
+		}
+		System.exit(0);
 	}
 
 	public void setPauseSim(boolean b) {
 		pauseSimulation = b;
-		
+
 	}
-	public boolean getPauseSim()
-	{
+
+	public boolean getPauseSim() {
 		return pauseSimulation;
 	}
-	public void setAnimation(boolean b)
-	{
+
+	public void setAnimation(boolean b) {
 		startAnimation = b;
 	}
-	public boolean getAnimationBool()
-	{
+
+	public boolean getAnimationBool() {
 		return startAnimation;
 	}
-	
 
-	  protected void mainLoop()
-{
-  long startTime = System.nanoTime();
-  long lastUpdateTime = startTime;
-  while (!isGameOver())
-  {
-    long frameStartTime = System.nanoTime();
-    float elapsedMilliSecs = (float)(frameStartTime - lastUpdateTime) / 1000000.0F;
-    lastUpdateTime = frameStartTime;
-    
-    handleInput(elapsedMilliSecs);
-    if (pauseSimulation == true)
-    {
-  	  pauseUpdate(elapsedMilliSecs);
-    
-    } else if (pauseSimulation == false)
-    {
-  	  update(elapsedMilliSecs);
-    }
-    render();
-    
-    DisplaySystem.getCurrentDisplaySystem().getRenderer().swapBuffers();
-    
-    Thread.yield();
-  }
-}
+	protected void mainLoop() {
+		long startTime = System.nanoTime();
+		long lastUpdateTime = startTime;
+		while (!isGameOver()) {
+			long frameStartTime = System.nanoTime();
+			float elapsedMilliSecs = (float) (frameStartTime - lastUpdateTime) / 1000000.0F;
+			lastUpdateTime = frameStartTime;
 
+			handleInput(elapsedMilliSecs);
+			if (pauseSimulation == true) {
+				pauseUpdate(elapsedMilliSecs);
 
+			} else if (pauseSimulation == false) {
+				update(elapsedMilliSecs);
+			}
+			render();
+
+			DisplaySystem.getCurrentDisplaySystem().getRenderer().swapBuffers();
+
+			Thread.yield();
+		}
+	}
 
 }
