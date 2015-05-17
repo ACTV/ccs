@@ -1234,11 +1234,10 @@ public class MyGame extends BaseGame {
 		// }
 
 		// here is the movement options of the character ..
-		/*
-		 * im.associateAction(kbName,
-		 * net.java.games.input.Component.Identifier.Key.W, rotateTest,
-		 * IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
-		 * im.associateAction(kbName,
+		
+		/*  im.associateAction(kbName,
+		  net.java.games.input.Component.Identifier.Key.W, rotateTest, IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
+		 im.associateAction(kbName,
 		 * net.java.games.input.Component.Identifier.Key.S, moveBackA,
 		 * IInputManager.INPUT_ACTION_TYPE.REPEAT_WHILE_DOWN);
 		 * im.associateAction(kbName,
@@ -1518,6 +1517,8 @@ public class MyGame extends BaseGame {
 
 	public void update(float elapsedTimeMS) // this will be where the objects
 	{
+		
+
 		// creating timer thing
 		time += elapsedTimeMS;
 		if (timeString != null) {
@@ -1598,6 +1599,24 @@ public class MyGame extends BaseGame {
 					 * ().intersects(largePlant.getWorldBound())) {
 					 * System.out.println("a hit largePl"); } }
 					 */
+					
+					if (loc.getX() > 200 || loc.getX() < 200)
+					{
+						System.out.println("x b");
+						s.rotate(-90, new Vector3D(1, 0, 0));
+					}
+					if (loc.getY() > 200 || loc.getY() < 200)
+					{
+						// rotate
+						System.out.println("y b");
+						   s.rotate(-90, new Vector3D(0, 1, 0));
+					}
+					if (loc.getZ() > 200 || loc.getZ() < 200)
+					{
+						// rotate
+						System.out.println("z b");
+						   s.rotate(-90, new Vector3D(0, 0, 1));
+					}
 					if (largePotC == true) {
 						if (cichlidA.getWorldBound().intersects(
 								largePot.getWorldBound())) {

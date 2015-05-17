@@ -28,7 +28,7 @@ public class BackwardAction extends AbstractInputAction{
 	   Vector3D dir = new Vector3D(0,0,-1);
 	   dir = dir.mult(rot);
 	   dir.scale((double)(speed * time));
-	   s.translate((float)dir.getX(),(float)dir.getY(),(float)dir.getZ());
+	   s.rotate(180, new Vector3D(0, 0, 1));
 	   s.updateWorldBound();
    }
 }
