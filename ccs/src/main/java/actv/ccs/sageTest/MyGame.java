@@ -1599,24 +1599,26 @@ public class MyGame extends BaseGame {
 					 * ().intersects(largePlant.getWorldBound())) {
 					 * System.out.println("a hit largePl"); } }
 					 */
-					
-					if (loc.getX() > 200 || loc.getX() < 200)
+			//		System.out.println("s: "  + loc);
+				/*	if (loc.getX() > 200 || loc.getX() < 200)
 					{
-						System.out.println("x b");
+				//		System.out.println("x b");
 						s.rotate(-90, new Vector3D(1, 0, 0));
+						s.translate(-5,0, 0);
 					}
 					if (loc.getY() > 200 || loc.getY() < 200)
 					{
 						// rotate
-						System.out.println("y b");
+					//	System.out.println("y b");
 						   s.rotate(-90, new Vector3D(0, 1, 0));
 					}
 					if (loc.getZ() > 200 || loc.getZ() < 200)
 					{
 						// rotate
-						System.out.println("z b");
+					//	System.out.println("z b");
 						   s.rotate(-90, new Vector3D(0, 0, 1));
 					}
+					*/
 					if (largePotC == true) {
 						if (cichlidA.getWorldBound().intersects(
 								largePot.getWorldBound())) {
