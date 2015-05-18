@@ -1591,14 +1591,14 @@ public class MyGame extends BaseGame {
 					// s.translate(0, 0, .1f);
 					// s.updateWorldBound();
 					// bound collision
-					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
-					
-					((ConvictCichlid) s).setLocation(loc);
+					((ConvictCichlid) s).setLocation(((ConvictCichlid) s).getLocation());
+					System.out.println( "get the starting location : " + ((ConvictCichlid) s).getLocation());
 					
 					((ConvictCichlid) s).move(elapsedTimeMS);
-					
-					System.out.println("where we going: ca:  " + loc + " caM: " + new Point3D(cichlidAObject.getWorldTranslation().getCol(3)));
 
+					Point3D test = new Point3D(s.getWorldTranslation().getCol(3));
+					System.out.println( "get the next location : " + test);
+					
 					// here is where i will test my newfound collision for
 					// spheres
 
@@ -1616,22 +1616,21 @@ public class MyGame extends BaseGame {
 					 * System.out.println("a hit largePl"); } }
 					 */
 			//		System.out.println("s: "  + loc);
-					if (loc.getX() > 200 || loc.getX() < 0)
+					if (((ConvictCichlid) s).getLocation().getX() > 200 || ((ConvictCichlid) s).getLocation().getX() < 0)
 					{
 						System.out.println("x b");
-					//	s.rotate(-90, new Vector3D(1, 0, 0));
-					//	s.translate(-5,0, 0);
+					//	((ConvictCichlid) s).turn(-30, new Vector3D(1, 0, 0));
 					}
-					if (loc.getY() > 200 || loc.getY() < 0)
+					if (((ConvictCichlid) s).getLocation().getY() > 200 || ((ConvictCichlid) s).getLocation().getY() < 0)
 					{
 						// rotate
-						System.out.println("y b");
-					//	   s.rotate(-90, new Vector3D(0, 1, 0));
+					//	System.out.println("y b");
+						((ConvictCichlid) s).turn(-30, new Vector3D(0, 1, 0));
 					}
-					if (loc.getZ() > 200 || loc.getZ() < 0)
+					if (((ConvictCichlid) s).getLocation().getZ() > 200 || ((ConvictCichlid) s).getLocation().getZ() < 0)
 					{
-						// rotate
-						System.out.println("z b");
+						((ConvictCichlid) s).turn(-30, new Vector3D(0, 0, 1));
+					//	System.out.println("z b");
 					}
 					
 					if (largePotC == true) {

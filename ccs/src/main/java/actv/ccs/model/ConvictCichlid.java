@@ -8,6 +8,7 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.Random;
 
+import sage.scene.SceneNode;
 import actv.ccs.model.type.FishState;
 import actv.ccs.sageTest.MoveActionFactory;
 
@@ -198,7 +199,15 @@ public class ConvictCichlid extends TankObject {
 	public void setInfluence(double influence) {
 		this.influence = influence;
 	}
-	
+	public  void turn(float degrees, Vector3D axis){
+		Matrix3D rot = this.getLocalRotation();
+		Vector3D dir = this.getDirection().normalize();
+		
+		dir = dir.mult(rot);
+		this.rotate(degrees, axis);
+		this.setDirection(dir);
+		this.updateWorldBound();
+	}
 	public void move(float time){
 		Matrix3D rot = this.getLocalRotation();
 		Vector3D dir = this.getDirection().normalize();
