@@ -61,12 +61,13 @@ public class AIController {
 	}
 	 public void AILoop()
 	 { while (true)
+		 
 		 { 
 			 long frameStartTime = System.nanoTime();
 			 float elapsedMilliSecs = (frameStartTime-lastUpdateTime)/(1000000.0f);
 			 if (elapsedMilliSecs >= 50.0f)
 			 { lastUpdateTime = frameStartTime;
-		//	 npc.updateLocation();
+			 update();
 		//	 server.sendNPCinfo();
 			 bt.update(elapsedMilliSecs);
 		 }
