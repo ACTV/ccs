@@ -2013,6 +2013,7 @@ public class MyGame extends BaseGame {
 	public void startAIImplementation()
 	{
 		AIExecutor.execute(new AIRunner(new AIController(this)));
+		
 	}
 	
 	public ConvictCichlid getCichlidA()

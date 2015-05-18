@@ -16,8 +16,9 @@ public class AIRunner implements Runnable {
 		long frameStartTime;
 		float elapMilSecs;
 		long lastUpdateTime=0;
-		
+
 		aic.setupAI();
+		aic.startAI();
 		while (true){
 			frameStartTime = System.nanoTime();
 			elapMilSecs = (frameStartTime-lastUpdateTime)/(1000000.0f);
