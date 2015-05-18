@@ -243,15 +243,15 @@ public class ConvictCichlid extends TankObject {
 				+ ", Speed: " + this.getSpeed() + " ]";
 	}
 
-	public void idleNearXWall() {
+	synchronized public void idleNearXWall() {
 	//	System.out.println("i'm near the X wall amirite");
 		this.setLocation(new Point3D(195, this.getLocation().getY(), this.getLocation().getZ()));
 	}
-	public void idleNearYWall() {
+	synchronized public void idleNearYWall() {
 	//	System.out.println("i'm near the Y wall amirite");
 		this.setLocation(new Point3D( this.getLocation().getX(), 195, this.getLocation().getZ()));
 	}
-	public void idleNearZWall() {
+	synchronized public void idleNearZWall() {
 	//	System.out.println("i'm near the Z wall amirite");
 		this.setLocation(new Point3D(this.getLocation().getX(), this.getLocation().getY(), 195));
 	}
