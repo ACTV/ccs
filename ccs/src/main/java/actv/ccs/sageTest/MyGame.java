@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +24,7 @@ import actv.ccs.RuleEngineRunner;
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
 import actv.ccs.sageTest.AI.AIController;
+import actv.ccs.sageTest.AI.AIRunner;
 import actv.ccs.sageTest.actions.*;
 import graphicslib3D.*;
 import sage.app.BaseGame;
@@ -114,12 +118,10 @@ public class MyGame extends BaseGame {
 	 * }
 	 */
 	
-	
 	// testing for AI now
 	private AIController aic;
 	private long lastUpdateTime;
-	
-
+	private ExecutorService AIExecutor = Executors.newSingleThreadExecutor();
 	
 	public void initGame() {
 		createHUD();
@@ -1958,6 +1960,7 @@ public class MyGame extends BaseGame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		AIExecutor.shutdown();
 		logger.info("BaseGame.shutdown() invoked...");
 		if (DisplaySystem.getCurrentDisplaySystem() != null) {
 			DisplaySystem.getCurrentDisplaySystem().close();
@@ -2006,26 +2009,10 @@ public class MyGame extends BaseGame {
 			Thread.yield();
 		}
 	}
+	
 	public void startAIImplementation()
 	{
-		aic = new AIController(this);
-		aic.setupAI();
-	//	npcLoop(); 
-		// the loop causes a thread error
-		
-	}
-	public void npcLoop()
-	{
-		while (true)
-		{
-			long frameStartTime = System.nanoTime();
-			float elapMilSecs = (frameStartTime-lastUpdateTime)/(1000000.0f);
-			if (elapMilSecs >= 50.0f)
-			{
-				aic.update();
-			}
-		}
-		// Thread.yield(); 
+		AIExecutor.execute(new AIRunner(new AIController(this)));
 	}
 	
 	public ConvictCichlid getCichlidA()
