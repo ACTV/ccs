@@ -1598,6 +1598,9 @@ public class MyGame extends BaseGame {
 
 					Point3D test = new Point3D(s.getWorldTranslation().getCol(3));
 					System.out.println( "get the next location : " + test);
+	
+					// so the world translation doesn't work for this?
+					
 					
 					// here is where i will test my newfound collision for
 					// spheres
@@ -1616,18 +1619,21 @@ public class MyGame extends BaseGame {
 					 * System.out.println("a hit largePl"); } }
 					 */
 			//		System.out.println("s: "  + loc);
-					if (((ConvictCichlid) s).getLocation().getX() > 200 || ((ConvictCichlid) s).getLocation().getX() < 0)
+				//	if (((ConvictCichlid) s).getX() > 200 || ((ConvictCichlid) s).getLocation().getX() < 0)
+					if (test.getX() > 200 || test.getX() < 0)
 					{
-						System.out.println("x b");
-					//	((ConvictCichlid) s).turn(-30, new Vector3D(1, 0, 0));
+					//	System.out.println("x b");
+						((ConvictCichlid) s).turn(-30, new Vector3D(1, 0, 0));
 					}
-					if (((ConvictCichlid) s).getLocation().getY() > 200 || ((ConvictCichlid) s).getLocation().getY() < 0)
+				//	if (((ConvictCichlid) s).getLocation().getY() > 200 || ((ConvictCichlid) s).getLocation().getY() < 0)
+					if (test.getY() > 200 || test.getZ() < 0)
 					{
 						// rotate
 					//	System.out.println("y b");
 						((ConvictCichlid) s).turn(-30, new Vector3D(0, 1, 0));
 					}
-					if (((ConvictCichlid) s).getLocation().getZ() > 200 || ((ConvictCichlid) s).getLocation().getZ() < 0)
+				//	if (((ConvictCichlid) s).getLocation().getZ() > 200 || ((ConvictCichlid) s).getLocation().getZ() < 0)
+					if (test.getZ() > 200 || test.getZ() < 0)
 					{
 						((ConvictCichlid) s).turn(-30, new Vector3D(0, 0, 1));
 					//	System.out.println("z b");
