@@ -244,6 +244,7 @@ public class ConvictCichlid extends TankObject {
 	}
 
 	public void idleNearXWall() {
+<<<<<<< HEAD
 		System.out.println("i'm near the X wall amirite");
 		if (getLocation().getX() > 200 - getWidth()){
 			this.getLocation().setX(200-getWidth());
@@ -251,8 +252,13 @@ public class ConvictCichlid extends TankObject {
 		if (getLocation().getX() < getWidth()) {
 			this.getLocation().setX(getWidth());
 		}
+=======
+	//	System.out.println("i'm near the X wall amirite");
+		this.setLocation(new Point3D(195, this.getLocation().getY(), this.getLocation().getZ()));
+>>>>>>> refs/remotes/origin/AITestBranch
 	}
 	public void idleNearYWall() {
+<<<<<<< HEAD
 		System.out.println("i'm near the Y wall amirite");
 		if (getLocation().getY() > 200 - getHeight()){
 			this.getLocation().setY(200-getHeight());
@@ -260,8 +266,13 @@ public class ConvictCichlid extends TankObject {
 		if(getLocation().getY() < getHeight()) {
 			this.getLocation().setY(getHeight());
 		}
+=======
+	//	System.out.println("i'm near the Y wall amirite");
+		this.setLocation(new Point3D( this.getLocation().getX(), 195, this.getLocation().getZ()));
+>>>>>>> refs/remotes/origin/AITestBranch
 	}
 	public void idleNearZWall() {
+<<<<<<< HEAD
 		System.out.println("i'm near the Z wall amirite");
 		if (getLocation().getZ() > 200 - getWidth()){
 			this.getLocation().setZ(200-getWidth());
@@ -269,6 +280,10 @@ public class ConvictCichlid extends TankObject {
 		if(getLocation().getZ() < getWidth()) {
 			this.getLocation().setZ(getWidth());
 		}
+=======
+	//	System.out.println("i'm near the Z wall amirite");
+		this.setLocation(new Point3D(this.getLocation().getX(), this.getLocation().getY(), 195));
+>>>>>>> refs/remotes/origin/AITestBranch
 	}
 
 }

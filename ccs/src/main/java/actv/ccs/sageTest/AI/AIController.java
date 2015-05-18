@@ -34,6 +34,7 @@ public class AIController {
 	setupAI();
 	
 	AILoop();
+	update();
 	}
 	
 	public void setupAI()
@@ -60,12 +61,13 @@ public class AIController {
 	}
 	 public void AILoop()
 	 { while (true)
+		 
 		 { 
 			 long frameStartTime = System.nanoTime();
 			 float elapsedMilliSecs = (frameStartTime-lastUpdateTime)/(1000000.0f);
 			 if (elapsedMilliSecs >= 50.0f)
 			 { lastUpdateTime = frameStartTime;
-		//	 npc.updateLocation();
+			 update();
 		//	 server.sendNPCinfo();
 			 bt.update(elapsedMilliSecs);
 		 }
@@ -174,19 +176,20 @@ public class AIController {
 		if (ccList[0] == mg.getCichlidA() && mg.getCichlidA() != null)
 		{
 			ccList[0].getLocation();
+			
 
-		//	System.out.println("loc 1: " + ccList[0].getLocation());
+			System.out.println("loc 1: " + ccList[0].getLocation());
 		}
 		if (ccList[1] == mg.getCichlidB() && mg.getCichlidB() != null)
 		{
 			ccList[1].getLocation();
 
-		//	System.out.println("loc 2 " + ccList[1].getLocation());
+			System.out.println("loc 2 " + ccList[1].getLocation());
 		}
 		if (ccList[2] == mg.getCichlidC() && mg.getCichlidC() != null)
 		{
 			ccList[2].getLocation();
-		//	System.out.println("loc 3: " + ccList[2].getLocation());
+			System.out.println("loc 3: " + ccList[2].getLocation());
 		}
 	}
 }
