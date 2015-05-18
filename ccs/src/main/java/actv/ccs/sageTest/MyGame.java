@@ -120,6 +120,7 @@ public class MyGame extends BaseGame {
 	
 	// testing for AI now
 	private AIController aic;
+	private AIRunner aiRunner;
 	private long lastUpdateTime;
 	private ExecutorService AIExecutor = Executors.newSingleThreadExecutor();
 	
@@ -1280,6 +1281,7 @@ public class MyGame extends BaseGame {
 		public void performAction(float time, Event ev) {
 			logger.debug("PAUSE " + pauseSimulation);
 			pauseSimulation = true;
+			aiRunner.pause();
 			// pauseRunner();
 			// error
 
@@ -1292,6 +1294,7 @@ public class MyGame extends BaseGame {
 			// resumeRunner();
 			// error here
 			pauseSimulation = false;
+			aiRunner.resume();
 
 		}
 	}
@@ -1553,7 +1556,14 @@ public class MyGame extends BaseGame {
 		// skybox.setLocalTranslation(camT);
 
 		// iterating through models
-
+		
+		try {
+			CCSSemaphore.getSemaphore().acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		for (SceneNode s : getGameWorld()) {
 			if (s instanceof Model3DTriMesh) {
 				if (cichlidAObject != null) {
@@ -1884,6 +1894,7 @@ public class MyGame extends BaseGame {
 			}
 
 		}
+		CCSSemaphore.getSemaphore().release();
 
 	}
 
@@ -1968,7 +1979,13 @@ public class MyGame extends BaseGame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		AIExecutor.shutdown();
+		
+		// Stop the ai loop, and shutdown the executor service
+		// 	so there will be no zombie threads lingering
+		//	after the program closes.
+		aiRunner.stop();
+		AIExecutor.shutdownNow();
+		
 		logger.info("BaseGame.shutdown() invoked...");
 		if (DisplaySystem.getCurrentDisplaySystem() != null) {
 			DisplaySystem.getCurrentDisplaySystem().close();
@@ -2020,7 +2037,8 @@ public class MyGame extends BaseGame {
 	
 	public void startAIImplementation()
 	{
-		AIExecutor.execute(new AIRunner(new AIController(this)));
+		aiRunner = new AIRunner(new AIController(this));
+		AIExecutor.execute(aiRunner);
 	}
 	
 	public ConvictCichlid getCichlidA()

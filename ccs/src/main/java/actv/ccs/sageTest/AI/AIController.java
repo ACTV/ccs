@@ -1,12 +1,17 @@
 package actv.ccs.sageTest.AI;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import actv.ccs.model.ConvictCichlid;
 import actv.ccs.sageTest.MyGame;
 import sage.ai.behaviortrees.BTCompositeType;
+import sage.ai.behaviortrees.BTSelector;
 import sage.ai.behaviortrees.BTSequence;
 import sage.ai.behaviortrees.BehaviorTree;
 
 public class AIController {
+	private static final Logger logger = LoggerFactory.getLogger(AIController.class);
 	BehaviorTree bt = new BehaviorTree(BTCompositeType.SELECTOR);
 	BehaviorTree bt1 = new BehaviorTree(BTCompositeType.SELECTOR);
 	BehaviorTree bt2 = new BehaviorTree(BTCompositeType.SELECTOR);
@@ -15,9 +20,20 @@ public class AIController {
 	MyGame mg;
 	ConvictCichlid cc;
 	
-	boolean getNearXWallFlag, getNearYWallFlag, getNearZWallFlag;
-	boolean getNearCichlidFlag;
-	boolean getNearObjectFlag;
+	private boolean getNearXWallFlag, getNearYWallFlag, getNearZWallFlag;
+	public boolean isGetNearXWallFlag() {
+		return getNearXWallFlag;
+	}
+
+	public boolean isGetNearYWallFlag() {
+		return getNearYWallFlag;
+	}
+
+	public boolean isGetNearZWallFlag() {
+		return getNearZWallFlag;
+	}
+	private boolean getNearCichlidFlag;
+	private boolean getNearObjectFlag;
 	
 	private ConvictCichlid[] ccList = new ConvictCichlid[3];
 	
@@ -27,14 +43,15 @@ public class AIController {
 		mg = gg;
 	}
 	
+	public BehaviorTree getBehaviorTree(){
+		return bt;
+	}
+	
 	public void startAI()
 	{
-	startTime = System.nanoTime();
-	lastUpdateTime = startTime;
-	setupAI();
-	
-	AILoop();
-	update();
+		startTime = System.nanoTime();
+		lastUpdateTime = startTime;
+		setupAI();
 	}
 	
 	public void setupAI()
@@ -59,21 +76,7 @@ public class AIController {
 		}
 		
 	}
-	 public void AILoop()
-	 { while (true)
-		 
-		 { 
-			 long frameStartTime = System.nanoTime();
-			 float elapsedMilliSecs = (frameStartTime-lastUpdateTime)/(1000000.0f);
-			 if (elapsedMilliSecs >= 50.0f)
-			 { lastUpdateTime = frameStartTime;
-			 update();
-		//	 server.sendNPCinfo();
-			 bt.update(elapsedMilliSecs);
-		 }
-		 Thread.yield();
-		 } 
-	 }
+
 	/*
 	 * if fish is near bounds then either stay thereor reverse direction
 	if aggroRange is in between another aggroRange then and both are male and one is bigger than the other
@@ -86,13 +89,20 @@ public class AIController {
 	 */
 	public void setupBehaviorTreeA()
 	{
-		bt.insertAtRoot(new BTSequence(10)); // bounds
+		BTSequence idleSeq = new BTSequence(15);
+		bt.insertAtRoot( new BTSequence(10)); // bounds
 	//	bt.insertAtRoot(new BTSequence(20)); // 
 	//	bt.insertAtRoot(new BTSequence(30));
+		
 		bt.insert(10, new IsNearWall(this, ccList[0], false)); // bounds condition
-		bt.insert(10, new IdleNearXWall(ccList[0])); // action 1
-		bt.insert(10, new IdleNearYWall(ccList[0]));
-		bt.insert(10, new IdleNearZWall(ccList[0]));
+		bt.insert(10, new BTSelector(15));
+		bt.insert(15, new IdleNearXWall(ccList[0])); // action 1
+		bt.insert(15, new IdleNearYWall(ccList[0]));
+		bt.insert(15, new IdleNearZWall(ccList[0]));
+		
+	//	bt.insert(10, new BTSequence(20));
+	//	bt.insert(10, new Move(ccList[0])); **PENDING 
+		
 	//	bt.insert(20, new CichlidNearChecker()); // cichlid fight condition
 	//	bt.insert(20, new CichlidFight()); // then fight
 	//	bt.insert(30, new CichlidNearObject()); // cichlid object condition
