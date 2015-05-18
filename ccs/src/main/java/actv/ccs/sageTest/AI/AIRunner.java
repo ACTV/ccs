@@ -39,8 +39,8 @@ public class AIRunner implements Runnable {
 				try {
 					// synchronize the AIController object so we can
 					// execute a wait() to pause
-					synchronized (aic) {
-						if (isPaused) {
+					if (isPaused) {
+						synchronized (aic) {
 							aic.wait();
 						}
 					}
