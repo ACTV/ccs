@@ -755,7 +755,7 @@ public class MyGame extends BaseGame {
 						cichlidA.setSpeed(0);
 						cichlidA.setBaseCautionLevel(4f);
 						cichlidA.setDirection(new Vector3D(1, 1, 1));
-						cichlidA.setCullMode(CULL_MODE.ALWAYS);
+				//		cichlidA.setCullMode(CULL_MODE.ALWAYS);
 						cichlidA.setState(FishState.IDLE);
 						cichlidA.setInfluence(12);
 
@@ -916,7 +916,7 @@ public class MyGame extends BaseGame {
 						cichlidB.setSpeed(0f);
 						cichlidB.setBaseCautionLevel(4f);
 						cichlidB.setDirection(new Vector3D(1, 1, 1));
-						cichlidB.setCullMode(CULL_MODE.ALWAYS);
+					//	cichlidB.setCullMode(CULL_MODE.ALWAYS);
 						cichlidB.setState(FishState.IDLE);
 						cichlidB.setInfluence(8);
 						Matrix3D cichlidBT = cichlidB.getLocalTranslation(); // this
@@ -1072,7 +1072,7 @@ public class MyGame extends BaseGame {
 						cichlidC.setBaseCautionLevel(4f);
 						cichlidC.setDirection(new Vector3D(-.5, .8, .1));
 						cichlidC.setState(FishState.IDLE);
-						cichlidC.setCullMode(CULL_MODE.ALWAYS);
+					//	cichlidC.setCullMode(CULL_MODE.ALWAYS);
 						cichlidC.setInfluence(6);
 
 						Matrix3D cichlidCT = cichlidC.getLocalTranslation(); // this
@@ -1594,6 +1594,8 @@ public class MyGame extends BaseGame {
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
 
 					((ConvictCichlid) s).move(elapsedTimeMS);
+					
+					System.out.println("where we going: ca:  " + loc + " caM: " + new Point3D(cichlidAObject.getWorldTranslation().getCol(3)));
 
 					// here is where i will test my newfound collision for
 					// spheres
