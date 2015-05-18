@@ -1592,7 +1592,9 @@ public class MyGame extends BaseGame {
 					// s.updateWorldBound();
 					// bound collision
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
-
+					
+					((ConvictCichlid) s).setLocation(loc);
+					
 					((ConvictCichlid) s).move(elapsedTimeMS);
 					
 					System.out.println("where we going: ca:  " + loc + " caM: " + new Point3D(cichlidAObject.getWorldTranslation().getCol(3)));
@@ -1614,25 +1616,24 @@ public class MyGame extends BaseGame {
 					 * System.out.println("a hit largePl"); } }
 					 */
 			//		System.out.println("s: "  + loc);
-				/*	if (loc.getX() > 200 || loc.getX() < 200)
+					if (loc.getX() > 200 || loc.getX() < 0)
 					{
-				//		System.out.println("x b");
-						s.rotate(-90, new Vector3D(1, 0, 0));
-						s.translate(-5,0, 0);
+						System.out.println("x b");
+					//	s.rotate(-90, new Vector3D(1, 0, 0));
+					//	s.translate(-5,0, 0);
 					}
-					if (loc.getY() > 200 || loc.getY() < 200)
-					{
-						// rotate
-					//	System.out.println("y b");
-						   s.rotate(-90, new Vector3D(0, 1, 0));
-					}
-					if (loc.getZ() > 200 || loc.getZ() < 200)
+					if (loc.getY() > 200 || loc.getY() < 0)
 					{
 						// rotate
-					//	System.out.println("z b");
-						   s.rotate(-90, new Vector3D(0, 0, 1));
+						System.out.println("y b");
+					//	   s.rotate(-90, new Vector3D(0, 1, 0));
 					}
-					*/
+					if (loc.getZ() > 200 || loc.getZ() < 0)
+					{
+						// rotate
+						System.out.println("z b");
+					}
+					
 					if (largePotC == true) {
 						if (cichlidA.getWorldBound().intersects(
 								largePot.getWorldBound())) {
