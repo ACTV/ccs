@@ -25,13 +25,13 @@ public class IsNearWall extends BTCondition {
 		if (ccP.getX() > 195|| ccP.getX() < 0 )
 		{
 	//		MoveActionFactory.turn(this, 180, new Vector3D(0, 1, 0));
-			System.out.println("X BOUNDS");
+			System.out.println("X BOUNDS ARE HAPPENING");
 			aiController.setNearWallFlag(true);
 			return true;
 		}
 		if (ccP.getY() > 195 || ccP.getY() < 0 )
 		{
-			System.out.println("Y BOUNDS");
+			System.out.println("Y BOUNDS ARE HAPPENING");
 			aiController.setNearWallFlag(true);
 			return true;
 	//		MoveActionFactory.turn(this, 180, new Vector3D(1, 0, 0));
@@ -39,7 +39,7 @@ public class IsNearWall extends BTCondition {
 		if (ccP.getZ() > 195 || ccP.getZ() < 0 )
 		{
 	//		MoveActionFactory.turn(this, 180, new Vector3D(0, 1, 0));
-			System.out.println("Z BOUNDS");
+			System.out.println("Z BOUNDS ARE HAPPENING");
 			aiController.setNearWallFlag(true);
 			return true;
 		}

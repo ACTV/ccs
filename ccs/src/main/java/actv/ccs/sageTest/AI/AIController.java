@@ -120,22 +120,24 @@ public class AIController {
 			
 		}
 		*/
+		
+		// the cichlids are getting the location
 		if (ccList[0] == mg.getCichlidA() && mg.getCichlidA() != null)
 		{
 			ccList[0].getLocation();
 
-			System.out.println("loc 1");
+		//	System.out.println("loc 1: " + ccList[0].getLocation());
 		}
 		if (ccList[1] == mg.getCichlidB() && mg.getCichlidB() != null)
 		{
 			ccList[1].getLocation();
 
-			System.out.println("loc 2");
+		//	System.out.println("loc 2 " + ccList[1].getLocation());
 		}
 		if (ccList[2] == mg.getCichlidC() && mg.getCichlidC() != null)
 		{
 			ccList[2].getLocation();
-			System.out.println("loc 3");
+		//	System.out.println("loc 3: " + ccList[2].getLocation());
 		}
 	}
 }

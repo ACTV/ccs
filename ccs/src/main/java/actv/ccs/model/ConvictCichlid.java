@@ -200,23 +200,6 @@ public class ConvictCichlid extends TankObject {
 	}
 	
 	public void move(float time){
-		
-		if (getLocation().getX() > 200-getWidth() || getLocation().getX() < getWidth())
-		{
-	//		MoveActionFactory.turn(this, 180, new Vector3D(0, 1, 0));
-			System.out.println("X BOUNDS");
-		}
-		if (getLocation().getY() > 200-getHeight() || getLocation().getY() < getHeight())
-		{
-			System.out.println("Y BOUNDS");
-	//		MoveActionFactory.turn(this, 180, new Vector3D(1, 0, 0));
-		}
-		if (getLocation().getZ() > 200-getWidth() || getLocation().getZ() < getWidth())
-		{
-	//		MoveActionFactory.turn(this, 180, new Vector3D(0, 1, 0));
-			System.out.println("Z BOUNDS");
-		}
-	/*	
 		Matrix3D rot = this.getLocalRotation();
 		Vector3D dir = this.getDirection().normalize();
 
@@ -231,7 +214,26 @@ public class ConvictCichlid extends TankObject {
 		this.translate((float) dir.getX(), (float) dir.getY(),
 				(float) dir.getZ());
 		this.updateWorldBound();
-*/
+		
+		
+		if (getLocation().getX() > 200-getWidth() || getLocation().getX() < getWidth())
+		{
+			
+			System.out.println("X BOUNDS");
+		}
+		if (getLocation().getY() > 200-getHeight() || getLocation().getY() < getHeight())
+		{
+			System.out.println("Y BOUNDS");
+	//		MoveActionFactory.turn(this, 180, new Vector3D(1, 0, 0));
+		}
+		if (getLocation().getZ() > 200-getWidth() || getLocation().getZ() < getWidth())
+		{
+	//		MoveActionFactory.turn(this, 180, new Vector3D(0, 1, 0));
+			System.out.println("Z BOUNDS");
+		}
+	
+
+
 		// avatar.startAnimation("ArmatureAction.001");
 	}
 
