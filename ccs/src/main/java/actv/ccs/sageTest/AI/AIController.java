@@ -8,6 +8,8 @@ import sage.ai.behaviortrees.BehaviorTree;
 
 public class AIController {
 	BehaviorTree bt = new BehaviorTree(BTCompositeType.SELECTOR);
+	BehaviorTree bt1 = new BehaviorTree(BTCompositeType.SELECTOR);
+	BehaviorTree bt2 = new BehaviorTree(BTCompositeType.SELECTOR);
 	long startTime;
 	long lastUpdateTime;
 	MyGame mg;
@@ -30,7 +32,7 @@ public class AIController {
 	startTime = System.nanoTime();
 	lastUpdateTime = startTime;
 	setupAI();
-	setupBehaviorTree();
+	
 	AILoop();
 	}
 	
@@ -40,16 +42,19 @@ public class AIController {
 		{
 			ccList[0] = mg.getCichlidA();
 			System.out.println(ccList[0]);
+			setupBehaviorTreeA();
 		}
 		if (mg.getCichlidB() != null)
 		{
 			ccList[1] = mg.getCichlidB();
 			System.out.println(ccList[1]);
+			setupBehaviorTreeB();
 		}
 		if (mg.getCichlidC() != null)
 		{
 			ccList[2] = mg.getCichlidC();
 			System.out.println(ccList[2]);
+			setupBehaviorTreeC();
 		}
 		
 	}
@@ -77,18 +82,43 @@ public class AIController {
 
 	if fish aggro range is nothing and not in wall then it will move around
 	 */
-	public void setupBehaviorTree()
+	public void setupBehaviorTreeA()
 	{
 		bt.insertAtRoot(new BTSequence(10)); // bounds
 	//	bt.insertAtRoot(new BTSequence(20)); // 
 	//	bt.insertAtRoot(new BTSequence(30));
-		bt.insert(10, new IsNearWall(this, cc, false)); // bounds condition
-		bt.insert(10, new IdleNearWall(cc)); // action 1
+		bt.insert(10, new IsNearWall(this, ccList[0], false)); // bounds condition
+		bt.insert(10, new IdleNearWall(ccList[0])); // action 1
 	//	bt.insert(20, new CichlidNearChecker()); // cichlid fight condition
 	//	bt.insert(20, new CichlidFight()); // then fight
 	//	bt.insert(30, new CichlidNearObject()); // cichlid object condition
 	//	bt.insert(30, new CichlidHoverObject()); // then hover
 	}
+	public void setupBehaviorTreeB()
+	{
+		bt.insertAtRoot(new BTSequence(10)); // bounds
+	//	bt.insertAtRoot(new BTSequence(20)); // 
+	//	bt.insertAtRoot(new BTSequence(30));
+		bt.insert(10, new IsNearWall(this, ccList[1], false)); // bounds condition
+		bt.insert(10, new IdleNearWall(ccList[1])); // action 1
+	//	bt.insert(20, new CichlidNearChecker()); // cichlid fight condition
+	//	bt.insert(20, new CichlidFight()); // then fight
+	//	bt.insert(30, new CichlidNearObject()); // cichlid object condition
+	//	bt.insert(30, new CichlidHoverObject()); // then hover
+	}
+	public void setupBehaviorTreeC()
+	{
+		bt.insertAtRoot(new BTSequence(10)); // bounds
+	//	bt.insertAtRoot(new BTSequence(20)); // 
+	//	bt.insertAtRoot(new BTSequence(30));
+		bt.insert(10, new IsNearWall(this, ccList[2], false)); // bounds condition
+		bt.insert(10, new IdleNearWall(ccList[2])); // action 1
+	//	bt.insert(20, new CichlidNearChecker()); // cichlid fight condition
+	//	bt.insert(20, new CichlidFight()); // then fight
+	//	bt.insert(30, new CichlidNearObject()); // cichlid object condition
+	//	bt.insert(30, new CichlidHoverObject()); // then hover
+	}
+	
 
 	public boolean getNearWallFlagCheck() {
 		// TODO Auto-generated method stub

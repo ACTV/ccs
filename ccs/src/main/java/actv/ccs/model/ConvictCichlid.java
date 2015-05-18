@@ -215,7 +215,7 @@ public class ConvictCichlid extends TankObject {
 				(float) dir.getZ());
 		this.updateWorldBound();
 		
-		
+/*		
 		if (getLocation().getX() > 200-getWidth() || getLocation().getX() < getWidth())
 		{
 			
@@ -232,7 +232,7 @@ public class ConvictCichlid extends TankObject {
 			System.out.println("Z BOUNDS");
 		}
 	
-
+*/
 
 		// avatar.startAnimation("ArmatureAction.001");
 	}
