@@ -20,21 +20,23 @@ public class IsNearWall extends BTCondition {
 	
 	protected boolean check()
 	{
-		System.out.println("VOGLER IS STILL ALIVE BUT IT'S IMPOSSIBLE?!");
+	//	System.out.println("VOGLER IS STILL ALIVE BUT IT'S IMPOSSIBLE?!");
 		
 		
-		System.out.println("THE LOCATION: " + cc.getLocation());
+	//	System.out.println("THE LOCATION: " + cc.getLocation());
+		
+	// is returning location	
 		if (cc.getLocation().getX() > 195|| cc.getLocation().getX() < 0 )
 		{
 	//		MoveActionFactory.turn(this, 180, new Vector3D(0, 1, 0));
 			System.out.println("X BOUNDS ARE HAPPENING");
-			aiController.setNearWallFlag(true);
+			aiController.setNearXWallFlag(true);
 			return true;
 		}
 		if (cc.getLocation().getY() > 195 || cc.getLocation().getY() < 0 )
 		{
 			System.out.println("Y BOUNDS ARE HAPPENING");
-			aiController.setNearWallFlag(true);
+			aiController.setNearYWallFlag(true);
 			return true;
 	//		MoveActionFactory.turn(this, 180, new Vector3D(1, 0, 0));
 		}
@@ -42,7 +44,7 @@ public class IsNearWall extends BTCondition {
 		{
 	//		MoveActionFactory.turn(this, 180, new Vector3D(0, 1, 0));
 			System.out.println("Z BOUNDS ARE HAPPENING");
-			aiController.setNearWallFlag(true);
+			aiController.setNearZWallFlag(true);
 			return true;
 		}
 		else return false;

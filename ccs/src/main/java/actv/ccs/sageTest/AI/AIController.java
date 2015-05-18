@@ -15,7 +15,7 @@ public class AIController {
 	MyGame mg;
 	ConvictCichlid cc;
 	
-	boolean getNearWallFlag;
+	boolean getNearXWallFlag, getNearYWallFlag, getNearZWallFlag;
 	boolean getNearCichlidFlag;
 	boolean getNearObjectFlag;
 	
@@ -88,7 +88,9 @@ public class AIController {
 	//	bt.insertAtRoot(new BTSequence(20)); // 
 	//	bt.insertAtRoot(new BTSequence(30));
 		bt.insert(10, new IsNearWall(this, ccList[0], false)); // bounds condition
-		bt.insert(10, new IdleNearWall(ccList[0])); // action 1
+		bt.insert(10, new IdleNearXWall(ccList[0])); // action 1
+		bt.insert(10, new IdleNearYWall(ccList[0]));
+		bt.insert(10, new IdleNearZWall(ccList[0]));
 	//	bt.insert(20, new CichlidNearChecker()); // cichlid fight condition
 	//	bt.insert(20, new CichlidFight()); // then fight
 	//	bt.insert(30, new CichlidNearObject()); // cichlid object condition
@@ -100,7 +102,9 @@ public class AIController {
 	//	bt.insertAtRoot(new BTSequence(20)); // 
 	//	bt.insertAtRoot(new BTSequence(30));
 		bt.insert(10, new IsNearWall(this, ccList[1], false)); // bounds condition
-		bt.insert(10, new IdleNearWall(ccList[1])); // action 1
+		bt.insert(10, new IdleNearXWall(ccList[1])); // action 1
+		bt.insert(10, new IdleNearYWall(ccList[1]));
+		bt.insert(10, new IdleNearZWall(ccList[1]));
 	//	bt.insert(20, new CichlidNearChecker()); // cichlid fight condition
 	//	bt.insert(20, new CichlidFight()); // then fight
 	//	bt.insert(30, new CichlidNearObject()); // cichlid object condition
@@ -112,7 +116,9 @@ public class AIController {
 	//	bt.insertAtRoot(new BTSequence(20)); // 
 	//	bt.insertAtRoot(new BTSequence(30));
 		bt.insert(10, new IsNearWall(this, ccList[2], false)); // bounds condition
-		bt.insert(10, new IdleNearWall(ccList[2])); // action 1
+		bt.insert(10, new IdleNearXWall(ccList[2])); // action 1
+		bt.insert(10, new IdleNearYWall(ccList[2]));
+		bt.insert(10, new IdleNearZWall(ccList[2]));
 	//	bt.insert(20, new CichlidNearChecker()); // cichlid fight condition
 	//	bt.insert(20, new CichlidFight()); // then fight
 	//	bt.insert(30, new CichlidNearObject()); // cichlid object condition
@@ -120,9 +126,17 @@ public class AIController {
 	}
 	
 
-	public boolean getNearWallFlagCheck() {
+	public boolean getNearXWallFlagCheck() {
 		// TODO Auto-generated method stub
-		return getNearWallFlag;
+		return getNearXWallFlag;
+	}
+	public boolean getNearYWallFlagCheck() {
+		// TODO Auto-generated method stub
+		return getNearYWallFlag;
+	}
+	public boolean getNearZWallFlagCheck() {
+		// TODO Auto-generated method stub
+		return getNearZWallFlag;
 	}
 	public boolean getNearCichlidCheck() {
 		// TODO Auto-generated method stub
@@ -133,10 +147,15 @@ public class AIController {
 		return getNearObjectFlag;
 	}
 
-	public void setNearWallFlag(boolean b) {
-		getNearWallFlag = b;
+	public void setNearXWallFlag(boolean b) {
+		getNearXWallFlag = b;
 	}
-	
+	public void setNearYWallFlag(boolean b) {
+		getNearYWallFlag = b;
+	}
+	public void setNearZWallFlag(boolean b) {
+		getNearZWallFlag = b;
+	}
 	public void update()
 	{
 		/*

@@ -6,12 +6,12 @@ import sage.ai.behaviortrees.BTAction;
 import sage.ai.behaviortrees.BTCondition;
 import sage.ai.behaviortrees.BTStatus;
 
-public class IdleNearWall extends BTAction {
+public class IdleNearYWall extends BTAction {
 	
 	ConvictCichlid cc;
 
 	
-	public IdleNearWall(ConvictCichlid c)
+	public IdleNearYWall(ConvictCichlid c)
 	{
 		cc = c;
 		
@@ -19,7 +19,7 @@ public class IdleNearWall extends BTAction {
 	
 	protected BTStatus update(float elapsedTime)
 	{
-		cc.idleNearWall();
+		cc.idleNearYWall();
 		return BTStatus.BH_SUCCESS;
 	}
 }
