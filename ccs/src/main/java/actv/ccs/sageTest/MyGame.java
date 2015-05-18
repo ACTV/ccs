@@ -20,6 +20,7 @@ import actv.ccs.DBConnection;
 import actv.ccs.RuleEngineRunner;
 import actv.ccs.model.*;
 import actv.ccs.model.type.FishState;
+import actv.ccs.sageTest.AI.AIController;
 import actv.ccs.sageTest.actions.*;
 import graphicslib3D.*;
 import sage.app.BaseGame;
@@ -72,6 +73,7 @@ public class MyGame extends BaseGame {
 	private TerrainBlock floor;
 	private Texture skyThing;
 	private ConvictCichlid cichlidA, cichlidB, cichlidC;
+	private ConvictCichlid[] CCList = new ConvictCichlid[3];
 	private SceneNode cameraGuy;
 	private Line yAxis1, zYPAxis, zyPtoxEnd3, pPart, zPart, yEndtoZPart,
 			xEndtoZPart, xxPart, finishPart;
@@ -111,6 +113,14 @@ public class MyGame extends BaseGame {
 	 * 
 	 * }
 	 */
+	
+	
+	// testing for AI now
+	private AIController aic;
+	private long lastUpdateTime;
+	
+
+	
 	public void initGame() {
 		createHUD();
 		startAnimation = false;
@@ -1996,5 +2006,38 @@ public class MyGame extends BaseGame {
 			Thread.yield();
 		}
 	}
-
+	public void startAIImplementation()
+	{
+		aic = new AIController(this);
+		aic.setupAI();
+	//	npcLoop(); 
+		// the loop causes a thread error
+		
+	}
+	public void npcLoop()
+	{
+		while (true)
+		{
+			long frameStartTime = System.nanoTime();
+			float elapMilSecs = (frameStartTime-lastUpdateTime)/(1000000.0f);
+			if (elapMilSecs >= 50.0f)
+			{
+				aic.update();
+			}
+		}
+		// Thread.yield(); 
+	}
+	
+	public ConvictCichlid getCichlidA()
+	{
+		return cichlidA;
+	}
+	public ConvictCichlid getCichlidB()
+	{
+		return cichlidB;
+	}
+	public ConvictCichlid getCichlidC()
+	{
+		return cichlidC;
+	}
 }
