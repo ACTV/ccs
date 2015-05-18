@@ -245,11 +245,30 @@ public class ConvictCichlid extends TankObject {
 
 	public void idleNearXWall() {
 		System.out.println("i'm near the X wall amirite");
+		if (getLocation().getX() > 200 - getWidth()){
+			this.getLocation().setX(200-getWidth());
+		}
+		if (getLocation().getX() < getWidth()) {
+			this.getLocation().setX(getWidth());
+		}
 	}
 	public void idleNearYWall() {
 		System.out.println("i'm near the Y wall amirite");
+		if (getLocation().getY() > 200 - getHeight()){
+			this.getLocation().setY(200-getHeight());
+		}
+		if(getLocation().getY() < getHeight()) {
+			this.getLocation().setY(getHeight());
+		}
 	}
 	public void idleNearZWall() {
 		System.out.println("i'm near the Z wall amirite");
+		if (getLocation().getZ() > 200 - getWidth()){
+			this.getLocation().setZ(200-getWidth());
+		}
+		if(getLocation().getZ() < getWidth()) {
+			this.getLocation().setZ(getWidth());
+		}
 	}
+
 }
