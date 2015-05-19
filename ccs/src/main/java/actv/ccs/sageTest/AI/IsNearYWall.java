@@ -1,13 +1,13 @@
 package actv.ccs.sageTest.AI;
 
-import actv.ccs.model.ConvictCichlid;
 import sage.ai.behaviortrees.BTCondition;
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.ConvictCichlid.Y_POS;
 
 public class IsNearYWall extends BTCondition {
 	
 	private AIController aiController;
 	private ConvictCichlid cc;
-	private boolean yFlag = false;
 
 	
 	public IsNearYWall(AIController aic, ConvictCichlid c, boolean toNegate)
@@ -15,16 +15,20 @@ public class IsNearYWall extends BTCondition {
 		super(toNegate);
 		aiController = aic;
 		cc = c;
-		
 	}
 	
 	protected boolean check()
 	{
-		if (cc.getLocation().getY() > 195|| cc.getLocation().getY() < 0 )
-		{
-			yFlag = true;
+		if (cc.getLocation().getY() > 195){
+			cc.setYpos(Y_POS.YT);
 		}
-		aiController.setNearYWallFlag(yFlag);
-		return yFlag;
+		else if( cc.getLocation().getY() < 0 ){
+			cc.setYpos(Y_POS.YB);
+		}else{
+			cc.setYpos(Y_POS.NONE);
+			return false;
+		}
+		
+		return true;
 	}
 }

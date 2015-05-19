@@ -1,13 +1,13 @@
 package actv.ccs.sageTest.AI;
 
 import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.ConvictCichlid.X_POS;
 import sage.ai.behaviortrees.BTCondition;
 
 public class IsNearXWall extends BTCondition {
 	
 	private AIController aiController;
 	private ConvictCichlid cc;
-	private boolean xFlag = false;
 
 	
 	public IsNearXWall(AIController aic, ConvictCichlid c, boolean toNegate)
@@ -20,11 +20,16 @@ public class IsNearXWall extends BTCondition {
 	
 	protected boolean check()
 	{
-		if (cc.getLocation().getX() > 195|| cc.getLocation().getX() < 0 )
-		{
-			xFlag = true;
+		if (cc.getLocation().getX() > 195){
+			cc.setXpos(X_POS.XR);
 		}
-		aiController.setNearXWallFlag(xFlag);
-		return xFlag;
+		else if( cc.getLocation().getX() < 0 ){
+			cc.setXpos(X_POS.XL);
+		}else{
+			cc.setXpos(X_POS.NONE);
+			return false;
+		}
+		
+		return true;
 	}
 }

@@ -760,6 +760,7 @@ public class MyGame extends BaseGame {
 				//		cichlidA.setCullMode(CULL_MODE.ALWAYS);
 						cichlidA.setState(FishState.IDLE);
 						cichlidA.setInfluence(12);
+						cichlidA.setState(FishState.SWIM);
 
 						Matrix3D cichlidAT = cichlidA.getLocalTranslation(); // this
 																				// is
@@ -921,6 +922,9 @@ public class MyGame extends BaseGame {
 					//	cichlidB.setCullMode(CULL_MODE.ALWAYS);
 						cichlidB.setState(FishState.IDLE);
 						cichlidB.setInfluence(8);
+						cichlidB.setState(FishState.SWIM);
+						
+						
 						Matrix3D cichlidBT = cichlidB.getLocalTranslation(); // this
 																				// is
 																				// for
@@ -1076,7 +1080,9 @@ public class MyGame extends BaseGame {
 						cichlidC.setState(FishState.IDLE);
 					//	cichlidC.setCullMode(CULL_MODE.ALWAYS);
 						cichlidC.setInfluence(6);
+						cichlidC.setState(FishState.SWIM);
 
+						
 						Matrix3D cichlidCT = cichlidC.getLocalTranslation(); // this
 																				// is
 																				// for
@@ -1604,7 +1610,13 @@ public class MyGame extends BaseGame {
 					// bound collision
 					System.out.println( "get the starting location A: " + ((ConvictCichlid) s).getLocation());
 					
-					((ConvictCichlid) s).move(elapsedTimeMS);
+					if(((ConvictCichlid)s).getState() == FishState.IDLE){
+						((ConvictCichlid) s).move(0);
+						logger.debug("{} MOVED 0", ((ConvictCichlid)s).getName());
+					}else{
+						logger.debug("{} MOVED 1", ((ConvictCichlid)s).getName());
+						((ConvictCichlid) s).move(elapsedTimeMS);
+					}
 					
 					Point3D test = new Point3D(s.getWorldTranslation().getCol(3));
 					

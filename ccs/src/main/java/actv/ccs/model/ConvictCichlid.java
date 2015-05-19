@@ -6,13 +6,14 @@ import graphicslib3D.Vector3D;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.util.Random;
 
-import sage.scene.SceneNode;
 import actv.ccs.model.type.FishState;
-import actv.ccs.sageTest.MoveActionFactory;
 
 public class ConvictCichlid extends TankObject {
+	public enum X_POS{ XR, XL, NONE }
+	public enum Y_POS{ YT, YB, NONE }
+	public enum Z_POS{ ZF, ZB, NONE }
+	
 	private Vector3D direction;
 	private FishState state;
 	private float aggroLevel;
@@ -26,6 +27,9 @@ public class ConvictCichlid extends TankObject {
 	private String gender;
 	private double influence = -1;
 	private float weight;
+	private X_POS xpos;
+	private Y_POS ypos;
+	private Z_POS zpos;
 	
 	private static float[] vrts = new float[] { 0, 1, 0, -1, -1, 1, 1, -1, 1,
 			1, -1, -1, -1, -1, -1 };
@@ -33,7 +37,8 @@ public class ConvictCichlid extends TankObject {
 			1, 1, 1, 0, 1, 1, 0, 1, 1 };
 	private static int[] triangles = new int[] { 0, 1, 2, 0, 2, 3, 0, 3, 4, 0,
 			4, 1, 1, 4, 2, 4, 3, 2 };
-
+	
+	
 	/**
 	 * 
 	 * @param length
@@ -240,4 +245,30 @@ public class ConvictCichlid extends TankObject {
 	synchronized public void idleNearZWall() {
 		this.setLocation(new Point3D(this.getLocation().getX(), this.getLocation().getY(), 190));
 	}
+
+	public X_POS getXpos() {
+		return xpos;
+	}
+
+	public void setXpos(X_POS xpos) {
+		this.xpos = xpos;
+	}
+
+	public Y_POS getYpos() {
+		return ypos;
+	}
+
+	public void setYpos(Y_POS ypos) {
+		this.ypos = ypos;
+	}
+
+	public Z_POS getZpos() {
+		return zpos;
+	}
+
+	public void setZpos(Z_POS zpos) {
+		this.zpos = zpos;
+	}
+	
+	
 }

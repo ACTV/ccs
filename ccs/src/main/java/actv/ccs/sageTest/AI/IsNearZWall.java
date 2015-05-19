@@ -1,7 +1,8 @@
 package actv.ccs.sageTest.AI;
 
-import actv.ccs.model.ConvictCichlid;
 import sage.ai.behaviortrees.BTCondition;
+import actv.ccs.model.ConvictCichlid;
+import actv.ccs.model.ConvictCichlid.Z_POS;
 
 public class IsNearZWall extends BTCondition {
 	
@@ -20,11 +21,16 @@ public class IsNearZWall extends BTCondition {
 	
 	protected boolean check()
 	{
-		if (cc.getLocation().getZ() > 195|| cc.getLocation().getZ() < 0 )
-		{
-			zFlag = true;
+		if (cc.getLocation().getZ() > 195){
+			cc.setZpos(Z_POS.ZF);
 		}
-		aiController.setNearYWallFlag(zFlag);
-		return zFlag;
+		else if( cc.getLocation().getX() < 0 ){
+			cc.setZpos(Z_POS.ZB);
+		}else{
+			cc.setZpos(Z_POS.NONE);
+			return false;
+		}
+		
+		return true;
 	}
 }
