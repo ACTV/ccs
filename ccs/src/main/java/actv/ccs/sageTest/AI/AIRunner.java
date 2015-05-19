@@ -14,6 +14,7 @@ public class AIRunner implements Runnable {
 	private static final Logger logger = LoggerFactory.getLogger(AIRunner.class);
 	private volatile boolean isPaused = false;
 	private volatile boolean stop = false;
+	private volatile boolean ended = false;
 	private AIController aic;
 	long lastUpdateTime;
 	
@@ -56,8 +57,13 @@ public class AIRunner implements Runnable {
 			}
 			Thread.yield();
 		}
+		logger.debug("Stopping execution in the thread...");
+		ended = true;
 	}
 	
+	public boolean isEnded(){
+		return ended;
+	}
 	public void pause(){
 		this.isPaused = true;
 	}
