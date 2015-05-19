@@ -1,7 +1,7 @@
 package actv.ccs.sageTest.AI;
 
-import actv.ccs.model.ConvictCichlid;
 import sage.ai.behaviortrees.BTCondition;
+import actv.ccs.model.ConvictCichlid;
 
 public class IsNearWall extends BTCondition {
 	
@@ -25,7 +25,6 @@ public class IsNearWall extends BTCondition {
 		if (cc.getLocation().getX() > 195|| cc.getLocation().getX() < 0 )
 		{
 			xFlag = true;
-			return true;
 		}
 		if (cc.getLocation().getY() > 195 || cc.getLocation().getY() < 0 )
 		{

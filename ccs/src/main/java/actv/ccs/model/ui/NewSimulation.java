@@ -792,7 +792,6 @@ public class NewSimulation extends JFrame {
 	    this.myGame.initActions();
 	    
 	    this.myGame.createFishTankWalls();
-	    this.myGame.startRunner();
 //	    this.myGame.createHUD();
 		this.myGame.setAnimation(true);
 	    this.myGame.setUpTank();

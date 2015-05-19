@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1601,14 +1602,15 @@ public class MyGame extends BaseGame {
 					// s.translate(0, 0, .1f);
 					// s.updateWorldBound();
 					// bound collision
-					System.out.println( "get the starting location : " + ((ConvictCichlid) s).getLocation());
+					System.out.println( "get the starting location A: " + ((ConvictCichlid) s).getLocation());
 					
 					((ConvictCichlid) s).move(elapsedTimeMS);
 					
 					Point3D test = new Point3D(s.getWorldTranslation().getCol(3));
 					
-	//				System.out.println("what: "  + ((ConvictCichlid) s).getLocation().getX());
-					System.out.println( "get the next location : " + test);
+					//System.out.println("what: "  + ((ConvictCichlid) s).getLocation().getX());
+					System.out.println( "get the next location A1: " + test);
+					System.out.println( "get the next location A2: " + ((ConvictCichlid) s).getLocation());
 	
 					// so the world translation doesn't work for this?
 					
@@ -1629,26 +1631,29 @@ public class MyGame extends BaseGame {
 					 * ().intersects(largePlant.getWorldBound())) {
 					 * System.out.println("a hit largePl"); } }
 					 */
-			//		System.out.println("s: "  + loc);
-					if (((ConvictCichlid) s).getLocation().getX() > 200 || ((ConvictCichlid) s).getLocation().getX() < 0)
-				//	if (test.getX() > 200 || test.getX() < 0)
-					{
-					//	System.out.println("x b");
-						((ConvictCichlid) s).turn(-30, new Vector3D(1, 0, 0));
-					}
-					if (((ConvictCichlid) s).getLocation().getY() > 200 || ((ConvictCichlid) s).getLocation().getY() < 0)
-				//	if (test.getY() > 200 || test.getZ() < 0)
-					{
-						// rotate
-					//	System.out.println("y b");
-						((ConvictCichlid) s).turn(-30, new Vector3D(0, 1, 0));
-					}
-					if (((ConvictCichlid) s).getLocation().getZ() > 200 || ((ConvictCichlid) s).getLocation().getZ() < 0)
-				//	if (test.getZ() > 200 || test.getZ() < 0)
-					{
-						((ConvictCichlid) s).turn(-30, new Vector3D(0, 0, 1));
-					//	System.out.println("z b");
-					}
+//			//		System.out.println("s: "  + loc);
+//					if (((ConvictCichlid) s).getLocation().getX() > 200 || ((ConvictCichlid) s).getLocation().getX() < 0)
+//				//	if (test.getX() > 200 || test.getX() < 0)
+//					{
+//					//	System.out.println("x b");
+//						System.out.println("Turning Loc AX: " + ((ConvictCichlid) s).getLocation());
+//						((ConvictCichlid) s).turn(-30, new Vector3D(1, 0, 0));
+//					}
+//					if (((ConvictCichlid) s).getLocation().getY() > 200 || ((ConvictCichlid) s).getLocation().getY() < 0)
+//				//	if (test.getY() > 200 || test.getZ() < 0)
+//					{
+//						// rotate
+//					//	System.out.println("y b");
+//						System.out.println("Turning Loc AY: " + ((ConvictCichlid) s).getLocation());
+//						((ConvictCichlid) s).turn(-30, new Vector3D(0, 1, 0));
+//					}
+//					if (((ConvictCichlid) s).getLocation().getZ() > 200 || ((ConvictCichlid) s).getLocation().getZ() < 0)
+//				//	if (test.getZ() > 200 || test.getZ() < 0)
+//					{
+//						System.out.println("Turning Loc AZ: " + ((ConvictCichlid) s).getLocation());
+//						((ConvictCichlid) s).turn(-30, new Vector3D(0, 0, 1));
+//					//	System.out.println("z b");
+//					}
 					
 					if (largePotC == true) {
 						if (cichlidA.getWorldBound().intersects(
@@ -1985,7 +1990,23 @@ public class MyGame extends BaseGame {
 		// 	so there will be no zombie threads lingering
 		//	after the program closes.
 		aiRunner.stop();
-		AIExecutor.shutdownNow();
+		// Block until the aiRunner has quit
+		while(!aiRunner.isEnded());
+		
+		AIExecutor.shutdown();
+		
+		boolean shutdown = false;
+		try {
+			shutdown = AIExecutor.awaitTermination(3, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			if(!shutdown){
+				logger.debug("Forcing shutdown of thread!");
+				AIExecutor.shutdownNow();
+			}
+		}
 		
 		logger.info("BaseGame.shutdown() invoked...");
 		if (DisplaySystem.getCurrentDisplaySystem() != null) {

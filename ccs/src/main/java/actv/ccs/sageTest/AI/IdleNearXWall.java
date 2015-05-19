@@ -16,21 +16,21 @@ public class IdleNearXWall extends BTAction {
 	public IdleNearXWall(ConvictCichlid c)
 	{
 		cc = c;
-		
 	}
 	
 	protected BTStatus update(float elapsedTime)
 	{
-		double angle = (Math.acos(cc.getDirection().normalize().dot(XRV))) * (190/Math.PI);
+		double angleR = (Math.acos(cc.getDirection().normalize().dot(XRV))) * (190/Math.PI);
 		
-		logger.debug("X angle: {}", angle);
+		logger.debug("X angle: {}, {}", cc.getName(), (int)angleR);
 		
-		if( angle < 90 ){
-			cc.turn(90, new Vector3D(0, 1, 0));
+		if( angleR < 90 ){
+			cc.turn((float)(180-angleR), new Vector3D(0, 1, 0));
 		}
+		
 		cc.idleNearXWall();
 		
-		logger.debug("x dir after: {}", cc.getDirection());
+		logger.debug("X dir after: {}, {}", cc.getName(), cc.getDirection());
 		return BTStatus.BH_SUCCESS;
 	}
 }

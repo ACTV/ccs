@@ -94,11 +94,19 @@ public class AIController {
 	//	bt.insertAtRoot(new BTSequence(20)); // 
 	//	bt.insertAtRoot(new BTSequence(30));
 		
-		bt.insert(10, new IsNearWall(this, ccList[0], false)); // bounds condition
-		bt.insert(10, new BTSelector(15));
+		//bt.insert(10, new IsNearWall(this, ccList[0], false)); // bounds condition
+		
+		bt.insert(10, new BTSequence(15));
+		bt.insert(15, new IsNearXWall(this, ccList[0], false)); // bounds condition
 		bt.insert(15, new IdleNearXWall(ccList[0])); // action 1
-		bt.insert(15, new IdleNearYWall(ccList[0]));
-		bt.insert(15, new IdleNearZWall(ccList[0]));
+		
+		bt.insert(10, new BTSequence(16));
+		bt.insert(16, new IsNearYWall(this, ccList[0], false)); // bounds condition
+		bt.insert(16, new IdleNearYWall(ccList[0]));
+		
+		bt.insert(10, new BTSequence(17));
+		bt.insert(17, new IsNearZWall(this, ccList[0], false)); // bounds condition
+		bt.insert(17, new IdleNearZWall(ccList[0]));
 		
 	//	bt.insert(10, new BTSequence(20));
 	//	bt.insert(10, new Move(ccList[0])); **PENDING 
