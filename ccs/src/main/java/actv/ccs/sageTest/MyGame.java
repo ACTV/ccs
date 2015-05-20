@@ -2117,6 +2117,18 @@ public class MyGame extends BaseGame {
 	{
 		return smallPot;
 	}
-		
+	public Sphere getAggroRangeA()
+	{
+		return aggroRangeA;
+	}
+	public Sphere getAggroRangeB()
+	{
+		return aggroRangeB;
+	}
+	public Sphere getAggroRangeC()
+	{
+		return aggroRangeC;
+	}
+	
 	
 }
