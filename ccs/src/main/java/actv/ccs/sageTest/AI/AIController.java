@@ -110,7 +110,7 @@ public class AIController {
 	 */
 	public void setupBehaviorTreeA()
 	{
-		bt.insertAtRoot( new BTSequence(10)); // bounds
+	//	bt.insertAtRoot( new BTSequence(10)); // bounds
 	//	bt.insertAtRoot(new BTSequence(20)); // 
 	//	bt.insertAtRoot(new BTSequence(30));
 		
@@ -164,7 +164,7 @@ public class AIController {
 	}
 	public void setupBehaviorTreeC()
 	{
-		System.out.println("i'm being called for C");
+	//	System.out.println("i'm being called for C");
 		BTSequence idleSeq = new BTSequence(15);
 	//	bt1.insertAtRoot( new BTSequence(10)); // bounds
 	//	bt.insertAtRoot(new BTSequence(20)); // 

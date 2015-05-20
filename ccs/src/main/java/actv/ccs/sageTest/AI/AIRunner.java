@@ -51,7 +51,7 @@ public class AIRunner implements Runnable {
 					CCSSemaphore.getSemaphore().acquire();
 					aic.getBehaviorTreeA().update(elapsedMilliSecs);
 					aic.getBehaviorTreeB().update(elapsedMilliSecs);
-				//	aic.getBehaviorTreeC().update(elapsedMilliSecs);
+					aic.getBehaviorTreeC().update(elapsedMilliSecs);
 					
 				} catch (InterruptedException e) {
 					e.printStackTrace();
