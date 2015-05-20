@@ -2092,4 +2092,31 @@ public class MyGame extends BaseGame {
 	{
 		return cichlidC;
 	}
+	
+	public TriMesh getLargePlant()
+	{
+		return largePlant;
+	}
+	public TriMesh getMediumPlant()
+	{
+		return mediumPlant;
+	}
+	public TriMesh getSmallPlant()
+	{
+		return smallPlant;
+	}
+	public TriMesh getLargePot()
+	{
+		return largePot;
+	}
+	public TriMesh getMediumPot()
+	{
+		return mediumPot;
+	}
+	public TriMesh getSmallPot()
+	{
+		return smallPot;
+	}
+		
+	
 }

@@ -315,5 +315,8 @@ public class ConvictCichlid extends TankObject {
 		this.zpos = zpos;
 	}
 	
-	
+	synchronized public void hoverNearLargePlant()
+	{
+		// hovering hovers
+	}
 }

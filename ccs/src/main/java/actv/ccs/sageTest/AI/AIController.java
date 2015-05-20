@@ -117,8 +117,9 @@ public class AIController {
 		//bt.insert(10, new IsNearWall(this, ccList[0], false)); // bounds condition
 		
 		bt.insertAtRoot(new BTSequence(10));
-		bt.insert(16, new BTSequence(16));
-		bt.insert(17, new BTSequence(17));
+		bt.insertAtRoot(new BTSequence(16));
+		bt.insertAtRoot(new BTSequence(17));
+		bt.insertAtRoot(new BTSequence(30));
 		bt.insert(10, new IsNearXWall(this, ccList[0], false)); // bounds condition
 		bt.insert(10, new IdleNearXWall(ccList[0])); // action 1
 		
@@ -135,8 +136,8 @@ public class AIController {
 		
 	//	bt.insert(20, new CichlidNearChecker()); // cichlid fight condition
 	//	bt.insert(20, new CichlidFight()); // then fight
-	//	bt.insert(30, new CichlidNearObject()); // cichlid object condition
-	//	bt.insert(30, new CichlidHoverObject()); // then hover
+		bt.insert(30, new CichlidNearObject(this, ccList[0], false, mg)); // cichlid object condition
+		bt.insert(30, new CichlidHoverObject(ccList[0])); // then hover
 	}
 	public void setupBehaviorTreeB()
 	{
@@ -149,6 +150,7 @@ public class AIController {
 		bt1.insertAtRoot(new BTSequence(15));
 		bt1.insertAtRoot(new BTSequence(16));
 		bt1.insertAtRoot(new BTSequence(17));
+	//	bt1.insertAtRoot(new BTSequence(30));
 		bt1.insert(15, new IsNearXWall(this, ccList[1], false)); // bounds condition
 		bt1.insert(15, new IdleNearXWall(ccList[0])); // action 1
 		
