@@ -1616,7 +1616,7 @@ public class MyGame extends BaseGame {
 						logger.debug("{} MOVED 0", ((ConvictCichlid)s).getName());
 					}else{
 						logger.debug("{} MOVED 1", ((ConvictCichlid)s).getName());
-						((ConvictCichlid) s).move(elapsedTimeMS);
+						cichlidA.move(elapsedTimeMS);
 					}
 					
 					Point3D test = new Point3D(s.getWorldTranslation().getCol(3));
@@ -1741,9 +1741,14 @@ public class MyGame extends BaseGame {
 				if (s == cichlidB) {
 
 					// call move stuff here
-					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
-
-					((ConvictCichlid) s).move(elapsedTimeMS);
+					if(((ConvictCichlid)s).getState() == FishState.IDLE){
+					//	((ConvictCichlid) s).move(0);
+						cichlidB.stop();
+						logger.debug("{} MOVED 0", ((ConvictCichlid)s).getName());
+					}else{
+						logger.debug("{} MOVED 1", ((ConvictCichlid)s).getName());
+						cichlidB.move(elapsedTimeMS);
+					}
 
 					Matrix3D cichlidBlocalT = s.getLocalTranslation();
 					Matrix3D cichlidBRot = s.getLocalRotation();

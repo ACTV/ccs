@@ -43,9 +43,30 @@ public class AIController {
 		mg = gg;
 	}
 	
-	public BehaviorTree getBehaviorTree(){
+	public BehaviorTree getBehaviorTreeA(){
+		if (mg.getCichlidA() != null)
+		{
 		return bt;
+		}
+		else return null;
+		
 	}
+	public BehaviorTree getBehaviorTreeB(){
+		if (mg.getCichlidB() != null)
+		{
+		return bt1;
+		}
+		else return null;
+	}
+	public BehaviorTree getBehaviorTreeC(){
+		
+		if (mg.getCichlidC() != null)
+		{
+		return bt2;
+		}
+		else return null;
+	}
+	
 	
 	public void startAI()
 	{
@@ -89,14 +110,13 @@ public class AIController {
 	 */
 	public void setupBehaviorTreeA()
 	{
-		BTSequence idleSeq = new BTSequence(15);
 		bt.insertAtRoot( new BTSequence(10)); // bounds
 	//	bt.insertAtRoot(new BTSequence(20)); // 
 	//	bt.insertAtRoot(new BTSequence(30));
 		
 		//bt.insert(10, new IsNearWall(this, ccList[0], false)); // bounds condition
 		
-		bt.insert(10, new BTSequence(15));
+		bt.insertAtRoot(new BTSequence(15));
 		bt.insert(15, new IsNearXWall(this, ccList[0], false)); // bounds condition
 		bt.insert(15, new IdleNearXWall(ccList[0])); // action 1
 		
@@ -118,24 +138,25 @@ public class AIController {
 	}
 	public void setupBehaviorTreeB()
 	{
+	//	System.out.println("i'm being called for B");
 		BTSequence idleSeq = new BTSequence(15);
-		bt.insertAtRoot( new BTSequence(10)); // bounds
+	//	bt1.insertAtRoot( new BTSequence(10)); // bounds
 	//	bt.insertAtRoot(new BTSequence(20)); // 
 	//	bt.insertAtRoot(new BTSequence(30));
 		
 		//bt.insert(10, new IsNearWall(this, ccList[0], false)); // bounds condition
 		
-		bt.insert(10, new BTSequence(15));
-		bt.insert(15, new IsNearXWall(this, ccList[0], false)); // bounds condition
-		bt.insert(15, new IdleNearXWall(ccList[0])); // action 1
+		bt1.insertAtRoot(new BTSequence(15));
+		bt1.insert(15, new IsNearXWall(this, ccList[1], false)); // bounds condition
+		bt1.insert(15, new IdleNearXWall(ccList[0])); // action 1
 		
-		bt.insert(10, new BTSequence(16));
-		bt.insert(16, new IsNearYWall(this, ccList[0], false)); // bounds condition
-		bt.insert(16, new IdleNearYWall(ccList[0]));
+		bt1.insertAtRoot(new BTSequence(16));
+		bt1.insert(16, new IsNearYWall(this, ccList[1], false)); // bounds condition
+		bt1.insert(16, new IdleNearYWall(ccList[1]));
 		
-		bt.insert(10, new BTSequence(17));
-		bt.insert(17, new IsNearZWall(this, ccList[0], false)); // bounds condition
-		bt.insert(17, new IdleNearZWall(ccList[0]));
+		bt1.insertAtRoot(new BTSequence(17));
+		bt1.insert(17, new IsNearZWall(this, ccList[1], false)); // bounds condition
+		bt1.insert(17, new IdleNearZWall(ccList[1]));
 	//	bt.insert(20, new CichlidNearChecker()); // cichlid fight condition
 	//	bt.insert(20, new CichlidFight()); // then fight
 	//	bt.insert(30, new CichlidNearObject()); // cichlid object condition
@@ -143,13 +164,25 @@ public class AIController {
 	}
 	public void setupBehaviorTreeC()
 	{
-		bt.insertAtRoot(new BTSequence(10)); // bounds
+		System.out.println("i'm being called for C");
+		BTSequence idleSeq = new BTSequence(15);
+	//	bt1.insertAtRoot( new BTSequence(10)); // bounds
 	//	bt.insertAtRoot(new BTSequence(20)); // 
 	//	bt.insertAtRoot(new BTSequence(30));
-		bt.insert(10, new IsNearWall(this, ccList[2], false)); // bounds condition
-		bt.insert(10, new IdleNearXWall(ccList[2])); // action 1
-		bt.insert(10, new IdleNearYWall(ccList[2]));
-		bt.insert(10, new IdleNearZWall(ccList[2]));
+		
+		//bt.insert(10, new IsNearWall(this, ccList[0], false)); // bounds condition
+		
+		bt2.insertAtRoot(new BTSequence(15));
+		bt2.insert(15, new IsNearXWall(this, ccList[2], false)); // bounds condition
+		bt2.insert(15, new IdleNearXWall(ccList[2])); // action 1
+		
+		bt2.insertAtRoot(new BTSequence(16));
+		bt2.insert(16, new IsNearYWall(this, ccList[2], false)); // bounds condition
+		bt2.insert(16, new IdleNearYWall(ccList[2]));
+		
+		bt2.insertAtRoot(new BTSequence(17));
+		bt2.insert(17, new IsNearZWall(this, ccList[2], false)); // bounds condition
+		bt2.insert(17, new IdleNearZWall(ccList[2]));
 	//	bt.insert(20, new CichlidNearChecker()); // cichlid fight condition
 	//	bt.insert(20, new CichlidFight()); // then fight
 	//	bt.insert(30, new CichlidNearObject()); // cichlid object condition
