@@ -1828,23 +1828,22 @@ public class MyGame extends BaseGame {
 				if (s == cichlidC) {
 					// call move stuff here
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
+					
+					if(cichlidC.getState() == FishState.IDLE){
+					//	((ConvictCichlid) s).move(0);
+						cichlidC.stop();
+						logger.debug("{} MOVED 0", ((ConvictCichlid)s).getName());
+					}else{
+						logger.debug("{} MOVED 1", ((ConvictCichlid)s).getName());
+						cichlidC.move(elapsedTimeMS);
+					}
 					Matrix3D cichlidClocalT = s.getLocalTranslation();
 					Matrix3D cichlidCRot = s.getLocalRotation();
 					aggroRangeC.setLocalTranslation(cichlidClocalT);
 					cichlidCObject.setLocalTranslation(cichlidClocalT);
 					cichlidCObject.setLocalRotation(cichlidCRot);
-					if (loc.getX() > 200 || loc.getX() < 0.0) {
-						// System.out.println("X BOUNDS");
 
-					}
-					if (loc.getY() > 200 || loc.getY() < 0.0) {
-						// System.out.println("Y BOUNDS");
-
-					}
-					if (loc.getZ() > 200 || loc.getZ() < 0.0) {
-						// System.out.println("Z BOUNDS");
-
-					}
+					
 					if (largePotC == true) {
 						if (cichlidC.getWorldBound().intersects(
 								largePot.getWorldBound())) {
