@@ -49,9 +49,12 @@ public class AIRunner implements Runnable {
 					// Semaphore used to control the order of MyGame.update()
 					// and any updates from the AI behavior tree
 					CCSSemaphore.getSemaphore().acquire();
-					aic.getBehaviorTreeA().update(elapsedMilliSecs);
-					aic.getBehaviorTreeB().update(elapsedMilliSecs);
-					aic.getBehaviorTreeC().update(elapsedMilliSecs);
+					if(aic.getBehaviorTreeA() != null)
+						aic.getBehaviorTreeB().update(elapsedMilliSecs);
+					if(aic.getBehaviorTreeA() != null)
+						aic.getBehaviorTreeB().update(elapsedMilliSecs);
+					if(aic.getBehaviorTreeC() != null)
+						aic.getBehaviorTreeC().update(elapsedMilliSecs);
 					
 				} catch (InterruptedException e) {
 					e.printStackTrace();
