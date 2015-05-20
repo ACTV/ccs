@@ -1608,10 +1608,11 @@ public class MyGame extends BaseGame {
 					// s.translate(0, 0, .1f);
 					// s.updateWorldBound();
 					// bound collision
-					System.out.println( "get the starting location A: " + ((ConvictCichlid) s).getLocation());
+			//		System.out.println( "get the starting location A: " + ((ConvictCichlid) s).getLocation());
 					
 					if(((ConvictCichlid)s).getState() == FishState.IDLE){
-						((ConvictCichlid) s).move(0);
+					//	((ConvictCichlid) s).move(0);
+						cichlidA.stop();
 						logger.debug("{} MOVED 0", ((ConvictCichlid)s).getName());
 					}else{
 						logger.debug("{} MOVED 1", ((ConvictCichlid)s).getName());
@@ -1621,8 +1622,8 @@ public class MyGame extends BaseGame {
 					Point3D test = new Point3D(s.getWorldTranslation().getCol(3));
 					
 					//System.out.println("what: "  + ((ConvictCichlid) s).getLocation().getX());
-					System.out.println( "get the next location A1: " + test);
-					System.out.println( "get the next location A2: " + ((ConvictCichlid) s).getLocation());
+			//		System.out.println( "get the next location A1: " + test);
+			//		System.out.println( "get the next location A2: " + ((ConvictCichlid) s).getLocation());
 	
 					// so the world translation doesn't work for this?
 					

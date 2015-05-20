@@ -229,6 +229,23 @@ public class ConvictCichlid extends TankObject {
 		this.translate((float) dir.getX(), (float) dir.getY(), (float) dir.getZ());
 		this.updateWorldBound();
 	}
+	
+	synchronized public void stop()
+	{
+		Matrix3D rot = this.getLocalRotation();
+		Vector3D dir = this.getDirection().normalize();
+
+		// Get the location, convert it, then back
+		Vector3D dd = new Vector3D(getLocation()).add(dir);
+
+		dir = dir.mult(rot);
+		dir.scale(.5);
+
+		this.setlocation(dd.getX(), dd.getY(), dd.getZ());
+
+		this.translate(0, 0, 0);
+		this.updateWorldBound();
+	}
 
 	@Override
 	public String toString() {
