@@ -1595,6 +1595,18 @@ public class MyGame extends BaseGame {
 			}
 		}
 
+		for (SceneNode s : getGameWorld())
+		{
+			if (s instanceof ConvictCichlid)
+			{
+				if (((ConvictCichlid) s).getState() == FishState.IDLE)
+				{
+					for (int i = 0; i < 2; i++)
+					{
+					}
+				}
+			}
+		}
 		super.update(time);
 		cc.update(time);
 		for (SceneNode s : getGameWorld()) {
