@@ -31,7 +31,7 @@ public class IdleNearXWall extends BTAction {
 		}else if(cc.getXpos() == X_POS.XL){
 			angle = (Math.acos(cc.getDirection().normalize().dot(XLV))) * (190/Math.PI);
 		}else{
-			logger.error("How did we get here?!");
+			logger.error("How  X did we get here?!");
 		}
 		
 		logger.debug("X angle: {}, {}", cc.getName(), (int)angle);

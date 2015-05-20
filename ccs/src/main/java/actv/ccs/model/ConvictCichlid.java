@@ -215,6 +215,17 @@ public class ConvictCichlid extends TankObject {
 	}
 	
 	synchronized public void move(float time){
+		
+		
+		// need to somehow factor time into this, so it will look like something's happening
+		// get the distance
+		// speed 
+		// time 
+		// get old position
+		// get new position
+		
+		
+		
 		Matrix3D rot = this.getLocalRotation();
 		Vector3D dir = this.getDirection().normalize();
 
@@ -228,6 +239,23 @@ public class ConvictCichlid extends TankObject {
 
 		this.translate((float) dir.getX(), (float) dir.getY(), (float) dir.getZ());
 		this.updateWorldBound();
+		
+		
+	/*	Vector3D newLocVector = new Vector3D();
+		Vector3D viewDir = this.getDirection().normalize();
+		Vector3D curLocVector = new Vector3D(this.getLocation());
+		
+		newLocVector = curLocVector.add(viewDir.mult(baseSpeed*time));
+		double newX = newLocVector.getX();
+		double newY = newLocVector.getY();
+		double newZ = newLocVector.getZ();
+		
+		Point3D newLoc = new Point3D(newX, newY, newZ);
+		
+		this.setLocation(newLoc);
+		
+		this.translate((float) newLoc.getX(), (float) newLoc.getY(), (float) newLoc.getZ());
+	*/	
 	}
 	
 	synchronized public void stop()

@@ -33,7 +33,7 @@ public class IdleNearZWall extends BTAction {
 		}else if(cc.getZpos() == Z_POS.ZB){
 			angle = (Math.acos(cc.getDirection().normalize().dot(ZBV))) * (190/Math.PI);
 		}else{
-			logger.error("How did we get here?!");
+			logger.error("How Z did we get here?!");
 		}
 		
 		logger.debug("Z angle: {}, {}", cc.getName(), (int)angle);
