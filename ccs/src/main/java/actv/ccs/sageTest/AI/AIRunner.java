@@ -50,8 +50,8 @@ public class AIRunner implements Runnable {
 					// and any updates from the AI behavior tree
 					CCSSemaphore.getSemaphore().acquire();
 					if(aic.getBehaviorTreeA() != null)
-						aic.getBehaviorTreeB().update(elapsedMilliSecs);
-					if(aic.getBehaviorTreeA() != null)
+						aic.getBehaviorTreeA().update(elapsedMilliSecs);
+					if(aic.getBehaviorTreeB() != null)
 						aic.getBehaviorTreeB().update(elapsedMilliSecs);
 					if(aic.getBehaviorTreeC() != null)
 						aic.getBehaviorTreeC().update(elapsedMilliSecs);

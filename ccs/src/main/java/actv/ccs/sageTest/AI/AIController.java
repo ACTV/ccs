@@ -116,15 +116,17 @@ public class AIController {
 		
 		//bt.insert(10, new IsNearWall(this, ccList[0], false)); // bounds condition
 		
-		bt.insertAtRoot(new BTSequence(15));
-		bt.insert(15, new IsNearXWall(this, ccList[0], false)); // bounds condition
-		bt.insert(15, new IdleNearXWall(ccList[0])); // action 1
+		bt.insertAtRoot(new BTSequence(10));
+		bt.insert(16, new BTSequence(16));
+		bt.insert(17, new BTSequence(17));
+		bt.insert(10, new IsNearXWall(this, ccList[0], false)); // bounds condition
+		bt.insert(10, new IdleNearXWall(ccList[0])); // action 1
 		
-		bt.insert(10, new BTSequence(16));
+
 		bt.insert(16, new IsNearYWall(this, ccList[0], false)); // bounds condition
 		bt.insert(16, new IdleNearYWall(ccList[0]));
 		
-		bt.insert(10, new BTSequence(17));
+
 		bt.insert(17, new IsNearZWall(this, ccList[0], false)); // bounds condition
 		bt.insert(17, new IdleNearZWall(ccList[0]));
 		
@@ -138,8 +140,6 @@ public class AIController {
 	}
 	public void setupBehaviorTreeB()
 	{
-	//	System.out.println("i'm being called for B");
-		BTSequence idleSeq = new BTSequence(15);
 	//	bt1.insertAtRoot( new BTSequence(10)); // bounds
 	//	bt.insertAtRoot(new BTSequence(20)); // 
 	//	bt.insertAtRoot(new BTSequence(30));
@@ -147,14 +147,16 @@ public class AIController {
 		//bt.insert(10, new IsNearWall(this, ccList[0], false)); // bounds condition
 		
 		bt1.insertAtRoot(new BTSequence(15));
+		bt1.insertAtRoot(new BTSequence(16));
+		bt1.insertAtRoot(new BTSequence(17));
 		bt1.insert(15, new IsNearXWall(this, ccList[1], false)); // bounds condition
 		bt1.insert(15, new IdleNearXWall(ccList[0])); // action 1
 		
-		bt1.insertAtRoot(new BTSequence(16));
+
 		bt1.insert(16, new IsNearYWall(this, ccList[1], false)); // bounds condition
 		bt1.insert(16, new IdleNearYWall(ccList[1]));
 		
-		bt1.insertAtRoot(new BTSequence(17));
+
 		bt1.insert(17, new IsNearZWall(this, ccList[1], false)); // bounds condition
 		bt1.insert(17, new IdleNearZWall(ccList[1]));
 	//	bt.insert(20, new CichlidNearChecker()); // cichlid fight condition
@@ -165,7 +167,6 @@ public class AIController {
 	public void setupBehaviorTreeC()
 	{
 	//	System.out.println("i'm being called for C");
-		BTSequence idleSeq = new BTSequence(15);
 	//	bt1.insertAtRoot( new BTSequence(10)); // bounds
 	//	bt.insertAtRoot(new BTSequence(20)); // 
 	//	bt.insertAtRoot(new BTSequence(30));

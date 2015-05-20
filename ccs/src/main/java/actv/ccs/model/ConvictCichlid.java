@@ -254,13 +254,13 @@ public class ConvictCichlid extends TankObject {
 	}
 
 	synchronized public void idleNearXWall() {
-		this.setLocation(new Point3D(190, this.getLocation().getY(), this.getLocation().getZ()));
+	//	this.setLocation(new Point3D(190, this.getLocation().getY(), this.getLocation().getZ()));
 	}
 	synchronized public void idleNearYWall() {
-		this.setLocation(new Point3D( this.getLocation().getX(), 190, this.getLocation().getZ()));
+	//	this.setLocation(new Point3D( this.getLocation().getX(), 190, this.getLocation().getZ()));
 	}
 	synchronized public void idleNearZWall() {
-		this.setLocation(new Point3D(this.getLocation().getX(), this.getLocation().getY(), 190));
+	//	this.setLocation(new Point3D(this.getLocation().getX(), this.getLocation().getY(), 190));
 	}
 
 	public X_POS getXpos() {
