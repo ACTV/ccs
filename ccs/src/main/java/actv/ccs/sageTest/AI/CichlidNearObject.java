@@ -23,11 +23,13 @@ public class CichlidNearObject extends BTCondition {
 	
 	protected boolean check()
 	{
-		if (cc.getWorldBound().intersects(mg.getLargePlant().getWorldBound()))
-		{
-		return true;
+		if(mg.getLargePlant() != null){
+			if (cc.getWorldBound().intersects(
+					mg.getLargePlant().getWorldBound())) {
+				return true;
+			}
 		}
-		else return false;
+		return false;
 		
 	}
 }
