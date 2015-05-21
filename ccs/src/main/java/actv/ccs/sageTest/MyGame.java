@@ -1621,12 +1621,16 @@ public class MyGame extends BaseGame {
 //					logger.debug( "get the starting location A: {}", ((ConvictCichlid) s).getLocation());
 					
 					if(((ConvictCichlid)s).getState() == FishState.IDLE){
-						if(System.currentTimeMillis() > cichlidA.getIdleWaitTime()){
+						for (int x = 0; x < 10000000; x++)
+						{
+							if ( x == 9000000)
+							{
+								
+							System.out.println("FLY YOU FOOLS");
+						//	cichlidA.turn(30, new Vector3D(1, 0, 0));
 							cichlidA.setState(FishState.SWIM);
-							cichlidA.move(elapsedTimeMS);
-						}else{
-							cichlidA.stop();
-						}
+							}
+					}
 					}else if (cichlidA.getState() == FishState.SWIM){
 						cichlidA.move(elapsedTimeMS);
 					}
@@ -1731,11 +1735,16 @@ public class MyGame extends BaseGame {
 
 					// call move stuff here
 					if(((ConvictCichlid)s).getState() == FishState.IDLE){
-						if(System.currentTimeMillis() > cichlidB.getIdleWaitTime()){
-							cichlidB.setState(FishState.SWIM);
-							cichlidB.move(elapsedTimeMS);
-						}else{
 							cichlidB.stop();
+							for (int x = 0; x < 10000000; x++)
+							{
+								if ( x == 9000000)
+								{
+									
+								System.out.println("FLY YOU FOOLS");
+							//	cichlidA.turn(30, new Vector3D(1, 0, 0));
+								cichlidB.setState(FishState.SWIM);
+								}
 						}
 					}else if (cichlidB.getState() == FishState.SWIM){
 						cichlidB.move(elapsedTimeMS);
@@ -1821,12 +1830,16 @@ public class MyGame extends BaseGame {
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
 					
 					if(((ConvictCichlid)s).getState() == FishState.IDLE){
-						if(System.currentTimeMillis() > cichlidC.getIdleWaitTime()){
+						for (int x = 0; x < 10000000; x++)
+						{
+							if ( x == 9000000)
+							{
+								
+							System.out.println("FLY YOU FOOLS");
+						//	cichlidA.turn(30, new Vector3D(1, 0, 0));
 							cichlidC.setState(FishState.SWIM);
-							cichlidC.move(elapsedTimeMS);
-						}else{
-							cichlidC.stop();
-						}
+							}
+					}
 					}else if (cichlidC.getState() == FishState.SWIM){
 						cichlidC.move(elapsedTimeMS);
 					}

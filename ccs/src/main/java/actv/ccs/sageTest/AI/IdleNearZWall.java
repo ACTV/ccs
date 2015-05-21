@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import sage.ai.behaviortrees.BTAction;
 import sage.ai.behaviortrees.BTStatus;
 import actv.ccs.model.ConvictCichlid;
-import actv.ccs.model.ConvictCichlid.X_POS;
 import actv.ccs.model.ConvictCichlid.Z_POS;
 import actv.ccs.model.type.FishState;
 
@@ -33,24 +32,21 @@ public class IdleNearZWall extends BTAction {
 		}else if(cc.getZpos() == Z_POS.ZB){
 			angle = (Math.acos(cc.getDirection().normalize().dot(ZBV))) * (190/Math.PI);
 		}else{
-			return BTStatus.BH_INVALID;
+			return BTStatus.BH_FAILURE;
 		}
 		
-		//logger.debug("Z angle: {}, {}", cc.getName(), (int)angle);
+		cc.setState(FishState.IDLE);
 		
-		if( cc.getZpos() == Z_POS.ZF){
-			//cc.turn((float)(180-angle), new Vector3D(0, 1, 0));
-			cc.setDirection(ZBV);
-		}else{
-			cc.setDirection(ZFV);
+		logger.debug("Z angle: {}, {}", cc.getName(), (int)angle);
+		
+		if( angle < 90 ){
+			cc.turn((float)(180-angle), new Vector3D(0, 1, 0));
 		}
 		
 		cc.idleNearZWall();
 		
-		//logger.debug("Z dir after: {}, {}", cc.getName(), cc.getDirection());
-		if(cc.getState() != FishState.IDLE)
-			cc.setIdleWaitTime(System.currentTimeMillis() + 3000);
-		cc.setState(FishState.IDLE);
+		logger.debug("Z dir after: {}, {}", cc.getName(), cc.getDirection());
+		
 		return BTStatus.BH_SUCCESS;
 	}
 }
