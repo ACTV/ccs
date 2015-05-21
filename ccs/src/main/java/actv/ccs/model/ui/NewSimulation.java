@@ -797,6 +797,9 @@ public class NewSimulation extends JFrame {
 	    this.myGame.setUpTank();
 	//	this.myGame.startAnimationProcess();
 	    this.myGame.startAIImplementation();
+	    this.myGame.setRunning(true);
+	    this.myGame.initPhysicsSystem();
+	    this.myGame.createSagePhysicsWorld();
 
 	}
 }

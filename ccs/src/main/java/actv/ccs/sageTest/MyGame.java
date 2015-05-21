@@ -38,6 +38,9 @@ import sage.input.action.AbstractInputAction;
 import sage.input.action.IAction;
 import sage.model.loader.OBJLoader;
 import sage.model.loader.ogreXML.OgreXMLParser;
+import sage.physics.IPhysicsEngine;
+import sage.physics.IPhysicsObject;
+import sage.physics.PhysicsEngineFactory;
 import sage.renderer.IRenderer;
 import sage.scene.*;
 import sage.scene.SceneNode.*;
@@ -125,9 +128,17 @@ public class MyGame extends BaseGame {
 	private long lastUpdateTime;
 	private ExecutorService AIExecutor = Executors.newSingleThreadExecutor();
 	
+	// testing for physics
+	private IPhysicsEngine physicsEngine;
+	private IPhysicsObject leftWallP, rightWallP, groundWallP, backWallP, frontWallP, ceilingWallP,
+		cichlidAP, cichlidBP, cichlidCP;
+	private boolean running;
+	private Rectangle leftWall, rightWall, backWall, frontWall, ceiling, ground;
+	
 	public void initGame() {
 		createHUD();
 		startAnimation = false;
+		running = false;
 		try {
 			this.conn = DriverManager
 					.getConnection("jdbc:ucanaccess://FishPool.accdb");
@@ -1487,8 +1498,82 @@ public class MyGame extends BaseGame {
 	}
 
 	public void createFishTankWalls() {
+		/*
 		walls = fishTank.getFishWalls();
 		addGameWorldObject(walls);
+		*/
+
+			Texture texture = TextureManager.loadTexture2D("./aquasoil.jpg");
+			Texture textureA = TextureManager.loadTexture2D("./background.jpg");
+			// add a rectangle, and turn it into a plane
+			ground = new Rectangle(200, 200);
+			ground.rotate(90, new Vector3D(1, 0, 0));
+			ground.translate(101.0f, -2f, 101.0f);
+			// ground.setColor(Color.orange);
+			ground.setTexture(texture);
+//			fishWalls.addChild(ground);
+			addGameWorldObject(ground);
+			ground.updateWorldBound();
+			
+
+			leftWall = new Rectangle(200, 200);
+			Matrix3D leftRot = new Matrix3D();
+			leftRot.rotate(0, 90, 90);
+			leftWall.setLocalRotation(leftRot);
+			leftWall.translate(-0.1f, 101f, 101.0f);
+			leftWall.setColor(Color.blue);
+			// leftWall.setCullMode(CULL_MODE.ALWAYS);
+//			fishWalls.addChild(leftWall);
+			addGameWorldObject(leftWall);
+			leftWall.updateWorldBound();
+
+			rightWall = new Rectangle(200, 200);
+			Matrix3D rightRot = new Matrix3D();
+			rightRot.rotate(0, 90, 90);
+			rightWall.setLocalRotation(rightRot);
+			rightWall.translate(201.0f, 101f, 101.0f);
+			rightWall.setColor(Color.blue);
+			// rightWall.setCullMode(CULL_MODE.ALWAYS);
+//			fishWalls.addChild(rightWall);
+			addGameWorldObject(rightWall);
+			rightWall.updateWorldBound();
+
+			backWall = new Rectangle(200, 200);
+			Matrix3D backRot = new Matrix3D();
+			backRot.rotate(0, 0, 0);
+			backWall.setLocalRotation(backRot);
+			backWall.translate(101.0f, 101.0f, -0.10f);
+			// backWall.setColor(Color.blue);
+			// backWall.setCullMode(CULL_MODE.ALWAYS);
+			backWall.setTexture(textureA);
+//			fishWalls.addChild(backWall);
+			addGameWorldObject(backWall);
+			backWall.updateWorldBound();
+
+			ceiling = new Rectangle(200, 200);
+			Matrix3D ceilingRot = new Matrix3D();
+			ceilingRot.rotate(90, 0, 0);
+			ceiling.setLocalRotation(ceilingRot);
+			ceiling.translate(101.0f, 201f, 101.0f);
+			ceiling.setColor(Color.blue);
+			// ceiling.setCullMode(CULL_MODE.ALWAYS);
+	//		fishWalls.addChild(ceiling);
+			addGameWorldObject(ceiling);
+			ceiling.updateWorldBound();
+
+			// find transparency for this
+			frontWall = new Rectangle(200, 200);
+			Matrix3D frontRot = new Matrix3D();
+			frontRot.rotate(0, 180, 0);
+			frontWall.setLocalRotation(frontRot);
+			frontWall.translate(101.0f, 101.0f, 201.0f);
+			frontWall.setCullMode(CULL_MODE.ALWAYS);
+//			fishWalls.addChild(frontWall);
+			addGameWorldObject(frontWall);
+			frontWall.updateWorldBound();
+
+
+			
 	}
 
 	public void createFishTank() { // issue with this.
@@ -1569,6 +1654,24 @@ public class MyGame extends BaseGame {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		if (running) // testing physics
+		{
+			Matrix3D mat;
+			Vector3D translateVec;
+			Matrix3D rotateVec;
+			physicsEngine.update(20f);
+			for (SceneNode s : getGameWorld())
+			{
+				if (s.getPhysicsObject() != null)
+				{
+					mat = new Matrix3D(s.getPhysicsObject().getTransform());
+					translateVec = mat.getCol(3);
+					s.getLocalTranslation().setCol(3, translateVec);
+					// get rotation
+					
+				}
+			}
 		}
 		
 		for (SceneNode s : getGameWorld()) {
@@ -2160,5 +2263,66 @@ public class MyGame extends BaseGame {
 		return aggroRangeC;
 	}
 	
+	public void initPhysicsSystem()
+	{
+		String engine = "sage.physics.JBullet.JBulletPhysicsEngine";
+		physicsEngine = PhysicsEngineFactory.createPhysicsEngine(engine);
+		physicsEngine.initSystem();
+		float[] gravity = {0, -1f, 0};
+		physicsEngine.setGravity(gravity);
+		
+	}
+	public void setRunning(Boolean b)
+	{
+		running = b;
+	}
+	public boolean getRunning()
+	{
+		return running;
+	}
 	
+	public void createSagePhysicsWorld()
+	{
+		float mass = 1.0f;
+		if (cichlidA != null)
+		{
+		cichlidAP = physicsEngine.addSphereObject(physicsEngine.nextUID(), mass, cichlidA.getWorldTransform().getValues(), 1.0f);
+		cichlidAP.setBounciness(1.0f);
+		cichlidA.setPhysicsObject(cichlidAP);
+		}
+		if (cichlidB != null)
+		{
+		cichlidBP = physicsEngine.addSphereObject(physicsEngine.nextUID(), mass, cichlidA.getWorldTransform().getValues(), 1.0f);
+		cichlidBP.setBounciness(1.0f);
+		cichlidB.setPhysicsObject(cichlidBP);
+		}
+		if (cichlidC != null)
+		{
+		cichlidCP = physicsEngine.addSphereObject(physicsEngine.nextUID(), mass, cichlidA.getWorldTransform().getValues(), 1.0f);
+		cichlidCP.setBounciness(1.0f);
+		cichlidC.setPhysicsObject(cichlidCP);
+		}
+		
+		float up[] = {-0.05f, 0.95f, 0};
+		leftWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), leftWall.getWorldTransform().getValues(), up, 0.0f);
+		leftWallP.setBounciness(1.0f);
+		leftWall.setPhysicsObject(leftWallP);
+		rightWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), rightWall.getWorldTransform().getValues(), up, 0.0f);
+		rightWallP.setBounciness(1.0f);
+		rightWall.setPhysicsObject(rightWallP);
+		groundWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), ground.getWorldTransform().getValues(), up, 0.0f);
+		groundWallP.setBounciness(1.0f);
+		ground.setPhysicsObject(groundWallP);
+		backWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), backWall.getWorldTransform().getValues(), up, 0.0f);
+		backWallP.setBounciness(1.0f);
+		backWall.setPhysicsObject(backWallP);
+		frontWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), frontWall.getWorldTransform().getValues(), up, 0.0f);
+		frontWallP.setBounciness(1.0f);
+		frontWall.setPhysicsObject(frontWallP);
+		ceilingWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), ceiling.getWorldTransform().getValues(), up, 0.0f);
+		ceilingWallP.setBounciness(1.0f);
+		ceiling.setPhysicsObject(ceilingWallP);
+		
+	}
+		
 }
