@@ -22,9 +22,12 @@ public class FishTankImpl implements FishTank {
 	private int objectCount;
 	private float temperature;
 	private int timer;
+	private Rectangle ground, leftWall, rightWall, backWall, frontWall, ceiling;
+	private MyGame mg;
 
-	public FishTankImpl() {
+	public FishTankImpl(MyGame g) {
 		super();
+		mg = g;
 		fishWalls = createFishTankWalls();
 		terrain = createTankTerrain();
 	}
@@ -35,7 +38,7 @@ public class FishTankImpl implements FishTank {
 		Texture texture = TextureManager.loadTexture2D("./aquasoil.jpg");
 		Texture textureA = TextureManager.loadTexture2D("./background.jpg");
 		// add a rectangle, and turn it into a plane
-		Rectangle ground = new Rectangle(WIDTH, HEIGHT);
+		ground = new Rectangle(WIDTH, HEIGHT);
 		ground.rotate(90, new Vector3D(1, 0, 0));
 		ground.translate(101.0f, -2f, 101.0f);
 		// ground.setColor(Color.orange);
@@ -43,7 +46,7 @@ public class FishTankImpl implements FishTank {
 		fishWalls.addChild(ground);
 		ground.updateWorldBound();
 
-		Rectangle leftWall = new Rectangle(WIDTH, HEIGHT);
+		leftWall = new Rectangle(WIDTH, HEIGHT);
 		Matrix3D leftRot = new Matrix3D();
 		leftRot.rotate(0, 90, 90);
 		leftWall.setLocalRotation(leftRot);
@@ -53,7 +56,7 @@ public class FishTankImpl implements FishTank {
 		fishWalls.addChild(leftWall);
 		leftWall.updateWorldBound();
 
-		Rectangle rightWall = new Rectangle(WIDTH, HEIGHT);
+		rightWall = new Rectangle(WIDTH, HEIGHT);
 		Matrix3D rightRot = new Matrix3D();
 		rightRot.rotate(0, 90, 90);
 		rightWall.setLocalRotation(rightRot);
@@ -63,7 +66,7 @@ public class FishTankImpl implements FishTank {
 		fishWalls.addChild(rightWall);
 		rightWall.updateWorldBound();
 
-		Rectangle backWall = new Rectangle(WIDTH, HEIGHT);
+		backWall = new Rectangle(WIDTH, HEIGHT);
 		Matrix3D backRot = new Matrix3D();
 		backRot.rotate(0, 0, 0);
 		backWall.setLocalRotation(backRot);
@@ -74,7 +77,7 @@ public class FishTankImpl implements FishTank {
 		fishWalls.addChild(backWall);
 		backWall.updateWorldBound();
 
-		Rectangle ceiling = new Rectangle(WIDTH, HEIGHT);
+		ceiling = new Rectangle(WIDTH, HEIGHT);
 		Matrix3D ceilingRot = new Matrix3D();
 		ceilingRot.rotate(90, 0, 0);
 		ceiling.setLocalRotation(ceilingRot);
@@ -85,7 +88,7 @@ public class FishTankImpl implements FishTank {
 		ceiling.updateWorldBound();
 
 		// find transparency for this
-		Rectangle frontWall = new Rectangle(WIDTH, HEIGHT);
+		frontWall = new Rectangle(WIDTH, HEIGHT);
 		Matrix3D frontRot = new Matrix3D();
 		frontRot.rotate(0, 180, 0);
 		frontWall.setLocalRotation(frontRot);
@@ -173,5 +176,53 @@ public class FishTankImpl implements FishTank {
 	public void setTerrain(TerrainBlock terrain) {
 		this.terrain = terrain;
 	}
+	public Rectangle getGround() {
+		return ground;
+	}
+
+	public void setGround(Rectangle ground) {
+		this.ground = ground;
+	}
+
+	public Rectangle getLeftWall() {
+		return leftWall;
+	}
+
+	public void setLeftWall(Rectangle leftWall) {
+		this.leftWall = leftWall;
+	}
+
+	public Rectangle getRightWall() {
+		return rightWall;
+	}
+
+	public void setRightWall(Rectangle rightWall) {
+		this.rightWall = rightWall;
+	}
+
+	public Rectangle getBackWall() {
+		return backWall;
+	}
+
+	public void setBackWall(Rectangle backWall) {
+		this.backWall = backWall;
+	}
+
+	public Rectangle getFrontWall() {
+		return frontWall;
+	}
+
+	public void setFrontWall(Rectangle frontWall) {
+		this.frontWall = frontWall;
+	}
+
+	public Rectangle getCeiling() {
+		return ceiling;
+	}
+
+	public void setCeiling(Rectangle ceiling) {
+		this.ceiling = ceiling;
+	}
+
 
 }

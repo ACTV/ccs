@@ -75,11 +75,9 @@ public class MyGame extends BaseGame {
 			smallPot;
 	private ICamera camera;
 	private CameraOrbit cc;
-	private SkyBox skybox;
 	private Connection conn;
 	private ResultSet rs, rsI;
-	private TerrainBlock floor;
-	private Texture skyThing;
+
 	private ConvictCichlid cichlidA, cichlidB, cichlidC;
 	private ConvictCichlid[] CCList = new ConvictCichlid[3];
 	private SceneNode cameraGuy;
@@ -133,7 +131,7 @@ public class MyGame extends BaseGame {
 	private IPhysicsObject leftWallP, rightWallP, groundWallP, backWallP, frontWallP, ceilingWallP,
 		cichlidAP, cichlidBP, cichlidCP;
 	private boolean running;
-	private Rectangle leftWall, rightWall, backWall, frontWall, ceiling, ground;
+//	private Rectangle leftWall, rightWall, backWall, frontWall, ceiling, ground;
 	
 	public void initGame() {
 		createHUD();
@@ -151,7 +149,7 @@ public class MyGame extends BaseGame {
 
 				int scenGrab = Integer.parseInt(scenNum);
 				if (scenGrab >= 1 && scenGrab <= 6) {
-					this.fishTank = new FishTankImpl();
+					this.fishTank = new FishTankImpl(this);
 					startAnimation = true;
 					startAnimationProcess();
 				} else {
@@ -1498,11 +1496,10 @@ public class MyGame extends BaseGame {
 	}
 
 	public void createFishTankWalls() {
-		/*
+		
 		walls = fishTank.getFishWalls();
 		addGameWorldObject(walls);
-		*/
-
+/*
 			Texture texture = TextureManager.loadTexture2D("./aquasoil.jpg");
 			Texture textureA = TextureManager.loadTexture2D("./background.jpg");
 			// add a rectangle, and turn it into a plane
@@ -1572,7 +1569,7 @@ public class MyGame extends BaseGame {
 			addGameWorldObject(frontWall);
 			frontWall.updateWorldBound();
 
-
+*/
 			
 	}
 
@@ -2304,7 +2301,11 @@ public class MyGame extends BaseGame {
 		}
 		
 		float up[] = {-0.05f, 0.95f, 0};
-		leftWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), leftWall.getWorldTransform().getValues(), up, 0.0f);
+		leftWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), fishTank.getFishWalls().getWorldTransform().getValues(), up, 0.0f);
+		leftWallP.setBounciness(1.0f);
+		fishTank.getFishWalls().setPhysicsObject(leftWallP);
+
+/*		leftWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), leftWall.getWorldTransform().getValues(), up, 0.0f);
 		leftWallP.setBounciness(1.0f);
 		leftWall.setPhysicsObject(leftWallP);
 		rightWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), rightWall.getWorldTransform().getValues(), up, 0.0f);
@@ -2322,7 +2323,7 @@ public class MyGame extends BaseGame {
 		ceilingWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), ceiling.getWorldTransform().getValues(), up, 0.0f);
 		ceilingWallP.setBounciness(1.0f);
 		ceiling.setPhysicsObject(ceilingWallP);
-		
+*/		
 	}
 		
 }

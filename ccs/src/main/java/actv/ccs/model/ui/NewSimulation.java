@@ -69,7 +69,7 @@ public class NewSimulation extends JFrame {
 	{
 		myGame = gg;
 		//tank = new TankObject(20, 20, 20, 26, 0, 0, 0); // array value default tank
-		tank = new FishTankImpl();
+		tank = new FishTankImpl(myGame);
 		
 		tankFishCount = tank.getCichlidCount();
 		tankPlantCount = tank.getCichlidCount();
