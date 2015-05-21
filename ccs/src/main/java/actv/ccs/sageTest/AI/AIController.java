@@ -152,7 +152,7 @@ public class AIController {
 		bt1.insertAtRoot(new BTSequence(17));
 	//	bt1.insertAtRoot(new BTSequence(30));
 		bt1.insert(15, new IsNearXWall(this, ccList[1], false)); // bounds condition
-		bt1.insert(15, new IdleNearXWall(ccList[0])); // action 1
+		bt1.insert(15, new IdleNearXWall(ccList[1])); // action 1
 		
 
 		bt1.insert(16, new IsNearYWall(this, ccList[1], false)); // bounds condition
