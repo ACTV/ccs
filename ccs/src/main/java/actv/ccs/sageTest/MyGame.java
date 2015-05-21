@@ -51,26 +51,10 @@ import sage.scene.state.TextureState;
 import sage.terrain.*;
 import sage.texture.*;
 
-/*
- *  Albert to do list 4-21-15
- *  do 165 lool
- *  figure out to close the window for test game
- *  then how to save file ...
- *  which could be done by adding another table for fish scenario and then when closed, saved all data to there. then you can start a new table 
- *  do documentation
- *  user manual
- *  models if victor doesn't do it ... zz
- *  
- *  rules need to be done - with collisions ... make them faster. will look at after i'm done with documentation
- *  
- *  for collisions - large plant is getting hit a lot. - maybe fixed.
- */
 public class MyGame extends BaseGame {
 
 	IDisplaySystem display;
 	IInputManager im;
-	// private Pot largePot, mediumPot, smallPot;
-	// private Plant largePlant, mediumPlant, smallPlant;
 	private TriMesh largePlant, mediumPlant, smallPlant, largePot, mediumPot,
 			smallPot;
 	private ICamera camera;
@@ -318,7 +302,7 @@ public class MyGame extends BaseGame {
 		timeString.setLocation(0, 0.05);
 		addGameWorldObject(timeString);
 		
-		saveString = new HUDString("Simulation is saved");
+		saveString = new HUDString("Simulation is saved"); // save state is saved
 		saveString.setLocation(0, 0.09);
 	//	saveString.setCullMode(CULL_MODE.ALWAYS);
 		addGameWorldObject(saveString);
