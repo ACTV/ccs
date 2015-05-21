@@ -2286,18 +2286,23 @@ public class MyGame extends BaseGame {
 		cichlidAP = physicsEngine.addSphereObject(physicsEngine.nextUID(), mass, cichlidA.getWorldTransform().getValues(), 1.0f);
 		cichlidAP.setBounciness(1.0f);
 		cichlidA.setPhysicsObject(cichlidAP);
+		System.out.println("cichlid A works");
 		}
+		
 		if (cichlidB != null)
 		{
-		cichlidBP = physicsEngine.addSphereObject(physicsEngine.nextUID(), mass, cichlidA.getWorldTransform().getValues(), 1.0f);
+		cichlidBP = physicsEngine.addSphereObject(physicsEngine.nextUID(), mass, cichlidB.getWorldTransform().getValues(), 1.0f);
 		cichlidBP.setBounciness(1.0f);
 		cichlidB.setPhysicsObject(cichlidBP);
+		
+		System.out.println("cichlid b works");
 		}
 		if (cichlidC != null)
 		{
-		cichlidCP = physicsEngine.addSphereObject(physicsEngine.nextUID(), mass, cichlidA.getWorldTransform().getValues(), 1.0f);
+		cichlidCP = physicsEngine.addSphereObject(physicsEngine.nextUID(), mass, cichlidC.getWorldTransform().getValues(), 1.0f);
 		cichlidCP.setBounciness(1.0f);
 		cichlidC.setPhysicsObject(cichlidCP);
+		System.out.println("cichlid c works");
 		}
 		
 		float up[] = {-0.05f, 0.95f, 0};
