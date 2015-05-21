@@ -1772,6 +1772,7 @@ public class MyGame extends BaseGame {
 						if (cichlidA.getWorldBound().intersects(
 								largePlant.getWorldBound())) {
 							System.out.println("a hit largePl");
+							cichlidA.setState(FishState.IDLE);
 						}
 					}
 					/*
@@ -2265,7 +2266,7 @@ public class MyGame extends BaseGame {
 		cichlidA.setPhysicsObject(cichlidAP);
 	//	System.out.println("cichlid A works");
 		}
-		/*
+		
 		if (cichlidB != null)
 		{
 
@@ -2275,7 +2276,7 @@ public class MyGame extends BaseGame {
 		
 		System.out.println("cichlid b works");
 		}
-		*/
+		
 		if (cichlidC != null)
 		{
 		cichlidCP = physicsEngine.addSphereObject(physicsEngine.nextUID(), mass, cichlidC.getWorldTransform().getValues(), 1.0f);
