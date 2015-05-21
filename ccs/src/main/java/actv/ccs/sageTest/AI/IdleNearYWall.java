@@ -33,7 +33,6 @@ public class IdleNearYWall extends BTAction {
 		}else if(cc.getYpos() == Y_POS.YB){
 			angle = (Math.acos(cc.getDirection().normalize().dot(YBV))) * (190/Math.PI);
 		}else{
-			logger.error("{}: How  Y did we get here?!", cc.getName());
 			return BTStatus.BH_FAILURE;
 		}
 		

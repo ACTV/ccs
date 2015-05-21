@@ -1623,9 +1623,7 @@ public class MyGame extends BaseGame {
 			//		System.out.println( "get the starting location A: " + ((ConvictCichlid) s).getLocation());
 					
 					if(((ConvictCichlid)s).getState() == FishState.IDLE){
-					//	((ConvictCichlid) s).move(0);
 						cichlidA.stop();
-						logger.debug("{} MOVED 0", ((ConvictCichlid)s).getName());
 						
 						for (int x = 0; x < 10000000; x++)
 						{
@@ -1638,7 +1636,6 @@ public class MyGame extends BaseGame {
 							}
 						}
 					}else if (cichlidA.getState() == FishState.SWIM){
-						logger.debug("{} MOVED 1", ((ConvictCichlid)s).getName());
 						cichlidA.move(elapsedTimeMS);
 					}
 					
