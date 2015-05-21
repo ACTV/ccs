@@ -292,7 +292,7 @@ public class MyGame extends BaseGame {
 
 	public void createPerson() {
 		cameraGuy = new CameraGuy();
-		cameraGuy.translate(100, 100, 500);
+		cameraGuy.translate(100, 100, 430);
 		cameraGuy.scale(-1, -1, -1);
 		cameraGuy.rotate(180, new Vector3D(0, 1, 0));
 		addGameWorldObject(cameraGuy);
@@ -1620,7 +1620,7 @@ public class MyGame extends BaseGame {
 					// s.translate(0, 0, .1f);
 					// s.updateWorldBound();
 					// bound collision
-			//		System.out.println( "get the starting location A: " + ((ConvictCichlid) s).getLocation());
+//					logger.debug( "get the starting location A: {}", ((ConvictCichlid) s).getLocation());
 					
 					if(((ConvictCichlid)s).getState() == FishState.IDLE){
 						cichlidA.stop();
@@ -1643,7 +1643,7 @@ public class MyGame extends BaseGame {
 					
 					//System.out.println("what: "  + ((ConvictCichlid) s).getLocation().getX());
 			//		System.out.println( "get the next location A1: " + test);
-			//		System.out.println( "get the next location A2: " + ((ConvictCichlid) s).getLocation());
+//					logger.debug( "get the next location A2: {}", ((ConvictCichlid) s).getLocation());
 	
 					// so the world translation doesn't work for this?
 					

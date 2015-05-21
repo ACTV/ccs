@@ -21,7 +21,7 @@ public class IsNearZWall extends BTCondition {
 	
 	protected boolean check()
 	{
-		if (cc.getLocation().getZ() > 195){
+		if (cc.getLocation().getZ() > 150){
 			cc.setZpos(Z_POS.ZF);
 		}
 		else if( cc.getLocation().getZ() < 0 ){
