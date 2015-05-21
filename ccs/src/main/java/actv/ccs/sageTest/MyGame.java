@@ -776,7 +776,7 @@ public class MyGame extends BaseGame {
 						cichlidA.setSpeed(0);
 						cichlidA.setBaseCautionLevel(4f);
 						cichlidA.setDirection(new Vector3D(1, 1, 1));
-				//		cichlidA.setCullMode(CULL_MODE.ALWAYS);
+						cichlidA.setCullMode(CULL_MODE.ALWAYS);
 						cichlidA.setInfluence(12);
 						cichlidA.setState(FishState.SWIM);
 
@@ -820,48 +820,6 @@ public class MyGame extends BaseGame {
 						aggroRangeA.setCullMode(CULL_MODE.ALWAYS); // cull mode
 																	// hides the
 																	// object
-						cichlidCount++;
-
-						/*
-						 * // // here is where i add the cichlidMesh OBJLoader
-						 * loader1 = new OBJLoader(); cichlidAMesh = loader1
-						 * .loadModel("wacklid.obj");
-						 * cichlidAMesh.setName(name); Matrix3D cichlidAMeshT =
-						 * cichlidAMesh.getLocalTranslation(); // this // is //
-						 * for // position cichlidAMeshT.translate(xStartW,
-						 * yStartY, zStartZ);
-						 * cichlidAMesh.setLocalTranslation(cichlidAMeshT);
-						 * Matrix3D cichlidAMeshS =
-						 * cichlidAMesh.getLocalScale(); // this // is // for //
-						 * size // of // object cichlidAMeshS.scale(widthW *
-						 * weightW * .1, heightW weightW * .1, 0); // the scale
-						 * // might be // too big // so we //
-						 * largePlant.setLocalScale(largePlantS);
-						 * 
-						 * // cichlidAMeshS.scale(10f, 10f, 10f);
-						 * cichlidAMesh.setLocalScale(cichlidAMeshS);
-						 * cichlidAMesh.setTexture(cichlidTexA);
-						 * 
-						 * 
-						 * 
-						 * // trying texture
-						 * 
-						 * TextureState cichlidATexS; Texture cATex =
-						 * TextureManager.loadTexture2D("cichlidMesh.png");
-						 * cATex
-						 * .setApplyMode(sage.texture.Texture.ApplyMode.Replace
-						 * ); cichlidATexS = (TextureState)
-						 * display.getRenderer()
-						 * .createRenderState(RenderState.RenderStateType
-						 * .Texture); cichlidATexS.setTexture(cATex, 0);
-						 * cichlidATexS.setEnabled(true);
-						 * 
-						 * cichlidAMesh.setRenderState(cichlidATexS);
-						 * addGameWorldObject(cichlidAMesh);
-						 * cichlidAMesh.updateLocalBound();
-						 * cichlidAMesh.updateGeometricState(0, true);
-						 * cichlidAMesh.updateWorldBound();
-						 */
 						// creating new ogre
 						OgreXMLParser loader = new OgreXMLParser();
 
@@ -877,7 +835,8 @@ public class MyGame extends BaseGame {
 									.iterator();
 							cichlidAObject = (Model3DTriMesh) modelIterator
 									.next();
-							logger.debug("test");
+							cichlidCount++;
+
 						} catch (Exception vv) {
 							vv.printStackTrace();
 
@@ -938,7 +897,7 @@ public class MyGame extends BaseGame {
 						cichlidB.setSpeed(0f);
 						cichlidB.setBaseCautionLevel(4f);
 						cichlidB.setDirection(new Vector3D(1, 1, 1));
-					//	cichlidB.setCullMode(CULL_MODE.ALWAYS);
+						cichlidB.setCullMode(CULL_MODE.ALWAYS);
 						cichlidB.setInfluence(8);
 						cichlidB.setState(FishState.SWIM);
 						
@@ -982,42 +941,6 @@ public class MyGame extends BaseGame {
 						aggroRangeB.setCullMode(CULL_MODE.ALWAYS); // cull mode
 																	// hides the
 																	// object
-
-						// // here is where i add the cichlidMesh
-						/*
-						 * OBJLoader loader1 = new OBJLoader(); cichlidBMesh =
-						 * loader1 .loadModel("wacklid.obj");
-						 * cichlidBMesh.setName(name); Matrix3D cichlidAMeshT =
-						 * cichlidBMesh.getLocalTranslation(); // this // is //
-						 * for // position cichlidAMeshT.translate(xStartW,
-						 * yStartY, zStartZ);
-						 * cichlidBMesh.setLocalTranslation(cichlidAMeshT);
-						 * Matrix3D cichlidAMeshS =
-						 * cichlidBMesh.getLocalScale(); // this // is // for //
-						 * size // of // object cichlidAMeshS.scale(widthW *
-						 * weightW * .1, heightW weightW * .1, 0); // the scale
-						 * // might be // too big // so we //
-						 * largePlant.setLocalScale(largePlantS);
-						 * 
-						 * // cichlidAMeshS.scale(10f, 10f, 10f);
-						 * cichlidBMesh.setLocalScale(cichlidAMeshS);
-						 * cichlidBMesh.setTexture(cichlidTexA); TextureState
-						 * cichlidATexS; Texture cATex =
-						 * TextureManager.loadTexture2D("cichlidMesh.png");
-						 * cATex
-						 * .setApplyMode(sage.texture.Texture.ApplyMode.Replace
-						 * ); cichlidATexS = (TextureState)
-						 * display.getRenderer()
-						 * .createRenderState(RenderState.RenderStateType
-						 * .Texture); cichlidATexS.setTexture(cATex, 0);
-						 * cichlidATexS.setEnabled(true);
-						 * 
-						 * cichlidBMesh.setRenderState(cichlidATexS);
-						 * addGameWorldObject(cichlidBMesh);
-						 * cichlidBMesh.updateLocalBound();
-						 * cichlidBMesh.updateGeometricState(0, true);
-						 * cichlidBMesh.updateWorldBound();
-						 */
 
 						OgreXMLParser loader = new OgreXMLParser();
 
@@ -1095,7 +1018,7 @@ public class MyGame extends BaseGame {
 						cichlidC.setSpeed(0);
 						cichlidC.setBaseCautionLevel(4f);
 						cichlidC.setDirection(new Vector3D(-.5, .8, .1));
-					//	cichlidC.setCullMode(CULL_MODE.ALWAYS);
+						cichlidC.setCullMode(CULL_MODE.ALWAYS);
 						cichlidC.setInfluence(6);
 						cichlidC.setState(FishState.SWIM);
 
@@ -1141,29 +1064,6 @@ public class MyGame extends BaseGame {
 																	// hides the
 																	// object
 
-						/*
-						 * OBJLoader loader1 = new OBJLoader(); cichlidCMesh =
-						 * loader1 .loadModel("wacklid.obj");
-						 * cichlidCMesh.setName(name); Matrix3D cichlidAMeshT =
-						 * cichlidCMesh.getLocalTranslation(); // this // is //
-						 * for // position cichlidAMeshT.translate(xStartW,
-						 * yStartY, zStartZ);
-						 * cichlidCMesh.setLocalTranslation(cichlidAMeshT);
-						 * Matrix3D cichlidAMeshS =
-						 * cichlidCMesh.getLocalScale(); // this // is // for //
-						 * size // of // object cichlidAMeshS.scale(widthW *
-						 * weightW * .1, heightW weightW * .1, 0); // the scale
-						 * // might be // too big // so we //
-						 * largePlant.setLocalScale(largePlantS);
-						 * 
-						 * // cichlidAMeshS.scale(10f, 10f, 10f);
-						 * cichlidCMesh.setLocalScale(cichlidAMeshS);
-						 * cichlidCMesh.setTexture(cichlidTexA);
-						 * addGameWorldObject(cichlidCMesh);
-						 * cichlidCMesh.updateLocalBound();
-						 * cichlidCMesh.updateGeometricState(0, true);
-						 * cichlidCMesh.updateWorldBound();
-						 */
 						OgreXMLParser loader = new OgreXMLParser();
 
 						try {
@@ -1214,16 +1114,6 @@ public class MyGame extends BaseGame {
 		startAnimation = true;
 		startAnimationProcess();
 	}
-
-	/**
-	 * 
-	 */
-	/**
-	 * 
-	 */
-	/**
-	 * 
-	 */
 	public void initActions() {
 		im = getInputManager();
 		String kbName = im.getKeyboardName(); // error here. it shouldn't be
@@ -1892,6 +1782,8 @@ public class MyGame extends BaseGame {
 					if (largePlantC == true) {
 						if (cichlidB.getWorldBound().intersects(
 								largePlant.getWorldBound())) {
+							cichlidB.setState(FishState.IDLE);
+							
 							// System.out.println("b hit largePl");
 						}
 					}
@@ -1987,6 +1879,8 @@ public class MyGame extends BaseGame {
 					if (largePlantC == true) {
 						if (cichlidC.getWorldBound().intersects(
 								largePlant.getWorldBound())) {
+							cichlidC.setState(FishState.IDLE);
+							
 							// System.out.println("c hit large plant");
 						}
 					}
