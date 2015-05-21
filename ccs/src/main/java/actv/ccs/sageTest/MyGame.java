@@ -91,7 +91,7 @@ public class MyGame extends BaseGame {
 	private float time = 0;
 	private int cichlidCount;
 	private int objCount;
-	private HUDString timeString;
+	private HUDString timeString, saveString;
 	private Sphere aggroRangeA, aggroRangeB, aggroRangeC;
 	private Group fishWalls;
 	private IRenderer renderer;
@@ -132,6 +132,10 @@ public class MyGame extends BaseGame {
 		cichlidAP, cichlidBP, cichlidCP;
 	private boolean running;
 //	private Rectangle leftWall, rightWall, backWall, frontWall, ceiling, ground;
+	
+	
+	// save state prompter
+	private boolean saveUpdate = false;
 	
 	public void initGame() {
 		createHUD();
@@ -313,6 +317,11 @@ public class MyGame extends BaseGame {
 		timeString = new HUDString("Time = " + time);
 		timeString.setLocation(0, 0.05);
 		addGameWorldObject(timeString);
+		
+		saveString = new HUDString("Simulation is saved");
+		saveString.setLocation(0, 0.09);
+	//	saveString.setCullMode(CULL_MODE.ALWAYS);
+		addGameWorldObject(saveString);
 
 	}
 
@@ -1253,14 +1262,12 @@ public class MyGame extends BaseGame {
 				net.java.games.input.Component.Identifier.Key.R, resumeKey,
 				IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
 
-		// if (pauseSimulation == true) // this is for save simulation
-		// {
 		IAction saveState = new saveAction();
 		im.associateAction(kbName,
 				net.java.games.input.Component.Identifier.Key.Q, saveState,
 				IInputManager.INPUT_ACTION_TYPE.ON_PRESS_ONLY);
 
-		// }
+
 
 		// here is the movement options of the character ..
 		
@@ -1325,6 +1332,8 @@ public class MyGame extends BaseGame {
 			 * 
 			 * the big issue is that you need to is get the time of the thing
 			 */
+			
+			
 			try {
 				Connection conn;
 				try {
@@ -1491,6 +1500,9 @@ public class MyGame extends BaseGame {
 			} catch (Exception pp) {
 				pp.printStackTrace();
 			}
+			
+			
+			saveUpdate = true;
 		}
 
 	}
@@ -1628,6 +1640,15 @@ public class MyGame extends BaseGame {
 		if (timeString != null) {
 			timeString.setText("Time: " + (int) Math.floor(time / 1000));
 		}
+
+		if (saveUpdate == true)
+		{
+		 saveString.setCullMode(CULL_MODE.NEVER);
+		}
+		else if (saveUpdate == false)
+		{
+			saveString.setCullMode(CULL_MODE.ALWAYS);
+		}
 		float timeCompare = time / 1000;
 
 		Point3D camLoc = camera.getLocation();
@@ -1645,6 +1666,7 @@ public class MyGame extends BaseGame {
 		// skybox.setLocalTranslation(camT);
 
 		// iterating through models
+
 		
 		try {
 			CCSSemaphore.getSemaphore().acquire();
