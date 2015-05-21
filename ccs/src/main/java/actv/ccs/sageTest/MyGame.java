@@ -301,7 +301,7 @@ public class MyGame extends BaseGame {
 
 	public void createPerson() {
 		cameraGuy = new CameraGuy();
-		cameraGuy.translate(100, 100, 430);
+		cameraGuy.translate(100, 100, 440);
 		cameraGuy.scale(-1, -1, -1);
 		cameraGuy.rotate(180, new Vector3D(0, 1, 0));
 		addGameWorldObject(cameraGuy);
@@ -398,6 +398,7 @@ public class MyGame extends BaseGame {
 																					// for
 																					// position
 						largePlantT.translate(xStartW, yStartY, zStartZ);
+//						largePlantT.translate(0, 200, 160);
 						largePlant.setLocalTranslation(largePlantT);
 						Matrix3D largePlantS = largePlant.getLocalScale(); // this
 																			// is
@@ -767,7 +768,6 @@ public class MyGame extends BaseGame {
 						cichlidA.setBaseCautionLevel(4f);
 						cichlidA.setDirection(new Vector3D(1, 1, 1));
 				//		cichlidA.setCullMode(CULL_MODE.ALWAYS);
-						cichlidA.setState(FishState.IDLE);
 						cichlidA.setInfluence(12);
 						cichlidA.setState(FishState.SWIM);
 
@@ -929,7 +929,6 @@ public class MyGame extends BaseGame {
 						cichlidB.setBaseCautionLevel(4f);
 						cichlidB.setDirection(new Vector3D(1, 1, 1));
 					//	cichlidB.setCullMode(CULL_MODE.ALWAYS);
-						cichlidB.setState(FishState.IDLE);
 						cichlidB.setInfluence(8);
 						cichlidB.setState(FishState.SWIM);
 						
@@ -1086,7 +1085,6 @@ public class MyGame extends BaseGame {
 						cichlidC.setSpeed(0);
 						cichlidC.setBaseCautionLevel(4f);
 						cichlidC.setDirection(new Vector3D(-.5, .8, .1));
-						cichlidC.setState(FishState.IDLE);
 					//	cichlidC.setCullMode(CULL_MODE.ALWAYS);
 						cichlidC.setInfluence(6);
 						cichlidC.setState(FishState.SWIM);
@@ -1723,8 +1721,6 @@ public class MyGame extends BaseGame {
 //					logger.debug( "get the starting location A: {}", ((ConvictCichlid) s).getLocation());
 					
 					if(((ConvictCichlid)s).getState() == FishState.IDLE){
-						cichlidA.stop();
-						
 						for (int x = 0; x < 10000000; x++)
 						{
 							if ( x == 9000000)
@@ -1734,7 +1730,7 @@ public class MyGame extends BaseGame {
 						//	cichlidA.turn(30, new Vector3D(1, 0, 0));
 							cichlidA.setState(FishState.SWIM);
 							}
-						}
+					}
 					}else if (cichlidA.getState() == FishState.SWIM){
 						cichlidA.move(elapsedTimeMS);
 					}
@@ -1764,29 +1760,6 @@ public class MyGame extends BaseGame {
 					 * ().intersects(largePlant.getWorldBound())) {
 					 * System.out.println("a hit largePl"); } }
 					 */
-//			//		System.out.println("s: "  + loc);
-//					if (((ConvictCichlid) s).getLocation().getX() > 200 || ((ConvictCichlid) s).getLocation().getX() < 0)
-//				//	if (test.getX() > 200 || test.getX() < 0)
-//					{
-//					//	System.out.println("x b");
-//						System.out.println("Turning Loc AX: " + ((ConvictCichlid) s).getLocation());
-//						((ConvictCichlid) s).turn(-30, new Vector3D(1, 0, 0));
-//					}
-//					if (((ConvictCichlid) s).getLocation().getY() > 200 || ((ConvictCichlid) s).getLocation().getY() < 0)
-//				//	if (test.getY() > 200 || test.getZ() < 0)
-//					{
-//						// rotate
-//					//	System.out.println("y b");
-//						System.out.println("Turning Loc AY: " + ((ConvictCichlid) s).getLocation());
-//						((ConvictCichlid) s).turn(-30, new Vector3D(0, 1, 0));
-//					}
-//					if (((ConvictCichlid) s).getLocation().getZ() > 200 || ((ConvictCichlid) s).getLocation().getZ() < 0)
-//				//	if (test.getZ() > 200 || test.getZ() < 0)
-//					{
-//						System.out.println("Turning Loc AZ: " + ((ConvictCichlid) s).getLocation());
-//						((ConvictCichlid) s).turn(-30, new Vector3D(0, 0, 1));
-//					//	System.out.println("z b");
-//					}
 					
 					if (largePotC == true) {
 						if (cichlidA.getWorldBound().intersects(
@@ -1862,24 +1835,21 @@ public class MyGame extends BaseGame {
 
 					// call move stuff here
 					if(((ConvictCichlid)s).getState() == FishState.IDLE){
-					//	((ConvictCichlid) s).move(0);
-						cichlidB.stop();
-						logger.debug("{} MOVED 0", ((ConvictCichlid)s).getName());
-						
-						for (int x = 0; x < 10000000; x++)
-						{
-							if ( x == 9000000)
+							cichlidB.stop();
+							for (int x = 0; x < 10000000; x++)
 							{
-								
-							System.out.println("FLY YOU FOOLS");
-						//	cichlidA.turn(30, new Vector3D(1, 0, 0));
-							cichlidB.setState(FishState.SWIM);
-							}
+								if ( x == 9000000)
+								{
+									
+								System.out.println("FLY YOU FOOLS");
+							//	cichlidA.turn(30, new Vector3D(1, 0, 0));
+								cichlidB.setState(FishState.SWIM);
+								}
 						}
 					}else if (cichlidB.getState() == FishState.SWIM){
-						logger.debug("{} MOVED 1", ((ConvictCichlid)s).getName());
 						cichlidB.move(elapsedTimeMS);
 					}
+					
 					Matrix3D cichlidBlocalT = s.getLocalTranslation();
 					Matrix3D cichlidBRot = s.getLocalRotation();
 					cichlidBObject.setLocalTranslation(cichlidBlocalT);
@@ -1959,14 +1929,21 @@ public class MyGame extends BaseGame {
 					// call move stuff here
 					Point3D loc = new Point3D(s.getWorldTranslation().getCol(3));
 					
-					if(cichlidC.getState() == FishState.IDLE){
-					//	((ConvictCichlid) s).move(0);
-						cichlidC.stop();
-						logger.debug("{} MOVED 0", ((ConvictCichlid)s).getName());
-					}else{
-						logger.debug("{} MOVED 1", ((ConvictCichlid)s).getName());
+					if(((ConvictCichlid)s).getState() == FishState.IDLE){
+						for (int x = 0; x < 10000000; x++)
+						{
+							if ( x == 9000000)
+							{
+								
+							System.out.println("FLY YOU FOOLS");
+						//	cichlidA.turn(30, new Vector3D(1, 0, 0));
+							cichlidC.setState(FishState.SWIM);
+							}
+					}
+					}else if (cichlidC.getState() == FishState.SWIM){
 						cichlidC.move(elapsedTimeMS);
 					}
+					
 					Matrix3D cichlidClocalT = s.getLocalTranslation();
 					Matrix3D cichlidCRot = s.getLocalRotation();
 					aggroRangeC.setLocalTranslation(cichlidClocalT);

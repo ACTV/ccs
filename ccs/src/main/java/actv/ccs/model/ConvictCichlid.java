@@ -204,7 +204,8 @@ public class ConvictCichlid extends TankObject {
 	public void setInfluence(double influence) {
 		this.influence = influence;
 	}
-	synchronized public  void turn(float degrees, Vector3D axis){
+	
+	synchronized public void turn(float degrees, Vector3D axis){
 		Matrix3D rot = this.getLocalRotation();
 		Vector3D dir = this.getDirection().normalize();
 		
@@ -233,10 +234,9 @@ public class ConvictCichlid extends TankObject {
 		Vector3D dd = new Vector3D(getLocation()).add(dir);
 
 		dir = dir.mult(rot);
-		dir.scale(.5);
+		dir.scale(.3);
 
 		this.setlocation(dd.getX(), dd.getY(), dd.getZ());
-
 		this.translate((float) dir.getX(), (float) dir.getY(), (float) dir.getZ());
 		this.updateWorldBound();
 		
