@@ -1626,7 +1626,18 @@ public class MyGame extends BaseGame {
 					//	((ConvictCichlid) s).move(0);
 						cichlidA.stop();
 						logger.debug("{} MOVED 0", ((ConvictCichlid)s).getName());
-					}else{
+						
+						for (int x = 0; x < 10000000; x++)
+						{
+							if ( x == 9000000)
+							{
+								
+							System.out.println("FLY YOU FOOLS");
+						//	cichlidA.turn(30, new Vector3D(1, 0, 0));
+							cichlidA.setState(FishState.SWIM);
+							}
+						}
+					}else if (cichlidA.getState() == FishState.SWIM){
 						logger.debug("{} MOVED 1", ((ConvictCichlid)s).getName());
 						cichlidA.move(elapsedTimeMS);
 					}
@@ -1757,11 +1768,21 @@ public class MyGame extends BaseGame {
 					//	((ConvictCichlid) s).move(0);
 						cichlidB.stop();
 						logger.debug("{} MOVED 0", ((ConvictCichlid)s).getName());
-					}else{
+						
+						for (int x = 0; x < 10000000; x++)
+						{
+							if ( x == 9000000)
+							{
+								
+							System.out.println("FLY YOU FOOLS");
+						//	cichlidA.turn(30, new Vector3D(1, 0, 0));
+							cichlidB.setState(FishState.SWIM);
+							}
+						}
+					}else if (cichlidB.getState() == FishState.SWIM){
 						logger.debug("{} MOVED 1", ((ConvictCichlid)s).getName());
 						cichlidB.move(elapsedTimeMS);
 					}
-
 					Matrix3D cichlidBlocalT = s.getLocalTranslation();
 					Matrix3D cichlidBRot = s.getLocalRotation();
 					cichlidBObject.setLocalTranslation(cichlidBlocalT);
