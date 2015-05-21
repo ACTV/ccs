@@ -25,7 +25,6 @@ public class IdleNearZWall extends BTAction {
 	
 	protected BTStatus update(float elapsedTime)
 	{
-		cc.setState(FishState.IDLE);
 		double angle = 0;
 		
 		if(cc.getZpos() == Z_POS.ZF){
@@ -33,8 +32,11 @@ public class IdleNearZWall extends BTAction {
 		}else if(cc.getZpos() == Z_POS.ZB){
 			angle = (Math.acos(cc.getDirection().normalize().dot(ZBV))) * (190/Math.PI);
 		}else{
-			logger.error("How Z did we get here?!");
+			logger.error("{}: How  Z did we get here?!", cc.getName());
+			return BTStatus.BH_FAILURE;
 		}
+		
+		cc.setState(FishState.IDLE);
 		
 		logger.debug("Z angle: {}, {}", cc.getName(), (int)angle);
 		

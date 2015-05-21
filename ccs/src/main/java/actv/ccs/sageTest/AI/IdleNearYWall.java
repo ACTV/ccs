@@ -26,7 +26,6 @@ public class IdleNearYWall extends BTAction {
 	
 	protected BTStatus update(float elapsedTime)
 	{
-		cc.setState(FishState.IDLE);
 		double angle = 0;
 		
 		if(cc.getYpos() == Y_POS.YT){
@@ -34,8 +33,11 @@ public class IdleNearYWall extends BTAction {
 		}else if(cc.getYpos() == Y_POS.YB){
 			angle = (Math.acos(cc.getDirection().normalize().dot(YBV))) * (190/Math.PI);
 		}else{
-			logger.error("How Y did we get here?!");
+			logger.error("{}: How  Y did we get here?!", cc.getName());
+			return BTStatus.BH_FAILURE;
 		}
+		
+		cc.setState(FishState.IDLE);
 		
 		logger.debug("Y angle: {}, {}", cc.getName(), (int)angle);
 		
