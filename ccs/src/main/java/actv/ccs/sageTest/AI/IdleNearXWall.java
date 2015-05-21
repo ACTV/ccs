@@ -1,5 +1,7 @@
 package actv.ccs.sageTest.AI;
 
+import java.util.Random;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,20 +32,26 @@ public class IdleNearXWall extends BTAction {
 		}else if(cc.getXpos() == X_POS.XL){
 			angle = (Math.acos(cc.getDirection().normalize().dot(XLV))) * (190/Math.PI);
 		}else{
-			return BTStatus.BH_FAILURE;
+			return BTStatus.BH_INVALID;
 		}
 		
-		cc.setState(FishState.IDLE);
-		logger.debug("X angle: {}, {}", cc.getName(), (int)angle);
 		
-		if( angle < 90 ){
-			cc.turn((float)(180-angle), new Vector3D(0, 1, 0));
+//		logger.debug("X angle: {}, {}", cc.getName(), (int)angle);
+		
+		if( cc.getXpos() == X_POS.XR){
+//			cc.turn((float)(180-angle), new Vector3D(0, 1, 0));
+			cc.setDirection(XLV);
+		}else{
+			cc.setDirection(XRV);
 		}
 		
 		cc.idleNearXWall();
+		if(cc.getState() != FishState.IDLE)
+			cc.setIdleWaitTime(System.currentTimeMillis() + (new Random(System.nanoTime())).nextInt(2000) + 1000);
 		
-		logger.debug("X dir after: {}, {}", cc.getName(), cc.getDirection());
+//		logger.debug("X dir after: {}, {}", cc.getName(), cc.getDirection());
 		
+		cc.setState(FishState.IDLE);
 		return BTStatus.BH_SUCCESS;
 	}
 }

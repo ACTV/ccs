@@ -33,21 +33,24 @@ public class IdleNearYWall extends BTAction {
 		}else if(cc.getYpos() == Y_POS.YB){
 			angle = (Math.acos(cc.getDirection().normalize().dot(YBV))) * (190/Math.PI);
 		}else{
-			return BTStatus.BH_FAILURE;
+			return BTStatus.BH_INVALID;
 		}
 		
-		cc.setState(FishState.IDLE);
+		//logger.debug("Y angle: {}, {}", cc.getName(), (int)angle);
 		
-		logger.debug("Y angle: {}, {}", cc.getName(), (int)angle);
-		
-		if( angle < 90 ){
-			cc.turn((float)(180-angle), new Vector3D(0, 0, 1));
+		if(cc.getYpos() == Y_POS.YB){
+//			cc.turn((float)(180-angle), new Vector3D(0, 0, 1));
+			cc.setDirection(YUV);
+		}else{
+			cc.setDirection(YBV);
 		}
 		
 		cc.idleNearYWall();
 		
-		logger.debug("Y dir after: {}, {}", cc.getName(), cc.getDirection());
-		
+		//logger.debug("Y dir after: {}, {}", cc.getName(), cc.getDirection());
+		if(cc.getState() != FishState.IDLE)
+			cc.setIdleWaitTime(System.currentTimeMillis() + 3000);
+		cc.setState(FishState.IDLE);
 		return BTStatus.BH_SUCCESS;
 	}
 }
