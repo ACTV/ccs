@@ -2246,7 +2246,7 @@ public class MyGame extends BaseGame {
 		String engine = "sage.physics.JBullet.JBulletPhysicsEngine";
 		physicsEngine = PhysicsEngineFactory.createPhysicsEngine(engine);
 		physicsEngine.initSystem();
-		float[] gravity = {0, -5f, 0};
+		float[] gravity = {0f, -1f, 0};
 		physicsEngine.setGravity(gravity);
 		
 	}
@@ -2265,33 +2265,31 @@ public class MyGame extends BaseGame {
 		if (cichlidA != null)
 		{
 		cichlidAP = physicsEngine.addSphereObject(physicsEngine.nextUID(), mass, cichlidA.getWorldTransform().getValues(), 1.0f);
-		cichlidAP.setBounciness(1.0f);
+		cichlidAP.setBounciness(1f);
 		cichlidA.setPhysicsObject(cichlidAP);
 	//	System.out.println("cichlid A works");
 		Point3D test = new Point3D(cichlidA.getWorldTransform().getValues());
-		System.out.println("cichlid A transforms " + cichlidA.getWorldTransform().getValues() + " test: " + test);
+	//	System.out.println("cichlid A transforms " + cichlidA.getWorldTransform().getValues() + " test: " + test);
 		
 		}
 		
 		if (cichlidB != null)
 		{
-
 		cichlidBP = physicsEngine.addSphereObject(physicsEngine.nextUID(), mass, cichlidB.getWorldTransform().getValues(), 1.0f);
-		cichlidBP.setBounciness(1.0f);
+		cichlidBP.setBounciness(1f);
 		cichlidB.setPhysicsObject(cichlidBP);
-		
 		System.out.println("cichlid b works");
 		}
 		
 		if (cichlidC != null)
 		{
 		cichlidCP = physicsEngine.addSphereObject(physicsEngine.nextUID(), mass, cichlidC.getWorldTransform().getValues(), 1.0f);
-		cichlidCP.setBounciness(1.0f);
+		cichlidCP.setBounciness(0.5f);
 		cichlidC.setPhysicsObject(cichlidCP);
 		System.out.println("cichlid c works");
 		}
 		
-		float up[] = {-0.05f, 0.95f, 0};
+		float up[] = {-0.5f, 0.95f, 0f};
 		leftWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), fishTank.getFishWalls().getWorldTransform().getValues(), up, 0.0f);
 		leftWallP.setBounciness(1.0f);
 		fishTank.getFishWalls().setPhysicsObject(leftWallP);

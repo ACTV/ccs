@@ -616,8 +616,8 @@ public class SimulationPrompter extends JFrame {
 		this.myGame.setAnimation(true);
 	//	this.myGame.startAnimationProcess();
 	    this.myGame.startAIImplementation();
-	    this.myGame.setRunning(true);
-	    this.myGame.initPhysicsSystem();
-	    this.myGame.createSagePhysicsWorld();
+	 //   this.myGame.setRunning(true);
+	 //   this.myGame.initPhysicsSystem();
+	//    this.myGame.createSagePhysicsWorld();
 	}
 }
