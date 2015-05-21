@@ -777,6 +777,7 @@ public class MyGame extends BaseGame {
 																				// position
 						cichlidAT.translate(xStartW, yStartY, zStartZ);
 						cichlidA.setLocalTranslation(cichlidAT);
+						cichlidA.setWorldTranslation(cichlidAT);
 						Matrix3D cichlidAS = cichlidA.getLocalScale(); // this
 																		// is
 																		// for
@@ -932,13 +933,13 @@ public class MyGame extends BaseGame {
 						cichlidB.setInfluence(8);
 						cichlidB.setState(FishState.SWIM);
 						
-						
 						Matrix3D cichlidBT = cichlidB.getLocalTranslation(); // this
 																				// is
 																				// for
 																				// position
 						cichlidBT.translate(xStartW, yStartY, zStartZ);
 						cichlidB.setLocalTranslation(cichlidBT);
+						cichlidB.setWorldTranslation(cichlidBT);
 						Matrix3D cichlidBS = cichlidB.getLocalScale(); // this
 																		// is
 																		// for
@@ -1096,6 +1097,7 @@ public class MyGame extends BaseGame {
 																				// position
 						cichlidCT.translate(xStartW, yStartY, zStartZ);
 						cichlidC.setLocalTranslation(cichlidCT);
+						cichlidC.setWorldTranslation(cichlidCT);
 						Matrix3D cichlidCS = cichlidC.getLocalScale(); // this
 																		// is
 																		// for
@@ -1664,7 +1666,8 @@ public class MyGame extends BaseGame {
 					translateVec = mat.getCol(3);
 					s.getLocalTranslation().setCol(3, translateVec);
 					// get rotation
-					
+			//		s.getLocalRotation().setCol(3, translateVec);
+			//		s.getLocalScale().setCol(3, translateVec);
 				}
 			}
 		}
@@ -2243,7 +2246,7 @@ public class MyGame extends BaseGame {
 		String engine = "sage.physics.JBullet.JBulletPhysicsEngine";
 		physicsEngine = PhysicsEngineFactory.createPhysicsEngine(engine);
 		physicsEngine.initSystem();
-		float[] gravity = {0, -1f, 0};
+		float[] gravity = {0, -5f, 0};
 		physicsEngine.setGravity(gravity);
 		
 	}
@@ -2265,6 +2268,9 @@ public class MyGame extends BaseGame {
 		cichlidAP.setBounciness(1.0f);
 		cichlidA.setPhysicsObject(cichlidAP);
 	//	System.out.println("cichlid A works");
+		Point3D test = new Point3D(cichlidA.getWorldTransform().getValues());
+		System.out.println("cichlid A transforms " + cichlidA.getWorldTransform().getValues() + " test: " + test);
+		
 		}
 		
 		if (cichlidB != null)
