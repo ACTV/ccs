@@ -606,15 +606,10 @@ public class SimulationPrompter extends JFrame {
 		this.myGame.spawnCichlids();
 		this.myGame.spawnObjects();
 		this.myGame.createPerson();
-
 		this.myGame.initActions();
-
 		this.myGame.createFishTankWalls();
-	//	this.myGame.startRunner();
-	//	this.myGame.createHUD();
 		this.myGame.setUpTank();
 		this.myGame.setAnimation(true);
-	//	this.myGame.startAnimationProcess();
 	    this.myGame.startAIImplementation();
 	 //   this.myGame.setRunning(true);
 	 //   this.myGame.initPhysicsSystem();

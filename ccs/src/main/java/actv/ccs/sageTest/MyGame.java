@@ -93,16 +93,6 @@ public class MyGame extends BaseGame {
 	Group model;
 	Model3DTriMesh cichlidAObject, cichlidBObject, cichlidCObject;
 
-	/*
-	 * public void initGame() { initObjects(); spawnCichlids(); spawnObjects();
-	 * createPerson(); // createScene(); initActions(); fishTank = new
-	 * FishTankImpl(); // createFishTank(); createFishTankWalls();
-	 * startRunner(); createHUD(); setUpTank(); pauseSimulation = false; // set
-	 * to false for beginning startAnimation = true; cichlidCount = 0; objCount
-	 * = 0;
-	 * 
-	 * }
-	 */
 	
 	// testing for AI now
 	private AIController aic;
@@ -115,12 +105,13 @@ public class MyGame extends BaseGame {
 	private IPhysicsObject leftWallP, rightWallP, groundWallP, backWallP, frontWallP, ceilingWallP,
 		cichlidAP, cichlidBP, cichlidCP;
 	private boolean running;
-//	private Rectangle leftWall, rightWall, backWall, frontWall, ceiling, ground;
 	
 	
 	// save state prompter
 	private boolean saveUpdate = false;
-	
+	/*
+	 * This initializes the game where if the simulationprompter/new simulation has flags in it, then it will run, else it will create a "loading window."
+	 */
 	public void initGame() {
 		createHUD();
 		startAnimation = false;
@@ -163,7 +154,10 @@ public class MyGame extends BaseGame {
 			epp.printStackTrace();
 		}
 	}
-
+	/*
+	 * Currently there are two animations in the cichlid class, there's two animations that you will call from blender, which are relatively the same. 
+	 * This calls them in a loop.
+	 */
 	public void startAnimationProcess() {
 		System.out.println("call me maybe");
 
@@ -208,7 +202,9 @@ public class MyGame extends BaseGame {
 			throw new RuntimeException("Unable to end the rule session thread!");
 		}
 	}
-
+	/*
+	 * This creates the lines in the tank.
+	 */
 	public void initObjects() {
 		// this is for initializing objects
 		display = getDisplaySystem();
@@ -286,7 +282,9 @@ public class MyGame extends BaseGame {
 	public boolean isInitialized() {
 		return initialized;
 	}
-
+	/*
+	 * This creates the camera view for the tank. You can change the view by changing the Z value, but we found out that by changing the camera view, it changes the bounds too.
+	 */
 	public void createPerson() {
 		cameraGuy = new CameraGuy();
 		cameraGuy.translate(100, 100, 440);
@@ -297,6 +295,9 @@ public class MyGame extends BaseGame {
 
 	}
 
+	/*
+	 * Creates HUD
+	 */
 	public void createHUD() {
 		timeString = new HUDString("Time = " + time);
 		timeString.setLocation(0, 0.05);
@@ -320,6 +321,10 @@ public class MyGame extends BaseGame {
 		resumeRunner();
 	}
 
+	/*
+	 * This grabs the simulation time. Currently the simulation is set to run endless, but there's a commented out if statement that if the value in TankData is the same as the one in 
+	 * update time, then the simulation will end or it's up to you to decide what happens next.
+	 */
 	public void setUpTank() {
 
 		try {
@@ -683,6 +688,10 @@ public class MyGame extends BaseGame {
 		}
 	}
 
+	/*
+	 * This is a work in progress function in order to streamline the code. Right now, everything is hard coded in. Hopefully it doesn't have to happen this way
+	 * later on but we shall see.
+	 */
 	private ConvictCichlid spawnCichlidFromDB(String id) throws SQLException {
 		ConvictCichlid cichlid;
 		DBConnection conn = DBConnection.getInstance();
@@ -712,6 +721,13 @@ public class MyGame extends BaseGame {
 		return cichlid;
 	}
 
+	/*
+	 * This is the function that grabs the flags from NewSimulation and SimulationPrompter and adds the fish into the simulation. So if I pressed 2 Cichlids on the
+	 * SimulationPrompter, it would check in the local database file and see if the flag has been set, and if it has been set in SimulationFish, then the fish will be loaded
+	 * into the database. For now, there's three objects that are spawned when a cichlid is formed; the main class ConvictCichlid with all the properties, the aggression sphere
+	 * where the fish will have in order to test out interactions, and the Model3DTriMesh, which is the Convict Cichlid itself in all it's terrible Blender glory. 
+	 * So if you're going to start out with this, I would recommend making better models in Blender for all the objects.
+	 */
 	public void spawnCichlids() {
 
 		try {
@@ -1098,6 +1114,10 @@ public class MyGame extends BaseGame {
 		startAnimation = true;
 		startAnimationProcess();
 	}
+	/*
+	 * This is for the user to press on the keyboard to change the scenario such as P for Pause, Q for save, R for resume, and ESC to exit. 
+	 * The other methods commented out are to test out a cichlid moving using IAction.
+	 */
 	public void initActions() {
 		im = getInputManager();
 		String kbName = im.getKeyboardName(); // error here. it shouldn't be
@@ -1174,6 +1194,10 @@ public class MyGame extends BaseGame {
 	}
 
 	// pause and restart simulation
+	
+	/*
+	 * pauseAction that sets a bool flag to true
+	 */
 	private class pauseAction extends AbstractInputAction {
 		public void performAction(float time, Event ev) {
 			logger.debug("PAUSE " + pauseSimulation);
@@ -1184,7 +1208,9 @@ public class MyGame extends BaseGame {
 
 		}
 	}
-
+	/*
+	 * resume action that sets a bool flag to false
+	 */
 	private class resumeAction extends AbstractInputAction {
 		public void performAction(float time, Event evento) {
 			logger.debug("pause is " + pauseSimulation);
@@ -1195,7 +1221,11 @@ public class MyGame extends BaseGame {
 
 		}
 	}
-
+	/*
+	 * This is where the user will press Q to save the simulation positions they want. Currently that's all that they're going to get for now. But it would be nice
+	 * for the saveAction to save the time, temperature and various other features of the cichlid by writing updates to the database. Maybe another feature is that 
+	 * there can be multiple save states implemented that can be accessed through the SimulationPrompter and show where the fish are located at. 
+	 */
 	private class saveAction extends AbstractInputAction {
 		public void performAction(float time, Event sp) {
 			logger.debug("saveAction");
@@ -1381,88 +1411,24 @@ public class MyGame extends BaseGame {
 
 	}
 
+	/*
+	 * This adds the fish walls to the simulation. This is a placeholder for now and if there's any implementation for a reflection, that would be great.
+	 */
 	public void createFishTankWalls() {
 		
 		walls = fishTank.getFishWalls();
 		addGameWorldObject(walls);
-/*
-			Texture texture = TextureManager.loadTexture2D("./aquasoil.jpg");
-			Texture textureA = TextureManager.loadTexture2D("./background.jpg");
-			// add a rectangle, and turn it into a plane
-			ground = new Rectangle(200, 200);
-			ground.rotate(90, new Vector3D(1, 0, 0));
-			ground.translate(101.0f, -2f, 101.0f);
-			// ground.setColor(Color.orange);
-			ground.setTexture(texture);
-//			fishWalls.addChild(ground);
-			addGameWorldObject(ground);
-			ground.updateWorldBound();
-			
-
-			leftWall = new Rectangle(200, 200);
-			Matrix3D leftRot = new Matrix3D();
-			leftRot.rotate(0, 90, 90);
-			leftWall.setLocalRotation(leftRot);
-			leftWall.translate(-0.1f, 101f, 101.0f);
-			leftWall.setColor(Color.blue);
-			// leftWall.setCullMode(CULL_MODE.ALWAYS);
-//			fishWalls.addChild(leftWall);
-			addGameWorldObject(leftWall);
-			leftWall.updateWorldBound();
-
-			rightWall = new Rectangle(200, 200);
-			Matrix3D rightRot = new Matrix3D();
-			rightRot.rotate(0, 90, 90);
-			rightWall.setLocalRotation(rightRot);
-			rightWall.translate(201.0f, 101f, 101.0f);
-			rightWall.setColor(Color.blue);
-			// rightWall.setCullMode(CULL_MODE.ALWAYS);
-//			fishWalls.addChild(rightWall);
-			addGameWorldObject(rightWall);
-			rightWall.updateWorldBound();
-
-			backWall = new Rectangle(200, 200);
-			Matrix3D backRot = new Matrix3D();
-			backRot.rotate(0, 0, 0);
-			backWall.setLocalRotation(backRot);
-			backWall.translate(101.0f, 101.0f, -0.10f);
-			// backWall.setColor(Color.blue);
-			// backWall.setCullMode(CULL_MODE.ALWAYS);
-			backWall.setTexture(textureA);
-//			fishWalls.addChild(backWall);
-			addGameWorldObject(backWall);
-			backWall.updateWorldBound();
-
-			ceiling = new Rectangle(200, 200);
-			Matrix3D ceilingRot = new Matrix3D();
-			ceilingRot.rotate(90, 0, 0);
-			ceiling.setLocalRotation(ceilingRot);
-			ceiling.translate(101.0f, 201f, 101.0f);
-			ceiling.setColor(Color.blue);
-			// ceiling.setCullMode(CULL_MODE.ALWAYS);
-	//		fishWalls.addChild(ceiling);
-			addGameWorldObject(ceiling);
-			ceiling.updateWorldBound();
-
-			// find transparency for this
-			frontWall = new Rectangle(200, 200);
-			Matrix3D frontRot = new Matrix3D();
-			frontRot.rotate(0, 180, 0);
-			frontWall.setLocalRotation(frontRot);
-			frontWall.translate(101.0f, 101.0f, 201.0f);
-			frontWall.setCullMode(CULL_MODE.ALWAYS);
-//			fishWalls.addChild(frontWall);
-			addGameWorldObject(frontWall);
-			frontWall.updateWorldBound();
-
-*/
-			
 	}
 
 	public void createFishTank() { // issue with this.
 		addGameWorldObject(fishTank.getTerrain());
 	}
 
+	/*
+	 * So there is a update function in SAGE that updates the GeometricBounds of every object in the game. Since there is no pause implementation in SAGE itself,
+	 * I made it that the gameloop calls either this pauseUpdate method or the built in abstract update method whether the pauseAnimation is true or not. If it can be
+	 * streamlined further, then that can be something worked on.
+	 */
 	public void pauseUpdate(float elapsedTimeMS) {
 		// creating timer thing
 		time += elapsedTimeMS;
@@ -1505,6 +1471,10 @@ public class MyGame extends BaseGame {
 		startAnimation = true;
 	}
 
+	/*
+	 * This method is the thing that keeps the program going. It will update cichlid movement and interactions and furthermore everything a cichlid moves, the model3dtrimesh
+	 * and the aggression sphere will follow it. There's a lot of collision implementation too but it would be better if it was merged into the AI behavior tree instead.
+	 */
 	public void update(float elapsedTimeMS) // this will be where the objects
 	{
 		
@@ -1530,16 +1500,10 @@ public class MyGame extends BaseGame {
 		camT.translate(camLoc.getX(), camLoc.getY(), camLoc.getZ());
 
 		if (startAnimation == true) {
-			// this should work
+			// this does work
 			startAnimationProcess();
 			startAnimation = false;
 		}
-
-		// update skybox loc
-
-		// skybox.setLocalTranslation(camT);
-
-		// iterating through models
 
 		
 		try {
@@ -1970,7 +1934,10 @@ public class MyGame extends BaseGame {
 
 	}
 
-	protected void shutdown() {
+	/*
+	 * When the user presses ESC to close the program, this sets all the flags to 0.
+	 */
+	protected void shutdown() { 
 		display.close();
 		// database clear?
 		Connection conn;
@@ -2062,6 +2029,10 @@ public class MyGame extends BaseGame {
 		return startAnimation;
 	}
 
+	/*
+	 * If pauseSimulation is true then pauseUpdate will be called, else it run like normal. 
+	 * 	 
+	 */
 	protected void mainLoop() {
 		long startTime = System.nanoTime();
 		long lastUpdateTime = startTime;
@@ -2140,7 +2111,9 @@ public class MyGame extends BaseGame {
 	{
 		return aggroRangeC;
 	}
-	
+	/*
+	 * This is testing out the physics system. If you find a way to make it work with water, then that's something can be worked on.
+	 */
 	public void initPhysicsSystem()
 	{
 		String engine = "sage.physics.JBullet.JBulletPhysicsEngine";
@@ -2193,26 +2166,7 @@ public class MyGame extends BaseGame {
 		leftWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), fishTank.getFishWalls().getWorldTransform().getValues(), up, 0.0f);
 		leftWallP.setBounciness(1.0f);
 		fishTank.getFishWalls().setPhysicsObject(leftWallP);
-
-/*		leftWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), leftWall.getWorldTransform().getValues(), up, 0.0f);
-		leftWallP.setBounciness(1.0f);
-		leftWall.setPhysicsObject(leftWallP);
-		rightWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), rightWall.getWorldTransform().getValues(), up, 0.0f);
-		rightWallP.setBounciness(1.0f);
-		rightWall.setPhysicsObject(rightWallP);
-		groundWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), ground.getWorldTransform().getValues(), up, 0.0f);
-		groundWallP.setBounciness(1.0f);
-		ground.setPhysicsObject(groundWallP);
-		backWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), backWall.getWorldTransform().getValues(), up, 0.0f);
-		backWallP.setBounciness(1.0f);
-		backWall.setPhysicsObject(backWallP);
-		frontWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), frontWall.getWorldTransform().getValues(), up, 0.0f);
-		frontWallP.setBounciness(1.0f);
-		frontWall.setPhysicsObject(frontWallP);
-		ceilingWallP = physicsEngine.addStaticPlaneObject(physicsEngine.nextUID(), ceiling.getWorldTransform().getValues(), up, 0.0f);
-		ceilingWallP.setBounciness(1.0f);
-		ceiling.setPhysicsObject(ceilingWallP);
-*/		
+	
 	}
 		
 }

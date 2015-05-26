@@ -762,16 +762,6 @@ public class NewSimulation extends JFrame {
 					Ex.printStackTrace();
 				}
 
-				
-			//	try {
-				//	rS = new RunSimulation();
-					System.out.println("trying a swap to 3d3d3d3d");
-		//		} catch (IOException e1) {
-			//		// TODO Auto-generated catch block
-			//		e1.printStackTrace();
-		//		}
-			//	new MyGame().start();
-				
 				CloseJFrame();
 				// +Exception in thread "AWT-EventQueue-0" java.lang.RuntimeException: Unable to create display
 			}
@@ -788,16 +778,12 @@ public class NewSimulation extends JFrame {
 	    this.myGame.spawnCichlids();
 	    this.myGame.spawnObjects();
 	    this.myGame.createPerson();
-	    
 	    this.myGame.initActions();
-	    
 	    this.myGame.createFishTankWalls();
-//	    this.myGame.createHUD();
 		this.myGame.setAnimation(true);
 	    this.myGame.setUpTank();
-	//	this.myGame.startAnimationProcess();
 	    this.myGame.startAIImplementation();
-	//    this.myGame.setRunning(true);
+	//    this.myGame.setRunning(true); 		// this is for testing the physics system.
 	//    this.myGame.initPhysicsSystem();
 	//    this.myGame.createSagePhysicsWorld();
 
