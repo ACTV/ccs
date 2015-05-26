@@ -22,14 +22,12 @@ import actv.ccs.model.TankObject;
 import actv.ccs.sageTest.FishTank;
 import actv.ccs.sageTest.FishTankImpl;
 import actv.ccs.sageTest.MyGame;
-import actv.ccs.sageTest.TestGame;
 
 public class NewSimulation extends JFrame {
 	private String cichlidNameA;
 	private FishTank tank;
 	private String cichlidNameZ, objectNameA;
 	private MyGame myGame;
-	private TestGame tg;
 	
 	private JTextField NameTextField;
 	private JTextField WeightTextField;

@@ -31,7 +31,9 @@ public class FishTankImpl implements FishTank {
 		fishWalls = createFishTankWalls();
 		terrain = createTankTerrain();
 	}
-
+/*
+ * This implements the fish walls.
+ */
 	private Group createFishTankWalls() {
 		fishWalls = new Group();
 

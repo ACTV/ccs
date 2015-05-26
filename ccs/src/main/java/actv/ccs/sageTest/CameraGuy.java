@@ -4,7 +4,9 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import sage.scene.TriMesh;
-
+/*
+ * basic trimesh example of the camera display that the camera is locked on using a orbit camera.
+ */
 public class CameraGuy extends TriMesh
 {
 private static float[] vrts = new float[] {0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0};

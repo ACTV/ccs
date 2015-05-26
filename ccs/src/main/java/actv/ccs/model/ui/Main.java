@@ -3,7 +3,6 @@ package actv.ccs.model.ui;
 import java.io.IOException;
 
 import actv.ccs.sageTest.MyGame;
-import actv.ccs.sageTest.TestGame;
 
 
 public class Main {

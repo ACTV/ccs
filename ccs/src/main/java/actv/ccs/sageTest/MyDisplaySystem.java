@@ -14,6 +14,9 @@ import sage.display.IDisplaySystem;
 import sage.renderer.IRenderer;
 import sage.renderer.RendererFactory;
 
+/*
+ * basic display system implementation
+ */
 public class MyDisplaySystem implements IDisplaySystem
 {
  private JFrame myFrame;

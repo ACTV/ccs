@@ -107,6 +107,12 @@ public class AIController {
 	if fish is near object like a plant, then they will go cover
 
 	if fish aggro range is nothing and not in wall then it will move around
+	
+	Update: Here is where the behavior trees are set. Refer to the 165 notes for a basic rundown in SAGE AI behavior.
+	We tried drools but it looks like it wasn't working with loading/exiting the program at the time, so we switched back 
+	to SAGE. For now the bounds are "working" and cichlidA will stop if it hits a big plant, but that's only in the update. 
+	If it's possible to find a different implementation of AI to work with SAGE, or also use the BOIDs implementation for fry, then 
+	it will make this way more complex. Right now, this is a barebones implementation.
 	 */
 	public void setupBehaviorTreeA()
 	{
@@ -225,19 +231,6 @@ public class AIController {
 	}
 	public void update()
 	{
-		/*
-		for (int i = 0; i < ccList.length; i++)
-		{
-			System.out.println("RIPPED OUT FROM THE PLANET");
-			if (ccList[0] != null)
-			{
-			System.out.println(mg.getCichlidA().getName());
-			}
-			
-		}
-		*/
-		
-		// the cichlids are getting the location
 		if (ccList[0] == mg.getCichlidA() && mg.getCichlidA() != null)
 		{
 			ccList[0].getLocation();
